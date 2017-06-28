@@ -176,9 +176,9 @@ function createNavList(type) {
         var onedataType = $markerTypes.eq(i).data("type");      
         html += '<div class="nav-item" data-type="'+onedataType+'">';
         html += '<span>'+queryMarkers[onedataType]["type"]+'</span>';
-        html += '<div class="sanjiao">';
+        /*html += '<div class="sanjiao">';
         html += '<span class="sanjiao-close">x</span>';
-        html += '</div>';
+        html += '</div>';*/
         html += '</div>';
         bdMapObj.selectModules.push(onedataType);
     }
