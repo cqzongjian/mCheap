@@ -1,0 +1,772 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8">
+    <title>mCollection</title>
+    <meta name="viewport" content="target-densitydpi=device-dpi,width=device-width, initial-scale=1,maximum-scale=1, user-scalable=no">
+    <meta name="apple-mobile-web-app-capable" content="yes">
+    <meta name="apple-mobile-web-app-status-bar-style" content="black">
+    <link rel="stylesheet" href="../../../static/mdui/css/mdui.min.css">
+    <link rel="stylesheet" href="../../../static/mCheap/css/mCommon.css">
+    <style>
+        *{
+            font-family: "Microsoft YaHei";
+        }
+        body{
+            background-color: #E6EAE8;
+        }
+        .header-box{
+            background-color: #F39426;
+            padding: 0;
+        }
+        .header{
+            width: 100%;
+            height: 100%;
+            position: relative;
+        }
+        .back{
+            padding-right: 1rem;
+            padding-left: 1rem;
+            padding-top: 0.75rem;
+            position: fixed;
+            z-index: 100;
+        }
+        .back img{
+            width:auto;
+            height: 1.25rem;
+        }
+        .title{
+            text-align: center;
+            position: absolute;
+            width: 100%;
+            height: 100%;
+            top: 0px;
+            line-height: 2.75rem;
+            color: #FFFFFF;
+        }
+        /*=============市场头===================*/
+
+        .price-sort{
+            padding-left: 1rem;
+            color: #EA4828;
+        }
+        .price-info{
+            padding: 0.5rem 1rem 0 1rem;
+        }
+        .market{
+            margin-top: 2.75rem;
+            width: 100%;
+            padding: 1rem;
+            background-color: white;
+            border-bottom: 1px solid #cccccc;
+        }
+        .market-img{
+            width: 7rem;
+            height: 5rem;
+            border-radius: 0.3rem;
+        }
+        .market-title{
+            display: inline-block;
+            margin-left: 1rem;
+        }
+        .market-describe{
+            width: auto;
+        }
+        .set-like{
+            line-height: 100%;
+            font-size: 0.8rem;
+            padding: 0.2rem 0.5rem 0.2rem 0.5rem;
+            border-radius: 1rem;
+            display: inline-block;
+            float: right;
+        }
+        .lists-box{
+            width: 100%;
+            height: 100%;
+        }
+        /*=========================================*/
+
+        /*=============产品展示===================*/
+        .product-show{
+            background-color: white;
+            overflow-y: auto;
+        }
+        /*========================list===========================*/
+        .img-box{
+            padding-left: 1rem;
+            width: 7rem;
+            height: 5rem;
+        }
+        .list-box{
+            position: relative;
+            margin-top: 0.5rem;
+            padding-top: 0.5rem;
+            padding-bottom: 0.5rem;
+            border-bottom: 1px solid #cccccc;
+            /*border-top: 1px solid #cccccc;*/
+        }
+        .market-img-box{
+            width: 100%;
+            height: 100%;
+        }
+        .market-list-name{
+            font-weight: 600;
+        }
+        .address{
+            white-space:nowrap;
+            width: 10rem;
+            overflow: auto;
+            font-size: 0.8rem;
+            padding-left: 1rem;
+            background: url("../images/dis.png")no-repeat left center;
+            background-size: 0.8rem auto;
+        }
+        .market-detail{
+            padding-left: 1rem;
+        }
+        .factory{
+            font-size: 0.8rem;
+            color: #7E7E7E;
+            overflow: hidden;
+            white-space:nowrap;
+            padding: 0.5rem 0.5rem 0 1rem;
+        }
+        .store-price{
+            position: absolute;
+            bottom: 10%;
+            right: 5%;
+            font-weight: 600;
+            color: #F39426;
+        }
+        .time{
+            font-size: 0.8rem;
+            padding-left: 1rem;
+            background: url("../images/time.png")no-repeat left center;
+            background-size: 0.8rem auto;
+        }
+        .price{
+            font-size: 1.2rem;
+            font-weight: 600;
+            color: #F39426;
+        }
+        .gz{
+            width: 1.2rem;
+            height: 1.2rem;
+        }
+        /*=========================list==========================*/
+        /*======筛选======*/
+        .top-choose{
+            z-index: 100;
+            position: fixed;
+            top: 1%;
+            right: 2%;
+            background: url("../images/shaixuan.png")no-repeat center;
+            background-size: 1.5rem 1.5rem;
+            margin-right: 0.5rem;
+            margin-left: 0.5rem;
+            width: 1.5rem;
+            height: 2rem;
+        }
+        /*======筛选======*/
+        .mc{
+            position: fixed;
+            background: rgba(0,0,0,0.3);
+            width:100%;
+            height:100%;
+            z-index:2;
+            display: none;
+        }
+        .sx-box{
+            width: 100%;
+            margin-top: 2.75rem;
+            background-color: white;
+            border-bottom: 1px solid #CCCCCC;
+        }
+        .sx-left{
+            background: url("../images/down.png")no-repeat 70%;
+            background-size: 0.7rem 0.5rem;
+            border-right: 1px solid #CCCCCC;
+            width: 50%;
+            text-align: center;
+            padding: 0.5rem;
+        }
+        .sx-left-on{
+            background: url("../images/lvup.png")no-repeat 70%;
+            background-size: 0.7rem 0.5rem;
+            border-right: 1px solid #CCCCCC;
+            width: 50%;
+            color: green;
+            text-align: center;
+            padding: 0.5rem;
+        }
+        .sx-right{
+            background: url("../images/down.png")no-repeat 70%;
+            background-size: 0.7rem 0.5rem;
+            width: 50%;
+            text-align: center;
+            padding: 0.5rem;
+        }
+        .my-item{
+            padding: 0.5rem 0.5rem 0.5rem 1rem;
+            background-color: white;
+            border-bottom: 1px solid #CCCCCC;
+        }
+        .px-my-item{
+            color: black;
+            padding: 0.5rem 0.5rem 0.5rem 1rem;
+            background-color: white;
+            border-bottom: 1px solid #CCCCCC;
+            border-right: 1px solid #CCCCCC;
+        }
+        .px-my-item-on{
+            color: green;
+            padding: 0.5rem 0.5rem 0.5rem 1rem;
+            background-color: white;
+            border-bottom: 1px solid #CCCCCC;
+            border-right: 1px solid #CCCCCC;
+        }
+        .my-item-choose{
+            position: relative;
+            height: 3rem;
+            background-color: white;
+        }
+        .my-item-on{
+            background: url("../images/greenright.png")no-repeat 90%;
+            background-size: 1.2rem 0.8rem;
+            color: green;
+            padding: 0.5rem 0.5rem 0.5rem 1rem;
+            background-color: white;
+            border-bottom: 1px solid #CCCCCC;
+        }
+        .sx-right-on{
+            background: url("../images/lvup.png")no-repeat 70%;
+            background-size: 0.7rem 0.5rem;
+            width: 50%;
+            color: green;
+            text-align: center;
+            padding: 0.5rem;
+        }
+        .distance{/*my*/
+            display: none;
+        }
+        .distance-item{
+            border-bottom: 1px solid #CCCCCC;
+            padding: 0.5rem 0.5rem 0.5rem 1rem;
+            background-color: white;
+        }
+        .distance-item-on{
+            background: url("../images/greenright.png")no-repeat 90%;
+            background-size: 1.2rem 0.8rem;
+            padding: 0.5rem 0.5rem 0.5rem 1rem;
+            background-color: white;
+            color: green;
+            border-bottom: 1px solid #CCCCCC;
+        }
+        .reset{
+            position: absolute;
+            left: 5%;
+            top:15%;
+            padding: 0.25rem;
+            border: 1px solid #CCCCCC;
+        }
+        .sure{
+            position: absolute;
+            right: 5%;
+            top:15%;
+            padding: 0.25rem;
+            border: 1px solid #CCCCCC;
+        }
+
+        /*======筛选======*/
+
+        /*=========每个list=======*/
+        .start-box>img{
+            height: 1rem;
+            width: 1rem;
+        }
+        .far{
+            font-size: 0.8rem;
+            position: absolute;
+            top:10%;
+            right: 5%;
+        }
+        .list-set-like>img{
+            display: none;
+            position: absolute;
+            width: 1.2rem;
+            height: 1.2rem;
+            bottom:45%;
+            right: 5%;
+        }
+        .no-data{
+            height: 3rem;
+            text-align: center;
+            line-height: 3rem;
+            border-bottom: 1px solid #CCCCCC;
+        }
+    </style>
+</head>
+<body>
+<div class="mc">
+    <div class="mdui-box sx-box">
+        <div class="sx-l sx-left">距离</div>
+        <div class="sx-r sx-right">筛选</div>
+    </div>
+    <div class="distance">
+        <div class="distance-item">附近</div>
+        <div class="distance-item">1km</div>
+        <div class="distance-item">2km</div>
+        <div class="distance-item">3km</div>
+        <div class="distance-item">4km</div>
+        <div class="distance-item">全城</div>
+    </div>
+    <div class="my">
+        <div class="my-choose">
+            <div class="my-item-on">常用地址</div>
+            <div class="my-item">我关注的超市</div>
+        </div>
+        <div class="mdui-box px">
+            <div class="px-my-item mdui-box-flex-1">价格升序</div>
+            <div class="px-my-item mdui-box-flex-1">价格降序</div>
+            <div class="px-my-item mdui-box-flex-1">距离升序</div>
+            <div class="px-my-item mdui-box-flex-1">距离降序</div>
+        </div>
+        <div class="my-item-choose mdui-box">
+            <div class="reset">重置</div>
+            <div class="sure">确定</div>
+        </div>
+    </div>
+</div>
+
+<div class="header-box mdui-bar mdui-bar-nav">
+    <div class="header">
+        <div class="back mdui-action-back"><img src="../images/back.png"></div>
+        <div class="title">超市信息</div>
+        <div class="top-choose"></div>
+    </div>
+</div>
+<div class="mdui-box mdui-box-ver lists-box">
+    <div class="market">
+
+        <div class="mdui-box">
+            <div class="market-img-div">
+                <!--<img src="../images/market_hongxinglu.png" class="market-img"/>-->
+            </div>
+            <div class="market-describe mdui-box-flex-1">
+                <div>
+                        <span class="market-title">
+                            <strong class="market-name">产品名字</strong>
+                        </span>
+                    <div class="set-like">
+                        <img src="../images/dislike.png" class="gz"/>
+                    </div>
+                </div>
+                <div class="factory">长沙ldjfdlksjfljldsajfljsdljflkadsf</div>
+                <div class="mdui-box price-info">
+                    <div class="price">$3.66</div>
+                    <div class="price-sort">全市平均价</div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="product-show mdui-box-flex-1" id="list">
+
+
+        <!--<div class="mdui-box list-box">-->
+            <!--<div class="far">14km</div>-->
+            <!--<div class="img-box">-->
+                <!--<img src="../image/market_hongxinglu.png" class="market-img-box"/>-->
+            <!--</div>-->
+            <!--<div class="market-detail">-->
+                <!--<div class="market-list-name">第一个</div>-->
+                <!--<div class="start-box">-->
+                    <!--<img src="../image/star.png"/>-->
+                    <!--<img src="../image/star.png"/>-->
+                    <!--<img src="../image/star.png"/>-->
+                    <!--<img src="../image/star.png"/>-->
+                    <!--<img src="../image/star.png"/>-->
+                <!--</div>-->
+                <!--<div class="address">地址</div>-->
+                <!--<div class="time">aaa</div>-->
+                <!--<div class="store-price">$3.66</div>-->
+                <!--<div class="list-set-like">-->
+                    <!--<img src="../image/dislike.png"/>-->
+                <!--</div>-->
+            <!--</div>-->
+        <!--</div>-->
+
+    </div>
+</div>
+
+
+
+<!--页面-->
+<script src="../../../static/mdui/js/mdui.js"></script>
+<script src="../../../static/mCheap/js/mCheap.config.js"></script>
+<script src="../../../server.js"></script>
+<script src="../../../static/mCheap/js/scroll.js"></script>
+<script>
+    var obj={};//保存药品信息
+    var requestFlag=true;//请求开关
+    var moreObj={distance:'',focus:'',ppiont:'',flag:'',sign:'',pageNum:1};
+    $.uexWindowReady(function(){
+        //加载更多
+        var option = {id:"list",funs:{after:function(){
+            if(requestFlag){
+                moreObj.pageNum=moreObj.pageNum+1;
+                var distance=moreObj.distance;
+                var focus=moreObj.focus;
+                var ppiont=moreObj.ppiont;
+                var flag=moreObj.flag;
+                var sign=moreObj.sign;
+                requestData(distance,focus,ppiont,flag,sign,moreObj.pageNum);
+            }else{
+                $.toast('没有更多了!');
+            }
+        }}};
+        $.initScroll(option);
+
+        setProductData();
+        requestData('','','','','',moreObj.pageNum,'yes');
+    });
+
+    function requestData(distance,focus,ppiont,flag,sign,pageNum,recordMark){
+        $.request({
+            urlType:'nearSupermarktPrice',
+            data:{
+                "access_token": $.getStorage('access_token'),
+                log: $.getStorage('log'),
+                lat:$.getStorage('lat'),
+                espgds01id:obj.id?obj.id:'',
+                nearDistance :distance?distance:'',
+                focusCs:focus?focus:'',
+                flag:flag?flag:'',
+                purchasePointCs:ppiont?ppiont:'',
+                sign:sign?sign:'',
+                espgds01001:obj.proName,
+                pageSize:'10',
+                page:pageNum,
+                comeFlag:'01', //访问来源标志:01app,02微信,03门户
+                recordMark:recordMark||'no', //记录标志,
+                saveParam:'5' //记录所属模块标志
+            }
+        },function(json){
+            if(json.success) {
+//                alert(JSON.stringify(json)+"附近药店");
+                var data=json.data;
+                if(data.length){
+                    setThisData(data);
+                }else{
+                    if(pageNum==1){
+                        setThisData(data);
+                    }else{
+                        $.toast('没有更多了!');
+                        requestFlag=false;
+                    }
+                }
+            }
+            else {
+                alert('网络错误');
+            }
+        });
+    }
+
+    //筛选点击确定后
+    $('.sure').on('tap',function(){
+        var far= $('.sx-l').html(),ppiont,focus,pxname,flag,sign;
+        far = getDistance(far);
+        moreObj.distance=far;
+        if($('.my-choose>div:first-child').hasClass('my-item-on')){
+            ppiont ='1';
+            moreObj.ppiont=ppiont;
+        }else{
+            ppiont ='';
+            moreObj.ppiont=ppiont;
+        }
+        if($('.my-choose>div:last-child').hasClass('my-item-on')){
+            focus = '1';
+            moreObj.focus=focus;
+        }else{
+            focus = '';
+            moreObj.focus=focus;
+        }
+        $('.px>div').each(function(){
+            if($(this).hasClass('px-my-item-on')){
+                pxname = $(this).html();
+            }
+        });
+        var px = setPx(pxname)?setPx(pxname):'';
+        flag =px.substring(0,2)?px.substring(0,2):'';
+        moreObj.flag=flag;
+        sign =px.substring(px.length,px.length-1)?px.substring(px.length,px.length-1):'';
+        moreObj.sign=sign;
+        moreObj.pageNum=1;
+        $('#list').html('');
+        requestData(far,focus,ppiont,flag,sign,moreObj.pageNum);
+        $('.mc').hide();
+        $('.top-choose').removeClass('top-choose-on');
+    });
+
+    //设置产品数据
+    function setProductData(){
+        var pageData=$.pageParam;
+        var productData=$.strToJson(pageData);
+        obj.proName = productData.proName;
+        obj.picture = productData.picture;
+        var img='<img src="'+ $.serverSettings.serverPath+'/mobile/mcheap/shopAction!getGoodsPicture.do?access_token='+ $.getStorage('access_token')+'&url='+obj.picture+'" class="market-img"/>';
+        $('.market-img-div').html(img);
+        $('.market-name').html(productData.proName);
+        $('.factory').html(productData.factory);
+        $('.price').html(productData.price);
+        obj.id=productData.id;
+        obj.standard=productData.standard;
+        obj.factory=productData.factory;
+        if(productData.focus=='1'){
+            $('.gz').attr('src','../images/like.png');
+        }
+    }
+
+
+    //点击单个超市列表
+    $('.product-show').on('tap','.list-box',function(){
+        $.openWin({
+            name:"cpxq",
+            animId : 2,
+            url:'wgtroot://supermarket/product_list/ui/cpxq.html',
+            pageParam: {
+                proImg:obj.picture,
+                marketImg:$(this).data('picture'),
+                proName:$('.market-name').html(),
+                proId:obj.id,
+                proPrice:$(this).find('.store-price').html(),
+                standard:obj.standard,
+                factory:obj.factory,
+                yytime:$(this).find('.time').html(),
+                address:$(this).find('.address').html(),
+                distance:$(this).find('.far').html(),
+                marketName:$(this).find('.market-list-name').html(),
+                lsh:$(this).data('lsh'),
+                star:$(this).data('star'),
+                tiaoshu:$(this).data('tiaoshu'),
+                range:$(this).data('range'),
+                focus:$(this).data('focus'),
+                lat:$(this).data('lat'),
+                log:$(this).data('log')
+            }
+        });
+    });
+
+    //设置关注产品
+    $('.market').on('tap','.set-like',function(){
+        var srcImg =$('.gz').attr('src'),goods ;
+        goods ={
+            espgds01id:obj.id,
+            espgds01001:$('.market-name').html(),//商品名称,
+            espgds01002:obj.standard?obj.standard:'',//商品规格
+            espgds01004:$('.factory').html()//商品产地
+        };
+        if(srcImg=='../images/dislike.png'){
+            $.request({
+                urlType:'addFocuShopping',
+                data:{
+                    "access_token": $.getStorage('access_token'),
+                    goods :JSON.stringify(goods)
+                }
+            },function(json){
+                if(json.success) {
+                    $.toast(json.message);
+                    $('.gz').attr('src','../images/like.png')
+                }
+                else {
+                    alert('网络错误')
+                }
+            });
+        }else{
+            $.request({
+                urlType:'delFocusShopping',
+                data:{
+                    "access_token": $.getStorage('access_token'),
+                    espgds01id :obj.id//药品流水号
+                }
+            },function(json){
+                if(json.success) {
+                    $.toast(json.message);
+                    $('.gz').attr('src','../images/dislike.png')
+                }
+                else {
+                    alert('网络错误')
+                }
+            });
+        }
+    });
+
+    $('.px').on('tap','.mdui-box-flex-1',function(){
+        $('.px>div').each(function(){
+            $(this).removeClass('px-my-item-on');
+        });
+        $(this).addClass('px-my-item-on');
+    });
+
+    //设置排序
+    function setPx(px){
+        switch(px){
+            case '价格升序':return 'jgu';
+                break;
+            case '价格降序':return 'jgd';
+                break;
+            case '距离升序':return 'jlu';
+                break;
+            case '距离降序':return 'jld';
+                break;
+        }
+    }
+
+    //显示出筛选选项
+    $('.top-choose').on('tap',function(){
+        if($(this).hasClass('top-choose-on')){
+            $('.mc').hide();
+            $(this).removeClass('top-choose-on');
+        }else{
+            $('.mc').show();
+            $(this).addClass('top-choose-on');
+        }
+    });
+
+    //点击距离筛选
+    $('.sx-box').on('tap','.sx-l',function(){
+        $('.my').hide();
+        $('.sx-r').removeClass('sx-right-on').addClass('sx-right');
+        if($(this).hasClass('sx-left-on')){
+            $(this).removeClass('sx-left-on').addClass('sx-left');
+            $('.distance').hide();
+        }else{
+            $(this).removeClass('sx-left').addClass('sx-left-on');
+            $('.distance').show();
+        }
+    });
+    //距离点击事件
+    $('.distance>div').on('tap',function(){
+        $('.distance>div').each(function(){
+            $(this).removeClass('distance-item-on').addClass('distance-item');
+        });
+        $('.sx-l').html($(this).html());
+        $(this).addClass('distance-item-on');
+        $('.sx-r').trigger('tap');
+    });
+
+
+
+    //点击选项筛选项目
+    $('.sx-box').on('tap','.sx-r',function(){
+        $('.distance').hide();
+        $('.sx-l').removeClass('sx-left-on').addClass('sx-left');
+        if($(this).hasClass('sx-right-on')){
+            $(this).removeClass('sx-right-on').addClass('sx-right');
+            $('.my').hide();
+        }else{
+            $(this).removeClass('sx-right').addClass('sx-right-on');
+            $('.my').show();
+        }
+    });
+
+    //设置我的关注等选项的选择
+    $('.my-choose>div').on('tap',function(){
+        if($(this).hasClass('my-item-on')){
+            $(this).removeClass('my-item-on').addClass('my-item');
+        }else{
+            $(this).removeClass('my-item').addClass('my-item-on');
+        }
+    });
+
+    $('.reset').on('tap',function(){
+        $('.my-choose>div').each(function(){
+            if($(this).hasClass('my-item-on')){
+                $(this).removeClass('my-item-on').addClass('my-item');
+            }
+        });
+        $('.px>div').each(function(){
+            if($(this).hasClass('px-my-item-on')){
+                $(this).removeClass('px-my-item-on').addClass('px-my-item');
+            }
+        })
+    });
+    /*------------------------筛选的js---------------------------------------*/
+    /*------------------------筛选时候调用的js---------------------------------------*/
+    function getDistance(far){
+        switch(far){
+            case '附近':return '0';
+                break;
+            case '1km':return '1';
+                break;
+            case '2km':return '2';
+                break;
+            case '3km':return '3';
+                break;
+            case '4km':return '4';
+                break;
+            case '全城':return '';
+                break;
+        }
+    }
+
+    //设置数据
+    function setThisData(data){
+        var html='',len=data.length;
+        if(len){
+            for(var i=0;i<len;i++){
+                var m=0,j=0;
+                html+='<div class="mdui-box list-box" data-range="'+data[i].ranges+'" data-lsh="'+data[i].cltpit01id+'" data-star="'+data[i].star+'" data-tiaoshu="'+data[i].tiaoshu+'" data-focus="'+data[i].isfocus+'" data-picture="'+data[i].cltpit02002+'" data-log="'+data[i].cltpit01007+'" data-lat="'+data[i].cltpit01008+'">';
+                html+='<div class="far">'+data[i].distance+'km</div>';
+                html+='<div class="img-box">';
+                html+='<img src="'+ $.serverSettings.serverPath+'/mobile/mcheap/mcheapAction!getMarketPicture.do?access_token='+ $.getStorage('access_token')+'&url='+data[i].cltpit02002+'" class="market-img-box"/>';
+                html+='</div>';
+                html+='<div class="market-detail">';
+                html+='<div class="market-list-name">'+data[i].cltpit01001+'</div>';
+                html+='<div class="start-box">';
+                if(data[i].star) {
+                    for(j;j<parseInt(data[i].star);j++){
+                        html+='<img src="../images/star_01.png" />';
+                        m++;
+                    }
+                    if (parseInt(data[i].star.split('.')[1])>0){
+                        html+='<img src="../images/star_03.png"/>';
+                        m++;
+                    }
+                    if(m<5){
+                        for (j=m;j<5;j++){
+                            html+='<img src="../images/star_02.png"/>';
+                        }
+                    }
+                } else{
+                    for (j=0;j<5;j++){
+                        html+='<img src="../images/star_02.png" />'
+                    }
+                }
+                html+='</div>';
+                html+='<div class="address">地址:'+data[i].cltpit01004+'</div>';
+                html+='<div class="time">营业时间:'+data[i].cltpit01005+'~'+data[i].cltpit01006+'</div>';
+                html+='</div>';
+                html+='<div class="store-price">￥'+data[i].price+'</div>';
+//                var focus = parseInt(data[i].isfocus);
+//                if(focus){
+//                    html+='<div class="list-set-like">';
+//                    html+='<img src="../images/like.png"/>';
+//                    html+='</div>';
+//                }else{
+//                    html+='<div class="list-set-like">';
+//                    html+='<img src="../images/dislike.png"/>';
+//                    html+='</div>';
+//                }
+                html+='</div>';
+                html+='</div>';
+            }
+            $('.product-show').append(html);
+        }else{
+            html='<div class="no-data">暂无数据</div>';
+            $('.product-show').html(html);
+        }
+    }
+</script>
+</body>
+</html>

@@ -1,0 +1,284 @@
+<?xml version="1.0" encoding="utf-8"?>
+<uexplugins>
+    <!-- 画图插件 -->
+    	<plugin
+        className="org.zywx.wbpalmstar.plugin.uexchart.EUExChart"
+         uexName="uexChart" >
+        <method name="openPieChart" />
+        <method name="closePieChart" />
+        <method name="openLineChart" />
+        <method name="closeLineChart" />
+        <method name="openBarChart" />
+        <method name="closeBarChart" />
+    	</plugin>
+    <!-- 画图插件 end-->
+    <!--jpush-->
+    <plugin
+        className="org.zywx.wbpalmstar.widgetone.uexjpush.EUExJPush"
+        uexName="uexJPush"
+        global="true">
+       	 	<method name="init" />
+            <method name="stopPush" />
+            <method name="resumePush" />
+            <method name="isPushStopped"/>
+            <method name="setAliasAndTags"/>
+            <method name="setAlias"/>
+            <method name="setTags"/>
+            <method name="getRegistrationID"/>
+            <method name="reportNotificationOpened" />
+            <method name="clearAllNotifications" />
+            <method name="clearNotificationById" />
+            <method name="setPushTime" />
+            <method name="setSilenceTime" />
+            <method name="setLatestNotificationNumber" />
+            <method name="getConnectionState"/>
+            <method name="addLocalNotification" />
+            <method name="removeLocalNotification" />
+            <method name="clearLocalNotifications" />
+            <method name="onReceiveNotificationOpen" />
+    </plugin>
+    <!--jpush-->
+    <!-- 定位 -->
+    <!--<plugin
+        className="org.zywx.wbpalmstar.plugin.uexlocation.EUExLocation" uexName="uexLocation" >
+        <method name="openLocation" />
+        <method name="getAddress" />
+        <method name="closeLocation" />
+    </plugin>-->
+    <!-- 定位 -->
+    <!-- imageView -->
+    <plugin
+        className="org.zywx.wbpalmstar.plugin.ueximagebrowser.EUExImageBrowser"
+        uexName="uexImageBrowser" >
+          <method name="pick" />
+          <method name="pickMulti" />
+          <method name="open" />
+          <method name="save" />
+          <method name="cleanCache" />
+          <method name="cropImage" />
+          <method name="previewImamges" />
+    </plugin>
+    <!-- imageView -->
+     <!-- 文件管理 -->
+    <plugin
+            build="0"
+            className="org.zywx.wbpalmstar.plugin.uexfilemgr.EUExFileMgr"
+            uexName="uexFileMgr"
+            version="3.0">
+        <method name="createFile"/>
+        <method name="createDir"/>
+        <method name="openFile"/>
+        <method name="deleteFileByPath"/>
+        <method name="deleteFileByID"/>
+        <method name="isFileExistByPath"/>
+        <method name="isFileExistByID"/>
+        <method name="getFileTypeByPath"/>
+        <method name="getFileTypeByID"/>
+        <method name="explorer"/>
+        <method name="multiExplorer"/>
+        <method name="seekFile"/>
+        <method name="seekBeginOfFile"/>
+        <method name="seekEndOfFile"/>
+        <method name="writeFile"/>
+        <method name="readFile"/>
+        <method name="getFileSize"/>
+        <method name="getFilePath"/>
+        <method name="getFileRealPath"/>
+        <method name="closeFile"/>
+        <method name="getReaderOffset"/>
+        <method name="readPercent"/>
+        <method name="readNext"/>
+        <method name="readPre"/>
+        <method name="openSecure"/>
+        <method name="createSecure"/>
+        <method name="getFileCreateTime"/>
+        <method name="renameFile"/>
+        <method name="getFileListByPath"/>
+        <method name="search"/>
+    </plugin>
+    <!-- Camera -->
+    <plugin
+        className="org.zywx.wbpalmstar.plugin.uexcamera.EUExCamera"
+        uexName="uexCamera" >
+        <method name="open" />
+        <method name="openInternal" />
+        <method name="openViewCamera" />
+        <method name="removeViewCameraFromWindow" />
+        <method name="changeFlashMode" />
+        <method name="changeCameraPosition" />
+    </plugin>
+    <!-- Device -->
+    <plugin
+        className="org.zywx.wbpalmstar.plugin.uexdevice.EUExDevice"
+        uexName="uexDevice" version="3.0" build="0">
+        <method name="vibrate" />
+        <method name="cancelVibrate" />
+        <method name="getInfo" />
+        <method name="screenCapture"/>
+        <method name="setAudioCategory"/>
+        <method name="setVolume"/>
+        <method name="getVolume"/>
+        <method name="setScreenAlwaysBright"/>
+        <method name="setScreenBrightness"/>
+        <method name="openWiFiInterface"/>
+        <method name="getScreenBrightness" />
+        <method name = "isFunctionEnable"/>
+        <method name = "openSetting"/>
+    </plugin>
+    <!-- 文件读取功能 -->
+    <plugin
+        className="org.zywx.wbpalmstar.plugin.uexuploadermgr.EUExUploaderMgr"
+        uexName="uexUploaderMgr" >
+        <method name="setHeaders"/>
+        <method name="createUploader" />
+        <method name="closeUploader" />
+        <method name="uploadFile" />
+        <method name="uploadMuiltFiles" />
+    </plugin>
+    <plugin
+        className="org.zywx.wbpalmstar.plugin.uexfilemgr.EUExFileMgr"
+        uexName="uexFileMgr" >
+        <method name="createFile" />
+        <method name="createDir" />
+        <method name="openFile" />
+        <method name="deleteFileByPath" />
+        <method name="deleteFileByID" />
+        <method name="isFileExistByPath" />
+        <method name="isFileExistByID" />
+        <method name="getFileTypeByPath" />
+        <method name="getFileTypeByID" />
+        <method name="explorer" />
+        <method name="multiExplorer" />
+        <method name="seekFile" />
+        <method name="seekBeginOfFile" />
+        <method name="seekEndOfFile" />
+        <method name="writeFile" />
+        <method name="readFile" />
+        <method name="getFileSize" />
+        <method name="getFilePath" />
+        <method name="getFileRealPath" />
+        <method name="closeFile" />
+        <method name="getReaderOffset" />
+        <method name="readPercent" />
+        <method name="readNext" />
+        <method name="readPre" />
+        <method name="openSecure" />
+        <method name="createSecure" />
+    </plugin>
+    
+    
+        <!-- 版本检查 -->
+    <plugin
+        className="org.zywx.wbpalmstar.plugin.uexcheckversion.EUExCheckVersion"
+        uexName="uexCheckVersion" >
+ <method name="checkVersion" />
+    </plugin>
+    
+    <!-- 新浪微博 -->
+    <plugin
+        className="org.zywx.wbpalmstar.plugin.uexsina.EUExSina"
+        uexName="uexSina" >
+        <method name="registerApp" />
+        <method name="sendTextContent" />
+        <method name="sendImageContent" />
+        <method name="create" />
+        <method name="cleanUserInfo" />
+        <method name="login" />
+        <method name="getUserInfo" />
+        <method name="logout" />
+    </plugin>
+    
+    <!-- 微信 -->
+     <plugin 
+        className="org.zywx.wbpalmstar.plugin.uexweixin.EUExWeiXin"
+        uexName="uexWeiXin">
+        
+        <!-- 通用 -->
+        <method name="registerApp" />
+        <method name="isWXAppInstalled" />
+        
+        <!-- 微信分享 -->
+        <method name="shareTextContent" />
+        <method name="shareImageContent" />
+        <method name="shareLinkContent" />
+
+        <!-- 微信登录 -->
+        <!-- 旧 -->
+        <method name="weiXinLogin" />
+        <method name="getWeiXinLoginAccessToken" />
+        <method name="getWeiXinLoginRefreshAccessToken" />
+        <method name="getWeiXinLoginCheckAccessToken " />
+        <method name="getWeiXinLoginUnionID" />
+        <!-- 新 -->
+        <method name="login"/>
+        <method name="getLoginAccessToken"/>
+        <method name="getLoginRefreshAccessToken"/>
+        <method name="getLoginCheckAccessToken"/>
+        <method name="getLoginUnionID"/>
+
+        <!-- 微信支付 -->
+        <method name="getPrepayId"/>
+        <method name="startPay"/>
+        <method name="isSupportPay" />
+        <method name="getAccessToken" />
+        <method name="generateAdvanceOrder" />
+        <method name="getAccessTokenLocal" />
+        <method name="gotoPay" />
+        <method name="generatePrepayID" />
+        <method name="sendPay" />
+
+        <method name="setCallbackWindowName"/>
+    </plugin>
+
+    <!-- 数据库 -->
+    <plugin
+            className="org.zywx.wbpalmstar.plugin.uexdatabasemgr.EUExDataBaseMgr"
+            uexName="uexDataBaseMgr" version="3.0" build="0">
+        <method name="openDataBase" />
+        <method name="executeSql" />
+        <method name="selectSql" />
+        <method name="transaction" />
+        <method name="beginTransaction" />
+        <method name="endTransaction" />
+        <method name="closeDataBase" />
+    </plugin>
+    <!-- 数据库 end-->
+
+    <!-- 下载插件 -->
+    <plugin
+            className="org.zywx.wbpalmstar.plugin.uexdownloadermgr.EUExDownloaderMgr"
+            uexName="uexDownloaderMgr" >
+        <method name="createDownloader" />
+        <method name="download" />
+        <method name="closeDownloader" />
+        <method name="getInfo" />
+        <method name="clearTask" />
+        <method name="cancelDownload" />
+        <method name="setHeaders"/>
+    </plugin>
+    <!-- 下载插件 end-->
+    
+     <!-- QQ -->
+   <!--   <plugin
+        className="org.zywx.wbpalmstar.plugin.uexqq.EUExQQ" uexName="uexQQ" >
+        <method name="login" />
+        <method name="shareWebImgTextToQQ" />
+        <method name="shareLocalImgToQQ" />
+        <method name="shareAudioToQQ" />
+        <method name="shareAppToQQ" />
+        <method name="shareImgTextToQZone" />
+        <method name="sendTextWeibo" />
+        <method name="isQQInstalled"/>
+        <method name="getUserInfo"/>
+    </plugin> -->
+
+    <!-- 定位插件 -->
+    <plugin
+            className="org.zywx.wbpalmstar.plugin.jinlintrace.EUExJinlinTrace"
+            uexName="uexJinlinTrace" >
+        <method name="stopLocation" />
+        <method name="openLocation" />
+        <method name="closeLocation" />
+    </plugin>
+
+</uexplugins>

@@ -1,0 +1,33 @@
+.content{
+	padding:0 1rem;
+	background: #FAFCFB;
+}
+.text{
+	font-family:SimHei;
+    margin-top: 0.5rem;
+    width:100%;
+    white-space:nowrap;
+    overflow:hidden;
+    text-overflow:ellipsis;
+}
+.new-log{
+    padding:0.1rem 0.2rem 0.1rem 0.2rem;
+    font-size:0.2rem;
+    background-color:red;
+    color:white;
+    margin-left:0.5rem;
+    border-radius:0.3rem;
+}
+.title{
+    font-size: 1.2rem;
+    font-family:SimHei;
+}
+.myUl{
+   background: #FAFCFB;
+}
+.myAll{
+    background: #FAFCFB!important;
+}
+.mdui-table-view-cell>.mdui-slider-left>.mdui-btn, .mdui-table-view-cell>.mdui-slider-right>.mdui-btn{
+    left: 1px;
+}

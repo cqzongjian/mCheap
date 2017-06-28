@@ -1,0 +1,55 @@
+*{
+    font-family: "Microsoft YaHei";
+}
+body{
+    background-color: #FFFFFF;
+    padding-top: 2.75rem;
+
+}
+.header-box{
+    background-color: #3BA15C;
+    padding: 0;
+}
+.header{
+    width: 100%;
+    height: 100%;
+    position: relative;
+    color: #ffffff;
+}
+.title{
+    text-align: center;
+    height: 100%;
+    line-height: 2.75rem;
+}
+.cancel{
+    position: absolute;
+    right: 0;
+    top: 0;
+    height: 2.75rem;
+    line-height: 2.75rem;
+    padding-right: 1rem;
+}
+#content_box{
+    padding-top:1rem;
+    position: relative;
+    background-color: #E6EAE8;
+}
+#username,#pwd{
+    margin-bottom: 0;
+}
+.btn{
+    margin: 1rem;
+    background-color:#3BA15C ;
+    color: #ffffff;
+    text-align: center;
+    height: 2.5rem;
+    line-height: 2.5rem;
+    border-radius: 0.3rem;
+}
+.other{
+    padding: 0 1rem;
+    color: #3BA15C;
+}
+.btn-touch{
+    opacity: 0.5;
+}

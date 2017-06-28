@@ -1,0 +1,128 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8">
+    <title>mCollection</title>
+    <meta name="viewport" content="target-densitydpi=device-dpi,width=device-width, initial-scale=1,maximum-scale=1, user-scalable=no">
+    <meta name="apple-mobile-web-app-capable" content="yes">
+    <meta name="apple-mobile-web-app-status-bar-style" content="black">
+    <link rel="stylesheet" href="../../../static/mdui/css/mdui.min.css">
+    <link rel="stylesheet" href="../../../static/mCheap/css/mCommon.css">
+    <style>
+        *{
+            font-family: "Microsoft YaHei";
+            color: #666666;
+        }
+        body{
+            background-color: #ffffff;
+            padding-top: 2.75rem;
+        }
+        .header-box{
+            background-color: #3BA15C;
+            padding: 0;
+        }
+        .header{
+            width: 100%;
+            height: 100%;
+            position: relative;
+        }
+        .back{
+            padding-right: 1rem;
+            padding-left: 1rem;
+            padding-top: 0.75rem;
+            position: absolute;
+            z-index: 100;
+        }
+        .back img{
+            width:auto;
+            height: 1.25rem;
+        }
+        .title{
+            text-align: center;
+            position: absolute;
+            width: 100%;
+            height: 100%;
+            top: 0;
+            line-height: 2.75rem;
+            color: #FFFFFF;
+        }
+        .sort{
+            padding-top: 0.5rem;
+            border-bottom: 1px solid #cccccc;
+            color: #666666;
+            font-weight: 600;
+        }
+        .sort-item-text{
+            padding-bottom: 0.5rem;
+            width: 80%;
+            text-align: center;
+            margin: 0 auto;
+            border-bottom: 0.2rem solid #FFFFFF;
+        }
+        .sort-item-gap{
+            color: #cccccc;
+        }
+        .sort-item-on{
+            color:#3BA15C;
+            border-bottom: 0.2rem solid #3BA15C;
+        }
+        .onTouch{
+            background-color:#F5F5F5;
+
+        }
+        #content_box{
+            padding-top: 0;
+            background-color:#ffffff;
+        }
+    </style>
+</head>
+<body>
+<div class="header-box mdui-bar mdui-bar-nav">
+    <div class="header">
+        <div class="back mdui-action-back"><img src="../images/back.png"></div>
+        <div class="title">价格分析</div>
+    </div>
+</div>
+<div class="sort mdui-box">
+    <div class="mdui-box-flex-1 sort-item">
+        <div class="sort-item-text" data-for="rlt">热力图</div>
+    </div>
+    <div class="sort-item-gap">|</div>
+    <div class="mdui-box-flex-1 sort-item">
+        <div class="sort-item-text" data-for="qst">趋势图</div>
+    </div>
+    <div class="sort-item-gap">|</div>
+    <div class="mdui-box-flex-1 sort-item">
+        <div class="sort-item-text" data-for="yjt">预警图</div>
+    </div>
+    <div class="sort-item-gap">|</div>
+    <div class="mdui-box-flex-1 sort-item">
+        <div class="sort-item-text" data-for="top10">市场Top10</div>
+    </div>
+</div>
+<div class="mdui-content" id="content_box"></div>
+<!--页面-->
+<script src="../../../static/mdui/js/mdui.min.js"></script>
+<script src="../../../static/mCheap/js/mCheap.config.js"></script>
+<script>
+    $.uexWindowReady(function(){
+        var ele=$('.sort-item');
+        ele.on('tap',function(){
+            var target=$(this).find('.sort-item-text');
+            if(!target.hasClass('sort-item-on')) {
+                ele.find('.sort-item-text').removeClass('sort-item-on');
+                target.addClass('sort-item-on');
+                var goto = target.data('for');
+                    $.openFrameByEle('content_box', {
+                        name: goto,
+                        winName: 'tj_container',
+                        url: 'wgtroot://mCheap/tongji/ui/'+goto+'.html',
+                        pageParam: {}
+                    });
+                }
+        });
+        ele.eq(0).trigger('tap');
+    });
+</script>
+</body>
+</html>

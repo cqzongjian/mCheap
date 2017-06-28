@@ -1,0 +1,517 @@
+
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="utf-8">
+<title>your title</title>
+<meta name="viewport"
+	content="target-densitydpi=device-dpi,width=device-width, initial-scale=1,maximum-scale=1, user-scalable=no">
+<meta name="mobile-web-app-capable" content="yes">
+<meta name="apple-mobile-web-app-capable" content="yes">
+<meta name="apple-mobile-web-app-status-bar-style" content="black">
+<link rel="stylesheet" href="static/mdui/css/mdui.min.css">
+<!--扩展组件/第三方/工程css---->
+<style>
+.body-wrapper-box{
+    width : 100%;
+    height: 100%;
+}
+.mc{
+    background: rgba(0,0,0,0.7);
+    position:relative;
+    width:100%;
+    height:100%;
+    position:fixed;
+    z-index:999;
+}
+#mc{
+    display:none;
+}
+
+
+/*蒙层*/
+.mcbody{
+    position:absolute;
+    top:7rem;
+    left:1rem;
+    right:1rem;
+}
+.mctitle{
+    padding-top:0.5rem;
+    padding-bottom:0.5rem;
+    background-color:#3CA15D;
+    border-radius:0.5rem 0.5rem 0 0;
+}
+#close{
+	color: white;
+	text-align: center;
+	position: absolute;
+	top: -33%;
+	right: 0;
+	padding: 0.8rem;
+}
+.message-title{
+    font-family:SimHei;
+    color:white;
+	text-align: center;
+    font-size: 1.2rem;
+    padding-top:0.3rem;
+    padding-bottom:0.3rem;
+	position: relative;
+}
+.mc-lineone{
+    background-color:white;
+    border-bottom:1px solid #E9E9E9;
+}
+.circle{
+    display: block;
+    width: 0.4rem; 
+    height:0.4rem;
+}
+.pic-new{
+    width:2rem;
+    height:2rem;
+}
+.list-title{
+    font-family:SimHei;
+    font-size: 1.1rem;
+    padding-left:0.2rem;
+}
+.list-content{
+    font-family:SimHei;
+    font-size: 0.9rem;
+    color:#949494;
+    padding-left:1rem;
+    padding-right:1rem;
+}
+.list-time{
+    font-family:SimHei;
+    font-size: 0.9rem;
+    color:#949494;
+    padding-right:1rem;
+}
+.push{
+	display: none;
+}
+#push_msg{
+	padding-top:0.2rem;
+	padding-bottom:0.2rem;
+}
+.push_img{
+	width: 0.4rem;
+	height:0.4rem;
+	margin-bottom: 0.2rem;
+}
+.push_span{
+	padding-left:0.2rem;
+	color:green;
+}
+#new_msg{
+	overflow:auto;
+	height:19.7rem;
+	border-radius:0 0 0.5rem 0.5rem;
+}
+/*==============================*/
+*{
+	font-family: "Microsoft YaHei";
+}
+body{
+	padding-top: 2.75rem;
+	background-color: #E6EAE8;
+}
+.title{
+	width: 100%;
+	height: 100%;
+	color: #FFFFFF;
+	text-align: center;
+	line-height:2.75rem ;
+
+}
+.header{
+	background-color: #3BA15C;
+}
+.message{
+	margin-left: 1rem;
+	margin-top: 0.75rem;
+	margin-right: 0.5rem;
+	position: absolute;
+	right: 1rem;
+	top: 0;
+}
+.message>img{
+	width:auto;
+	height: 1.25rem
+}
+.message-num{
+	position: absolute;
+	top: -0.5rem;
+	left: 0.5rem;
+	height: 0.9rem;
+	width: 1.5rem;
+	border-radius: 0.5rem;
+	background-color: #F25923;
+	color: white;
+	line-height: 1rem;
+	font-size: 0.7rem;
+	text-align: center;
+	border: 1px solid white;
+}
+.header-left{
+	padding-left: 1rem;
+	padding-top:0.75rem ;
+	padding-right: 0.5rem;
+	position: absolute;
+	left: 0;
+	top: 0;
+}
+.header-left>img{
+	width:auto;
+	height: 1.25rem
+}
+.box>div{
+	margin: 1rem;
+	position: relative;
+}
+/*.box>div:first-child{*/
+	/*margin-top: 0;*/
+/*}*/
+.box>div>.bg{
+	width: 100%;
+	height: auto;
+}
+.box>div>.logo{
+	position: absolute;
+}
+.box>div:nth-child(odd)>.logo{
+	height: 80%;
+	width: auto;
+	left: 1rem;
+	top: 8%;
+}
+.box>div:nth-child(even)>.logo{
+	height: 80%;
+	width: auto;
+	right: 1rem;
+	top: 8%;
+}
+.box>div>.text{
+	position: absolute;
+}
+.box>div:nth-child(odd)>.text{
+	height: 40%;
+	width: auto;
+	right: 1rem;
+	top: 28%;
+}
+.box>div:nth-child(even)>.text{
+	height: 40%;
+	width: auto;
+	left: 1rem;
+	top: 28%;
+}
+.suggest>.text{
+	right: .5rem!important;
+}
+
+/*蒙层*/
+</style>
+</head>
+
+<body>
+	<!--页面html-->
+	<div id="body" class="mdui-box mdui-box-ver body-wrapper-box" >
+	    
+	    <div id="mc">
+	        <div class="mcbody">
+	           <div class="mdui-box mctitle bod">
+		           <div class="mdui-box-flex-7 mdui-box-align-center mdui-box-pack-center message-title">
+					   <span>最新提示消息(</span>
+					   <span id="mc-msg-num">13</span>)
+					   <div id="close" class="mdui-box-flex-3">X</div>
+				   </div>
+		       </div>
+		       <div id="new_msg">
+			       <div class="mdui-box mdui-box-ver mc-lineone">
+			           <div class="mdui-box mdui-box-flex-1">
+		                   <div class="mdui-box mdui-box-flex-1 mdui-box-align-center mdui-box-pack-center">
+			                   <img class="circle" src="static/mCheap/images/circle.png">
+			               </div>
+			               <div class="mdui-box mdui-box-flex-9 mdui-box-align-center list-title">暂无推送消息</div>
+		                   <div class="mdui-box mdui-box-pack-end mdui-box-flex-1">
+		                       <img class="pic-new" src="static/mCheap/images/new.png">
+		                   </div>
+			           </div>
+			           <div class="mdui-box mdui-box-flex-1 list-content"></div>
+			           <div class="mdui-box mdui-box-flex-1 mdui-box-pack-end list-time"></div>
+			       </div>
+		       </div>   
+	        </div>    
+	    </div>
+
+
+		<div class="header mdui-bar mdui-bar-nav mdui-box ">
+			<div class="header-left">
+				<img src="static/mCheap/images/person.png">
+			</div>
+			<div class="title">找相因</div>
+			<div class="message">
+				<img class="head_pic" src="static/mCheap/images/message.png">
+				<div class="num message-num"></div>
+			</div>
+		</div>
+		<div class="push">
+			<marquee id="push_msg" direction=left scrollamount=10>
+		    <span>
+		        <img class="push_img" src="static/mCheap/images/circle.png">
+		        <span class="push_span">暂无推送消息</span>
+		    </span>
+			</marquee>
+		</div>
+		<div class="box">
+			<div class="maic">
+				<img class="bg" src="static/mCheap/images/bg_mc.png"/>
+				<img class="logo" src="static/mCheap/images/mc.png"/>
+				<img class="text" src="static/mCheap/images/text_mc.png"/>
+			</div>
+			<div class="kb">
+				<img class="bg" src="static/mCheap/images/bg_kb.png"/>
+				<img class="logo" src="static/mCheap/images/kb.png"/>
+				<img class="text" src="static/mCheap/images/text_kb.png"/>
+			</div>
+			<div class="cs">
+				<img class="bg" src="static/mCheap/images/bg_cs.png"/>
+				<img class="logo" src="static/mCheap/images/cs.png"/>
+				<img class="text" src="static/mCheap/images/text_cs.png"/>
+			</div>
+			<div class="my">
+				<img class="bg" src="static/mCheap/images/bg_my.png"/>
+				<img class="logo" src="static/mCheap/images/my.png"/>
+				<img class="text" src="static/mCheap/images/text_my.png"/>
+			</div>
+			<!-- TODO 民生服务-->
+			<!--<div class="livelihood">
+				<img class="bg" src="static/mCheap/images/bg_msfw.png"/>
+				<img class="logo" src="static/mCheap/images/msfw.png"/>
+				<img class="text" src="static/mCheap/images/text_msfw.png"/>
+			</div>-->
+			<div class="suggest">
+				<img class="bg" src="static/mCheap/images/bg_suggest.png"/>
+				<img class="logo" src="static/mCheap/images/suggest.png"/>
+				<img class="text" src="static/mCheap/images/text_suggest.png"/>
+			</div>
+		</div>
+	</div>
+	<script src="static/mdui/js/mdui.js"></script>
+	<script src="public.js"></script>
+	<script src="server.js"></script>
+	<script src="push.js"></script>
+	<script src="translator.js"></script>
+	<!--扩展组件/第三方/工程js-->
+	<script>
+	var nowData={};//首页请求token参数对象
+	$.uexWindowReady(function(){
+		var init=new indexClass();
+		init.setPosition();
+		init._checkVersion();
+		init.events();
+		/* 不能获取到附近索引则设置附近为索引5 */
+		if(!$.getStorage('near')){
+			$.setStorage('near','5')
+		}
+		/*获取到用户设备信息后发送请求*/
+		uexDevice.getInfo('16');
+		uexDevice.cbGetInfo=function (opCode,dataType,data){
+			var device = eval('('+data+')');
+			$.setStorage('mac',device.macAddress);//用户终端mac地址
+			if($.getStorage('access_token')){
+				nowData.access_token = $.getStorage('access_token');
+			}
+			else {
+				nowData.mac=device.macAddress;
+			}
+			setTimeout(function(){
+				if (nowData.mac) {
+					nowData.epsbht01008='1';//用户终端类型
+					nowData.epsbht01006= $.getStorage('log');
+					nowData.epsbht01007= $.getStorage('lat');
+					nowData.comeFlag='01'; //访问来源标志:01app,02微信,03门户
+					nowData.recordMark='yes'; //记录标志
+					nowData.saveParam='0';//记录所属模块标志
+					$.request({
+						urlType: 'gettoken',
+						data: nowData
+					}, function (json) {
+						if (json.access_token) {
+							$.setStorage('access_token', json.access_token);
+							push_message();
+							getNotReadNum(refreshMsgNum);//设置消息推送
+							$.setStorage('push_flag', "1");
+						}
+					});
+				}else{
+					nowData.unicode=$.getStorage('registerID');//用户设备号
+					nowData.epsbht01006= $.getStorage('log');
+					nowData.epsbht01007= $.getStorage('lat');
+					nowData.comeFlag='01'; //访问来源标志:01app,02微信,03门户
+					nowData.recordMark='yes'; //记录标志
+					nowData.saveParam='0';//记录所属模块标志
+					$.request({
+						urlType: 'gettoken',
+						data: nowData
+					}, function () {
+
+					},null,function(){
+
+					});
+				}
+			},500);
+		};
+
+		//机器关机后第二次打开软件
+		if( $.getStorage('push_flag')=='1'){
+			push_message();
+			getNotReadNum(refreshMsgNum);
+		}
+		window.setInterval("push_getRoundStationNames_message()",600000);
+		window.setInterval("push_getStationCheapProducts_message()",180000);
+		window.setInterval("push_getFocusProductsInfo_message()",840000);
+		window.setInterval("push_getFocusStationInfo_message()",960000);
+	});
+	var indexClass=function(){};
+	indexClass.prototype={
+		/*
+		* 获取经纬度并设置到本地存储
+		* */
+		setPosition:function(){
+			$.setStorage('log','');
+			$.setStorage('lat','');
+			var nowLat,nowLog;
+
+            uexJinlinTrace.openLocation(0, 10);
+            uexJinlinTrace.onChange = function(lat, log) {
+			    nowLat=lat;
+				nowLog=log;
+				$.setStorage('log',log);
+				$.setStorage('lat',lat);
+				//500ms后无法获取位置，则判断为未开启定位,初始化位置为空
+				setTimeout(function(){
+					if(!nowLat){
+						$.setStorage('log','');
+						$.setStorage('lat','');
+					}
+				},500);
+			};
+		},
+		/*
+		* 检测版本
+		* */
+		_checkVersion:function(){
+			if(this.getDate()==$.getStorage("checkDate"))return;
+			uexCheckVersion.onStatus = function(code, msg){
+				switch (code) {
+					case 0: //失败包括地址出错，下载文件出错等
+						alert(msg);
+						break;
+					case 1: //成功
+						//alert(msg);
+						break;
+				}
+			};
+			var url = $.serverSettings.serverPath+$.serverSettings.urlPath.checkVersion;
+			//版本更新检测地址
+			uexCheckVersion.checkVersion(url);
+			//$.setStorage("checkFlag","1");
+			$.setStorage("checkDate",this.getDate());
+		},
+		/*
+		* 点击事件集
+		* */
+		events:function(){
+			/*点击菜市*/
+			$(".maic").on('tap',function(){
+				$.openWin({
+					name:"caishi",
+					animId : 2,
+					url:'wgtroot://mCheap/nav/ui/caishi_base.html',
+					pageParam: {}
+				});
+			});
+			/* 点击个人中心 */
+			$('.header-left').on('tap',function(){
+				$.openWin({
+					name:"grzx",
+					animId : 2,
+					url:'wgtroot://mCheap/grzx/ui/grzx.html',
+					pageParam: {}
+				});
+			});
+			/*点击医院菜单调用的方法*/
+			$(".kb").on('tap',function(){
+				$.openWin({
+					name:"hos_list",
+					animId : 2,
+					url:'wgtroot://hospital/hos_index/ui/hos_index.html',
+					pageParam: {}
+				});
+			});
+			/*点击消息*/
+			$('.message').on('tap',function(){
+				$.openWin({
+					name:"message",
+					animId : 2,
+					url:'wgtroot://mCheap/message/ui/message.html',
+					pageParam: {}
+				});
+			});
+			/*点击关闭按钮调用的方法*/
+			$("#close").on('tap',function(){
+				$("#mc").css("display","none");
+			});
+			/*点击超市*/
+			$(".cs").on('tap',function(){
+				$.openWin({
+					name:"supermarket",
+					animId : 2,
+					url:'wgtroot://supermarket/nav/ui/supermarket_base.html',
+					pageParam: {}
+				});
+			});
+			/*点击买药*/
+			$(".my").on('tap',function(){
+				$.openWin({
+					name:"medicine",
+					animId : 2,
+					url:'wgtroot://medicine/nav/ui/medicine_base.html',
+					pageParam: {}
+				});
+			});
+			/*点击民生服务*/
+			$(".livelihood").on('tap',function(){
+				$.openWin({
+					name:"livelihood",
+					animId : 2,
+					url:'wgtroot://livelihood/ui/livelihood.html',
+					pageParam: {}
+				});
+			});
+			/*点击建议投诉*/
+			$(".suggest").on('tap',function(){
+				$.openWin({
+					name:"suggest",
+					animId : 2,
+					url:'wgtroot://mCheap/complaint_suggest/ui/suggest.html',
+					pageParam:{}
+				});
+			});
+		},
+		/*获取年月日*/
+		getDate:function () {
+			var date = new Date();
+			var month = date.getMonth() < 10 ? "0" + (date.getMonth() + 1) : "" + date.getMonth() + 1;
+			var day = date.getDate() < 10 ? "0" + date.getDate() : "" + date.getDate();
+			return date.getFullYear() + "-" + month + "-" + day;    //获取完整的年份(4位,1970-????)
+		}
+	};
+	</script>
+</body>
+</html>

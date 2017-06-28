@@ -1,0 +1,342 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8">
+    <title>mCollection</title>
+    <meta name="viewport" content="target-densitydpi=device-dpi,width=device-width, initial-scale=1,maximum-scale=1, user-scalable=no">
+    <meta name="apple-mobile-web-app-capable" content="yes">
+    <meta name="apple-mobile-web-app-status-bar-style" content="black">
+    <link rel="stylesheet" href="../../../static/mdui/css/mdui.min.css">
+    <link rel="stylesheet" href="../../../static/mCheap/css/mCommon.css">
+    <style>
+        *{
+            font-family: "Microsoft YaHei";
+        }
+        body{
+            background-color: white;
+            padding-top: 2.75rem;
+
+        }
+        .header-box{
+            background-color: #3BA15C;
+            padding: 0;
+        }
+        .header{
+            width: 100%;
+            height: 100%;
+            position: relative;
+        }
+        .back{
+            padding-right: 1rem;
+            padding-left: 1rem;
+            padding-top: 0.75rem;
+            position: absolute;
+            z-index: 100;
+        }
+        .back img{
+            width:auto;
+            height: 1.25rem;
+        }
+        .title{
+            text-align: center;
+            position: absolute;
+            width: 100%;
+            height: 100%;
+            top: 0px;
+            line-height: 2.75rem;
+            color: #FFFFFF;
+        }
+        .top-img>img{
+            width: 5rem;
+            height: auto;
+            border-radius: 0.2rem;
+        }
+        .content{
+            height: 100%;
+            background-color: #ffffff;
+        }
+        .row{
+            width: 100%;
+            border-bottom: 1px solid #cccccc;
+        }
+        .img-box{
+            margin: 1rem 0.5rem 1rem 1rem;
+        }
+        .drug-img{
+            width: 6rem;
+            height: auto;
+        }
+        .drug-name{
+            font-size: 0.8rem;
+            font-weight: 600;
+            overflow: auto;
+        }
+        .drug-origin,.standard{
+            font-size: 0.8rem;
+            color: #7E7E7E;
+            height: auto;
+        }
+        .drug-price{
+            font-weight: 600;
+            color: #78B468;
+        }
+        .gz{
+            width: 1.2rem;
+            height: 1.2rem;
+        }
+        .set-like{
+            position: absolute;
+            bottom: 5%;
+            right: 5%;
+            padding: 0.5rem;
+        }
+        .drug-detail{
+            position: relative;
+            padding: 1rem 1rem 1rem 0;
+        }
+        .adds{
+            position: absolute;
+            top:20%;
+            right:5%;
+            width: 1.5rem;
+            height: 1.5rem;
+            background: url("../image/whiteadd.png") no-repeat center;
+            background-size: 2rem 2rem;
+        }
+        .mask{
+            position: fixed;
+            z-index: 2;
+            background: rgba(0, 0, 0,0.3);
+            width: 100%;
+            height: 100%;
+            display: none;
+        }
+        .show-big-name{
+            position: relative;
+            color: black;
+            background-color: white;
+            margin: 0.5rem;
+            border: 1px solid #CCCCCC;
+            border-radius: 1rem;
+            display:inline-block;
+            padding: 0.5rem;
+        }
+        .show-big-name-on{
+            position: relative;
+            color:green;
+            background-color: white;
+            margin: 0.5rem;
+            border: 1px solid #CCCCCC;
+            border-radius: 1rem;
+            display:inline-block;
+            padding: 0.5rem;
+        }
+        .allright{
+            background: url("../image/dui.png") no-repeat center;
+            background-size: 1.2rem 1.2rem;
+            width: 1.2rem;
+            height: 1.2rem;
+            position: absolute;
+            top:-10%;
+            right: -10%;
+            display: none;
+        }
+        .sure{
+            position: absolute;
+            bottom: 0;
+            height: 3rem;
+            text-align: center;
+            background-color: #3BA15C;
+            width: 100%;
+            color: white;
+            line-height: 3rem;
+        }
+
+    </style>
+</head>
+<body>
+<div>
+    <div class="header-box mdui-bar mdui-bar-nav">
+        <div class="header">
+            <div class="back mdui-action-back"><img src="../image/back.png"></div>
+            <div class="title">常用药品</div>
+            <div class="adds"></div>
+        </div>
+    </div>
+    <div class="mask">
+        <div class="show-big-name">
+        <!--<div>'+data[i].smalltype+'</div>-->
+            <div class="allright"></div>
+        </div>
+    </div>
+    <div class="content" id="list">
+        <!--<div class="row mdui-box">-->
+            <!--<div class="img-box">-->
+                <!--<img src="../image/01.jpg" class="drug-img"/>-->
+            <!--</div>-->
+            <!--<div class="drug-detail mdui-box-flex-1">-->
+                <!--<div class="drug-name">药品名字地方来刷卡缴费鲁</div>-->
+                <!--<div class="drug-origin">生地方来刷卡缴费鲁大师及安防监控</div>-->
+                <!--<div class="drug-price">价格展示</div>-->
+                <!--<div class="set-like">-->
+                    <!--<img src="../image/dislike.png" class="gz"/>-->
+                <!--</div>-->
+            <!--</div>-->
+        <!--</div>-->
+
+    </div>
+</div>
+
+
+
+<!--页面-->
+<script src="../../../static/mdui/js/mdui.min.js"></script>
+<script src="../../../static/mCheap/js/mCheap.config.js"></script>
+<script src="../../../server.js"></script>
+<!--<script src="../../../static/mCheap/js/scroll.js"></script>-->
+<script>
+    var flag=1;
+    var pageNum=1;
+    var smalltype;
+    var requestFlag=true;//请求开关
+    $.uexWindowReady(function(){
+        //下拉加载更多
+        var option = {id:"list",funs:{after:function(){
+            if(requestFlag){
+                pageNum=pageNum+1;
+                requestDrugData(smalltype,pageNum);
+            }else{
+                $.toast('没有更多了！');
+            }
+        }}};
+        $.initScroll(option);
+
+        //请求分类数据
+        requestDrugData('',pageNum);
+    });
+
+    function requestDrugData(smalltype,pageNum){
+        $.request({
+            urlType: 'lifeNeed',
+            data: {
+                "access_token": $.getStorage('access_token'),
+                pageSize: '10',
+                page:pageNum,
+                smalltype:smalltype?smalltype:''
+            }
+        }, function (json) {
+            if (json.success) {
+                var data=json.data;
+                var leng=data.length;
+                if(leng){
+                    setDrugContentData(data);
+                    if(flag==1){
+                        requestTinySortData();
+                        flag=flag+1;
+                    }
+                }else{
+                    $.toast('没有更多了！');
+                    requestFlag=false;
+                }
+            }
+            else {
+                alert('网络错误');
+            }
+        });
+    }
+
+    function setDrugContentData(data){
+        var html='',len=data.length;
+        for(var i=0;i<len;i++){
+            html+='<div class="row mdui-box" data-id="'+data[i].id+'" data-midName="'+data[i].midtype+'" data-tinyName="'+data[i].smalltype+'" data-focus="'+data[i].isfocus+'" data-standard="'+data[i].specification+'" data-picture="'+data[i].picture+'">';
+            html+='<div class="img-box">';
+            html+='<img src="'+ $.serverSettings.serverPath+'/mobile/mcheap/medicineAction!getMedicinePicture.do?access_token='+ $.getStorage('access_token')+'&url='+data[i].picture+'" class="drug-img"/>';
+            html+='</div>';
+            html+='<div class="drug-detail mdui-box-flex-1">';
+            html+='<div class="drug-name">'+data[i].namemark+'</div>';
+            html+='<div class="drug-origin">厂商:'+data[i].factory+'</div>';
+            html+='<div class="drug-price">￥'+data[i].price+'</div>';
+            html+='</div>';
+            html+='</div>';
+        }
+        $('.content').append(html);
+    }
+
+    function requestTinySortData(){
+        $.request({
+            urlType: 'lifeNeed',
+            data: {
+                "access_token": $.getStorage('access_token'),
+                 choose : 'yes'
+            }
+        }, function (json) {
+            if (json.success) {
+                var data=json.data;
+                setSortData(data);
+            }
+            else {
+                alert('网络错误');
+            }
+        });
+    }
+
+    function setSortData(data){
+        var html='',len=data.length;
+        for(var i=0;i<len;i++){
+            html +='<div class="show-big-name">';
+            html +='<div class="name">'+data[i].smalltype+'</div>';
+            html +='<div class="allright"></div>';
+            html +='</div>';
+        }
+        $('.mask').html(html);
+    }
+
+    //跳转到药店列表页
+    $(document).on('tap','.row',function(){
+        $.openWin({
+            name:"shop_list",
+            animId : 2,
+            url:'wgtroot://medicine/shop_list/ui/shop_list.html',
+            pageParam: {
+                drugName:$(this).find('.drug-name').html(),
+                id:$(this).data('id'),
+                midName:$(this).data('midName'),
+                tinyName:$(this).data('tinyName'),
+                factory:$(this).find('.drug-origin').html(),
+                standard:$(this).data('standard'),
+                price:$(this).find('.drug-price').html(),
+                focus:$(this).data('focus'),
+                picture:$(this).data('picture')
+            }
+        });
+    });
+
+
+    $(document).on('tap','.adds',function(){
+        var mask=$('.mask');
+        if(mask.hasClass('on')){
+            mask.removeClass('on').hide();
+            $("body").unbind("touchmove");
+        }else{
+            mask.addClass('on').show();
+            $("body").bind("touchmove",function(event){event.preventDefault();});
+        }
+    });
+    $('.mask').on('tap','.show-big-name',function(){
+        pageNum=1;
+        $('#list').html('');
+        $('.mask>div').each(function(){
+            $(this).removeClass('show-big-name-on').addClass('show-big-name');
+            $(this).find('.allright').hide();
+        });
+        $(this).addClass('show-big-name-on');
+        $(this).find('.allright').show();
+        smalltype=$(this).find('.name').html();
+        requestDrugData(smalltype,pageNum);
+        $('.mask').hide();
+        $('.adds').trigger('tap');
+    });
+</script>
+<script src="../../../static/mCheap/js/scroll.js"></script>
+</body>
+</html>

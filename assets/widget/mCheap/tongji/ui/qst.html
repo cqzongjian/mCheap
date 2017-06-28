@@ -1,0 +1,307 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8">
+    <title>mCollection</title>
+    <meta name="viewport" content="target-densitydpi=device-dpi,width=device-width, initial-scale=1,maximum-scale=1, user-scalable=no">
+    <meta name="apple-mobile-web-app-capable" content="yes">
+    <meta name="apple-mobile-web-app-status-bar-style" content="black">
+    <link rel="stylesheet" href="../../../static/mdui/css/mdui.min.css">
+    <link rel="stylesheet" href="../../../static/mCheap/css/mCommon.css">
+    <style>
+        *{
+            color: #666666;
+        }
+        .top{
+            height: 2rem;
+            line-height: 2rem;
+            padding: 0 1rem;
+            background-color: #ffffff;
+            font-weight: 600;
+        }
+        .arrowRight{
+            width:1rem ;
+            background: url("../images/right.png") no-repeat right center;
+            background-size: auto 1rem;
+        }
+        .lineChart{
+            margin: .5rem;
+            background-color: #ffffff;
+            border-radius: .5rem;
+        }
+        .scatterChart{
+            margin: 0 .5rem;
+            border-radius: .5rem;
+            background-color: #ffffff;
+        }
+        .chartContainer{
+            padding-bottom: .5rem;
+        }
+        .chartContainer>.title{
+            border-bottom: 1px solid #CCCCCC;
+            text-align: center;
+            color: #3BA15C;
+            font-weight: 600;
+            line-height: 2rem;
+        }
+        #lineChart,#scatterChart{
+            min-height: 12rem;
+        }
+    </style>
+</head>
+<body>
+<div class="top mdui-box">
+    <div class="mdui-box-flex-1 product-name" data-id="2133">白菜</div>
+    <div class="arrowRight"></div>
+</div>
+<div class="lineChart chartContainer">
+    <div class="title">产品价格走势图</div>
+    <div id="lineChart"></div>
+</div>
+<div class="scatterChart chartContainer">
+    <div class="title">产品价格离散图</div>
+    <div id="scatterChart"></div>
+</div>
+<script src="../../../static/mdui/js/mdui.min.js"></script>
+<script src="../../../static/mCheap/js/mCheap.config.js"></script>
+<script src="../../../server.js"></script>
+<script src="../js/echarts.min.js"></script>
+<script>
+    var qstClass=function(product_Id){
+        this.product_Id=product_Id;
+        this.init=function(){
+            this.events();
+            this.requestLs(this.product_Id);
+            this.requestQs(this.product_Id);
+        };
+    };
+    qstClass.prototype={
+        creatLineChart:function(id,data){
+            var myChart = echarts.init(document.getElementById(id));
+            var color=['#7AC840','#4DA2F2','#FFA027','#FF6769','red','#FDD132','#A1E5EE'];
+            var xData=data.dates;
+            var series=[];
+            Object.defineProperties(data,{
+                dates:{
+                    enumerable:false
+                }
+            });//将dates属性设置为不可枚举
+//            delete data.dates;//删除dates属性
+            var legendData=Object.keys(data);
+            for(var x in data){
+                var obj={};
+                var objData=[];
+                obj.name=x;
+                obj.type='line';
+                //生成xData
+                for(var i=0;i<data[x].length;i++){
+                    objData.push(data[x][i].cltprc05007)
+                }
+                obj.data=objData;
+                series.push(obj);
+            }
+            var option = {
+                title: {
+                    text: '价格(元)',
+                    left: '20',
+                    textStyle:{
+                        fontSize:'24'
+                    },
+                    top:'20'
+                },
+                tooltip: {
+                    trigger: 'item',
+                    formatter: '{a} <br/>{b} : {c}'
+                },
+                legend: {
+                    right: '20',
+                    data:legendData,
+                    top:'20',
+                    width:'80%',
+                    textStyle:{
+                        fontSize:'24'
+                    }
+                },
+                xAxis: {
+                    type: 'category',
+                    splitLine: {show: false},
+                    data:xData
+                },
+                grid: {
+                    left: '3%',
+                    right: '4%',
+                    bottom: '3%',
+                    top:'25%',
+                    containLabel: true
+                },
+                yAxis: {
+                    type: 'value'
+                },
+                series:series,
+                color:color
+            };
+            myChart.setOption(option);
+        },
+        creatScatterChart:function(id,data){
+            var myChart = echarts.init(document.getElementById(id));
+            var color=['#7AC840','#4DA2F2','#FFA027','red','#FDD132','#A1E5EE'];
+            var avgPrice=data.avgPrice;
+            var xData=data.dates;
+            var legendData=[];
+            var series=[];
+            var m=0;
+            delete data.dates;//删除dates属性
+            delete  data.avgPrice;//删除avgPrice属性
+            for(var x in data){
+                legendData.push(x);//生成legendData
+                var obj={};
+                var objData=[];
+                obj.name=x;
+                obj.type='scatter';
+                //生成xData
+                for(var i=0;i<data[x].length;i++){
+                    objData.push(data[x][i].cltprc05007);
+                }
+                obj.data=objData;
+                if(m==0){//在第一个legend上加画全市平均线
+                    obj.markLine={
+                        label: {
+                            normal: {formatter: '平均价：'+avgPrice}
+                        },
+                        tooltip: {
+                            formatter: '平均价：'+avgPrice
+                        },
+                        lineStyle: {
+                            normal: {
+                                type: 'solid',
+                                color:'black'
+                            }
+                        },
+                        data : [
+                            { yAxis: parseFloat(avgPrice) }
+                        ]
+                    };
+                    m=null;
+                }
+                series.push(obj);
+            }
+            var option={
+                    title: {
+                        text: '价格(元)',
+                        left: '20',
+                        textStyle:{
+                            fontSize:'24'
+                        },
+                        top:'20'
+                    },
+                    tooltip: {
+                        trigger: 'item',
+                        formatter: '{a} <br/>{b} : {c}'
+                    },
+                    legend: {
+                        right: '20',
+                        data:legendData,
+                        top:'20',
+                        width:'80%',
+                        textStyle:{
+                            fontSize:'24'
+                        }
+                    },
+                    xAxis: {
+                        type: 'category',
+                        splitLine: {show: false},
+                        data:xData
+                    },
+                    grid: {
+                        left: '3%',
+                        right: '10%',
+                        bottom: '3%',
+                        top:'25%',
+                        containLabel: true
+                    },
+                    yAxis: {
+                        type: 'value'
+                    },
+                    series:series,
+                    color:color
+            };
+            myChart.setOption(option);
+        }
+    };
+    qstClass.prototype.events=function(){
+        $('.top').on('tap',function(){
+            $.openWin({
+                name:"selectProduct",
+                animId : 2,
+                url:'wgtroot://mCheap/tongji/ui/selectProduct.html',
+                pageParam:{
+                    wName:'qst'
+                }
+            });
+        })
+    };
+    qstClass.prototype.requestLs=function(cltpro01id){
+        var that=this;
+        $.request({
+            urlType: 'productPriceDiscrete',
+            data: {
+                "access_token": $.getStorage('access_token'),
+                cltpro01id:cltpro01id
+            }
+        }, function (data) {
+            if (data.success) {
+                that.creatScatterChart('scatterChart',data.data);
+            }
+            else {
+                //$.toast('网络错误');
+            }
+        });
+    };
+    qstClass.prototype.requestQs=function(cltpro01id){
+        var that=this;
+        $.request({
+            urlType: 'productPriceTrend',
+            data: {
+                "access_token": $.getStorage('access_token'),
+                cltpro01id:cltpro01id
+            }
+        }, function (data) {
+            if (data.success) {
+                that.creatLineChart('lineChart',data.data);
+            }
+            else {
+                //$.toast('网络错误');
+            }
+        });
+    };
+
+    function changeProduct(){
+        var name = [];
+        var proId = '';
+        var productName = '';
+        for(var t=0;t<arguments.length;t++){
+            if(t!=arguments.length-1){
+                name[t]=String.fromCharCode(arguments[t]);
+            }else{
+                proId=arguments[t];
+            }
+        }
+        for(var s=0;s<name.length;s++){
+            productName +=name[s];
+        }
+        $('.product-name').html(productName).data('id',proId);
+        var newPro=new qstClass(proId);
+        newPro.init();
+        newPro = null;
+    }
+
+    //载入完成
+    $.uexWindowReady(function() {
+        var product_Id = $('.product-name').data('id');
+        var init = new qstClass(product_Id);
+        init.init();
+        init = null;
+    })
+</script>
+</body>
+</html>

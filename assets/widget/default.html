@@ -1,0 +1,61 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8">
+    <title>mCollection</title>
+    <meta name="viewport" content="target-densitydpi=device-dpi,width=device-width, initial-scale=1,maximum-scale=1, user-scalable=no">
+    <meta name="apple-mobile-web-app-capable" content="yes">
+    <meta name="apple-mobile-web-app-status-bar-style" content="black">
+    <link rel="stylesheet" href="./static/mdui/css/mdui.min.css">
+    <link rel="stylesheet" href="./static/mCheap/css/mCommon.css">
+    <style>
+        body{
+            position: relative;
+        }
+        .box{
+            position: fixed;
+            top: 0;
+            bottom: 0;
+            width: 100%;
+        }
+        img{
+            width: 100%;
+            height: 100%;
+            border: none;
+            margin: 0;
+            padding: 0;
+        }
+        .toIndex{
+            height: 2rem;
+            line-height: 2rem;
+            padding: 0 1rem;
+            /*border: 1px solid #CCCCCC;*/
+            background-color: rgba(0,0,0,0.3);
+            color: #ffffff;
+            border-radius: 1rem;
+            position: absolute;
+            top: 1rem;
+            right: 2rem;
+        }
+    </style>
+</head>
+<body>
+<div class="box">
+    <img src="static/mCheap/images/mdlife_splash1.png"/>
+</div>
+<div class="toIndex">立即进入</div>
+<!--页面-->
+<script src="./static/mdui/js/mdui.min.js"></script>
+<script src="./static/mCheap/js/mCheap.config.js"></script>
+<script>
+    $.uexWindowReady(function() {
+        $('.toIndex').on('tap',function(){
+            $.execScript({
+                winName:'root',
+                script:'toIndex()'
+            });
+        })
+    })
+</script>
+</body>
+</html>

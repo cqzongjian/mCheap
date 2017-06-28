@@ -1,0 +1,173 @@
+.mdui-preview-image.mdui-fullscreen {
+	position: fixed;
+	z-index: 20;
+	background-color: #000;
+}
+
+.mdui-preview-header, .mdui-preview-footer {
+	position: absolute;
+	width: 100%;
+	left: 0;
+	z-index: 10;
+}
+
+.mdui-preview-header {
+	height: 2.75rem;
+	top: 0;
+}
+
+.mdui-preview-footer {
+	height: 3.125rem;
+	bottom: 0;
+}
+
+.mdui-preview-header .mdui-preview-indicator {
+	display: block;
+	line-height: 1.5625rem;
+	color: #fff;
+	text-align: center;
+	margin: 0.9375rem auto 4;
+	width: 4.375rem;
+	background-color: rgba(0, 0, 0, 0.4);
+	border-radius: 0.875rem;
+	font-size: 1rem;
+}
+
+.mdui-preview-image {
+	display: none;
+	-webkit-animation-duration: 0.5s;
+	animation-duration: 0.5s;
+	-webkit-animation-fill-mode: both;
+	animation-fill-mode: both;
+}
+
+.mdui-preview-image.mdui-preview-in {
+	-webkit-animation-name: fadeIn;
+	animation-name: fadeIn;
+}
+
+.mdui-preview-image.mdui-preview-out {
+	background: none;
+	-webkit-animation-name: fadeOut;
+	animation-name: fadeOut;
+}
+
+.mdui-preview-image.mdui-preview-out .mdui-preview-header,
+	.mdui-preview-image.mdui-preview-out .mdui-preview-footer {
+	display: none;
+}
+
+.mdui-zoom-scroller {
+	position: absolute;
+	display: -webkit-box;
+	display: -webkit-flex;
+	display: flex;
+	-webkit-box-align: center;
+	-webkit-align-items: center;
+	align-items: center;
+	-webkit-box-pack: center;
+	-webkit-justify-content: center;
+	justify-content: center;
+	left: 0;
+	right: 0;
+	bottom: 0;
+	top: 0;
+	width: 100%;
+	height: 100%;
+	margin: 0;
+	-webkit-backface-visibility: hidden;
+}
+
+.mdui-zoom {
+	-webkit-transform-style: preserve-3d;
+	transform-style: preserve-3d;
+}
+
+.mdui-slider .mdui-slider-group .mdui-slider-item img {
+	width: auto;
+	height: auto;
+	max-width: 100%;
+	max-height: 100%;
+}
+
+.mdui-android-4-1 .mdui-slider .mdui-slider-group .mdui-slider-item img
+	{
+	width: 100%;
+}
+
+.mdui-android-4-1 .mdui-slider.mdui-preview-image .mdui-slider-group .mdui-slider-item
+	{
+	display: inline-table;
+}
+
+.mdui-android-4-1 .mdui-slider.mdui-preview-image .mdui-zoom-scroller img
+	{
+	display: table-cell;
+	vertical-align: middle;
+}
+
+.mdui-preview-loading {
+	position: absolute;
+	width: 100%;
+	height: 100%;
+	top: 0;
+	left: 0;
+	display: none;
+}
+
+.mdui-preview-loading.mdui-active {
+	display: block;
+}
+
+.mdui-preview-loading .mdui-spinner-white {
+	position: absolute;
+	top: 50%;
+	left: 50%;
+	margin-left: -1.5625rem;
+	margin-top: -1.5625rem;
+	height: 3.125rem;
+	width: 3.125rem;
+}
+
+.mdui-preview-image img.mdui-transitioning {
+	-webkit-transition: -webkit-transform 0.5s ease, opacity 0.5s ease;
+	transition: transform 0.5s ease, opacity 0.5s ease;
+}
+
+@-webkit-keyframes fadeIn { 
+	0% {
+	opacity: 0;
+    }
+    100%
+    {
+    opacity:1;
+    }
+}
+@keyframes fadeIn { 
+	0% {
+	opacity: 0;
+    }
+	100%{
+	opacity:1;
+    }
+}
+@-webkit-keyframes fadeOut { 
+	0% {
+	opacity: 1;
+    }
+    100%{
+	opacity:0;
+    }
+}
+@keyframes fadeOut { 
+	0% {
+	opacity: 1;
+    }
+    100%{
+	opacity:0;
+    }
+}
+p img {
+	max-width: 100%;
+	height: auto;
+}

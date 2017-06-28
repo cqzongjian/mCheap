@@ -1,0 +1,1139 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8">
+    <title>mCollection</title>
+    <meta name="viewport" content="target-densitydpi=device-dpi,width=device-width, initial-scale=1,maximum-scale=1, user-scalable=no">
+    <meta name="apple-mobile-web-app-capable" content="yes">
+    <meta name="apple-mobile-web-app-status-bar-style" content="black">
+    <link rel="stylesheet" href="../../../static/mdui/css/mdui.min.css">
+    <link rel="stylesheet" href="../../../static/mCheap/css/mCommon.css">
+    <style>
+        *{
+            font-family: "Microsoft YaHei";
+        }
+        html{
+            height: 100%;
+            overflow: hidden;
+        }
+        body{
+            overflow: hidden;
+            background-color: #FFFFFF;
+            padding-top: 2.75rem;
+        }
+        .search-img{
+            height:1.75rem;
+            line-height: 1.75rem;
+            margin-right: 0.5rem;
+            margin-top: 0.25rem;
+            margin-bottom: 0.25rem;
+        }
+        .search-img>img{
+            width: 1.25rem;
+            height: 1.25rem;
+        }
+        /*--------------------------------------------*/
+        .header{
+            background-color: #F39426;
+        }
+        .saoma{
+            padding-right: 1rem;
+            padding-top: 0.75rem;
+            padding-left: 0.625rem;
+        }
+        .saoma>img{
+            width:auto;
+            height: 1.25rem;
+        }
+        #search{
+            border: none;
+            height: 1.75rem;
+        }
+        .search-box{
+            border: 1px solid #cccccc;
+            border-radius: 5px;
+            background-color: #FFFFFF;
+            height: 1.75rem;
+            margin-top: 0.5rem;
+            margin-bottom: 0.5rem;
+            overflow: hidden;
+        }
+        .searching{
+            color: white;
+            margin-top: 10rem;
+            width: 100%;
+            text-align: center;
+        }
+        .search-item{
+            text-align: center;
+            padding: 0.5rem 0 0.5rem 0;
+            border-bottom:1px solid green;
+            background-color: white;
+        }
+        .search-item-content{
+            height: 100%;
+            width: 100%;
+            position: fixed;
+            z-index: 999;
+            background: rgba(0,0,0,0.3);
+            overflow: auto;
+            display:none;
+        }
+        .search-before-content{
+            height: 100%;
+            width: 100%;
+            position: fixed;
+            z-index: 999;
+            background: rgba(0,0,0,0.3);
+            overflow: auto;
+            display:none;
+        }
+        .mask{
+            position: absolute;
+            width: 100%;
+            top: 0;
+            bottom: 0;
+            z-index: 999;
+            background-color:rgba(0,0,0,0.3);
+            color: #ffffff;
+        }
+        .sore{
+            background-color: white;
+            width: 35%;
+            height: 17rem;
+            overflow-y:auto;
+        }
+        .bottom-sore-box{
+            width: 65%;
+            overflow-y: auto;
+            background-color: #F2F2F2;
+            height: 17rem;
+        }
+        .sore-item{
+            color: black;
+            height: 3.5rem;
+            width: 100%;
+            border-bottom: 1px solid #cccccc;
+            padding-left: 1rem;
+            line-height: 3.5rem;
+            overflow: hidden;
+            white-space:nowrap;
+            text-overflow:ellipsis;
+        }
+        .sore-item-title{
+            background-color: white;
+            color: black;
+            height: 3.5rem;
+            width: 100%;
+            border-bottom: 1px solid #cccccc;
+            padding-left: 1rem;
+            line-height: 3.5rem;
+            overflow: hidden;
+            white-space:nowrap;
+            text-overflow:ellipsis;
+        }
+        .product-content{
+            overflow-y:auto;
+            width: 100%;
+            height: 90%;
+            /*display: none;*/
+        }
+        .row{
+            border: 1px solid #CCCCCC;
+            background-color: white;
+            position: relative;
+            float: left;
+            width: 50%;
+        }
+        .drug-detail{
+            padding: 0.5rem;
+        }
+        .img-box{
+            width: 100%;
+            height: 8rem;
+            padding: 0.25rem;
+        }
+        .img-box>img{
+            width: 100%;
+            height: 8rem;
+        }
+        .avg-price{
+            position: absolute;
+            bottom: 5%;
+            right: 5%;
+            color: white;
+            background-color:#F39426;
+            padding-left: 0.25rem;
+            padding-right: 0.25rem;
+            font-size: 0.8rem;
+            border-radius: 0.5rem;
+        }
+        .drug-name{
+            font-size: 0.8rem;
+            font-weight: 600;
+            overflow: auto;
+        }
+        .drug-origin,.standard{
+            font-size: 0.8rem;
+            color: #7E7E7E;
+            height: auto;
+        }
+        .drug-price{
+            font-weight: 600;
+            color: #F39426;
+        }
+        .choose-box{
+            position: relative;
+            height: 3rem;
+            padding: 0.5rem 1rem 0.5rem 1rem;
+            border-bottom: 1px solid black;
+            border-top: 1px solid black;
+        }
+        .choose-box-hide{
+            background-color: white;
+            position: relative;
+            height: 3rem;
+            padding: 1rem;
+            border-bottom: 1px solid black;
+            border-top: 1px solid black;
+        }
+        .top-sort-name{
+            font-weight: 600;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+        }
+        .tiny-sort-name{
+            background: url("../images/oaw.png")no-repeat left;
+            background-size: 0.5rem 0.8rem;
+            margin-left: 0.5rem;
+            padding-left: 1rem;
+            display: flex;
+            color: #F39426;
+            justify-content: center;
+            align-items: center;
+        }
+        .choose-sx{
+            text-align: right;
+            position: absolute;
+            right: 5%;
+            top: 20%;
+        }
+        .sx-img{
+            width: 3rem;
+            height: 1.5rem;
+        }
+
+        /*==========分类别=====================*/
+        .classify{
+            position: fixed;
+            height: 100%;
+            width: 100%;
+            background: rgba(0,0,0,0.2);
+            z-index:2;
+            display: none;
+        }
+        .no-data{
+            height: 3rem;
+            text-align: center;
+            line-height: 3rem;
+            border-bottom: 1px solid #CCCCCC;
+        }
+        /*==========大分类=====================*/
+        .big-sort{
+            height: 3rem;
+            width: 100%;
+        }
+        .choose-move-name{
+            margin-top: 1.5rem;
+            overflow-x:auto;
+        }
+        .choose-big-title{
+            color:#F39426;
+            font-size: 1.2rem;
+            font-weight: 600;
+            padding-top: 1.5rem;
+            padding-left:1rem;
+            padding-right:1rem;
+            display: none;
+        }
+        .choose-more{
+            height: 3rem;
+            width: 3rem;
+        }
+        .choose-more>img{
+            margin-top: 1rem;
+            margin-left: 0.9rem;
+            width: 1.2rem;
+            height: 1rem;
+        }
+        .big-name{
+            color: black;
+            padding-left: 0.25rem;
+            padding-right: 0.25rem;
+        }
+        .big-name-on{
+            color: #F39426;
+            padding-left: 0.25rem;
+            padding-right: 0.25rem;
+        }
+
+        .show-big-sort{
+            border-top: 1px solid #CCCCCC;
+            position: fixed;
+            background-color:white;
+            z-index: 100;
+            width: 100%;
+            height: 70%;
+            display: none;
+        }
+        .show-big-name{
+            color: black;
+            background-color: white;
+            margin: 0.5rem;
+            border: 1px solid #CCCCCC;
+            border-radius: 1rem;
+            display:inline-block;
+            padding: 0.5rem;
+        }
+        .show-big-name-on{
+            color:#F39426;
+            background-color: white;
+            margin: 0.5rem;
+            border: 1px solid #CCCCCC;
+            border-radius: 1rem;
+            display:inline-block;
+            padding: 0.5rem;
+        }
+
+        /*==========大分类=====================*/
+        /*==========超市=====================*/
+        .market{
+            position: relative;
+            width: 100%;
+            height: 8rem;
+        }
+        .market-img>img{
+            width: 100%;
+            height: 8rem;
+            -webkit-filter: blur(0.1rem);
+            -moz-filter: blur(0.1rem);
+            -ms-filter: blur(0.1rem);
+            filter: blur(0.1rem)
+        }
+        .name{
+            color: white;
+            font-weight: 600;
+            position: absolute;
+            top:10%;
+            left:5%
+        }
+        .star-box{
+            position: absolute;
+            top:30%;
+            left:5%
+        }
+        .star-box>img{
+            width: 1rem;
+            height: 1rem;
+        }
+        .time{
+            color: white;
+            font-size: 0.8rem;
+            position: absolute;
+            top:10%;
+            right:5%
+        }
+        .address{
+            padding-left: 1.25rem;
+            background:url("../images/dis_01.png") no-repeat left;
+            background-size: 0.9rem 1rem;
+            color: white;
+            font-size: 0.8rem;
+            position: absolute;
+            top:50%;
+            left:5%
+        }
+        .dis{
+            color: white;
+            font-size: 0.8rem;
+            position: absolute;
+            bottom:10%;
+            left:5%
+        }
+        .set-like>img{
+            width: 1.2rem;
+            height: 1.2rem;
+        }
+        .set-like{
+            padding: 0.5rem;
+            position: absolute;
+            bottom:40%;
+            right: 5%;
+        }
+        .comment{
+            color: white;
+            font-size: 0.8rem;
+            position: absolute;
+            bottom:5%;
+            right: 5%;
+            width: auto;
+            padding:0.2rem ;
+            border: 1px solid white;
+            border-radius:2rem ;
+        }
+        .share-log{
+            background: url("../images/share.png") no-repeat center;
+            background-size: 1.5rem 1.5rem;
+            width: 3rem;
+            height: 2.75rem;
+        }
+        /*分享*/
+        .mc{
+            height: 100%;
+            width: 100%;
+            position: fixed;
+            z-index: 200;
+            background: rgba(0,0,0,0.3);
+            overflow: auto;
+            display:none;
+        }
+        .qq-img,.weichat-img,.xinlang-img{
+            width: 3rem;
+            height: 3rem;
+            /*border: 1px solid red;*/
+        }
+        .qq-share-div{
+            padding: 1rem;
+            text-align: center;
+        }
+        .qq-share-txt{
+            text-align: center;
+        }
+        .share-box{
+            position: absolute;
+            bottom: 0;
+            height: 15rem;
+            width: 100%;
+            background-color: white;
+        }
+        .share-div{
+            margin-top: 1rem;
+            border-top: 1px solid #666666;
+            padding: 1rem 2rem 2rem 2rem;
+        }
+        .share-cancel{
+            background-color: #f0f0f0;
+            border: 1px solid #CCCCCC;
+            padding: 0.5rem;
+            text-align: center;
+        }
+
+    </style>
+
+
+
+</head>
+<body>
+<div class="search-before-content">
+    <div class="searching">努力搜索中...</div>
+</div>
+<div class="search-item-content"></div>
+<!--分享-->
+<div class="mc">
+    <div class="share-box">
+        <div class="mdui-box">
+            <div class="mdui-box-flex-1" style="visibility: hidden;">
+                <div class="qq-share-div">
+                    <img src="" class="qq-img"/>
+                </div>
+                <div class="qq-share-txt">QQ好友</div>
+            </div>
+            <div class="mdui-box-flex-1">
+                <div class="qq-share-div">
+                    <img src="../images/weixinlog.png" class="weichat-img"/>
+                </div>
+                <div class="qq-share-txt">微信好友</div>
+            </div>
+            <div class="mdui-box-flex-1" style="visibility: hidden;">
+                <div class="qq-share-div">
+                    <img src="" class="xinlang-img"/>
+                </div>
+                <div class="qq-share-txt">新浪微博</div>
+            </div>
+        </div>
+        <div class="share-div">
+            <div class="share-cancel">取消</div>
+        </div>
+    </div>
+</div>
+<!--分享-->
+<div class="header mdui-bar mdui-bar-nav mdui-box " style="padding-left: 0;">
+    <div class="saoma">
+        <img src="../images/back.png">
+    </div>
+    <div class="mdui-box-flex-1 mdui-box search-box">
+        <div class="mdui-box-flex-1">
+            <input type="text" id="search" placeholder="商品..."/>
+        </div>
+        <div class="search-img"><img src="../images/search-orange.png"></div>
+    </div>
+    <div class="share-log"></div>
+</div>
+
+<div class="mdui-box mdui-box-ver" style="height: 100%;">
+    <div class="market">
+        <div class="market-img">
+            <!--<img src="../images/01.jpg"/>-->
+        </div>
+        <div class="name"></div>
+        <div class="star-box">
+            <img src="../images/star.png"/>
+            <img src="../images/star.png"/>
+            <img src="../images/star.png"/>
+            <img src="../images/star.png"/>
+            <img src="../images/star.png"/>
+        </div>
+        <div class="time">营业时间:</div>
+        <div class="address"></div>
+        <div class="set-like">
+            <img src="../images/dislike.png"/>
+        </div>
+        <div class="dis"></div>
+        <div class="comment">评论:<span class="tiaoshu">123</span>条</div>
+    </div>
+
+
+
+
+    <div class="big-sort mdui-box">
+        <div class="choose-big-title">你好啊</div>
+        <div class="choose-move-name mdui-box-flex-1 mdui-box">
+            <!--<div class="big-name">大类已</div>-->
+        </div>
+        <div class="choose-more">
+            <img src="../images/triangle_down.png"/>
+        </div>
+    </div>
+    <div class="show-big-sort">
+        <div class="show-big-sort-box" style="padding: 1rem">
+            <!--<div class="show-big-name">大类一</div>-->
+        </div>
+    </div>
+    <div class="classify mdui-box-flex-1 mdui-box mdui-box-ver">
+        <div class="choose-box-hide mdui-box">
+            <div class="top-sort-name"></div>
+            <div class="tiny-sort-name"></div>
+            <div class="choose-sx mdui-box-flex-1">
+                <img src="../images/sx_orange.png" class="sx-img"/>
+            </div>
+        </div>
+
+        <div class="mdui-box mdui-box-flex-1">
+            <div class="sore">
+                <!--<div class="sore-item-title" data-id="1">白癜风</div>-->
+            </div>
+            <div class="bottom-sore-box">
+                <!--<div class="sore-item">神经病</div>-->
+            </div>
+
+        </div>
+    </div>
+    <div class="mdui-box-flex-1 mdui-box-ver mdui-box">
+        <div class="choose-box mdui-box">
+            <div class="top-sort-name"></div>
+            <div class="tiny-sort-name"></div>
+            <div class="choose-sx mdui-box-flex-1">
+                <img src="../images/sx1.png" class="sx-img"/>
+            </div>
+        </div>
+
+
+        <div class="product-content mdui-box-flex-1" id="list">
+
+            <!--<div class="row">-->
+            <!--<div class="img-box">-->
+            <!--<img src="../images/01.jpg"/>-->
+            <!--</div>-->
+            <!--<div class="drug-detail mdui-box-flex-1">-->
+            <!--<div class="drug-name">药品名字地方来刷卡缴费鲁</div>-->
+            <!--<div class="drug-origin">生地方来刷卡缴费鲁大师及安防监控</div>-->
+            <!--<div class="drug-price">价格展示</div>-->
+            <!--<div class="avg-price">均价</div>-->
+            <!--</div>-->
+            <!--</div>-->
+
+        </div>
+    </div>
+</div>
+<!--页面-->
+<script src="../../../static/mdui/js/mdui.js"></script>
+<!--<script src="../../../static/mCheap/js/mCheap.config.js"></script>-->
+<script src="../../../server.js"></script>
+<script src="../../public.js"></script>
+<script src="../../../static/mCheap/js/scroll.js"></script>
+<script src="../../../static/mCheap/js/wechat.js"></script>
+<script>
+    var requestFlag=true;//请求开关
+    var pageNum=1;
+    var page = {};//保存分类小标题
+    var topSortName;//保存中类名字
+    var flag;//判断开关
+    var flag1;//判断开关
+    var marketData={};//保存超市新鲜
+    $.uexWindowReady(function(){
+        weChat.init();
+        //下拉加载更多
+        var option = {id:"list",funs:{after:function(){
+            if(requestFlag){
+                var big=$('.choose-big-title').html();
+                var mid=$('.top-sort-name').html();
+                var small=$('.tiny-sort-name').html();
+                var proName=$("#search").val();
+                pageNum=pageNum+1;
+                requestProductData(big,mid,small,proName,pageNum);
+            }else{
+                $.toast('没有更多了!');
+            }
+        }}};
+        $.initScroll(option);
+
+        $('.top-sort-name').hide();
+        $('.tiny-sort-name').hide();
+        setMarketData();//设置超市信息
+        requestProductData('','','','',pageNum,'yes','yes');//请求商品数据
+    });
+    //设置超市数据
+    function setMarketData(){
+//        $('.choose-big-title').hide();
+        var pageData=$.pageParam;//得到页面参数
+        marketData.lsh=$.strToJson(pageData).lsh;
+        requestAllBigSortData(marketData.lsh);//请求超市下所有大类数据
+        marketData.star=$.strToJson(pageData).star;
+        marketData.marketName=$.strToJson(pageData).marketName;
+        marketData.address=$.strToJson(pageData).address;
+        marketData.yytime=$.strToJson(pageData).yytime;
+        marketData.distance=$.strToJson(pageData).distance;
+        marketData.tiaoshu=$.strToJson(pageData).tiaoshu;
+        marketData.range=$.strToJson(pageData).range;
+        marketData.focus=$.strToJson(pageData).focus;
+        marketData.picture=$.strToJson(pageData).picture;
+        marketData.log=$.strToJson(pageData).log;
+        marketData.lat=$.strToJson(pageData).lat;
+//        alert(marketData.log+"经纬度"+marketData.lat);
+        $('.name').html(marketData.marketName);
+        if(parseInt(marketData.tiaoshu)){
+            $('.tiaoshu').html(marketData.tiaoshu);
+        }else{
+            $('.tiaoshu').html('0');
+        }
+        $('.address').html(marketData.address);
+        $('.time').html(marketData.yytime);
+        if(parseInt(marketData.focus)){
+            $('.set-like>img').attr('src',"../images/like.png");
+        }else{
+            $('.set-like>img').attr('src',"../images/dislike.png");
+        }
+        var star =marketData.star,html='';
+        if(star) {
+            var m= 0,j= 0;
+            for(j;j<parseInt(star);j++){
+                html+='<img src="../images/star_01.png" />';
+                m++;
+            }
+            if (parseInt(star.split('.')[1])>0){
+                html+='<img src="../images/star_03.png"/>';
+                m++;
+            }
+            if(m<5){
+                for (j=m;j<5;j++){
+                    html+='<img src="../images/star_02.png"/>';
+                }
+            }
+        } else{
+            for (j=0;j<5;j++){
+                html+='<img src="../images/star_02.png" />'
+            }
+        }
+        $('.star-box').html(html);
+        var img='<img src="'+ $.serverSettings.serverPath+'/mobile/mcheap/mcheapAction!getMarketPicture.do?access_token='+ $.getStorage('access_token')+'&url='+marketData.picture+'"/>';
+        $('.market-img').html(img);
+    }
+
+    //大类列表切换
+    $('.show-big-sort').on('tap','div',function(){
+        var name = $(this).html();
+        $('.show-big-sort-box>div').each(function(){
+            if($(this).hasClass('show-big-name-on')){
+                $(this).removeClass('show-big-name-on').addClass('show-big-name');
+            }
+        });
+        var ele=$('.choose-move-name>div');
+        ele.removeClass('big-name-on').addClass('big-name');
+        ele.each(function(){
+            if($(this).html()==name){
+                $(this).removeClass('big-name').addClass('big-name-on');
+            }
+        });
+        $(this).addClass('show-big-name-on');
+        requestSortData($(this).html());//请求大类下所有小类
+        pageNum=1;
+        $('#list').html('');
+        requestFlag=true;
+        requestProductData($(this).html(),'','','',pageNum);
+        $('.choose-big-title').html($(this).html());//$('.choose-big-title').html($(this).html()).show();
+        $('.top-sort-name').hide();
+        $('.tiny-sort-name').hide();
+        $('.choose-more').trigger('tap');
+        $('.classify').hide();
+        $('.bottom-sore-box').html('');
+    });
+
+    $('.choose-move-name').on('tap','div',function(){
+        var name = $(this).html();
+        $('.choose-move-name>div').each(function(){
+            if($(this).hasClass('big-name-on')){
+                $(this).removeClass('big-name-on').addClass('big-name');
+            }
+        });
+        var ele=$('.show-big-sort-box>div');
+        ele.removeClass('show-big-name-on').addClass('show-big-name');
+        ele.each(function(){
+            if($(this).html()==name){
+                $(this).removeClass('show-big-name').addClass('show-big-name-on');
+            }
+        });
+        $(this).addClass('big-name-on');
+        requestSortData($(this).html());
+        pageNum=1;
+        $('#list').html('');
+        requestFlag=true;
+        requestProductData($(this).html(),'','','',pageNum);
+        $('.choose-big-title').html($(this).html());//$('.choose-big-title').html($(this).html()).show();
+        $('.top-sort-name').hide();
+        $('.tiny-sort-name').hide();
+        $('.classify').hide();
+        $('.bottom-sore-box').html('');
+    });
+
+
+
+    //请求所有大类数据
+    function requestAllBigSortData(id){
+        $.request({
+            urlType:'queryBigClass',
+            data:{
+                "access_token": $.getStorage('access_token'),
+                epsrct02002:id
+            }
+        },function(json){
+            if(json.success) {
+                var data=json.data;
+                setBigSortData(data);
+            }
+            else {
+                alert('网络错误')
+            }
+        });
+    }
+    //设置大类数据
+    function setBigSortData(data){
+        var len=data.length,htmlOne='',htmlTwo='', i;
+        for(i=0;i<len;i++){
+            htmlOne +='<div class="big-name">'+data[i].espgds01006+'</div>';
+            htmlTwo +='<div class="show-big-name">'+data[i].espgds01006+'</div>';
+        }
+        $('.choose-move-name').html(htmlOne);
+        $('.show-big-sort-box').html(htmlTwo);
+    }
+    //请求所有商品数据
+    function requestProductData(big,mid,small,proName,pageNum,hot,recordMark){
+        $.request({
+            urlType:'goodsOfShop',
+            data:{
+                "access_token": $.getStorage('access_token'),
+                big:big?big:'',
+                mid:mid?mid:'',
+                small:small?small:'',
+                espgds01001:proName?proName:'',//输入搜索的时候搜索内容
+                pageSize:'10',
+                cltpit01id:marketData.lsh,
+                page:pageNum,
+                distance:'',//后期要改
+                range:marketData.range,
+                log: $.getStorage('log'),
+                lat:$.getStorage('lat'),
+                hot:hot?hot:'no',
+                cltpit01001:marketData.marketName, //超市名称
+                comeFlag:'01', //访问来源标志:01app,02微信,03门户
+                recordMark:recordMark||'no', //记录标志,
+                saveParam:'5' //记录所属模块标志
+            }
+        },function(json){
+            if(json.success) {
+                var data=json.data;
+                var dataNum=data.length;
+                if(dataNum){
+                    setData(data);
+                }else{
+                    if(pageNum==1){
+                        setData(data);
+                    }else{
+                        $.toast('没有更多了!');
+                        requestFlag=false;
+                    }
+                }
+            }
+            else {
+                alert('网络错误')
+            }
+        });
+    }
+
+    //请求大类下的小类数据
+    function requestSortData(name){
+        $.request({
+            urlType:'getMidAndSmallClass',
+            data:{
+                "access_token": $.getStorage('access_token'),
+                espgds01006:name,
+                epsrct02002:marketData.lsh
+            }
+        },function(json){
+            if(json.success){
+                var data=json.data;
+                setSort(data);
+                $('.sore>div').each(function(){
+                    if($(this).html()==midName){
+                        $(this).trigger('tap');
+                    }
+                });
+                $('.bottom-sore-box>div').each(function(){
+                    if($(this).html()==$('.tiny-sort-name').html()){
+                        $(this).css('color','#F39426');
+                    }
+                });
+            }
+            else {
+                alert('网络错误')
+            }
+        });
+    }
+
+    //跳转到产品到详情
+    $('.product-content').on('tap','.row',function(){
+        $.openWin({
+            flag:4,
+            name:'cpxq',
+            animId : 2,
+            url:'wgtroot://supermarket/product_list/ui/cpxq.html',
+            pageParam:{
+                marketImg:marketData.picture,
+                proImg:$(this).data('picture'),
+                proId : $(this).data('id'),
+                proName : $(this).find('.drug-name').html(),
+                standard : $(this).data('standard'),
+                factory : $(this).find('.drug-origin').html(),
+                proPrice : $(this).find('.drug-price').html(),
+                yytime : marketData.yytime,
+                address : marketData.address,
+                distance : $('.dis').html(),
+                tiaoshu : marketData.tiaoshu,
+                range : marketData.range,
+                focus : marketData.focus,
+                marketName : marketData.marketName,
+                lsh : marketData.lsh,
+                star : marketData.star,
+                lat : marketData.lat,
+                log : marketData.log
+            }
+        });
+    });
+
+    //进超市评论页面
+    $(document).on('tap','.comment',function(){
+        $.openWin({
+            name:"shop_comment",
+            animId : 2,
+            url:'wgtroot://supermarket/market_product_show/ui/shop_comment.html',
+            pageParam: {
+                lsh:marketData.lsh,
+                storeName:marketData.marketName,
+                storeYysj:marketData.yytime,
+                storeAddress:marketData.address,
+                picture:marketData.picture
+            }
+        });
+    });
+
+
+    //设置总体分类数据
+    function setSort(data,midName){
+        var len = data.length,i,j= 0,htmlOne='';
+        for(i=0;i<len;i++){
+            var htmlTwo='';
+            var leng = data[i].espgds01008.length,smallname=data[i].espgds01008;
+            htmlOne +='<div class="sore-item-title">'+data[i].espgds01007+'</div>';
+            htmlTwo +='<div class="sore-item" data-name="'+data[i].espgds01007+'">全部</div>';
+            for(j=0;j<leng;j++){
+                htmlTwo +='<div class="sore-item">'+smallname[j].espgds01008+'</div>';
+            }
+            page[data[i].espgds01007] = htmlTwo;
+        }
+        $('.sore').html(htmlOne);
+        chooseMidName(midName);
+    }
+
+    //点击大类选项
+    function chooseMidName(midName){
+        for(var a in page){
+            if(midName==a){
+                $('.bottom-sore-box').html(page[a]);
+            }
+        }
+    }
+
+    /*
+     * 搜索框
+     * */
+    //$('.search-box').on('tap','.search-img',function(){
+    $('#search').on('input propertychange', function(){
+        $('.classify').hide();
+        var mc = $("#search").val();
+        if(mc){
+            $('.search-before-content').show();
+            pageNum=1;
+            $('#list').html('');
+            requestFlag=true;
+            requestProductData('','','',mc,pageNum);
+            $('.top-sort-name').html('').hide();
+            $('.tiny-sort-name').html('').hide();
+        }else{
+            $.toast("请输入搜索内容");
+        }
+    });
+
+    //点击小分类获取商品列表
+    $('.bottom-sore-box').on('tap','.sore-item',function(){
+        flag=1;
+        $('.tiny-sort-name').show();
+        $('.sore>div').each(function(){
+            if($(this).css('color')=='#F39426'){
+                $('.top-sort-name').html($(this).html()).show();
+            }
+        });
+        var tinyName = $('.tiny-sort-name').html();
+        $('.bottom-sore-box>div').each(function(){
+            $(this).css('color','black');
+            if(tinyName==$(this).html()){
+                $(this).css('color','#F39426');
+            }
+        });
+        $('.tiny-sort-name').html($(this).html()).show();
+        $('.classify').hide();
+        pageNum=1;
+        $('#list').html('');
+        if($(this).html()=='全部'){
+            requestFlag=true;
+            requestProductData('',$(this).data('name'),'','',pageNum);
+        }else{
+            requestFlag=true;
+            requestProductData('','',$(this).html(),'',pageNum);
+        }
+    });
+
+    //点击大分类进行列表切换
+    $('.sore').on('tap','.sore-item-title',function(){
+//        $('.top-sort-name').show();
+
+        $('.top-sort-name').html($(this).html()).show();
+        $('.sore>div').each(function(){
+            $(this).css('color','black');
+            $(this).css('background-color','white');
+        });
+        $(this).css('color','#F39426');
+        $(this).css('background-color','#F2F2F2');
+        var midname = $(this).html();
+        chooseMidName(midname);
+    });
+
+    //
+    function setData(data){
+        $('.search-before-content').hide();
+        var len = data.length;
+        var html='';
+        if(len){
+            for(var i=0;i<len;i++){
+                html +='<div class="row" data-id="'+data[i].espgds01id+'" data-focus="'+data[i].isfocus+'" data-standard="'+data[i].espgds01002+'" data-picture="'+data[i].espgds01010+'">';
+                html +='<div class="img-box">';
+                html +='<img src="'+ $.serverSettings.serverPath+'/mobile/mcheap/shopAction!getGoodsPicture.do?access_token='+ $.getStorage('access_token')+'&url='+data[i].espgds01010+'"/>';
+                html +='</div>';
+                html +='<div class="drug-detail mdui-box-flex-1">';
+                html +='<div class="drug-name">'+data[i].espgds01001+'</div>';
+                if(data[i].espgds01004){
+                    html +='<div class="drug-origin">产地:'+data[i].espgds01004+'</div>';
+                }else{
+                    html +='<div class="drug-origin">产地:</div>';
+                }
+                html +='<div class="drug-price">￥'+data[i].price+'</div>';
+                html +='</div>';
+                html +='</div>';
+            }
+            $('.product-content').append(html);
+        }else{
+            html='<div class="no-data">暂无数据</div>';
+            $('.product-content').html(html);
+        }
+    }
+
+    $('.choose-box').on('tap','.choose-sx',function(){
+        //判断小类是否隐藏
+        if($(".tiny-sort-name").css("display")== 'none'){
+            flag1=1;    //元素为隐藏
+        }else{
+            flag1=0;     //元素为显现
+        }
+        $('.tiny-sort-name').hide();
+        flag=0;
+        topSortName=$('.top-sort-name').html();
+//        $('.top-sort-name').show();
+        var tinyName = $('.tiny-sort-name').html();
+        if(tinyName){
+            $('.bottom-sore-box>div').each(function(){
+                $(this).css('color','black');
+                if($(this).html()==$('.tiny-sort-name').html()){
+                    $(this).css('color','#F39426');
+                }
+            });
+        }
+        $('.classify').show();
+    });
+
+    $('.classify').on('tap','.choose-sx',function(){
+        $('.classify').hide();
+        $('.bottom-sore-box>div').each(function(){
+            if(flag==1){//点了小类的
+                $('.sore>div').each(function(){
+                    if($(this).css('color')=='#F39426'){
+                        $('.top-sort-name').html($(this).html());
+                    }
+                })
+            }else{
+                if(flag1==1){
+                    $('.top-sort-name').html(topSortName);
+                }else{
+                    $('.tiny-sort-name').show();
+                    $('.top-sort-name').html(topSortName);
+                }
+            }
+        });
+    });
+
+    //设置超市关注
+    $('.set-like').on('tap',function(){
+        var img=$('.set-like>img').attr('src');
+        if(img=='../images/dislike.png'){
+            $.request({
+                urlType:'addFocusShop',
+                data:{
+                    "access_token": $.getStorage('access_token'),
+                    cltpit01id:marketData.lsh, //超市流水号
+                    cltpit01001:marketData.marketName//超市名称
+                }
+            },function(json){
+                if(json.success){
+                    $.toast(json.message);
+                    $('.set-like>img').attr('src','../images/like.png');
+                    refreshPage();
+                }
+                else {
+                    alert('网络错误')
+                }
+            });
+        }else{
+            $.request({
+                urlType:'delFocusShop',
+                data:{
+                    "access_token": $.getStorage('access_token'),
+                    cltpit01id:marketData.lsh //药店流水号
+                }
+            },function(json){
+                if(json.success){
+                    $.toast(json.message);
+                    $('.set-like>img').attr('src','../images/dislike.png');
+                    refreshPage();
+                }
+                else {
+                    alert('网络错误')
+                }
+            });
+        }
+    });
+
+
+
+    //点更多大类
+    $(document).on('tap','.choose-more',function(){
+        if($(this).hasClass('choose-more-on')){
+            $('.show-big-sort').hide();
+            $(this).find('img').attr('src','../images/triangle_down.png');
+            $(this).removeClass('choose-more-on');
+        }else{
+            $('.show-big-sort').show();
+            $(this).find('img').attr('src','../images/triangle_up.png');
+            $(this).addClass('choose-more-on');
+        }
+    });
+    $(document).on('tap','.search-before-content',function(){
+        $('.search-before-content').hide();
+    });
+
+    function changeCommentNum(){
+        var num=parseInt($('.tiaoshu').html())+1;
+        $('.tiaoshu').html(num);
+    }
+
+    //返回大首页
+    $('.saoma').on('tap',function(){
+        $.closeWin();
+    });
+
+    //点分享
+    $(document).on('tap','.share-log',function(){
+        $('.mc').show();
+    });
+
+    //注册微信
+    $(document).on('tap','.weichat-img',function(){
+        var option={
+            thumbImg:'../images/share_shopping.png',//(必选)(大小必须小于32k)
+            wedpageUrl:'https://open.weixin.qq.com/connect/oauth2/authorize?appid=wx884671f313119520&redirect_uri=http://xm.yhxzdz.com/gongyi/maicai/supermarket/index/ui/supermarket_index.html&response_type=code&scope=snsapi_base&state=123#wechat_redirect',//(必选)链接的地址
+            scene:'0',//(必选)发送的目标场景 0-会话场景 1-朋友圈场景
+            title:'找相因',//(必选)链接的标题
+            description:marketData.marketName//(必选)描述
+        };
+        weChat.shareLink(option);
+    });
+
+    //点击取消
+    $(document).on('tap','.share-cancel',function(){
+        $('.mc').hide();
+    });
+
+    $('.market').on('tap','.address',function(){
+        $.toast('开始导航!');
+        $.openWin({
+            animId : 2,
+            name: "navigation",
+            url: 'wgtroot://mCheap/map/ui/navigation.html',
+            pageParam: {
+                lng:marketData.log,
+                lat:marketData.lat,
+                marketName:marketData.marketName
+            }
+        });
+    })
+
+</script>
+</body>
+</html>

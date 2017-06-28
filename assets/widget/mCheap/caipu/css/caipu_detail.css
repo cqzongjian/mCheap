@@ -1,0 +1,138 @@
+*{
+    font-family: "Microsoft YaHei";
+    color: #666666;
+}
+body{
+    background-color: #FFFFFF;
+    padding-top: 2.75rem;
+    padding-bottom: 2.9rem;
+
+}
+.header-box{
+    background-color: #3BA15C;
+    padding: 0;
+}
+.header{
+    width: 100%;
+    height: 100%;
+    position: relative;
+}
+.back{
+    padding-right: 1rem;
+    padding-left: 1rem;
+    padding-top: 0.75rem;
+    position: absolute;
+    z-index: 100;
+}
+.back img{
+    width:auto;
+    height: 1.25rem;
+}
+.title{
+    text-align: center;
+    position: absolute;
+    width: 100%;
+    height: 100%;
+    top: 0px;
+    line-height: 2.75rem;
+    color: #FFFFFF;
+}
+.top-header{
+    position: relative;
+    padding: 0.5rem 1rem;
+}
+.top-header>div:first-child{
+    font-weight: 600;
+    height: 1.5rem;
+}
+.top-header>div:nth-child(2){
+    font-size: 0.8rem;
+}
+.add{
+    position: absolute;
+    width: 2rem;
+    height: 1rem;
+    background-size: 0.95rem 0.95rem;
+    background-repeat: no-repeat;
+    background-position: left center;
+    top: 0.6rem;
+    right: 0rem;
+    background-image:url("../images/add.png");
+}
+.cailiao-detail{
+    padding-bottom: 0.5rem;
+    overflow: auto;
+}
+.cailiao-detail>div{
+    padding-left: 1rem;
+}
+.cailiao-detail>.bar{
+    padding: 0 1rem;
+}
+.cailiao-detail>div>span{
+    display: block;
+}
+.cailiao-detail>div>span:first-child{
+    color:#3BA15C ;
+    font-weight: 600;
+    font-size: 1.1rem;
+}
+.cailiao-detail>div>span:last-child{
+    margin-top: 0.2rem;
+}
+.list-item{
+    padding: 0.5rem 1rem;
+    position: relative;
+    border-bottom: 1px solid #cccccc;
+}
+.list-item-img>img{
+    width:5rem;
+    /*height: 5rem;*/
+    height: auto;
+    border-radius: 5px;
+}
+.list-item-title{
+    font-weight: 600;
+    padding-left: 0.5rem;
+    padding-right: 4.2rem;
+    text-overflow:ellipsis;
+    overflow: hidden;
+    white-space:nowrap;
+}
+.list-item-sub{
+    color: #666666;
+    padding-left: 0.5rem;
+    font-size: 0.8rem;
+}
+.list-item-more{
+    position: absolute;
+    right: 0rem;
+    padding-right: 0.5rem;
+    top: 0.5rem;
+    right: 1rem;
+    font-size: 0.8rem;
+    background: url("../images/you_3.png") no-repeat right center;
+    background-size: 0.4rem 0.8rem ;
+    color: #FAA048;
+    z-index: 100;
+}
+.footer{
+    position: fixed;
+    left: 0px;
+    right: 0px;
+    bottom: 0px;
+    padding: 0.75rem 0rem;
+    background: #FFFFFF;
+    color:#3BA15C;
+    border-top:1px solid #cccccc;
+}
+.footer>div{
+    padding-left: 1.5rem;
+    margin: 0 auto;
+    width:3.5rem;
+    background: url("../images/xunjia.png") no-repeat left center;
+    background-size: 1rem auto;
+}
+.bar{
+    padding: 0 1rem;
+}

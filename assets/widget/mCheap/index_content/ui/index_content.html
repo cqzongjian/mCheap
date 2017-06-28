@@ -1,0 +1,811 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<meta charset="utf-8">
+	<title>mCollection</title>
+	<meta name="viewport" content="target-densitydpi=device-dpi,width=device-width, initial-scale=1,maximum-scale=1, user-scalable=no">
+	<meta name="apple-mobile-web-app-capable" content="yes">
+	<meta name="apple-mobile-web-app-status-bar-style" content="black">
+	<link rel="stylesheet" href="../../../static/mdui/css/mdui.min.css">
+	<link rel="stylesheet" href="../../../static/mCheap/css/mCommon.css">
+	<link rel="stylesheet" href="../css/index_content.css">
+	<script src="../js/main.js"></script>
+</head>
+<body>
+<div class="search-before-content">
+	<div class="searching">努力搜索中...</div>
+</div>
+<div class="search-item-content"></div>
+<div class="header mdui-bar mdui-bar-nav mdui-box " style="padding-left: 0;">
+	<div class="saoma"  style="visibility: hidden">
+		<img src="../images/back.png">
+	</div>
+	<div class="mdui-box-flex-1 mdui-box search-box">
+		<div class="mdui-box-flex-1">
+			<form action="">
+			    <input type="text" id="search" placeholder="产品、市场、区域" readonly="readonly"/>
+			</form>
+		</div>
+		<div class="search-img"><img src="../images/search.png"></div>
+	</div>
+	<div class="message">
+		<img src="../images/message.png">
+		<div class="num message-num"></div>
+	</div>
+</div>
+<div id="page_content">
+	<div id="slider" class="mdui-slider">
+		<div class="mdui-slider-group mdui-slider-loop">
+			<!--&lt;!&ndash; 额外增加的一个节点(循环轮播：第一个节点是最后一张轮播) &ndash;&gt;-->
+			<!--<div class="mdui-slider-item mdui-slider-item-duplicate">-->
+			<!--<a href="#">-->
+			<!--<img src="../images/slider/3.jpg">-->
+			<!--<div class="mask"></div>-->
+			<!--</a>-->
+			<!--</div>-->
+			<!--&lt;!&ndash; 第一张 &ndash;&gt;-->
+			<!--<div class="mdui-slider-item">-->
+			<!--<a href="#">-->
+			<!--<img src="../images/slider/1.jpg">-->
+			<!--<div class="mask">-->
+			<!--<div class="mask-title"></div>-->
+			<!--<div class="mask-sub"></div>-->
+			<!--</div>-->
+			<!--</a>-->
+			<!--</div>-->
+			<!--&lt;!&ndash; 第二张 &ndash;&gt;-->
+			<!--<div class="mdui-slider-item">-->
+			<!--<a href="#">-->
+			<!--<img src="../images/slider/2.jpg">-->
+			<!--<div class="mask"></div>-->
+			<!--</a>-->
+			<!--</div>-->
+			<!--&lt;!&ndash; 第三张 &ndash;&gt;-->
+			<!--<div class="mdui-slider-item">-->
+			<!--<a href="#">-->
+			<!--<img src="../images/slider/3.jpg">-->
+			<!--<div class="mask"></div>-->
+			<!--</a>-->
+			<!--</div>-->
+			<!--&lt;!&ndash; 额外增加的一个节点(循环轮播：最后一个节点是第一张轮播) &ndash;&gt;-->
+			<!--<div class="mdui-slider-item mdui-slider-item-duplicate">-->
+			<!--<a href="#">-->
+			<!--<img src="../images/slider/1.jpg">-->
+			<!--<div class="mask"></div>-->
+			<!--</a>-->
+			<!--</div>-->
+		</div>
+		<div class="mdui-slider-indicator">
+			<div class="mdui-indicator mdui-active"></div>
+			<div class="mdui-indicator"></div>
+			<div class="mdui-indicator"></div>
+		</div>
+	</div>
+	<div class="sort mdui-box">
+		<!--		<div class="mdui-box-flex-1">
+                    <a class="sort-item btn-com">
+                        <img src="../images/1.png">
+                        <span>蔬菜</span>
+                    </a>
+                </div>-->
+		<!--<div class="mdui-box-flex-1">-->
+		<!--<a class="sort-item">-->
+		<!--<img src="../images/3.png">-->
+		<!--<span>肉禽</span>-->
+		<!--</a>-->
+		<!--</div>-->
+		<!--<div class="mdui-box-flex-1">-->
+		<!--<a class="sort-item">-->
+		<!--<img src="../images/4.png">-->
+		<!--<span>水产</span>-->
+		<!--</a>-->
+		<!--</div>-->
+		<!--<div class="mdui-box-flex-1">-->
+		<!--<a class="sort-item">-->
+		<!--<img src="../images/danlei.png">-->
+		<!--<span>蛋类</span>-->
+		<!--</a>-->
+		<!--</div>-->
+		<!--<div class="mdui-box-flex-1">-->
+		<!--<a class="sort-item">-->
+		<!--<img src="../images/5.png">-->
+		<!--<span>豆制品</span>-->
+		<!--</a>-->
+		<!--</div>-->
+	</div>
+	<div style="height: 0.5rem;background-color: #E6EAE8"></div>
+	<div class="tj-market">
+		<div class="tj-title"><img src="../images/store.png">&nbsp;附近市场</div>
+		<div class="tj-more">更多&nbsp;<img src="../images/you.png"></div>
+		<div class="tj-list">
+			<!--<div class="tj-list-item mdui-box">-->
+			<!--<div>-->
+			<!--<img src="../images/qjrs.jpg">-->
+			<!--</div>-->
+			<!--<div class="mdui-box-flex-1">-->
+			<!--<div class="list-item-title">双人青椒肉丝套餐对撒的空间的时间啊</div>-->
+			<!--<div class="star"><img src="../images/star_01.png"/><img src="../images/star_02.png"/></div>-->
+			<!--<div class="market-address">桃蹊路</div>-->
+			<!--<div class="market-yysj">营业时间：</div>-->
+			<!--</div>-->
+			<!--<div class="market-dis">1.7km</div>-->
+			<!--</div>-->
+		</div>
+	</div>
+	<div style="height: 0.5rem;background-color: #E6EAE8"></div>
+	<!--<div class="tj-focusMarket">-->
+	<!--<div class="tj-title"><img src="../images/store.png">&nbsp;关注市场</div>-->
+	<!--<div class="tj-more" id="wdgz">我的关注&nbsp;<img src="../images/you.png"></div>-->
+	<!--<div class="tj-list">-->
+	<!--<div class="tj-list-item mdui-box">-->
+	<!--<div>-->
+	<!--<img src="../images/qjrs.jpg">-->
+	<!--</div>-->
+	<!--<div class="mdui-box-flex-1">-->
+	<!--<div class="list-item-title">双人青椒肉丝套餐对撒的空间的时间啊</div>-->
+	<!--<div class="star"><img src="../images/star_01.png"/><img src="../images/star_02.png"/></div>-->
+	<!--<div class="market-address">桃蹊路</div>-->
+	<!--<div class="market-yysj">营业时间：</div>-->
+	<!--</div>-->
+	<!--<div class="market-dis">1.7km</div>-->
+	<!--</div>-->
+	<!--</div>-->
+	<!--</div>-->
+	<div class="focusMarket"></div>
+	<div style="height: 0.5rem;background-color: #E6EAE8" id="for_foucsMarket"></div>
+	<div class="tj-caipu">
+		<div class="tj-title"><img src="../images/cook.png">&nbsp;选菜谱&nbsp;找实惠</div>
+		<div class="tj-more">更多&nbsp;<img src="../images/you.png"></div>
+		<div class="tj-list">
+			<!--<div class="tj-list-item mdui-box">-->
+			<!--<div>-->
+			<!--<img src="../images/qjrs.jpg">-->
+			<!--</div>-->
+			<!--<div class="mdui-box-flex-1">-->
+			<!--<div class="list-item-title">双人青椒肉丝套餐对撒的空间的时间啊</div>-->
+			<!--<div class="list-item-sub mdui-ellipsis-2">青椒肉丝、炝炒土豆丝、蛋花汤但就是撒开发放大空间付款回到家撒娇点击撒娇</div>-->
+			<!--</div>-->
+			<!--</div>-->
+		</div>
+	</div>
+	<div style="height: 0.5rem;background-color: #E6EAE8"></div>
+	<div class="tj-like">
+		<div class="tj-title"><img src="../images/like.png">&nbsp;猜你喜欢</div>
+		<!--<div class="tj-more" id="wdgz">我的关注&nbsp;<img src="../images/you.png"></div>-->
+		<div class="tj-list">
+			<!--<div class="mdui-box">-->
+			<!--<div class="mdui-box-flex-1 tj-list-item mdui-box">-->
+			<!--<div>-->
+			<!--<img src="../images/qjrs.jpg">-->
+			<!--</div>-->
+			<!--<div class="mdui-box-flex-1">-->
+			<!--<div class="list-item-title">双人青椒肉丝套餐对撒的空间的时间啊</div>-->
+			<!--<div class="list-item-sub mdui-ellipsis-2">青椒肉丝、炝炒土豆丝、蛋花汤但就是撒开发放大空间付款回到家撒娇点击撒娇</div>-->
+			<!--</div>-->
+			<!--</div>-->
+			<!--<div class="list-item-dis"><img src="../images/dis.png">&nbsp<span>1.7km</span></div>-->
+			<!--</div>-->
+		</div>
+	</div>
+</div>
+<!--页面-->
+<script src="../../../static/mdui/js/mdui.js"></script>
+<script src="../../../static/mCheap/js/mCheap.config.js"></script>
+<script src="../../../server.js"></script>
+<script src="../../../public.js"></script>
+<script src="../../../static/mCheap/js/btn_click.js"></script>
+<script src="../../../static/mdui/js/imageHandler.js"></script>
+<script src="../../../static/mdui/js/imageConfig.js"></script>
+<!--<script src="../../../static/mdui/js/list.js"></script>-->
+<script>
+	var priceArr={};
+	var image;
+    var posArr = [];//存储3分钟前和现在的位置信息
+	var ids = [];
+    var distances = [];
+
+	$.uexWindowReady(function(){
+		var oForm =  document.getElementsByTagName("form")[0];
+		oForm.onsubmit = function(){
+			$('.search-img').trigger('tap');
+			return false;
+		};
+		image = $.imageHandler;
+		image.init($.imageOptions);
+		getNotReadNum(refreshMsgNum);//设置推送消息条数（但此处可省）
+        initPage();
+        setInterval(refresh,180000);//3分钟刷新一次
+
+		/*下拉刷新*/
+        $.setBounce({
+            bounceType:"1",
+            type:"0",
+            startPullCall:function(){
+                //console.log("下拉动作开始");
+            },
+            downEndCall:function(type){
+                //执行刷新数据
+                initPage();
+                //关闭上/下拉刷新效果
+                $.resetBounce(type);
+            }
+        });
+        /*var option = {
+				id:"page_content",
+				mode:1,
+				funs:{refresh:function(){
+
+					initPage();
+				}},
+				header : $('<div class="" id="header" style="height: 3rem;text-align: center"> <img src="../../../static/mCheap/images/down.png" style="width: .8rem;transition-duration: 100ms;"/> <span style="color: #777777;margin-left: .3rem">继续下拉以刷新...</span> ')
+		};
+        $.initScroll(option);*/
+
+	});
+	/*
+	 *请求推荐菜谱
+	 * */
+    $.setStorage('sortHtml', '');
+    var $reLoading = $('<div style="height:10rem" class="mdui-box mdui-box-ver mdui-box-pack-center mdui-box-align-center" id="load_recommend"><div style="height: 1rem"></div></div>');
+    var $favLoading = $('<div style="height:10rem" class="mdui-box mdui-box-ver mdui-box-pack-center mdui-box-align-center" id="load_favorite"><div style="height: 1rem"></div></div>');
+
+	function initPage() {
+        getHomePage();
+        getGuessUserLike();
+        getFocusStation();
+	}
+
+	//刷新页面
+    function refresh() {
+	    var isConnect = true;
+        uexDevice.getInfo('13');//获取系统版本
+        uexDevice.cbGetInfo=function (opCode,dataType,data){
+            //alert(data);
+			if(data.connectStatus === -1) {	//没有联网
+                isConnect = false;
+			}
+        };
+        if(!isConnect)return;
+        var posObj = {
+            log : $.getStorage('log'),
+            lat : $.getStorage('lat')
+		};
+        if(posArr.length>=2){
+            posArr.shift();
+		}
+        posArr.push(posObj);
+
+        var lastLat = posArr[0].lat,
+            lastLog = posArr[0].log,
+            curLat = posArr[1].lat,
+            curLog = posArr[1].log,
+			distance = getDisance(lastLat, lastLog, curLat, curLog);
+//alert('当前坐标：'+'('+curLat+','+curLog+')'+',上次坐标：'+'('+lastLat+','+lastLog+')'+',距离：'+distance);
+		if(distance>0.1) {	//如果距离大于100m
+            $.request({
+                urlType: 'homePage',
+                data: {
+                    "access_token": $.getStorage('access_token'),
+                    epsbht01008: '01',//用户终端类型
+                    epsbht01006: $.getStorage('log'),//经度
+                    epsbht01007: $.getStorage('lat')//纬度
+                }
+            }, function (data) {
+                if (data.success) {
+                    for(var i=0,len=data.data.collectStationDetail.length;i<len;i++){
+                        ids.push(data.data.collectStationDetail[i].cltpit01id);
+                        distances.push(data.data.collectStationDetail[i].distance);
+                    }
+                    if(ids.length>=9){
+                        ids.splice(0, 3);
+                    }
+                    if(distances.length>=9){
+                        distances.splice(0, 3);
+                    }
+					var last_ids = ids.slice(0,3),
+                        cur_ids = ids.slice(3),
+                        last_dis = distances.slice(0,3),
+                        cur_dis = distances.slice(3);
+                    for(var j=0;j<3;j++){
+                        var flag = last_ids[j]!=cur_ids[j] || last_dis[j]!=cur_dis[j]
+                    }
+                    if(flag){
+                        setBanner(data.data.collectStationDetail);
+                        setNearMarket(sortDataByKey(data.data.collectStationDetail,'distance',false),true);
+                        getFocusStation();
+                        getGuessUserLike();
+                    }
+                }
+                else {
+                    alert('网络错误');
+                }
+            });
+        }
+    }
+
+    function getDisance(lat1, lng1, lat2, lng2) {
+        var radLat1 = lat1 * Math.PI / 180.0;
+        var radLat2 = lat2 * Math.PI / 180.0;
+        var a = radLat1 - radLat2;
+        var b = lng1 * Math.PI / 180.0 - lng2 * Math.PI / 180.0;
+        var s = 2 * Math.asin(Math.sqrt(Math.pow(Math.sin(a / 2), 2) + Math.cos(radLat1) * Math.cos(radLat2) * Math.pow(Math.sin(b / 2), 2)));
+        s = s * 6378.137;
+        s = Math.round(s * 10000) / 10000;
+        return s
+    }
+
+
+    //请求附近市场、产品类别、菜谱
+    function getHomePage() {
+        var posObj = {
+            log : $.getStorage('log'),
+            lat : $.getStorage('lat')
+        };
+        posArr.push(posObj);
+        $.request({
+            urlType: 'homePage',
+            data: {
+                "access_token": $.getStorage('access_token'),
+                epsbht01008: '01',//用户终端类型
+                epsbht01006: $.getStorage('log'),//经度
+                epsbht01007: $.getStorage('lat')//纬度
+            }
+        }, function (data) {
+//$.log('data: '+$.jsonToStr(data));
+            hideLoading("load_recommend");
+            hideLoading("load_favorite");
+            if (data.success) {
+
+                setSort(data.data.category);
+                if (data.data.recommendMenu.length > 0) {
+                    try {
+                        $reLoading.remove();
+                        setCaipu(data.data.recommendMenu);
+                    } catch(e) {}
+                    finally {}
+                }else{
+                    $reLoading.find("div").html("抱歉，没有找到相应的数据");
+                }
+                var len = data.data.collectStationDetail.length;
+                if(len>0){
+                    for(var i=0;i<len;i++){	//存储市场id和距离
+                        ids.push(data.data.collectStationDetail[i].cltpit01id);
+                        distances.push(data.data.collectStationDetail[i].distance);
+                    }
+                    try {
+                        setNearMarket(sortDataByKey(data.data.collectStationDetail,'distance',false),true);
+                        setBanner(data.data.collectStationDetail)
+                    }catch (e){}
+                }
+                $('.tj-caipu,.tj-like').find('img').on('error',function(){
+                    $(this).attr('src','../../../public/images/noImg.jpg');
+                });
+                $('#slider,.tj-market,.focusMarket').find('img').on('error',function(){
+                    $(this).attr('src','../images/market_default.png');
+                });
+            }
+            else {
+                alert('网络错误')
+            }
+        },function(){
+            if($("#load_recommend").length==0)$(".tj-list").append($reLoading);
+            showLoading("load_recommend");
+            if($("#load_favorite").length==0)$(".tj-list").append($favLoading);
+            showLoading("load_favorite");
+        },function(){
+            //网络错误
+            $favLoading.find("div").html("网络错误,请稍后重试");
+            $reLoading.find("div").html("网络错误,请稍后重试");
+        });
+    }
+
+    //请求猜你喜欢
+    function getGuessUserLike() {
+        $.request({
+            urlType: 'guessUserLike',
+            data: {
+                "access_token": $.getStorage('access_token'),
+                log:$.getStorage('log'),
+                lat:$.getStorage('lat')
+            }
+        }, function (data) {
+            if (data.success) {
+                if (data.data.length > 0) {
+                    setYouLike(data.data);
+                }
+            }
+            else {
+                //$.toast('网络错误');
+            }
+        });
+    }
+
+    //请求关注市场
+    function getFocusStation() {
+        $.request({
+            urlType:'focusStation',
+            data:{
+                "access_token": $.getStorage('access_token'),
+                log: $.getStorage('log'),
+                lat:$.getStorage('lat'),
+                show:'1'
+            }
+        },function(data){
+            if(data.success) {
+//				alert(JSON.stringify(data));
+                if (data.data.length>0) {
+                    //与附近市场调用公用设置方法
+                    setNearMarket(sortDataByKey(data.data,'distance',false),false);
+                }
+//				else{
+//					$.toast('你还没有关注的市场哦~');
+//				}
+            }
+            else {
+                //$.toast('网络错误')
+            }
+        });
+    }
+
+	/*
+	 * 点击我的关注
+	 * */
+    $(document).on('tap','#wdgz',function(){
+        $.openWin({
+            animId : 2,
+            name: "wdgz",
+            url: 'wgtroot://mCheap/wdgz/ui/wdgz.html',
+            pageParam: {
+                from:'index'
+            }
+        });
+    });
+	/*
+	 * 点击消息
+	 * */
+    $('.message').on('tap',function(){
+        $.openWin({
+            name:"message",
+            animId : 2,
+            url:'wgtroot://mCheap/message/ui/message.html',
+            pageParam: {}
+        });
+    });
+	/*
+	 * 点击附近市场列表
+	 * */
+    $('.tj-market').on('tap','.tj-list-item',function(){
+        $.openWin({
+            name:'market',
+            animId : 2,
+            url:'wgtroot://mCheap/market/ui/market.html',
+            pageParam:{
+                cltpit01id:$(this).data('cltpit01id'),
+                log:$(this).data('log'),
+                lat:$(this).data('lat')
+            }
+        });
+    });
+    $('.focusMarket').on('tap','.tj-list-item',function(){
+        $.openWin({
+            name:'market',
+            animId : 2,
+            url:'wgtroot://mCheap/market/ui/market.html',
+            pageParam:{
+                cltpit01id:$(this).data('cltpit01id'),
+                log:$(this).data('log'),
+                lat:$(this).data('lat')
+            }
+        });
+    });
+    $('.tj-market').on('tap','.tj-more',function(){
+        $.openWin({
+            name:'market_more',
+            animId : 2,
+            url:'wgtroot://mCheap/market_more/ui/market_more.html',
+            pageParam:{
+            }
+        });
+    });
+	/*
+	 * 点击菜谱
+	 * */
+    $('.tj-caipu').on('tap','.tj-list-item',function(){
+        $.openWin({
+            name:'caipu_detail',
+            animId : 2,
+            url:'wgtroot://mCheap/caipu/ui/caipu_detail.html',
+            pageParam:{
+                epsrmm01id:$(this).data('id'),
+                name:$(this).find('.list-item-title').text()
+            }
+        });
+    });
+
+    //猜你喜欢
+    $('.tj-like').on('tap','.tj-list-item',function(){
+        var log = $(this).find('.list-item-title').data('log');
+        var lat = $(this).find('.list-item-title').data('lat');
+        if($(this).data('epsgyl01001')=='01'){
+            $.openWin({
+                name:'market',
+                animId : 2,
+                url:'wgtroot://mCheap/market/ui/market.html',
+                pageParam:{
+                    cltpit01id:$(this).data('epsgyl01002'),
+                    log : log ,
+                    lat : lat
+                }
+            });
+        }
+        else if($(this).data('epsgyl01001')=='02'){
+            var product={
+                time: $(this).data('epsgyl01003').substring(0,16),
+                epsmym01id:'', //菜谱流水号(为空即可)
+                cltpro01id: $(this).data('epsgyl01002'), //产品id
+                cltpro01001:$(this).data('name'), //产品名称
+                epsmym02001:'',//数量(为空即可)
+                //epsmym02002:$(this).parent().data('cltpro01004'),//计量单位 对应 cltpro01004
+                //epsmym02003:$(this).parent().data('cltpro01005')//民间计量单位 对应 cltpro01005
+            };
+            var price=[];
+            price.push($(this).data('cltprc05004'));
+            price.push($(this).data('cltprc05005'));
+            price.push($(this).data('cltprc05006'));
+            price.push($(this).data('cltprc05007'));
+            $.openWin({
+                name:'market_list',
+                animId : 2,
+                url:'wgtroot://mCheap/market_list/ui/market_list.html',
+                pageParam:{
+                    cltpro01id: $(this).data('epsgyl01002'),
+                    isfocus:'0',
+                    price:price,
+                    product:product
+                }
+            });
+        }
+        else{
+        }
+    });
+
+	/*
+	 * 猜你喜欢导航
+	 * */
+    $('.tj-like').on('tap','.list-item-dis',function(){
+        var title = ($(this).parent().find('.list-item-title').text()).trim();
+        var log = $(this).parent().find('.list-item-title').data('log');
+        var lat = $(this).parent().find('.list-item-title').data('lat');
+        $.openWin({
+            animId : 2,
+            name: "navigation",
+            url: 'wgtroot://mCheap/map/ui/navigation.html',
+            pageParam: {
+                lng:log,
+                lat:lat,
+                marketName:title
+            }
+        });
+        //location_map(lat,log,title);
+    });
+
+	/*点击收缩结果消失*/
+    $('.search-item-content').on('tap',function(){
+        $(".search-item-content").hide();
+        //$("body").css({"overflow":"auto"});
+        //document.documentElement.style.overflow="auto";
+        //document.body.style.overflow="auto";
+        //console.log('#########1:'+document.documentElement.style.overflow);
+        //console.log('#########2:'+document.body.style.overflow);
+        //$.refreshWin();
+    });
+    $(document).on('tap','.sort-item',function(){
+        $.openWin({
+            name:'search_cp',
+            animId : 2,
+            url:'wgtroot://mCheap/search_cp/ui/search_cp.html',
+            pageParam:{
+                name:$(this).find('span').text(),
+                categoryid:$(this).data('id')
+            }
+        });
+    });
+    $('.tj-caipu>.tj-more').on('tap',function(){
+        $.execScript({
+            winName:'caishi',
+            script:'$(".footer-item-a").eq(2).trigger("tap")'
+        });
+        $.execScript({
+            winName:'caishi',
+            frameName:'caipu',
+            script:'$(".sort-item").eq(0).trigger("tap")'
+        });
+    });
+    $('.mdui-slider-loop').on('tap','.mdui-slider-item',function(){
+        $.openWin({
+            name:'market',
+            animId : 2,
+            url:'wgtroot://mCheap/market/ui/market.html',
+            pageParam:{
+                cltpit01id:$(this).data('cltpit01id'),
+                log:$(this).data('log'),
+                lat:$(this).data('lat')
+            }
+        });
+    });
+
+    function openSearchWin() {
+        $.openWin({
+            name:'search',
+            animId : 0,
+            url:'wgtroot://mCheap/index_content/ui/search_result.html',
+            pageParam:{
+
+            }
+        });
+    }
+    $('.search-box').on('tap','#search, .search-img',openSearchWin);
+    $('#search').on('tap', openSearchWin);
+
+    /*
+     * 搜索框
+     * */
+	//$('.search-box').on('tap','.search-img',doSearchPro);
+	//$('#search').on('input propertychange', doSearchPro);  //搜索框内容改变时触发
+	function doSearchPro(){
+		var mc = $("#search").val();
+        var html = '';
+		if(mc){
+			$('.search-before-content').show();
+			$.request({
+				urlType: 'querySC',
+				data: {
+					"access_token": $.getStorage('access_token'),
+					mc : mc
+				}
+			}, function (json) {
+				if (json.success) {
+                    //showMask();  //添加蒙层
+//					alert(JSON.stringify(json)+"back");
+					$('.search-before-content').hide();
+					var len = json.data.length;
+					var data = json.data;
+					if(len==0){
+						html='<div class="search-item">暂无信息</div>';
+						$(".search-item-content").html(html).show();
+                        //$("body,html").css({"overflow":"hidden"});
+					}else{
+						for(var i=0;i<len;i++){
+							if(data[i].log){
+								html+='<div id="'+i+'" class="search-item" data-id="'+data[i].id+'" data-bz="'+data[i].bz+'" data-log="'+data[i].log+'" data-lat="'+data[i].lat+'">'+data[i].mz+'</div>';
+							}else{
+								html+='<div id="'+i+'" class="search-item" data-id="'+data[i].id+'" data-bz="'+data[i].bz+'">'+data[i].mz+'</div>';
+							}
+							if(data[i].scPrice){
+								var arr=[];
+								arr.push(data[i].scPrice.cltprc05004);
+								arr.push(data[i].scPrice.cltprc05005);
+								arr.push(data[i].scPrice.cltprc05006);
+								arr.push(data[i].scPrice.cltprc05007);
+								priceArr[data[i].id]=arr;
+							}
+						}
+						$(".search-item-content").html(html).show();
+                        /*var itemsHeight = $('.search-item').height()*$('.search-item').length;  //搜索内容总高度
+                        var containerHeight = $('.search-item-content').height();  //容器高度，即屏幕高度
+						if(itemsHeight < containerHeight){
+                            $("body").css({"overflow":"hidden"});
+                        }*/
+					}
+				}
+				else {
+					alert('网络错误');
+				}
+			});
+		}else{
+			//$.toast("请输入搜索内容");
+            //html='<div class="search-item">请输入搜索内容</div>';
+            $(".search-item-content").html(html).hide();
+            //$("body,html").css({"overflow":"auto"});
+		}
+	}
+	/*
+	 * 点击搜索结果跳转
+	 * */
+	$(document).on('tap','.search-item',function(){
+		$(this).css("background-color","green");
+		var id = $(this).data("id");
+		var price=priceArr[id];
+		var bz = $(this).data("bz");
+		$(".search-item-content").hide();
+        /*$("body,html").css({"overflow":"auto"});
+        $.refreshWin();*/
+		if(bz==1){
+			$.openWin({
+				name:'market',
+				animId : 2,
+				url:'wgtroot://mCheap/market/ui/market.html',
+				pageParam:{
+					cltpit01id : id,
+					price:price,
+					log:$(this).data("log"),
+					lat:$(this).data("lat")
+				}
+			});
+		}else{
+			$.openWin({
+				name:'market_list',
+				animId : 2,
+				url:'wgtroot://mCheap/market_list/ui/market_list.html',
+				pageParam:{
+					cltpro01id : id,
+					price:price
+				}
+			});
+		}
+	});
+	$('.saoma').on('tap',function(){
+		$.execScript({
+			winName:'caishi',
+			script:'$.closeWin()'
+		});
+	});
+	/*点击收缩结果消失*/
+	/*$('.search-item-content').on('tap',function(){
+		$(".search-item-content").hide();
+        $("body,html").css({"overflow":"auto"});
+	});*/
+
+
+    /*var arr1=["a","b","c"];
+    var arr2=["f","g"];*/
+    //比较两个数组是否有相同元素
+	function checkRefresh(arr1, arr2) {
+        var temp=[];
+        for(var s in arr1){
+            for(var x in arr2){
+                if(arr1[s]===arr2[x]){
+                    temp.push(arr1[s]);
+                }
+            }
+        }
+        if(temp.length==0){
+            return false;
+		}else{
+            return true; //只要有一个相同即为true
+		}
+    }
+    
+    /*function Stack() {//最多存储6个市场id
+		var items = [];
+		this.push = function (element) {
+			items.push(element);
+        };
+        this.pop = function () {
+			return items.pop();
+        };
+        this.getArr2 = function () {
+			return [items[items.length-3],items[items.length-2],items[items.length-1]];
+        };
+        this.getArr1 = function () {
+            return [items[items.length-6],items[items.length-5],items[items.length-4]];
+        };
+        this.isEmpty = function () {
+			return items.length == 0;
+        };
+        this.size = function () {
+			return items.length;
+        };
+        this.clear = function () {
+			items = [];
+        };
+        this.shift = function () {
+            return items.shift();
+        };
+        this.print = function () {
+			console.log(items.toString());
+        };
+    }*/
+</script>
+</body>
+</html>

@@ -1,0 +1,151 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8">
+    <title>mCollection</title>
+    <meta name="viewport" content="target-densitydpi=device-dpi,width=device-width, initial-scale=1,maximum-scale=1, user-scalable=no">
+    <meta name="apple-mobile-web-app-capable" content="yes">
+    <meta name="apple-mobile-web-app-status-bar-style" content="black">
+    <link rel="stylesheet" href="../../../static/mdui/css/mdui.min.css">
+    <link rel="stylesheet" href="../../../static/mCheap/css/mCommon.css">
+    <link rel="stylesheet" href="../css/caipu_wd.css">
+</head>
+<body>
+<div class="tj-list mdui-table-view">
+    <!--<div class="mdui-table-view-cell">-->
+        <!--<div class="mdui-slider-right mdui-disabled ">-->
+            <!--<a class="mdui-btn mdui-btn-red delete">删除</a>-->
+        <!--</div>-->
+
+        <!--<div class="mdui-slider-handle tj-list-item mdui-box">-->
+            <!--<div class="mdui-box-flex-1">-->
+                <!--<div class="list-item-title">双人青椒肉丝套餐对撒的空间的时间啊</div>-->
+                <!--<div class="list-item-sub mdui-ellipsis-2">青椒肉丝、炝炒土豆丝、蛋花汤但就是撒开发放大空间付款回到家撒娇点击撒娇</div>-->
+            <!--</div>-->
+            <!--<div class="edit">编辑</div>-->
+        <!--</div>-->
+    <!--</div>-->
+</div>
+<div class="add-new">
+    <div>添加新菜谱</div>
+</div>
+<!--页面-->
+<script src="../../../static/mdui/js/mdui.min.js"></script>
+<script src="../../../static/mCheap/js/mCheap.config.js"></script>
+<script src="../../../server.js"></script>
+<script>
+
+    var obj={};
+    $.uexWindowReady(function(){
+        var products={};
+        function setMenu(data) {
+            var html='';
+            for(var i=0;i<data.length;i++) {
+                products[data[i].epsmym01id]=data[i].userMenuProduct;
+                epsrmm01id =data[i].epsrmm01id ;
+                html += '<div class="mdui-table-view-cell">';
+                html += '<div class="mdui-slider-right mdui-disabled ">';
+                html += '<a class="mdui-btn mdui-btn-red delete">删除</a>';
+                html += '</div>';
+                html += '<div class="mdui-slider-handle tj-list-item mdui-box" data-epsrmm01id="'+epsrmm01id+'" data-epsmym01id="'+data[i].epsmym01id+'" data-epsmym01001="'+data[i].epsmym01001+'">';
+//                html += '<div>';
+//                html += '<img src="../images/01/qjrs.jpg">';
+//                html += '</div>';
+                html += '<div class="mdui-box-flex-1">';
+                html += '<div class="list-item-title">' + data[i].epsmym01001 + '</div>';
+                html += '<div class="list-item-sub mdui-ellipsis-2">';
+                for(var j=0;j<data[i].userMenuProduct.length;j++) {
+                    html+=data[i].userMenuProduct[j].cltpro01001+'   ';
+                }
+                html+='</div>';
+                html += '</div>';
+                html += '<div class="edit">编辑</div>';
+                html += '</div>';
+                html += '</div>';
+            }
+            $('.tj-list').html(html);
+        }
+        $.request({
+            urlType:'menu',
+            data:{
+                "access_token": $.getStorage('access_token')
+            }
+        },function(data){
+        	obj.epsrtu01id=data.data[0].epsrtu01id;
+            if(data.success) {
+               setMenu(data.data)
+            }
+            else {
+                alert('网络错误')
+            }
+        });
+        $('.tj-list').on('tap','.delete',function(){
+            $.request({
+                urlType:'deleteMenu',
+                data:{
+                    "access_token": $.getStorage('access_token'),
+                    epsmym01id:$(this).parent().siblings('.tj-list-item').data('epsmym01id')
+                }
+            },function(data){
+                if(data.success) {
+                    $(this).parent().parent().remove();
+                    $.refreshWin();
+                }
+                else {
+                    alert('网络错误')
+                }
+            });
+        });
+        (function(){
+//            $('.edit').on('tap',function(e){
+//                $.openWin({
+//                    name:"caipu_menu",
+//                    url:'wgtroot://mCheap/caipu/ui/menu.html',
+//                    pageParam:{
+//                    }
+//                });
+//                e.stopPropagation();
+//            });
+            $(document).on('tap','.tj-list-item',function(){
+                epsrmm01id=$(this).data("epsrmm01id");
+                $.openWin({
+                    name:"menu",
+        			animId : 2,
+                    url:'wgtroot://mCheap/caipu/ui/menu.html',
+                    pageParam:{
+                        userMenuProduct:products[$(this).data('epsmym01id')],//菜单具体信息
+                        epsmym01001:$(this).data('epsmym01001'),//菜单名称
+                        epsmym01id:$(this).data('epsmym01id'),
+                        epsrtu01id:obj.epsrtu01id ,
+                        epsrmm01id:epsrmm01id
+                    }
+                });
+            });
+            $(document).on('tap','.add-new',function(){
+                $.openWin({
+                    name:"menu_new",
+        			animId : 2,
+                    url:'wgtroot://mCheap/caipu/ui/menu_new.html',
+                    pageParam:{
+
+                    }
+                });
+            })
+
+        })();
+    });
+    //打开新的win的示例方法
+    //			var frameData = {};
+    //			frameData.top_nav_title = title;
+    //			frameData.frameUrl = frameUrl;
+    //			frameData.framePageData = {};
+    //			frameData.winName = 'top_first';
+    //			$.openWin({
+    //				name:"top_first",
+    //				animId : 2,
+    //				url:'wgtroot://index.html',
+    //				pageParam: frameData
+    //			});
+</script>
+</body>
+</html>

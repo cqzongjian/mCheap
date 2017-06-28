@@ -1,0 +1,66 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8">
+    <title>mCollection</title>
+    <meta name="viewport" content="target-densitydpi=device-dpi,width=device-width, initial-scale=1,maximum-scale=1, user-scalable=no">
+    <meta name="apple-mobile-web-app-capable" content="yes">
+    <meta name="apple-mobile-web-app-status-bar-style" content="black">
+    <link rel="stylesheet" href="../../../static/mdui/css/mdui.min.css">
+    <link rel="stylesheet" href="../../../static/mCheap/css/mCommon.css">
+    <link rel="stylesheet" href="../css/suggest.css">
+</head>
+<body>
+<div class="header-box mdui-bar mdui-bar-nav">
+    <div class="header">
+        <div class="back mdui-action-back"><img src="../images/back.png"></div>
+        <div class="title">建议与投诉</div>
+    </div>
+</div>
+<div class="sort mdui-box">
+    <div class="mdui-box-flex-1 sort-item">
+        <div class="sort-item-text">建议与投诉</div>
+    </div>
+    <div class="sort-item-gap">|</div>
+    <div class="mdui-box-flex-1 sort-item">
+        <div class="sort-item-text">我的建议与投诉</div>
+    </div>
+</div>
+<div class="mdui-content" id="content_box"></div>
+<!--页面-->
+<script src="../../../static/mdui/js/mdui.min.js"></script>
+<script src="../../../static/mCheap/js/mCheap.config.js"></script>
+<script>
+    $.uexWindowReady(function(){
+        var ele=$('.sort-item');
+        ele.on('tap',function(){
+            var target=$(this).find('.sort-item-text');
+            if(!target.hasClass('sort-item-on')) {
+                ele.find('.sort-item-text').removeClass('sort-item-on');
+                target.addClass('sort-item-on');
+                var text = $(this).find('.sort-item-text').text();
+                if (text == '建议与投诉') {
+                    $.openFrameByEle('content_box', {
+                        name: 'complaint_suggest',
+                        winName: 'suggest',
+                        url: 'wgtroot://mCheap/complaint_suggest/ui/complaint_suggest.html',
+                        pageParam: {}
+                    });
+                    $.closeFrame('my_complaint_suggest')
+                }
+                else if (text == '我的建议与投诉') {
+                    $.openFrameByEle('content_box', {
+                        name: 'my_complaint_suggest',
+                        winName: 'suggest',
+                        url: 'wgtroot://mCheap/complaint_suggest/ui/my_complaint_suggest.html',
+                        pageParam: {}
+                    });
+                    $.closeFrame('complaint_suggest')
+                }
+            }
+        });
+        ele.eq(0).trigger('tap');
+    });
+</script>
+</body>
+</html>

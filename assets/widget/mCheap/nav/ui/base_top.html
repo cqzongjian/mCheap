@@ -1,0 +1,43 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8">
+    <title>mCollection</title>
+    <meta name="viewport" content="target-densitydpi=device-dpi,width=device-width, initial-scale=1,maximum-scale=1, user-scalable=no">
+    <meta name="apple-mobile-web-app-capable" content="yes">
+    <meta name="apple-mobile-web-app-status-bar-style" content="black">
+    <link rel="stylesheet" href="../../../static/mdui/css/mdui.min.css">
+    <link rel="stylesheet" href="../../../static/mCheap/css/mCommon.css">
+    <link rel="stylesheet" href="../css/base_top.css">
+</head>
+<body>
+<div class="header-box mdui-bar mdui-bar-nav">
+    <div class="header">
+        <div class="back mdui-action-back"><img src="../image/back.png"></div>
+        <div class="title"></div>
+    </div>
+</div>
+<div class="mdui-content" id="content_box"></div>
+<!--页面-->
+<script src="../../../static/mdui/js/mdui.min.js"></script>
+<script src="../../../static/mCheap/js/mCheap.config.js"></script>
+<!--扩展组件/第三方/工程js-->
+<script>
+    $.uexWindowReady(function() {
+        var pageData=$.pageParam;
+        var jsonData=$.strToJson(pageData);
+        var frameName=jsonData.frameName;
+        var frameUrl=jsonData.frameUrl;
+        var winTitle=jsonData.winTitle;
+        $('.header>.title').html(winTitle);
+        $.openFrameByEle('content_box', {
+            name: frameName,
+            winName: 'base_top',
+            url:frameUrl,
+            pageParam:{
+            }
+        });
+    })
+</script>
+</body>
+</html>

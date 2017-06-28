@@ -1,0 +1,16 @@
+/*处理分辨率低于320px的手机，比如iPhone5，缩小字体*/
+@media screen and (max-width:321px){
+    *{font-size: 85%}
+}
+/*设置容器div的背景颜色*/
+.mdui-content{
+    background-color: #3BA15C;
+}
+/*设置通用背景颜色，主绿色*/
+.m-bg{
+    background-color: #06c1ae;
+}
+/*设置通用字体颜色，主绿色*/
+.m-color-green{
+    color: #06c1ae;
+}

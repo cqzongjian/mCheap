@@ -1,0 +1,283 @@
+*{
+    font-family: "Microsoft YaHei";
+}
+body{
+    background-color: #FFFFFF;
+    padding-top: 2.75rem;
+}
+.sort-box{
+    width: 20%;
+    text-align: center;
+}
+.sort-item{
+    padding: 0 0.2rem 0 0.2rem;
+}
+.pro-img{
+    width: 2rem;
+    height: 2rem;
+}
+/*--------------------------------------------*/
+.header{
+    background-color: #3BA15C;
+}
+.saoma{
+    padding-right: 1rem;
+    padding-top: 0.75rem;
+    padding-left: 0.625rem;
+}
+.saoma>img{
+    width:auto;
+    height: 1.25rem;
+}
+#search{
+    border: none;
+    height: 1.75rem;
+}
+.search-box{
+    border: 1px solid #cccccc;
+    border-radius: 5px;
+    background-color: #FFFFFF;
+    height: 1.75rem;
+    margin-top: 0.5rem;
+    margin-bottom: 0.5rem;
+    overflow: hidden;
+}
+.search-img{
+    height:1.75rem;
+    line-height: 1.75rem;
+    margin-right: 0.5rem;
+    margin-top: 0.25rem;
+    margin-bottom: 0.25rem;
+    padding-left: 2rem;
+}
+.search-img>img{
+    width: 1.25rem;
+    height: 1.25rem;
+}
+.message>img{
+    width:auto;
+    height: 1.25rem
+}
+/*.message>.message-num{*/
+    /*position: absolute;*/
+    /*display: block;*/
+    /*border-radius: 0.8rem;*/
+    /*background-color:#3BA15C ;*/
+    /*top:-0.5rem;*/
+    /*left: 1.2rem;*/
+    /*color: #FFFFFF;*/
+    /*font-weight: normal;*/
+    /*font-size: 0.8rem;*/
+    /*display: none;*/
+/*}*/
+
+.searching{
+    color: white;
+    margin-top: 10rem;
+    width: 100%;
+    text-align: center;
+}
+.sort{
+    padding-top: 1rem;
+    padding-bottom: 0.25rem;
+}
+.sort-two{
+    padding-top: 0.25rem;
+    padding-bottom: 1rem;
+}
+.sort>div>a{
+    display: block;
+    width: 3rem;
+    margin: 0 auto;
+    text-align: center;
+    color: #000000;
+}
+.sort-two>div>a{
+    display: block;
+    width: 3rem;
+    margin: 0 auto;
+    text-align: center;
+    color: #000000;
+}
+.sort-two>div>a>img{
+    width: 2rem;
+    height: auto;
+}
+.sort>div>a>img{
+    width: 2rem;
+    height: auto;
+}
+.tj-market>.tj-title>img,.tj-focusMarket>.tj-title>img{
+    position: relative;
+    top: 0.2rem;
+}
+.star{
+    height: 1rem;
+    line-height: 1rem;
+}
+.star>img{
+    height: 0.8rem;
+    width: auto;
+}
+.market-address,.market-yysj{
+    text-overflow:ellipsis;
+    overflow: hidden;
+    white-space:nowrap;
+    font-size: .8rem;
+    font-weight: normal;
+    color: #666666;
+    height:1rem;
+    line-height: 1rem;
+    padding-left: 1rem;
+}
+.usual-drug{
+    border-top: 1px solid #cccccc;
+    border-bottom: 1px solid #cccccc;
+}
+.usual-drug-title{
+    padding:0.25rem  0  0.25rem 1rem;
+    border-bottom: 1px solid #cccccc;
+}
+.usual-drug-title>img{
+    width: 1rem;
+    height: 1rem;
+}
+.tj-market .list-item-title,.tj-focusMarket .list-item-title{
+    padding-right: 3rem;
+}
+.market-address{
+    background: url("../images/dis.png") no-repeat left center;
+    background-size: 0.8rem auto;
+}
+.market-yysj{
+    background: url("../images/time.png") no-repeat left center;
+    background-size: 0.8rem auto;
+}
+.market-dis{
+    position: absolute;
+    top: 0.7rem;
+    right: 1rem;
+    font-size: 0.9rem;
+    color: #666666;
+}
+
+
+.tj-title{
+    padding:0.5rem  1rem;
+    border-bottom: 1px solid #cccccc;
+}
+.tj-title>img{
+    width: 1rem;
+    height: 1rem;
+}
+.tj-like>.tj-title>img{
+    position: relative;
+    top: 0.2rem;
+}
+.tj-caipu,.tj-like,.tj-market,.tj-focusMarket{
+    position: relative;
+}
+.tj-more{
+    position: absolute;
+    right: 1rem;
+    top: 0.5rem;
+    color:#696969;
+    font-size: 0.9rem;
+}
+.tj-more>img{
+    height: 0.6rem;
+    width: auto;
+    position: relative;
+}
+.tj-list-item{
+    padding: 0.5rem 1rem;
+    border-bottom: 1px solid #cccccc;
+    position: relative;
+}
+.tj-list-item:last-child{
+    border: none;
+}
+.tj-list-item>div:nth-child(2){
+    padding-left: 0.5rem;
+}
+.list-item-title{
+    text-overflow:ellipsis;
+    overflow: hidden;
+    white-space:nowrap;
+    height: 1rem;
+    line-height: 1rem;
+    color: #000000;
+    margin-top: 0.3rem;
+}
+.list-item-sub{
+    margin-top: 0.4rem;
+    font-size: 0.75rem;
+    line-height: 1rem;
+    color: #929292;
+}
+.tj-list-item>div>img{
+    width: 5rem;
+    height: 4rem;
+    border-radius: 5px;
+}
+.list-item-dis{
+    padding: 0.5rem 1rem 0 1rem;
+}
+.list-item-dis>img{
+   width: auto;
+    height: 0.9rem;
+}
+.tj-like .tj-list-item{
+    border: none;
+}
+.tj-like>.tj-list>div{
+    border-bottom: 1px solid #CCCCCC;
+}
+.search-item{
+    text-align: center;
+    padding: 0.5rem 0 0.5rem 0;
+    border-bottom:1px solid green;
+    background-color: white;
+}
+.search-item-content{
+    height: 100%;
+    width: 100%;
+    position: fixed;
+    z-index: 999;
+    background: rgba(0,0,0,0.3);
+    overflow: auto;
+    display:none;
+}
+.search-before-content{
+    height: 100%;
+    width: 100%;
+    position: fixed;
+    z-index: 999;
+    background: rgba(0,0,0,0.3);
+    overflow: auto;
+    display:none;
+}
+.mask{
+    position: absolute;
+    width: 100%;
+    top: 0;
+    bottom: 0;
+    z-index: 999;
+    background-color:rgba(0,0,0,0.3);
+    color: #ffffff;
+}
+.mdui-slider .mdui-slider-group .mdui-slider-item img{
+    height: 8rem;
+}
+.mask-title{
+    position: absolute;
+    left: 1rem;
+    top: 1rem;
+    font-size: 1.2rem;
+}
+.mask-sub{
+    position: absolute;
+    left: 1rem;
+    top: 2.5rem;
+    font-size: 0.8rem;
+}

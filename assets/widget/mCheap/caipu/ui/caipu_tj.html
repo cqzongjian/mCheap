@@ -1,0 +1,120 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8">
+    <title>mCollection</title>
+    <meta name="viewport" content="target-densitydpi=device-dpi,width=device-width, initial-scale=1,maximum-scale=1, user-scalable=no">
+    <meta name="apple-mobile-web-app-capable" content="yes">
+    <meta name="apple-mobile-web-app-status-bar-style" content="black">
+    <link rel="stylesheet" href="../../../static/mdui/css/mdui.min.css">
+    <link rel="stylesheet" href="../../../static/mCheap/css/mCommon.css">
+    <link rel="stylesheet" href="../css/caipu_tj.css">
+</head>
+<body>
+<div class="data">
+    <!--<div class="data-item mdui-box">-->
+        <!--<div class=" data-item-main mdui-box-flex-1 mdui-box">-->
+            <!--<div class="item-img"></div>-->
+            <!--<div class="item-title-group mdui-box-flex-1">-->
+                <!--<div class="item-title">双人青椒肉丝</div>-->
+                <!--<div class="item-sub">青椒、肉丝、</div>-->
+            <!--</div>-->
+        <!--</div>-->
+        <!--<div class="add"></div>-->
+    <!--</div>-->
+</div>
+<!--页面-->
+<script src="../../../static/mdui/js/mdui.min.js"></script>
+<script src="../../../static/mCheap/js/mCheap.config.js"></script>
+<script src="../../../server.js"></script>
+<script src="../../../static/mdui/js/imageHandler.js"></script>
+<script src="../../../static/mdui/js/imageConfig.js"></script>
+<script>
+    var image;
+    $.uexWindowReady(function(){
+        image = $.imageHandler;
+        image.init($.imageOptions);
+        /*
+        * 请求今日菜谱数据
+        * */
+        $.request({
+            urlType:'queryDayRecommend',
+            data:{
+                "access_token": $.getStorage('access_token')
+            }
+        },function(data){
+            if(data.success) {
+                setDayList(data.data);
+            }
+            else {
+                //$.toast('网络错误')
+            }
+        });
+        /*
+        * 点击添加到我的菜谱
+        * */
+        $(document).on('tap','.add',function(event){
+            var epsrmm01id=$(this).parent().find('.data-item-main').data('epsrmm01id');
+            $.request({
+                urlType:'addRecommendMenu',
+                data:{
+                    "access_token": $.getStorage('access_token'),
+                    epsrmm01id : epsrmm01id
+                }
+            },function(data){
+                if(data.success) {
+                    $.toast('添加成功！');
+                }
+                else {
+                    $.toast(data.message)
+                }
+            });
+        });
+        //点击菜谱列表
+        $(document).on('tap','.data-item-main',function(){
+            var epsrmm01id=$(this).parent().find('.data-item-main').data("epsrmm01id");
+            var name=$(this).parent().find('.item-title').text();
+            $.openWin({
+                name:"caipu_detail",
+                animId : 2,
+                url:'wgtroot://mCheap/caipu/ui/caipu_detail.html',
+                pageParam:{
+                    epsrmm01id : epsrmm01id,
+                    name:name
+                }
+            });
+        });
+        function setDayList(data){
+            var str='';
+            var html='';
+            for(var i=0;i<data.length;i++){
+                image.setCount(data.length);
+                str='适合人数:' + data[i].epsrmm01003 + '人&nbsp;&nbsp;&nbsp;&nbsp;预算价格:' + data[i].epsrmm01004+'元';
+                html+='<div class="data-item mdui-box">';
+                html +='<div class=" data-item-main mdui-box-flex-1 mdui-box" data-epsrmm01id="' + data[i].epsrmm01id +'">';
+//              html+='<div class="item-img"><img src="'+ $.serverSettings.serverPath+'/mobile/mcheap/mcheapAction!getPhoto.do?access_token='+ $.getStorage('access_token')+'&url='+data[i].epsrmm04002+ '"/></div>';
+                html+='<div class="item-img"><img class="jrcp-img" imgid="' +data[i].epsrmm01id+'" imgsrc="'+ $.serverSettings.serverPath+'/mobile/mcheap/mcheapAction!getPhoto.do?url='+data[i].epsrmm04002+'&access_token='+ $.getStorage('access_token')+ '" src=""/></div>';
+
+                html+='<div class="item-title-group mdui-box-flex-1">';
+                html+='<div class="item-title">'+data[i].epsrmm01001+'</div>';
+                html+='<div class="item-sub">'+str+'</div>';
+                html+='</div>';
+                html+='</div>';
+                html+='<div class="add"></div>';
+                html+='</div>';
+            }
+            $('.data').html(html);
+
+            $($(".data").find(".jrcp-img")).each(function(index,each){
+                var $img = $(each);
+                image.setImage($img.attr("imgid"),$img.attr("imgsrc"),ImageType.cookbook,$img);
+            });
+
+            $('img').on('error',function(){
+                $(this).attr('src','../../../public/images/noImg.jpg');
+            });
+        }
+    });
+</script>
+</body>
+</html>

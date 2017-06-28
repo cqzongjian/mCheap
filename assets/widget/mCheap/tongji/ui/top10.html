@@ -1,0 +1,181 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8">
+    <title>mCollection</title>
+    <meta name="viewport" content="target-densitydpi=device-dpi,width=device-width, initial-scale=1,maximum-scale=1, user-scalable=no">
+    <meta name="apple-mobile-web-app-capable" content="yes">
+    <meta name="apple-mobile-web-app-status-bar-style" content="black">
+    <link rel="stylesheet" href="../../../static/mdui/css/mdui.min.css">
+    <link rel="stylesheet" href="../../../static/mCheap/css/mCommon.css">
+    <style>
+        *{
+            color: #666666;
+        }
+        body{
+            background-color: #ffffff;
+        }
+        .top{
+            height: 2rem;
+            line-height: 2rem;
+            padding: 0 1rem;
+            background-color: #ffffff;
+            font-weight: 600;
+            border-bottom: 1px solid #CCCCCC;
+        }
+        .arrowRight{
+            width:1rem ;
+            background: url("../images/right.png") no-repeat right center;
+            background-size: auto 1rem;
+        }
+        .list{
+            background-color: #ffffff;
+        }
+        .list-item{
+            padding: .5rem 0 0 1rem;
+            font-weight: 600;
+        }
+        .list-item>div{
+            padding-bottom: .5rem;
+        }
+        .item-left{
+            margin-right: 1rem;
+        }
+        .item-left>div{
+            padding:0  .5rem;
+            border-radius:.5rem;
+        }
+        .item-title{
+            border-bottom: 1px solid #CCCCCC;
+        }
+        .item-right{
+            border-bottom: 1px solid #CCCCCC;
+            padding-right: 1rem;
+        }
+        .first .item-left>div{
+            background-color:#FE6869 ;
+            color: #ffffff;
+        }
+        .first .item-right{
+            color:#FE6869;
+        }
+        .second .item-left>div{
+            background-color:#FF9F23 ;
+            color: #ffffff;
+        }
+        .second .item-right{
+            color: #FF9F23;
+        }
+        .third .item-left>div{
+            background-color:#FED131 ;
+            color: #ffffff;
+        }
+        .third .item-right{
+            color: #FED131;
+        }
+    </style>
+</head>
+<body>
+<div class="top mdui-box">
+    <div class="mdui-box-flex-1 product-name" data-id="2133">白菜</div>
+    <div class="arrowRight"></div>
+</div>
+<div class="list"></div>
+<script src="../../../static/mdui/js/mdui.min.js"></script>
+<script src="../../../static/mCheap/js/mCheap.config.js"></script>
+<script src="../../../server.js"></script>
+<script src="../js/echarts.min.js"></script>
+<script>
+    var top10Class=function(product_Id){
+        this.product_Id=product_Id;
+        this.init=function(){
+            this.events();
+            this.request(this.product_Id);
+        }
+    };
+    top10Class.prototype={
+        events:function(){
+            $('.top').on('tap',function(){
+                $.openWin({
+                    name:"selectProduct",
+                    animId : 2,
+                    url:'wgtroot://mCheap/tongji/ui/selectProduct.html',
+                    pageParam:{
+                        wName:'top10'
+                    }
+                });
+            })
+        },
+        creatHtml:function(data){
+            var len=data.length,i= 0,arr=['first','second','third'];
+            var html='';
+            for(i;i<len;i++){
+                if(i<3){
+                   html+=' <div class="list-item mdui-box '+arr[i]+'">';
+                }
+                else{
+                    html+='<div class="list-item mdui-box">';
+                }
+                html+='<div class="item-left">';
+                if(i<9) {
+                    html += '<div>' + '0' + (i + 1) + '</div>';
+                }
+                else
+                {
+                    html += '<div>'+ (i + 1) + '</div>';
+                }
+                html+='</div>';
+                html+='<div class="mdui-box-flex-1 item-title">'+data[i].colletionName+'</div>';
+                html+='<div class="item-right">'+data[i].upPrice+'</div>';
+                html+='</div>';
+            }
+            $('.list').html(html);
+        },
+        request:function(cltpro01id){
+            var that=this;
+            $.request({
+                urlType: 'tenCollections',
+                data: {
+                    "access_token": $.getStorage('access_token'),
+                    cltpro01id:cltpro01id
+                }
+            }, function (data) {
+                if (data.success) {
+                    that.creatHtml(data.data);
+                }
+                else {
+                    //$.toast('网络错误');
+                }
+            });
+        }
+
+    };
+    $.uexWindowReady(function() {
+        var product_Id = $('.product-name').data('id');
+        var init = new top10Class(product_Id);
+        init.init();
+        init = null;
+    });
+
+    function changeProduct(){
+        var name = [];
+        var proId = '';
+        var productName = '';
+        for(var t=0;t<arguments.length;t++){
+            if(t!=arguments.length-1){
+                name[t]=String.fromCharCode(arguments[t]);
+            }else{
+                proId=arguments[t];
+            }
+        }
+        for(var s=0;s<name.length;s++){
+            productName +=name[s];
+        }
+        $('.product-name').html(productName).data('id',proId);
+        var newPro=new top10Class(proId);
+        newPro.init();
+        newPro = null;
+    }
+</script>
+</body>
+</html>

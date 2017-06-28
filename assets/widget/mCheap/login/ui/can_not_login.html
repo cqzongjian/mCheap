@@ -1,0 +1,266 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8">
+    <title>mCollection</title>
+    <meta name="viewport" content="target-densitydpi=device-dpi,width=device-width, initial-scale=1,maximum-scale=1, user-scalable=no">
+    <meta name="apple-mobile-web-app-capable" content="yes">
+    <meta name="apple-mobile-web-app-status-bar-style" content="black">
+    <link rel="stylesheet" href="../../../static/mdui/css/mdui.min.css">
+    <link rel="stylesheet" href="../../../static/mCheap/css/mCommon.css">
+    <link rel="stylesheet" href="../css/login.css">
+    <style>
+        .next,.sure{
+            text-align: center;
+            line-height: 2.5rem;
+            height: 2.5rem;
+            width: 6rem;
+            margin-top:1rem;
+            margin-left:1rem;
+            margin-right:1rem;
+            border-radius: 0.5rem;
+            background-color: #3BA15C;
+            color: white;
+        }
+        .next-off{
+            font-size: 1.5rem;
+            text-align: center;
+            line-height: 2.5rem;
+            height: 2.5rem;
+            width: 6rem;
+            margin-top:1rem;
+            margin-left:1rem;
+            margin-right:1rem;
+            border-radius: 0.5rem;
+            background-color: #CCCCCC;
+            color: #3BA15C;
+        }
+        .back-msg{
+            font-size: 0.8rem;
+            text-align: center;
+            height: 2.5rem;
+            width: 6rem;
+            margin-top:1rem;
+            margin-left:1rem;
+            margin-right:1rem;
+            border-radius: 0.5rem;
+            background-color: #E6EAE8;
+            color: #3BA15C;
+        }
+        .sure-pwd{
+            padding: 1rem;
+        }
+        .show-time{
+            display: none;
+        }
+        .change-pwd{
+            display: none;
+        }
+    </style>
+</head>
+<body>
+<div class="header-box mdui-bar mdui-bar-nav">
+    <div class="header">
+        <div class="title">重置密码</div>
+        <div class="cancel mdui-action-back touch">取消</div>
+    </div>
+</div>
+<div class="mdui-content" id="content_box">
+    <div style="padding: 1rem;">
+        <input type="text" id="username" placeholder="请输入您的账号或手机号"/>
+    </div>
+    <div class="mdui-box get-safe-code">
+        <div class="next get-safe-box">
+            <span class="show-text">获取验证码</span>
+            <span class="show-time"></span>
+        </div>
+        <div class="back-msg mdui-box-flex-1"></div>
+    </div>
+    <div class="change-pwd">
+        <div class="sure-pwd">
+            <input type="password" id="pwd" placeholder="输入新密码">
+            <input type="password" id="pwd-new" placeholder="确认新密码">
+            <input type="number" id="aqm" placeholder="安全码">
+        </div>
+        <div>
+            <div class="sure">提交</div>
+        </div>
+    </div>
+</div>
+<!--页面-->
+<script src="../../../static/mdui/js/mdui.min.js"></script>
+<script src="../../../static/mCheap/js/mCheap.config.js"></script>
+<script src="../../../server.js"></script>
+<!--扩展组件/第三方/工程js-->
+<script>
+    var pageObj={time:59};
+
+    $('.get-safe-code').on('tap','.next',function(){
+        var username=$('#username').val();
+        if(username){
+            var mark=$(this).text().trim();
+            if(mark=='获取验证码'){
+                getSafeCode(username);
+                showTime();
+            }else{
+                $.toast('请耐心等待!');
+            }
+        }else{
+            $.toast("请输入您的账号或手机号");
+        }
+    });
+
+
+    //获取安全码
+    function getSafeCode(username){
+        $('.back-msg').html('请等待!');
+        $.request({
+            urlType: 'forgetCode',
+            data: {
+                "access_token": $.getStorage('access_token'),
+                account: username
+            }
+        }, function (json) {
+//console.log('json1111111:'+JSON.stringify(json));
+            if (json.success) {
+                if(json.message){
+                    $('.back-msg').html(json.message);
+                    clearTime();
+                }else{
+//                    alert(JSON.stringify(json)+")))))");
+//                    pageObj.code=json.data.code;
+                    pageObj.phone=json.data.epsrtu01004;
+                    var talk='已向手机号码'+pageObj.phone+'发送了验证码!';
+                    $('.back-msg').html(talk);
+                    $('.change-pwd').show();
+                }
+            }
+        });
+    }
+
+    $("#pwd").focus(function(){
+        clearTime();
+    });
+
+
+    function showTime(){
+        $('.get-safe-box').removeClass('next').addClass('next-off');
+        $('.show-text').hide();
+        $('.show-time').show();
+        if(pageObj.time==59){
+            pageObj.iD=setInterval(function(){
+                if(pageObj.time>-1){
+                    var time=pageObj.time;
+                    $('.show-time').html(time);
+                    pageObj.time--;
+                }else{
+                    pageObj.time=59;
+                    window.clearInterval(pageObj.iD);
+                    $('.show-text').show();
+                    $('.show-time').html('').hide();
+                    $('.get-safe-box').removeClass('next-off').addClass('next');
+                }
+            },1000);
+        }else{
+            pageObj.time=59;
+        }
+    }
+
+    function clearTime(){
+        window.clearInterval(pageObj.iD);
+        $('.show-text').show();
+        $('.show-time').html('').hide();
+        $('.get-safe-box').removeClass('next-off').addClass('next');
+    }
+
+    $("#pwd-new").blur(function(){
+        var pwd1=$('#pwd').val(),pwd2=$('#pwd-new').val();
+        if(pwd1&&pwd2){
+            if(pwd1!=pwd2){
+                alert("密码不一致");
+            }
+        }else{
+            $.toast('请输入密码');
+        }
+    });
+
+    $("#pwd").blur(function(){
+        $('.back-msg').html('');
+        var pwd1=$('#pwd').val();
+        var reg = /[\u4E00-\u9FA5\uF900-\uFA2D]/;
+        if(reg.test(pwd1)){
+            $.toast('密码不能包含中文字符');
+        }else{
+
+        }
+    });
+
+//    $(document).on('tap','.sure',function(){
+//        var tj=$('.sure').html();
+//        if(tj=='提交'){
+//            var pwd1=$('#pwd').val(),pwd2=$('#pwd-new').val(),aqm=$('#aqm').val();
+//            if(aqm==pageObj.code){
+//                if(pwd1&&pwd2&&(pwd1==pwd2)){
+//                    $('.sure').html('已提交');
+//                    $.request({
+//                        urlType: 'checkMessageCode',
+//                        data: {
+//                            "access_token": $.getStorage('access_token'),
+//                            telnum: pageObj.phone,
+//                            password:pwd1,
+//                            valiCode:aqm
+//                        }
+//                    }, function (json) {
+//                        if (json.success) {
+//                            $.toast(json.message);
+//                            $('.sure').html('提交');
+//                        }else{
+//                            $('.sure').html('提交');
+//                        }
+//                    });
+//                }else{
+//                    $.toast('输入的密码不正确');
+//                }
+//            }else{
+//                $.toast('验证码不正确');
+//            }
+//        }else{
+//            $.toast('请勿重复提交');
+//        }
+//    })
+
+    $(document).on('tap','.sure',function(){
+        var tj=$(this).html();
+        if(tj=='提交'){
+            var pwd1=$('#pwd').val(),pwd2=$('#pwd-new').val(),aqm=$('#aqm').val();
+            if(aqm&&pwd1&&pwd2&&(pwd1==pwd2)){
+                $('.sure').html('已提交');
+                $.request({
+                    urlType: 'checkMessageCode',
+                    data: {
+                        "access_token": $.getStorage('access_token'),
+                        telnum: pageObj.phone,
+                        password:pwd1,
+                        valiCode:aqm
+                    }
+                }, function (json) {
+                    if (json.success) {
+                        $.toast(json.message);
+                        $('.sure').html('提交');
+                    }else{
+                        $.toast(json.message);
+                        $('.sure').html('提交');
+                    }
+                });
+            }else{
+                $.toast('输入的密码不正确或无验证码');
+            }
+        }else{
+            $.toast('请勿重复提交');
+        }
+    })
+
+
+</script>
+</body>
+</html>

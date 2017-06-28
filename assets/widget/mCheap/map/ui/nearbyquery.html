@@ -1,0 +1,65 @@
+<!DOCTYPE html>
+<html>
+<head>
+	 <meta http-equiv="Content-Type" content="text/html; charset=utf-8"/>
+    <meta name="viewport" content="initial-scale=1.0, user-scalable=no"/>
+<!--
+	<meta name="viewport" content="initial-scale=1.0, user-scalable=no" />
+-->
+<!--
+ <meta name="viewport" content="target-densitydpi=device-dpi,width=device-width, initial-scale=1,maximum-scale=1, user-scalable=no">
+-->  
+    <meta name="apple-mobile-web-app-capable" content="yes">
+    <meta name="apple-mobile-web-app-status-bar-style" content="black">	
+	<link rel="stylesheet" href="../css/nearsearch.css">
+	
+	<script type="text/javascript" src="../js/mapkey.js"></script>	
+	<script src="../../../static/mdui/js/mdui.js"></script>
+	<script src="../../../server.js"></script>
+    <script type="text/javascript" src="../js/infobox.js"></script> 
+
+ 	<title> 价格地图</title>
+</head>
+<body style="-webkit-user-select: none;">
+<div class="c1">	     
+         <div class="nearly"><div class="nearfj">附近</div><img src="../images/down.png" class="nearim" /><img src="../images/lvup.png" class="nearlv"/></div>  
+         <img alt="" src="../images/hddq.png" class="imghddq" onclick="initInfo();">
+		 <img src="../images/icon_27.png" class="imgdw"/>
+		 <input id="suggestId" placeholder="请输入购物点地址" type="text" class="textStyle"/>
+		 <img  src="../images/chazhao.png" class="imgdv" onclick="searchInfo();">	
+		  
+  </div> 
+  
+   <div class="nearlbs">
+                  <div class="bdbtm">   <div class="nearlb" id="trigger0"><img src="../images/gou1.png" style="display:none; position: absolute;margin-left: -0.8rem; top: 0.1rem;"><span class="jlstyle" style="display:none">0</span><span class="jlstyle">附近</span></div></div>
+                  <div class="bdbtm">   <div class="nearlb" id="trigger1"><img src="../images/gou1.png" style="display:none; position: absolute;margin-left: -0.8rem; top: 0.1rem;"><span class="jlstyle">1</span><span class="jlstyle">km</span></div></div>
+                  <div class="bdbtm">  <div class="nearlb" id="trigger2"><img src="../images/gou1.png" style="display:none; position: absolute;margin-left: -0.8rem; top: 0.1rem;"><span class="jlstyle">2</span><span class="jlstyle">km</span></div></div>
+                  <div class="bdbtm">  <div class="nearlb" id="trigger3"><img src="../images/gou1.png"style="display:none; position: absolute;margin-left: -0.8rem; top: 0.1rem;"><span class="jlstyle">3</span><span class="jlstyle">km</span></div></div>
+                  <div class="bdbtm">  <div class="nearlb" id="trigger4"><img src="../images/gou1.png" style="display:none; position: absolute;margin-left: -0.8rem; top: 0.1rem;"><span class="jlstyle">4</span><span class="jlstyle">km</span></div></div>
+                  <div class="bdbtm">  <div class="nearlb" id="trigger5"><img src="../images/gou1.png" style="display:none; position: absolute;margin-left: -0.8rem; top: 0.1rem;"><span style="display:none">5</span><span class="jlstyle">全城</span></div></div>
+            </div>
+  
+<div id="searchResultPanel" style="border:1px solid #C0C0C0;width:150px;height:auto; display:none;"></div>
+
+	 <div class="mengc"></div>
+    <div id="allmap">
+	</div>
+     <img src="../images/dh.png" id="dhimg" class="dhimg">
+    <div class="a1">
+        
+    <div class="marketStyle" ><div class="marketS">一共为你找到<span id="numberMarket"></span>个市场</div></div>	
+	
+	<div class="info" id="info">
+          
+         </div>
+        
+    </div>
+    
+     </div>
+
+
+
+<script type="text/javascript" src="../js/nearsearch.js">	
+</script>
+</body>
+</html>

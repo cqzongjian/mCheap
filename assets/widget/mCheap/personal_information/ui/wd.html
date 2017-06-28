@@ -1,0 +1,369 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8">
+    <title>grzx</title>
+    <meta name="viewport" content="target-densitydpi=device-dpi,width=device-width, initial-scale=1,maximum-scale=1, user-scalable=no">
+    <meta name="apple-mobile-web-app-capable" content="yes">
+    <meta name="apple-mobile-web-app-status-bar-style" content="black">
+    <link rel="stylesheet" href="../../../static/mdui/css/mdui.min.css">
+    <link rel="stylesheet" href="../../../static/mCheap/css/mCommon.css">
+    <style>
+        *{
+            font-family: "Microsoft YaHei";
+            color: #666666;
+        }
+        body{
+            background-color: #FFFFFF;
+            padding-top: 2.75rem;
+
+        }
+        .header-box{
+            background-color: #3BA15C;
+            padding: 0;
+        }
+        .header{
+            width: 100%;
+            height: 100%;
+            position: relative;
+        }
+        .back{
+            padding-right: 1rem;
+            padding-left: 1rem;
+            padding-top: 0.75rem;
+            position: absolute;
+            z-index: 100;
+        }
+        .back img{
+            width:auto;
+            height: 1.25rem;
+        }
+        .title{
+            text-align: center;
+            position: absolute;
+            width: 100%;
+            height: 100%;
+            top: 0px;
+            line-height: 2.75rem;
+            color: #FFFFFF;
+        }
+        .person{
+            height: 5rem;
+            /*border-bottom: 1px solid #cccccc;*/
+            background-color: #FFFFFF;
+            line-height: 5rem;
+            padding-left: 2rem;
+            font-weight: 600;
+            font-size: 1.3rem;
+        }
+        .person-img>img{
+            width: 3.5rem;
+            height: 3.5rem;
+            border-radius: 3.5rem;
+            border: 0.2rem solid #C0E1CB;
+            margin-top: 0.75rem;
+            margin-right: 0.5rem;
+            /*background: url("../images/head.jpg") no-repeat center;*/
+            background-size:2.8rem;
+        }
+       .setting,.ewm,.address,.tsjy{
+            height: 3rem;
+            border-bottom: 1px solid #cccccc;
+            line-height: 3rem;
+            background: #FFFFFF;
+            padding-left: 2rem;
+        }
+       .address-img{
+           width: 1.5rem;
+           background: url("../images/flag.png") no-repeat left center;
+           background-size: auto 1rem;
+       }
+       .setting-img{
+           width: 1.5rem;
+           background: url("../images/settings.png") no-repeat left center;
+           background-size: auto 1rem;
+       }
+        .ewm-img{
+            width: 1.5rem;
+            background: url("../images/ewm.png") no-repeat left center;
+            background-size: auto 1rem;
+       }
+        .tsjy-img{
+            width: 1.5rem;
+            background: url("../images/tsjy.png") no-repeat left center;
+            background-size: auto 1rem;
+        }
+        #gmd>.list-img{
+            background: url("../images/flag.png") no-repeat left center;
+            background-size: auto 1rem;
+        }
+        .arrow{
+            width: 2rem;
+            background: url("../images/arrow.png") no-repeat center;
+            background-size: auto 0.8rem;
+        }
+
+
+        .my{
+            padding-left: 2rem;
+            border-bottom: 1px solid #cccccc;
+            border-top: 1px solid #cccccc;
+            background: #FFFFFF;
+            margin-top: 1rem;
+        }
+        .list>.list-item{
+            height: 3rem;
+            line-height: 3rem;
+            border-bottom: 1px solid #cccccc;
+        }
+        .list-img,.suggest-img,.setting-img{
+            width: 1.5rem;
+        }
+        #wdgz>.list-img{
+            background: url("../images/shopping-bag.png") no-repeat left center;
+            background-size: auto 1rem;
+        }
+        #gmd>.list-img{
+            background: url("../images/flag.png") no-repeat left center;
+            background-size: auto 1rem;
+        }
+        #wdcp>.list-img{
+            background: url("../images/basket.png") no-repeat left center;
+            background-size: auto 1rem;
+        }
+        #jgfx>.list-img{
+            background: url("../images/jgfx.png") no-repeat left center;
+            background-size: auto 1rem;
+        }
+        .list>.list-item:last-child{
+            border-bottom: none;
+        }
+        .suggest,.setting{
+            height: 3rem;
+            border-bottom: 1px solid #cccccc;
+            line-height: 3rem;
+            background: #FFFFFF;
+            /*margin-top: 1rem;*/
+            padding-left: 2rem;
+            /*display: none;*/
+        }
+        .suggest-img{
+            background: url("../images/writing.png") no-repeat left center;
+            background-size: auto 1rem;
+        }
+        .setting-img{
+            background: url("../images/settings.png") no-repeat left center;
+            background-size: auto 1rem;
+        }
+        .arrow{
+            width: 2rem;
+            background: url("../images/arrow.png") no-repeat center;
+            background-size: auto 0.8rem;
+        }
+        .onTouch{
+            background-color:#F5F5F5;
+        }
+    </style>
+</head>
+<body>
+<div class="header-box mdui-bar mdui-bar-nav">
+    <div class="header">
+        <!--<div class="back mdui-action-back"><img src="../images/back.png"></div>-->
+        <div class="title">我的</div>
+    </div>
+</div>
+
+<div class="person mdui-box touch">
+    <div class="person-img">
+        <!--<img id="head"/>-->
+    </div>
+    <div class="mdui-box-flex-1 user"></div>
+    <div class="arrow"></div>
+</div>
+<div class="my list">
+    <div class="list-item mdui-box touch"  id="wdgz">
+        <div class="list-img"></div>
+        <div class="mdui-box-flex-1">我的关注</div>
+        <div class="arrow"></div>
+    </div>
+    <!--<div class="list-item mdui-box touch" id="gmd">-->
+    <!--<div class="list-img"></div>-->
+    <!--<div class="mdui-box-flex-1">常用地址</div>-->
+    <!--<div class="arrow"></div>-->
+    <!--</div>-->
+    <div class="list-item mdui-box touch" id="wdcp">
+        <div class="list-img"></div>
+        <div class="mdui-box-flex-1">我的菜谱</div>
+        <div class="arrow"></div>
+    </div>
+    <!--<div class="list-item mdui-box touch" id="jgfx">
+        <div class="list-img"></div>
+        <div class="mdui-box-flex-1">价格分析</div>
+        <div class="arrow"></div>
+    </div>-->
+</div>
+<div class="address mdui-box">
+    <div class="address-img"></div>
+    <div class="mdui-box-flex-1">常用地址</div>
+    <div class="arrow"></div>
+</div>
+<div class="setting mdui-box touch">
+    <div class="setting-img">
+    </div>
+    <div class="mdui-box-flex-1">设置</div>
+    <div class="arrow"></div>
+</div>
+<div class="mdui-box ewm">
+    <div class="ewm-img">
+    </div>
+    <div class="mdui-box-flex-1">二维码</div>
+    <div class="arrow"></div>
+</div>
+<div style="position: fixed; top: 2.75rem; bottom: 0; width: 100%; background-color: rgba(0,0,0,0.3);display: none;" class="mdui-box mdui-box-pack-center mdui-box-align-center mask">
+    <img src="../images/link.png" style="width: 10rem; height: auto">
+</div>
+<div class="mdui-box tsjy">
+    <div class="tsjy-img">
+    </div>
+    <div class="mdui-box-flex-1">投诉与建议</div>
+    <div class="arrow"></div>
+</div>
+
+<!--页面-->
+<script src="../../../static/mdui/js/mdui.min.js"></script>
+<script src="../../../static/mCheap/js/mCheap.config.js"></script>
+<script src="../../../server.js"></script>
+<script src="../../../public.js"></script>
+<script>
+
+    $.uexWindowReady(function(){
+        getNotReadNum(refreshMsgNum);//设置推送消息条数（但此处可省）
+        $(document).on('tap','#wdcp',function(){
+            $.openWin({
+                name: "base_top",
+                animId : 2,
+                url: 'wgtroot://mCheap/nav/ui/base_top.html',
+                pageParam: {
+                    frameName: 'wdcp',
+                    frameUrl: 'wgtroot://mCheap/caipu/ui/caipu_wd.html',
+                    winTitle: '我的菜谱'
+                }
+            });
+        });
+        $('.message').on('tap',function(){
+            $.openWin({
+                name:"message",
+                animId : 2,
+                url:'wgtroot://mCheap/message/ui/message.html',
+                pageParam: {}
+            });
+        });
+        $('#wdgz').on('tap',function(){
+            $.openWin({
+                name: "wdgz",
+                animId : 2,
+                url: 'wgtroot://mCheap/wdgz/ui/wdgz.html',
+                pageParam: {}
+            });
+        });
+        $('#jgfx').on('tap',function(){
+            $.openWin({
+                name: "tj_container",
+                animId : 2,
+                url: 'wgtroot://mCheap/tongji/ui/tj_container.html',
+                pageParam: {}
+            });
+        });
+        $('.touch').on('tap',function(){
+            $(this).addClass('onTouch');
+            var ele=$(this);
+            setTimeout(function(){
+                ele.removeClass('onTouch');
+            },200)
+        })
+
+
+        //设置页面消息条数
+        var userMessage={};
+        $.request({
+            urlType: 'checkLoading',
+            data: {
+                "access_token": $.getStorage('access_token')
+            }
+        }, function (data) {
+            if (data.success) {
+               userMessage=data.data;
+                $.setStorage('userMessage',JSON.stringify(userMessage));
+                $('.user').html(userMessage.epsrtu01001);
+                $('.person').addClass('login');
+                //这里需要请求用户头像并设置
+                $('.person-img').append('<img src="'+$.serverSettings.serverPath+'/mobile/mcheap/mcheapAction!getUserPicture.do?access_token='+ $.getStorage('access_token')+'"/>');
+            }
+            else if(data.error){
+                $('.user').html(data.error_msg);
+                $('.person-img').append('<img src="../images/head.jpg"/>');
+
+            }
+        });
+        /*投诉与建议*/
+        $('.tsjy').on('tap',function(){
+            $.openWin({
+                name:"suggest",
+                animId : 2,
+                url:'wgtroot://mCheap/complaint_suggest/ui/suggest.html',
+                pageParam:{}
+            });
+        });
+        $('.setting').on('tap',function(){
+            $.openWin({
+                name:"base_top",
+    			animId : 2,
+                url:'wgtroot://mCheap/nav/ui/base_top.html',
+                pageParam:{
+                    frameName:'setting',
+                    frameUrl: 'wgtroot://mCheap/personal_information/ui/setting.html',
+                    winTitle:'设置'
+                }
+            });
+        });
+        $('.address').on('tap',function(){
+            $.openWin({
+                name: "address",
+                animId : 2,
+                url: 'wgtroot://mCheap/grzx/ui/address.html'
+            });
+        });
+        $('.ewm').on('tap',function(){
+            $('.mask').show();
+        });
+        $('.mask').on('tap',function(){
+            $(this).hide()
+        });
+        $('.person').on('tap',function(){
+            if($(this).hasClass('login')) {
+                $.openWin({
+                    name: "personal_message",
+        			animId : 2,
+                    url: 'wgtroot://mCheap/personal_information/ui/personal_message.html'
+                });
+            }
+            else{
+                $.openWin({
+                    name: "login",
+        			animId : 2,
+                    url: 'wgtroot://mCheap/login/ui/login.html',
+                    pageParam: {}
+                });
+            }
+        });
+        $('.touch').on('tap',function(){
+            $(this).addClass('onTouch');
+            var ele=$(this);
+            setTimeout(function(){
+                ele.removeClass('onTouch');
+            },200)
+        })
+    });
+</script>
+</body>
+</html>

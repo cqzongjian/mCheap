@@ -1,0 +1,37 @@
+#footer{
+    display: -webkit-box;
+    padding-top: 0.25rem;
+}
+#footer>.footer-item{
+    width: 25%;
+}
+.footer-item>div{
+    display: block;
+    width:100%;
+    text-align: center;
+    margin: 0 auto;
+    padding-top: 0.2rem;
+}
+.footer-item>div>img{
+    width: auto;
+    height: 1.3rem;
+}
+.footer-item>div>div{
+    font-size: 0.6rem;
+    line-height: 0.6rem;
+}
+.footer-item-a{
+    color:#929292;
+}
+.footer-item-on{
+    color:#3BA15C ;
+}
+.img-on{
+    display: none;
+}
+.content{
+    overflow-y: auto;
+    height: 100%;
+    width: 100%;
+    padding-bottom: 3.125rem;
+}

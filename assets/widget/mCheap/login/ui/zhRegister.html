@@ -1,0 +1,155 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8">
+    <title>mCollection</title>
+    <meta name="viewport" content="target-densitydpi=device-dpi,width=device-width, initial-scale=1,maximum-scale=1, user-scalable=no">
+    <meta name="apple-mobile-web-app-capable" content="yes">
+    <meta name="apple-mobile-web-app-status-bar-style" content="black">
+    <link rel="stylesheet" href="../../../static/mdui/css/mdui.min.css">
+    <link rel="stylesheet" href="../../../static/mCheap/css/mCommon.css">
+    <style>
+        *{
+            font-family: "Microsoft YaHei";
+        }
+        body{
+            background-color: #FFFFFF;
+
+        }
+        #content_box{
+            padding-top:1rem;
+            position: relative;
+            background-color: #E6EAE8;
+        }
+        #username,#pwd{
+            margin-bottom: 0;
+        }
+        .btn{
+            margin: 1rem;
+            background-color:#3BA15C ;
+            color: #ffffff;
+            text-align: center;
+            height: 2.5rem;
+            line-height: 2.5rem;
+            border-radius: 0.3rem;
+        }
+        .other{
+            padding: 0 1rem;
+            color: #3BA15C;
+        }
+        .btn-touch{
+            opacity: 0.5;
+        }
+        .sex-item{
+            margin: 0.5rem 0.5rem 1.5rem 0.5rem;
+            text-align: center;
+            color: black;
+            padding: 0.25rem 0.5rem 0.25rem 0.5rem;
+            border: 1px solid #CCCCCC;
+        }
+        .sex-item-on{
+            margin: 0.5rem 0.5rem 1.5rem 0.5rem;
+            text-align: center;
+            color: #3BA15C;
+            padding: 0.25rem 0.5rem 0.25rem 0.5rem;
+            border: 1px solid #3BA15C;
+        }
+    </style>
+</head>
+<body>
+<div class="mdui-content" id="content_box">
+    <input type="text" id="username" placeholder="用户名(长度2-20个字符)*必填"/>
+    <input type="text" id="tel" placeholder="注册手机号*必填"/>
+    <input type="text" id="nc" placeholder="昵称">
+    <input type="text" id="address" placeholder="常居地">
+    <div class="mdui-box sex-choose">
+        <div class="sex-item mdui-box-flex-1" data-sex="1">男</div>
+        <div class="sex-item mdui-box-flex-1" data-sex="2">女</div>
+    </div>
+    <input type="password" id="pwd" placeholder="密码(6-16位字符和数字)">
+    <input type="password" id="repwd" placeholder="确认密码">
+    <div id="btn" class="btn touch">立即注册</div>
+</div>
+<!--页面-->
+<script src="../../../static/mdui/js/mdui.min.js"></script>
+<script src="../../../static/mCheap/js/mCheap.config.js"></script>
+<script src="../../../server.js"></script>
+<!--扩展组件/第三方/工程js-->
+<script>
+    var pageData={};
+    $.uexWindowReady(function() {
+        $('.touch').on('tap',function(){
+            var ele=$(this);
+            $(this).addClass('btn-touch');setTimeout(function(){
+                ele.removeClass('btn-touch');
+            },200)
+        });
+        $('#btn').on('tap',function(){
+            var epsrtu01001=$('#username').val();
+            var epsrtu01004=$('#tel').val();
+            var pwd=$('#pwd').val();
+            var repwd=$('#repwd').val();
+            var address=$('#address').val();
+            var nc=$('#nc').val()||'';
+            var msg='';
+            if(pwd!=repwd){
+                msg='两次输入的密码不一致'
+            }
+            if(pwd.length<6||pwd.length>16){
+                msg='密码必须在6-16个字符'
+            }
+            if(!epsrtu01004.match(/\d{11}/)){
+                msg='请输入正确手机号'
+            }
+            if(epsrtu01001.length<2||epsrtu01001>20){
+                msg='用户名必须在2-20个字符'
+            }
+            if(msg==''){
+                console.log(JSON.stringify(pageData));
+                $.request({
+                    urlType: 'register',
+                    data: {
+                        "access_token": $.getStorage('access_token'),
+                        epsrtu01001: epsrtu01001,
+                        epsrtu01004: epsrtu01004,
+                        epsrtu01011: pwd,
+                        epsrtu01002:nc,
+                        mac: $.getStorage('mac'),//mac地址
+                        epsrtu01009:pageData.sex||'0',//用户性别
+                        epsrtu01010:address||'',//常居地
+                        unicode:$.getStorage('registerID')//用户设备号
+                     }
+                },function(data){
+                    console.log(JSON.stringify(data));
+                    if (data.code='00') {
+                        $.toast('注册成功,请登陆');
+                        $.execScript({
+                            winName:'register',
+                            script:'$.closeWin()'
+                        });
+                    }
+                    else {
+                        alert('注册失败');
+                    }
+                },'json')
+            }
+            else{
+                alert(msg)
+            }
+        });
+    });
+
+    $('.sex-choose').on('tap','.sex-choose>div',function(){
+        var items=$('.sex-choose>div');
+        items.removeClass('sex-item-on').addClass('sex-item');
+        $(this).removeClass('sex-item').addClass('sex-item-on');
+        pageData.sex=$(this).data('sex');
+    });
+
+
+
+
+
+</script>
+</body>
+</html>

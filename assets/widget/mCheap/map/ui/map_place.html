@@ -1,0 +1,1468 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+	<meta name="viewport" content="initial-scale=1.0, user-scalable=no" />
+	<style type="text/css">
+	body, html{font-size: 52px;width: 100%;height: 100%;margin:0;font-family:"微软雅黑";}
+	   #allmap {
+        position:relative;
+        height:100%;
+        width:100%;
+        clear:both;
+        overflow:hidden;
+        }
+    
+    .BMap_cpyCtrl
+    {
+    display:none; 
+    }
+    .anchorBL{
+    display:none; 
+    }
+    
+    .titleStyle{
+       text-align: center;
+    background-color: #090;
+    height: 1rem;
+    position: relative;
+    }
+    .textStyle{
+    /* top: -0.35rem; */
+    height: 0.8rem;
+    position: relative;
+    width: 4.5rem;
+    border: 2px;
+    border-radius: 6px;
+    padding-left: 0.5rem;     
+    padding-right: 0.5rem;      
+    }
+    .imgStyle{
+    height: 0.48rem;
+    left: 0.5rem;
+    position: absolute;
+    top: 0.28rem;
+    width: 0.25rem;
+    }
+    .gouwuStyle{
+            line-height: 1rem;
+    vertical-align: text-bottom;
+    color: white;
+    font-size: 23px;
+    }
+    .imgdw{
+        position: absolute;
+        top: 0.7rem;
+        width: 0.3rem;
+        margin-left:0.15rem;
+        z-index: 1001;
+    }
+    .imgdv{
+        position: absolute;
+        top: 0.7rem;
+        width: 0.4rem;
+        margin-left: -0.45rem;
+        z-index: 1001;
+    }
+    .buyPlace{
+    color: white;
+    font-size: 0.32rem;
+    left: 0.8rem;
+    position: absolute;
+    top: 0.33rem;
+    }
+    .placeStyle{
+    height: 2rem;
+    left: 0.6rem;
+    position: relative;
+    text-align: center;
+    top: -1.6rem;
+    width: 4rem;
+    z-index: 200;
+    }
+    .placeStyle2{
+    height: 2rem;
+    left: 5.5rem;
+    position: relative;
+    text-align: center;
+    top: -1.6rem;
+    width: 4rem;
+    z-index: 10;
+    }
+    .imgJ{
+       height: 0.3em;
+        left: 1.84em;
+        position: absolute;
+        top: 1.03em;
+        width: 0.3em;
+    }
+    .kuangStyle{
+        background-color: #575757;
+        border-bottom-left-radius: 8px;
+        border-bottom-right-radius: 8px;
+        border-top-left-radius: 8px;
+        border-top-right-radius: 8px;
+        height: 1.05em;
+        position: absolute;
+        width: 4em;
+        opacity: 0.85;
+    }
+    .gouStyle{
+        left: 0.2rem;
+        position: absolute;
+        top: 0.38rem;
+        width: 0.4rem;
+    }
+    
+ .mdui-slider-item {
+    position: relative;
+      
+}
+    #stylehua{
+                width:42em;
+            }
+            
+.mdui-slider .mdui-slider-group {
+    background-color: white;
+    font-size: 0;
+    position: relative;
+    transition: all 0s linear;
+    white-space: nowrap;
+    overflow:auto;
+   
+}
+
+
+#slider2>div>div>div:nth-child(1){
+     font-size: 0.37rem;
+    margin: 0.2rem;
+    }
+    #slider2>div>div>div:nth-child(2){
+    top: -3rem;
+    position: absolute;
+    }
+
+
+    .mdui-slider{
+    width:100%;
+    height: 1.2rem;
+    background-color: white;
+    position: fixed;
+    overflow: hidden;
+    bottom: 0rem;
+    }
+    /*
+        删除图片样式
+    */
+    .deleteimg{
+      font-size: 0.8rem;
+position: absolute;
+width: 0.4em;
+z-index: 1000;
+    }
+    
+    .c1{
+    top: -0.35rem;
+    text-align: center;
+    z-index: 1;
+    height: 0rem;
+    width: auto;
+    position: relative;
+    left:0.2rem;
+    }
+    
+    .infobox>img{
+    display:none;
+    }
+    .marketStyle{
+    bottom:0rem;
+    background-color: #268DD5;
+    color: white;
+    font-size: 0.44rem;
+    height: 0.9rem;
+    text-align: center;
+    width: 100%;
+    position: fixed;
+    }
+    .marketS{
+        line-height: 0.955rem;
+    }
+    .a1{
+        visibility: hidden;
+        position: relative;
+    }
+    .info{
+       /* height: 6em;*/
+         background: white;
+      height: 0em;
+        overflow: auto;          
+    }
+    .shiyan{
+       background-color: white;
+/*
+border-bottom-color: #CCC;
+border-bottom-style: solid;
+border-bottom-width: 0.03rem;*/
+
+position: relative;
+    }
+    .titleplace{
+        height: 0.85rem;
+        margin-left: 0.25rem;
+        position: relative;
+    }
+    .titleplace>div:first-child{
+         color: #008845;
+        float: left;
+        font-size: 0.38rem;
+        margin-top: 0.2rem;
+        position: absolute;
+        width: 6.3rem;
+    }
+    .titleplace>img{
+      float: left;
+        margin-top: 0.28rem;
+        position: absolute;
+        right: 0.35rem;
+        width: 0.4rem;
+    }
+    .titleplace>div:nth-child(2){
+    color: #008845;
+    float: left;
+    font-size: 0.38rem;
+    margin-left: 0.5rem;
+    margin-top: 0.2rem;
+    position: absolute;
+    }
+    
+    .specificplace{
+    height: 0.85rem;
+    margin-left: 0.3rem;
+    position: relative;
+    }
+    .specificplace>img{
+     float: left;
+    line-height: 0.85rem;
+    margin-top: 0.2rem;
+    position: absolute;
+    width: 0.25rem;
+    }
+   
+    .specificplace>div:nth-child(2){
+       color: #888;
+        float: left;
+        font-size: 0.25rem;
+        line-height: 0.8rem;
+        margin-left: 0.4rem;
+        position: absolute;
+    }
+    .specificplace>div:nth-child(3){
+       color: #888;
+        float: left;
+        font-size: 0.25rem;
+        margin-right: 0.1rem;
+        margin-top: 0.2rem;
+        position: absolute;
+        right: 0.23rem;
+    }
+   .mintype{
+    border-bottom: 1px solid #ccc;
+       height: 0.85rem;
+        margin-left: 0.085rem;
+        position: relative;
+    }
+    .mintype>div:nth-child(1){
+        clear: both;
+        color: #666;
+        float: left;
+        font-size: 0.36rem;
+        line-height: 0.75rem;
+        margin-left: 0.2rem;
+        margin-top: 0.1rem;
+    }
+    .mintype>div:nth-child(2){
+        color: #3BA15C;
+        font-size: 0.36rem;
+        line-height: 0.75rem;
+        margin-top: 0.1rem;
+        overflow-x: hidden;
+        overflow-y: hidden;
+        position: absolute;
+        right: 0.3rem;
+    }
+    
+    .imgdiv{
+       position: absolute;
+        right: 0.5rem;
+        top: 0.1rem;
+    }
+    /* 保存框开始*/
+    .dzbc{
+     display:none;
+     left: 4.57rem;
+    height: 3.3rem;
+    top: -3.8rem;
+    z-index: 1;
+    position: absolute;
+    background-color: white;
+    width: 6.0rem;
+    }
+    .srks{
+          top: 0rem;
+    height: 1.1rem;
+    position: relative;
+    }
+    .iptsrk{
+    border: 1px solid #ccc;
+    bottom: 0rem;
+    height: 0.65rem;
+    width: 5rem;
+    position: absolute;
+    left: 0.4rem;
+    }
+    .dzk{
+           height: 1.1rem;
+    position: relative;
+    }
+    .dztm{
+        color: #999;
+    left: 0.3rem;
+    top: 0.2rem;
+    position: absolute;
+    font-size: 0.3rem;
+    }
+    .dzmc{
+      color: #999;
+    left: 0.3rem;
+    position: absolute;
+    font-size: 0.3rem;
+    top: 0.6rem;
+    }
+    .qbstyle{
+    position: relative;
+    height: 1.3rem;
+    }
+    .bcstyle{
+        line-height: 0.7rem;
+    color: white;
+    /* background-color: #008B45; */
+    /* width: 1rem; */
+    /* position: absolute; */
+    /* float: left; */
+    font-size: 0.4rem;
+    /* left: 1.6rem; */
+    }
+   .qxstyle{
+        line-height: 0.7rem;
+    /* width: 1rem; */
+    color: white;
+    /* left: 2.8rem; */
+    position: relative;
+    font-size: 0.4rem;
+   }
+   .qxwc{
+       top: 0.1rem;
+    text-align: center;
+    height: 0.7rem;
+    float: left;
+    background-color: #008B45;
+    position: absolute;
+    /* position: absolute; */
+    left: 3.5rem;
+    width: 1.5rem;
+   }
+   .bcwc{
+       top: 0.1rem;
+    width: 1.5rem;
+    left: 1rem;
+    float: left;
+    background-color: #008B45;
+    position: absolute;
+    height: 0.7rem;
+    text-align: center;
+   }
+   .jtimg{
+   left: 45%;
+   font-size: 0;
+    width: 0rem;
+    line-height: 1rem;
+    border-width: 10px;
+    border-color: white;
+    border-bottom-width: 0;
+    border-style: dashed;
+    border-top-style: solid;
+    border-left-color: transparent;
+    border-right-color: transparent;
+    /* border-top: 10px solid #03f; */
+    position: relative;
+    top: -0.2rem;
+   }
+   .jiantou{
+   position: relative;
+   }
+
+   .qipao{
+        background-color: #454545;
+        border-bottom-left-radius: 6px;
+        border-bottom-right-radius: 6px;
+        border-top-left-radius: 6px;
+        border-top-right-radius: 6px;
+        display: inline-block;
+        height: 2.1rem;
+        left: 6.4rem;
+        opacity: 0.9;
+        padding-bottom: 0.05rem;
+        padding-right: 0.2rem;
+        position: absolute;
+        top: -2.2rem; 
+        z-index: 100;
+        display: none;  
+        
+    }
+    .qipaonew{
+        background-color: #454545;
+        border-bottom-left-radius: 6px;
+        border-bottom-right-radius: 6px;
+        border-top-left-radius: 6px;
+        border-top-right-radius: 6px;
+        display: inline-block;
+        height: 2.1rem;
+        left: 6.45rem;
+        opacity: 0.9;
+        padding-bottom: 0.05rem;
+        padding-right: 0.2rem;
+        position: absolute;
+        top:-1.85rem;
+         z-index: 100;
+         display: none; 
+    }
+    .title{
+    color: white;
+    font-size: 0.42rem;
+    height: 0.7rem;
+    line-height: 1rem;
+    margin-left: 0.23rem;
+    }
+    .priceIndex{
+         color: #D4D4D4;
+    font-size: 0.36rem;
+    height: 0.7rem;
+    margin-left: 0.23rem;
+    position: relative;
+    white-space: nowrap;
+    }
+    .priceIndex>div{
+     line-height: 0.72rem;
+    /*position: absolute;*/
+    display: inline-block;
+        vertical-align: top;
+    white-space: nowrap;
+    } 
+    .priceIndex>span{
+       /* font-size: 0.36rem;*/
+       line-height: 0.72rem;
+        padding:0rem 0.2rem;
+        /*position: absolute;*/
+        white-space: nowrap;
+    }
+    .varietNum{
+      color: #D4D4D4;
+        font-size: 0.36rem;
+        height: 0.7rem;
+        margin-left: 0.23rem;
+        position: relative;
+        white-space: nowrap;
+    }
+    .varietNum>div{
+        display: inline-block;
+        vertical-align: top;
+        /*position: absolute;*/
+        white-space: nowrap;
+    }
+    .varietNum>span{
+    /*position: absolute;*/
+    white-space: nowrap;
+    padding:0rem 0.2rem;
+    }
+    .arrow{
+        left: 0.4rem;
+        position: absolute;
+        top: 2.1rem;
+    }
+    #return{
+			position: absolute;
+			top: 0.25rem;
+			left: 0.2rem;
+			font-size:0.5rem;
+		}
+	</style>
+	<script type="text/javascript" src="../js/mapkey.js"></script>
+	<script src="../../../static/mdui/js/mdui.js"></script>
+	<script src="../../../server.js"></script>
+	 <script type="text/javascript" src="../js/infobox.js"></script> 
+   
+ 	<title> 价格地图</title>
+ 	
+</head>
+
+<body id="body" style="-webkit-user-select: none;">
+<!-- <div class="dzbc">
+  <div class="srks"><input type="text" class="iptsrk"/></div>
+  <div class="dzk"><div class="dztm">地址:</div><div class="dzmc">三色路136号</div></div>
+  <div class="qbstyle"><div class="bcstyle">保存</div><div class="qxstyle">取消</div></div>
+  </div> -->
+  <div class="c1">	     
+		 <img src="../images/icon_27.png" class="imgdw"/>
+		 <input id="suggestId" placeholder="请输入购物点地址" type="text" class="textStyle"/>
+		 <img id="search-img"  src="../images/chazhao.png" class="imgdv" onclick="searchInfo();">
+		  
+  </div> 
+<!--   <div ontouchend='saveAddress("+lng+","+lat+")' class='placeStyle'><div class='kuangStyle'><img src='../images/gou1.png' class='gouStyle'/><div class='buyPlace'>保存为我的常用地址</div></div><img src='../images/icon_24.png' class='imgJ'/></div>
+ --><div id="allmap"></div>
+ <img id="return" class="back mdui-action-back" src="../images/return.png">
+<div id="searchResultPanel" style="border:1px solid #C0C0C0;width:150px;height:auto; display:none;"></div>
+
+<!-- 统计列表 -->
+<div class="a1">
+        
+    <div class="marketStyle" ><div class="marketS">一共为你找到<span id="numberMarket"></span>个市场</div></div> 
+    
+    <div class="info" id="info">
+          
+         </div>
+        
+    </div>
+    
+     </div>
+<!--   <div id="slider2" class="mdui-slider">
+            <div class="mdui-slider-group"  id="placename">            
+              <div id="changan" class='mdui-slider-item' style="-moz-user-select:none;"> <div >高新区-天顺路</div><img src="../images/icon_07.png" class="deleteimg"/></div>
+              <div class='mdui-slider-item' style="-moz-user-select:none;"> <div >高新区-天顺路</div><img src="../images/icon_07.png" class="deleteimg"/></div>
+              <div class='mdui-slider-item' style="-moz-user-select:none;"> <div >高新区-天顺路</div><img src="../images/icon_07.png" class="deleteimg"/></div>    
+            </div>  
+  </div>   -->
+  
+  
+</body>
+
+<script type="text/javascript">
+var map = new BMap.Map("allmap");             
+map.centerAndZoom(new BMap.Point(104.067192,30.665534), 13);
+map.enableScrollWheelZoom(true);
+map.enableDragging();  
+
+var epsbht01006=104.076355;
+var epsbht01007=30.61923;
+
+ var epsflw03id;
+ var epsflw03002
+ var epsflw03003;
+ var epsflw03004;
+ var epsflw03005;
+ var arr=[];
+ var numbg=1;
+ var bzf;
+ var ii=0;
+ //这个是我新增加的
+var kindConfig = {//类型的配置
+        "02":{//医院
+            "noOverUrl":"../images/marker/b",//这个前10个的图标
+            "overUrl":"../images/marker/bb.png",//超过10个后的图标地址
+            "oneType":"seeDoctor",//这个是类型标识
+            "likeMarker":"hos_addFocusHosiptal",
+            "dislikeMarker":"hos_delFocusHosiptal",
+            },
+        "01":{//买菜 //先改成01最后要改成03(就只修改这个地方)(要改两处地方)
+            "noOverUrl":"../images/marker/g",
+            "overUrl":"../images/marker/gg.png",
+            "oneType":"greensNearby",
+            "likeMarker":"addFocusStation",
+            "dislikeMarker":"deleteFocusStation",
+            },
+        "04":{//药店
+            "noOverUrl":"../images/marker/y",
+            "overUrl":"../images/marker/yy.png",
+            "oneType":"buyDrugs",
+            "likeMarker":"addFocusDrugstore",
+            "dislikeMarker":"delFocusDrugstore",
+            },
+        "05":{//超市
+            "noOverUrl":"../images/marker/o",
+            "overUrl":"../images/marker/oo.png",
+            "oneType":"buyThings",
+            "likeMarker":"addFocusShop",
+            "dislikeMarker":"delFocusShop",
+            },
+    }
+var count =null;
+var showMarkerInfos = {//配置marker的显示字段
+    "01":{//买菜附近的地图上的marker
+        //"cltpit01001":"菜市场名称:",
+        "address":"市场地址 :",
+        "cheapercount":"最低价格品种数 :"
+    },
+    "02":{//看病附近的地图上的marker
+        "address":"医院地址 :",
+        "level":"医院等级 :",
+    },
+    "05":{//逛超市附近的地图上的marker
+        "address":"超市地址 :",
+        "cheapercount":"最低价格品种数:",
+    },
+    "04":{//买药附近的地图上的marker
+        "address":"药店地址 :",
+        "cheapercount":"最低价格药品数 :",
+    }
+}
+var yyLevel = {//医院等级的码表
+		"0101":"一级甲等",
+		"0102":"一级乙等",
+		"0103":"一级丙等",
+		"0201":"二级甲等",
+		"0202":"二级乙等",
+		"0203":"二级丙等",
+		"0301":"三级甲等",
+		"0302":"三级乙等",
+		"0303":"三级丙等",
+}
+var walkRoute = null;//步行路线
+ $.uexWindowReady(function(){
+	   /* 点击地图失去焦点 */
+	 function showInfo2(){    	
+	       $("#suggestId").blur();
+	   };
+	   map.addEventListener("click", showInfo2);
+	   
+	 var pageData=$.pageParam;
+      bzf=$.strToJson(pageData).bzf;//标识符判断是否为空
+    
+	  if(bzf=="1"){
+		  epsflw03003=104.072977;
+		  epsflw03004=30.578313;
+		  epsflw03005="01";
+	  }else if(bzf=="2"){
+		  epsflw03003=104.072977;
+		  epsflw03004=30.578313;
+		  epsflw03005="02";
+	  }else{
+		  epsflw03id=$.strToJson(pageData).epsflw03id;//购买点流水号
+		
+		  epsflw03002=$.strToJson(pageData).epsflw03002;//购买点地址
+		 
+			 epsflw03003=$.strToJson(pageData).epsflw03003;//经度
+			 epsflw03004=$.strToJson(pageData).epsflw03004;//纬度
+			  epsflw03005=$.strToJson(pageData).epsflw03005;//购买点类型
+	  }
+	  
+	  if(numbg==1){
+			 numbg++;
+	  datainfoks();
+	  }
+ });
+ 
+ 
+ function datainfoks(){
+	 if(bzf == "3"){
+		 epsflw03003=104.072977;
+		  epsflw03004=30.578313;
+	 }
+	 var point = new BMap.Point(epsflw03003,epsflw03004);
+	 var myIcon = new BMap.Icon("../images/icondwbz-31.png", new BMap.Size(30, 45), 
+	         {
+	       anchor : new BMap.Size(13, 46), 
+	        imageOffset: new BMap.Size(0, 0)
+	      });
+	    var marker=new BMap.Marker(point,{icon: myIcon});
+	     if(bzf != "3" && bzf != "2" && bzf !="1"){	 
+	      map.addOverlay(marker);
+	    }
+	     caishi(epsflw03003,epsflw03004);	     
+	 map.centerAndZoom(point,13);                   // 初始化地图,设置城市和地图级别。
+ 
+ }
+ 
+ 
+    var titleplace;
+ function saveData(){
+     var con=$("#suggestId").val();
+     if(con){
+         var geoc = new BMap.Geocoder();
+         var point = new BMap.Point(lngsave,latsave);
+         geoc.getLocation(point, function(rs){
+             var addComp = rs.addressComponents;
+             titleplace=addComp.district + "" + addComp.street + "" + addComp.streetNumber;
+             ksinfo();
+         });
+         
+     }else{
+         $.toast('请输入内容');
+         return;
+     }
+ }
+
+
+
+
+ 
+ function cancelData(){
+	 $(".placeStyle2").css("display","inline");
+     $(".dzbc").css("display","none");
+ }
+ 
+ function focussrk(){
+	    $("#iptsrk").focus();
+	 }
+ 
+//验证是否重复
+	function ksinfo(){
+	for(var i=0;i<arr.length;i++){   		
+      if(arr[i] == titleplace){     
+   	   $.toast("地址重复")
+       return;
+    }
+  } 
+
+   var obj;
+	if(epsflw03005=="01"){
+	  obj={ 
+		   epsflw03id:null,// 购买点流水号
+		   epsflw03001:""+document.getElementById("iptsrk").value,//购买点名称
+		   epsflw03002:""+titleplace,// 购买点地址
+		   epsflw03003:lngsave,// 购买点经度
+		   epsflw03004:latsave,// 购买点纬度
+		   epsrtu01id:null,// 注册用户流水号
+		   create_time:"",// 创建时间
+		   epsflw03005:"01"//购买点类型
+	   }
+	}else if(epsflw03005=="02"){
+		  obj={ 
+				   epsflw03id:null,// 购买点流水号
+				   epsflw03001:""+document.getElementById("iptsrk").value,//购买点名称
+				   epsflw03002:""+titleplace,// 购买点地址
+				   epsflw03003:lngsave,// 购买点经度
+				   epsflw03004:latsave,// 购买点纬度
+				   epsrtu01id:null,// 注册用户流水号
+				   create_time:"",// 创建时间
+				   epsflw03005:"02"//购买点类型
+				   
+			   }
+	}else{
+         obj={
+            epsflw03id:null,// 购买点流水号
+            epsflw03001:""+document.getElementById("iptsrk").value,//购买点名称
+            epsflw03002:""+titleplace,// 购买点地址
+            epsflw03003:lngsave,// 购买点经度
+            epsflw03004:latsave,// 购买点纬度
+            epsrtu01id:null,// 注册用户流水号
+            create_time:"",// 创建时间
+            epsflw03005:"03"//购买点类型
+
+        }
+    }
+         
+   
+/* 添加购物点 */		
+			            $.request({
+			                    urlType: 'addPurchasePoint',
+			                    data: {
+			                        "access_token": $.getStorage('access_token'),
+			                        purchasePoint:JSON.stringify(obj)
+			                    }
+			                }, function (json) {
+			                    if(json.success) {
+			          
+			                    	$.execScript({
+			                            winName:'address',
+			                            script:'$.refreshWin();'
+			                        });
+			                    	
+			                    	
+			                    	
+			                    	$.toast("保存成功")
+                                         $(".placeStyle2").css("display","none");
+                                        $(".dzbc").css("display","none");
+			                    
+			                    	
+			                    	arr.push(titleplace);
+			                    	
+			                    	//添加地图标志
+			                   
+			                    	var point = new BMap.Point(lngsave,latsave);			                    				                  
+			                    	  map.centerAndZoom(point, 13);
+			                    }
+			                });
+			       	 //删除购物点传参
+	                    $.request({
+	                    urlType: 'deletePurchasePoint',
+	                    data: {
+	                        "access_token": $.getStorage('access_token'),
+	                        epsflw03id:epsflw03id// 采集点流水号
+	                    }
+	                }, function (json) {
+	                    if(json.success) {
+	                    	
+	                    	 /* $.toast("删除成功")  */  
+	                    }
+	                    else {
+	                        //$.toast('网络错误')
+	                    }
+	
+	                });
+	}
+	
+	function saveAddress(){
+		$(".placeStyle2").css("display","none");
+		$(".dzbc").css("display","inline");
+	}
+	
+	
+	
+	// 百度地图API功能
+	function G(id) {
+		return document.getElementById(id);
+	}
+
+	
+
+	var ac = new BMap.Autocomplete(    //建立一个自动完成的对象
+		{"input" : "suggestId"
+		,"location" : map
+	});
+
+	ac.addEventListener("onhighlight", function(e) {  //鼠标放在下拉列表上的事件
+	var str = "";
+		var _value = e.fromitem.value;
+		var value = "";
+		if (e.fromitem.index > -1) {
+			value = _value.province +  _value.city +  _value.district +  _value.street +  _value.business;
+		}    
+		str = "FromItem<br />index = " + e.fromitem.index + "<br />value = " + value;
+		
+		value = "";
+		if (e.toitem.index > -1) {
+			_value = e.toitem.value;
+			value = _value.province +  _value.city +  _value.district +  _value.street +  _value.business;
+		}    
+		str += "<br />ToItem<br />index = " + e.toitem.index + "<br />value = " + value;
+		G("searchResultPanel").innerHTML = str;
+	});
+
+	var myValue;
+	ac.addEventListener("onconfirm", function(e) {    //鼠标点击下拉列表后的事件
+	var _value = e.item.value;
+		myValue = _value.province +  _value.city +  _value.district +  _value.street +  _value.business;
+		G("searchResultPanel").innerHTML ="onconfirm<br />index = " + e.item.index + "<br />myValue = " + myValue;
+		
+		setPlace();
+	});
+
+	function setPlace(){
+		map.clearOverlays();    //清除地图上所有覆盖物
+		function myFun(){
+			var pp = local.getResults().getPoi(0).point;    //获取第一个智能搜索的结果	
+			lngsave=pp.lng;
+	 		latsave=pp.lat;
+	 		 caishi(lngsave,latsave);
+			var geoc = new BMap.Geocoder(); 
+			var address;
+			
+			
+			   var lng=pp.lng;
+			   var lat=pp.lat;
+			   var point=new BMap.Point(lng,lat+0.065);			
+			   map.centerAndZoom(point,13); 
+			   geoc.getLocation(pp, function(rs){
+					var addComp = rs.addressComponents;
+					address=addComp.district + "" + addComp.street + "" + addComp.streetNumber;								
+					saveSearch(pp,address);		
+				});  
+   
+			   
+		}
+		var local = new BMap.LocalSearch(map, { //智能搜索
+		  onSearchComplete: myFun
+		});
+		local.search(myValue);
+	}
+	
+	/* 显示麻点得方法 */
+	function caishi(epsflw03003,epsflw03004){
+
+		/* 周边查询 */
+		$.request({
+                    urlType: 'nearQuery',
+                    data: {
+                        "access_token": $.getStorage('access_token'),
+                        log:epsflw03003,
+                        lat:epsflw03004,     
+                        distance:"3",
+                        markType:"03,02,04,05"
+                    }
+                }, function (json) {
+                    if(json.success) {
+                    	var array = json.data;
+                          /* alert(JSON.stringify(array))  */
+	                     if(ii==0){
+		                     if(bzf != "3" && bzf !="2" && bzf !="1"){	                    	 
+		               	        showPoint(array);
+                                 $(".a1").css("visibility","visible");
+		                     }else{
+
+                                 $(".a1").css("visibility","hidden");
+                             }
+		                     ii++;
+	                     }else{
+	                    	 showPoint(array);
+                             $(".a1").css("visibility","visible");
+	                     } 
+	                    
+	                     
+                    }
+                    else {
+                        //$.toast('网络错误')
+                    }
+
+                });
+		    /* 结束查询 */
+	}
+	
+    /*添加市场麻点*/
+	function showPoint(json){
+        //自己新增的
+		$("#info").empty();//清空列表数据
+        	count = {
+            "greensNearby":0,//菜市场的marker
+            "seeDoctor":0,//看病的marker
+            "buyThings":0,//逛超市的marker
+            "buyDrugs":0,//买药的marker    
+        }
+        $("#numberMarket").html(json.length);
+		 var hh=21;
+         var k=0;
+		for(var j=0;j<json.length;j++){
+			hh = hh-21;
+            k=k+1;
+            var title=json[j].cltpit01001;//菜市场标题
+                var poi=new BMap.Point(json[j].cltpit01007,json[j].cltpit01008);//经纬度实例化    
+                var vagetableIndex=json[j].zhishu;//蔬菜指数
+                var minpriceNumber=json[j].cheapercount == null?"空":json[j].cheapercount;    //最少品种数
+                var address=json[j].cltpit01004;//菜市场地址
+                var distance=json[j].distance;//距离    
+                var cltpit01005=json[j].cltpit01005;//营业开始时间
+                var cltpit01006=json[j].cltpit01006;//营业结束时间
+                var cltpit01id=json[j].cltpit01id;//采集点流水号
+                var isfocus=json[j].isfocus;
+                var flagType = json[j].cltpit01003;//这个是功能的标识
+                var epsflw02001="";//关注类型
+				
+			var lng=json[j].cltpit01007;//获取精度
+	 		var lat=json[j].cltpit01008;//获取纬度
+	 		  addmarker(lng,lat,j,hh,title,poi,vagetableIndex,minpriceNumber,address,distance,cltpit01005,cltpit01006,cltpit01id,k,isfocus,flagType,count,json[j]); 
+		}
+          
+	}
+	function  addmarker(lng,lat,j,hh,title,poi,vagetableIndex,minpriceNumber,address,distance,cltpit01005,cltpit01006,cltpit01id,k,isfocus,flagType,count,onedata){
+		if(vagetableIndex==null){
+            vagetableIndex="空"
+        }
+		var poi=new BMap.Point(lng,lat);
+		var myIconTwo;
+        var typeOne = kindConfig[flagType];
+        //自定义麻点样式
+        myIconTwo = createIcon(typeOne,myIconTwo);//动态生成图标
+        function createIcon(typeOne,icon) {//动态生成图标的方法
+            count[typeOne.oneType]++;
+            if(count[typeOne.oneType] <= 10) {
+                var imgUrl = typeOne.noOverUrl+count[typeOne.oneType]+".png";
+                    icon = new BMap.Icon(imgUrl, new BMap.Size(18, 26),{
+                        anchor: new BMap.Size(10, 30),
+                    });
+            }else{
+                var imgUrl = typeOne.overUrl;
+                    icon = new BMap.Icon(imgUrl, new BMap.Size(16, 16),{
+                        anchor: new BMap.Size(10, 5),
+                    });
+            }
+            return icon ;   
+    }
+         var marker=new BMap.Marker(poi,{icon: myIconTwo});    
+
+          marker.addEventListener("click", function(e){                 
+                    infoBox.open(marker);
+                $(".qipao").css("display","none");
+                $("#qipao"+j+"").css("display","block");
+                $(".qipaonew").css("display","none");
+                $("#qipaonew"+j+"").css("display","block");
+                $(".infoBox>img").css("display","none");  
+        });
+
+         map.addOverlay(marker);
+		var indexNum = count[kindConfig[flagType]["oneType"]];
+		var yyDj =null;
+		if(flagType == "02") {
+			var startEnd =cltpit01005+"~"+cltpit01006;
+			yyDj = onedata.level;
+		}else{
+			var startEnd = "营业时间:"+cltpit01005+"~"+cltpit01006;
+		}
+          //拼字符串
+         var html="<div id='"+j+"sc' class='backcolor' data-num='"+indexNum+"' ><div class='shiyan'>"+
+                      "<div class='titleplace'>"+                  
+                    "<div>"+k+".</div><div data-img="+onedata.cltpit02002+" data-yydj="+onedata.cltpit01011+" data-range="+onedata.cltpit01011+" data-isfocus="+isfocus+" data-tiaoshu="+onedata.tiaoshu+" data-distance="+distance+" data-startend="+startEnd+" data-address="+address+" data-title="+title+" data-star="+onedata.star+" data-id="+cltpit01id+" data-type="+flagType+" onclick='caishiOpen(this)'>"+title+"</div>"+       
+               " <img id="+j+0+" data-type="+flagType+" src='../images/dislike.png' onclick='precervation()'/>"+
+               " <img id="+j+1+" data-type="+flagType+" style='display:none' src='../images/like.png' onclick='clprecervation("+lng+","+lat+")'/>"+
+            "</div>"+            
+           " <div class='specificplace'>"+         
+                        "<img id='"+k+1+"dh' src='../images/dingwei.png' class='precervation' name='plan'/>"+
+                        "<div >"+address+"</div>"+
+                        "<div>"+distance+"km</div>"+
+                        "<div style='display:none'>"+lng+"</div>"+
+                        "<div style='display:none'>"+lat+"</div>"+
+                        "<div style='display:none'>"+title+"</div>"+
+               "</div>"+
+         /*  " <div class='vegeprice'>"+
+               "<div>蔬菜指数</div>"+
+               "<div>"+vagetableIndex+"</div>"+
+           "</div>"+ */
+           "<div class='mintype'>";
+           if(flagType == "02"){
+        	   html += "<div>"+showMarkerInfos[flagType]['level']+"</div>"
+               html +=   "<div>"+yyLevel[onedata.level]+"</div>"+
+              "</div></div>";  
+           }else{
+        	   html += "<div>"+showMarkerInfos[flagType]['cheapercount']+"</div>"
+               html +=   "<div>"+minpriceNumber+"</div>"+
+              "</div></div>";  
+           }   
+   //添加页面信息
+   //
+   $(".info").append(html);
+
+  //添加窗口信息
+    var html = [];
+    var textHtml;
+           if(count[kindConfig[flagType]["oneType"]] < 11){
+            textHtml=" <div class='qipao' id='qipao"+j+"' >"+
+            "<div class='title'>"+title+"</div>"+
+            "<div class='priceIndex'> "+
+            "<div>"+showMarkerInfos[flagType]["address"]+"</div><span>"+address+"</span>"+
+            "</div><div class='varietNum'>";
+            if(flagType == "02"){
+            	 textHtml+="<div>"+showMarkerInfos[flagType]['level']+"</div><span>"+yyLevel[onedata.level]+"</span>"+
+                 "</div><img src='../images/jian.png' class='arrow'/>"+
+                 "</div>";
+            }else{
+            	 textHtml+="<div>"+showMarkerInfos[flagType]["cheapercount"]+"</div><span>"+minpriceNumber+"</span>"+
+                 "</div><img src='../images/jian.png' class='arrow'/>"+
+                 "</div>";
+            }
+           }else{
+        	   textHtml=" <div class='qipaonew' id='qipaonew"+j+"' >"+
+        	            "<div class='title'>"+title+"</div>"+
+        	            "<div class='priceIndex'> "+
+        	            "<div>"+showMarkerInfos[flagType]["address"]+"</div><span>"+address+"</span>"+
+        	            "</div><div class='varietNum'>";
+        	            if(flagType == "02"){
+        	            	 textHtml+="<div>"+showMarkerInfos[flagType]['level']+"</div><span>"+yyLevel[onedata.level]+"</span>"+
+             	            "</div><img src='../images/jian.png' class='arrow'/>"+
+             	            "</div>"; 
+        	            }else{
+        	            	 textHtml+= "<div>"+showMarkerInfos[flagType]["cheapercount"]+"</div><span>"+minpriceNumber+"</span>"+
+             	            "</div><img src='../images/jian.png' class='arrow'/>"+
+             	            "</div>"; 
+        	            }
+        	                     }   //创建气泡
+        	            html.push(textHtml);
+       var infoBox = new BMapLib.InfoBox(map,html.join(""),{   
+              boxStyle:{ 
+                    width: "15rem"
+                      ,height: "0.6rem"
+                  }
+           ,closeIconMargin: "1px 1px 0 0"
+           ,enableAutoPan: true
+           ,align: INFOBOX_AT_TOP
+          });
+    
+       /* infoBox.open(marker);*/
+
+          //点击地图，删除气泡
+          map.addEventListener("click", function(e){                   
+                            if(!e.overlay){         
+                             infoBox.close(marker);                
+                                $(".qipao").css("display","none");   
+                            }
+                        }); 
+
+                /*判断市场是否被关注*/
+               
+                if(isfocus==1){
+                  $("#"+j+0+"").css("display","none");
+                  $("#"+j+1+"").css("display","inline");
+                   
+                }
+                $("#"+j+0+"").on("click", function() {  
+                var type = $(this).data("type");
+                $(this).css("display","none"); 
+                $(this).next().css("display","inline"); 
+                var likeUrl = kindConfig[type]["likeMarker"];
+                var jsonData;
+                if(type == "01") {
+                        var obj={ 
+                         epsrtu01id:"",// 注册用户流水号
+                         cltpit01id:cltpit01id,// 采集点流水号
+                         cltpit01001:""+title,// 采集点名称
+                         epsflw03id:null,// 购买点流水号
+                         epsflw02001:"",// 关注类型
+                         create_time:"",// 创建时间
+                         cltpit01004:""+address,// 采集点地址
+                         cltpit01005:""+cltpit01005,// 营业开始时间
+                         cltpit01006:""+cltpit01006,// 营业结束时间
+                         cltpit01007:lng,// 采集点经度
+                         cltpit01008:lat// 采集点纬度
+                    }
+                    jsonData = {
+                        "access_token": $.getStorage('access_token'),               
+                        focusCollectStation:JSON.stringify(obj)
+                    }
+                }else if(type == "04"){
+                    var obj = { 
+                         cltpit01id:cltpit01id,// 采集点流水号
+                         cltpit01001:title,// 采集点名称
+                        }
+                        jsonData = {
+                        "access_token": $.getStorage('access_token'),               
+                        "drugstore" :JSON.stringify(obj),
+                    }
+                }else if(type == "05"){
+                           jsonData = {
+                           "access_token": $.getStorage('access_token'),               
+                           cltpit01id:cltpit01id,// 采集点流水号
+                           cltpit01001:title,// 采集点名称  
+                       }
+                }else if(type == "02") {
+                	jsonData = {
+                            "access_token": $.getStorage('access_token'),               
+                            clthtp01id:cltpit01id,// 采集点流水号
+                            clthtp01001:title,// 采集点名称  
+                        }
+                }
+             /* 添加关注市场 */
+             $.request({
+                    urlType: likeUrl,
+                    data: jsonData
+                }, function (json) {
+                    if(json.success) {
+                       
+                     $.toast("关注成功");     
+                         
+                    }
+                    else {
+                        //$.toast('网络错误')
+                    }
+
+                });
+             
+           
+             
+             
+        });
+        $("#"+j+1+"").on("click", function() {
+            var type = $(this).data("type");
+            $(this).css("display","none");
+            $(this).prev().css("display","inline");  
+            var dislikeUrl = kindConfig[type]["dislikeMarker"];    
+            var disObj;
+        /* 取消关注市场 */  
+        if(type == "02"){
+        	disObj ={
+        			"access_token": $.getStorage('access_token'),
+        			clthtp01id:cltpit01id// 采集点流水号		
+        	}
+        }else{
+				disObj ={
+						"access_token": $.getStorage('access_token'),
+                        cltpit01id:cltpit01id// 采集点流水号		
+				        	}
+        }
+                    $.request({
+                    urlType: dislikeUrl,
+                    data: {
+                        "access_token": $.getStorage('access_token'),
+                        cltpit01id:cltpit01id// 采集点流水号
+                    }
+                }, function (json) {
+                    if(json.success) {
+                     
+                        $.toast("取消成功")
+                         
+                    }
+                    else {
+                        //$.toast('网络错误')
+                    }
+
+                });
+       
+            
+        });
+        
+       /* if(isfocus==1){
+         $("#"+i+1+"").css("display","inline"); 
+         $("#"+i+0+"").css("display","none");
+      }*/
+     
+        /*点击注册事件*/
+     $("#"+j+"sc").on("click", function() {
+    	 var num = $(this).data("num");
+             var marPoint =new BMap.Point(poi.lng+0.0115,poi.lat-0.01)
+            map.centerAndZoom(marPoint, 13);
+             infoBox.close(marker);
+             infoBox.open(marker);
+      if(num<11){
+         $(".qipaonew").css("display","none"); 
+         $(".qipao").css("display","none");       
+         $(".infoBox>img").css("display","none");
+         $("#qipao"+j+"").css("display","block");  //显示气泡
+     }else{
+        $(".qipao").css("display","none");     
+         $(".qipaonew").css("display","none"); 
+         $("#qipaonew"+j+"").css("display","block"); 
+         $(".infoBox>img").css("display","none");
+     }
+    });
+ //点击出现路线规划
+     $("#"+k+1+"dh").on("click", function(e) {
+        e.stopPropagation();//阻止冒泡
+        var startPoint = new BMap.Point(epsflw03003,epsflw03004);
+        pointNav(startPoint,poi,"walk");
+     })
+	}
+function caishiOpen(obj){ //打开菜市气泡
+    var id = $(obj).data("id");
+    var type = $(obj).data("type");
+	var star = $(obj).data("star");
+	var name = $(obj).data("title");
+	var address = $(obj).data("address");
+	var yysj = $(obj).data("startend");
+	var distance = $(obj).data("distance");
+	var tiaoshu =	$(obj).data("tiaoshu");
+	var isfocus =	$(obj).data("isfocus");
+	var range =	$(obj).data("range");
+	var yydj = $(obj).data("yydj");
+	var picture = $(obj).data("img");
+    if(type == "01"){//买菜要改成03的
+    	$.openWin({
+            name:"nearbyquery",
+            animId : 2,
+            url:'wgtroot://mCheap/market/ui/market.html',
+            pageParam: {
+            	cltpit01id : id
+            }
+        });
+    		}else if(type == "04"){//买药
+    			$.openWin({
+    		            name:"shop_sort",
+    		            animId : 2,
+    		            url:'wgtroot://medicine/medicine_shop/ui/shop_sort.html',
+    		            pageParam: {
+    		                lsh:id,
+    		                storeStar:star,
+    		                storeName:name,
+    		                storeAddress:address,
+    		                storeYysj:yysj,
+    		                tiaoshu:tiaoshu,
+    		                focus:isfocus,
+    		                range:range,
+    		                picture:picture,
+    		            }
+    		        });
+    		}else if(type == "05"){//超市	
+    	$.openWin({
+                name:"product_show",
+                animId : 2,
+                url:'wgtroot://supermarket/market_product_show/ui/product_show.html',
+                pageParam: {
+                    lsh:id,
+                    star:star,
+                    marketName:name,
+                    address:address,
+                    yytime:yysj,
+                    distance:distance,
+                    tiaoshu:tiaoshu,
+                    focus:isfocus,
+                    range:range,
+                    picture:picture,
+                }
+            });
+    		}else if(type == "02") {
+    			$.openWin({
+    				name:'hos_main',
+    				animId : 2,
+    				url:'wgtroot://hospital/hos_main/ui/hos_main.html',
+    				pageParam:{
+    					cltpit01id:id,
+    					title:name,
+    					address:address,
+    					distance:distance,
+    					clthtp01013:yydj,
+    					time:yysj,
+    					comment:tiaoshu
+    				}
+    			}); 
+    		}
+            
+        }
+/**
+ * 根据起始点和目的点来规划路线
+ * @param {[type]} startPoint     [description] 起点坐标
+ * @param {[type]} endPoint     [description] 终点坐标
+ * @param {[type]} navType     [description] 导航类型
+ */
+function pointNav(startPoint,endPoint,navType) {
+    if(navType == "walk") {//步行路线
+        if(walkRoute != null)walkRoute.clearResults();//清除上一次的路径
+        walkRoute = new BMap.WalkingRoute(map, {renderOptions:{map: map, autoViewport: true}}); 
+        walkRoute.search(startPoint,endPoint);
+        walkRoute.setMarkersSetCallback(function(result){
+                map.removeOverlay(result[0].marker); //删除起点
+               //map.removeOverlay(result[1].marker);//删除终点
+            })
+    }else if(navType == "bus") {//公交路线
+
+    }else if(navType == "drive") {//驾车路线
+
+    }
+}
+	function searchInfo(){
+		 var addressInfo=document.getElementById("suggestId").value;
+		    if(addressInfo==""){
+		    	return;
+		    }	 
+	    map.clearOverlays(); 		    
+		 // 创建地址解析器实例
+		var myGeo = new BMap.Geocoder();
+		var geoc = new BMap.Geocoder();  
+		
+			// 将地址解析结果显示在地图上,并调整地图视野
+		myGeo.getPoint(""+addressInfo, function(point){
+			var pp=new BMap.Point(point.lng,point.lat);
+		 if (point) {
+			 lngsave=point.lng;
+	 		 latsave=point.lat;
+	 		 caishi(lngsave,latsave);
+			 var address;
+			 geoc.getLocation(pp, function(rs){
+					var addComp = rs.addressComponents;		
+				address=addComp.district + "" + addComp.street + "" + addComp.streetNumber;
+				saveSearch(pp,address);   
+			    });    
+				   	map.centerAndZoom(point, 13);					
+				}else{
+					 $.toast("您选择地址没有解析到结果!");
+				}
+			}, "成都市");
+			
+	}
+	//保存地址
+	function saveSearch(pp,address){
+		  var myIcon = new BMap.Icon("../images/icondwbz-31.png", new BMap.Size(30, 45), 
+		         {
+		        anchor : new BMap.Size(13, 46), 
+		        imageOffset: new BMap.Size(0, 0)
+		      });
+		   var marker=new BMap.Marker(pp,{icon: myIcon});
+		   map.addOverlay(marker);
+		   var htmlsave=[ 
+		                 "<div ontouchend='saveAddress()' class='placeStyle2'><div class='kuangStyle'><img src='../images/gou1.png' class='gouStyle'/><div class='buyPlace'>保存为我的常用地址</div></div><img src='../images/icon_24.png' class='imgJ'/></div>"
+		                ]
+		              	   var jdlx;
+		                 
+		                   if(epsflw03005=="01"){
+		                	   jdlx="家";
+		                   }else if(epsflw03005=="02"){
+		                	   jdlx="公司";
+		                   }else{
+		                	   jdlx =" ";
+		                   }
+		 
+		              	   var html=[ 
+		              		 			"<div class='dzbc'>"+
+		              		 			"<div class='srks'><input type='text' id='iptsrk' class='iptsrk' ontouchend='focussrk()' value="+jdlx+" ></div>"+
+		              		 			"<div class='dzk'><div class='dztm'>地址:</div><div class='dzmc'>"+address+"</div></div>"+
+		              		 			"<div class='qbstyle'>"+
+		              		 			     "<div class='bcwc' ontouchend='saveData()'><div class='bcstyle'>保存</div></div>"+
+		              		 			     "<div class='qxwc' ontouchend='cancelData()'><div class='qxstyle'>取消</div></div>"+
+		              		 			     "</div>"+
+		              		 			     "<div class='jiantou'><div class='jtimg'></div></div>"+
+		              		 			"</div>"
+		              		                ]
+		              		 	   
+		              		   var infoBoxSave = new BMapLib.InfoBox(map,htmlsave.join(""),{   
+		              	           boxStyle:{ 
+		              	           	      width: "15rem"
+		              	                  ,height: "0.6rem"
+		              	               }
+		              		       ,closeIconMargin: "1px 1px 0 0"
+		              		       ,enableAutoPan: true
+		              		       ,align: INFOBOX_AT_TOP
+		              	           
+		              	       });
+		              	   var infoBox = new BMapLib.InfoBox(map,html.join(""),{   
+		                         boxStyle:{ 
+		                         	    width: "15rem"
+		                                 ,height: "0.6rem"
+		                             }
+		              	       ,closeIconMargin: "1px 1px 0 0"
+		              	       ,enableAutoPan: true
+		              	       ,align: INFOBOX_AT_TOP
+		                         
+		                     });
+		              	   
+		              	   infoBoxSave.open(marker); 	   
+		              	   infoBox.open(marker);
+	}
+	
+ //注册统计面板点击事件
+ var dianji=1;
+    //给市场数样式注册监听方法
+    $(".marketStyle").on("click",function(){
+        if(dianji%2==1){
+         $(".a1").css({"top":'-6.3rem'});
+         $(".info").css("height","6rem");
+         $(".marketStyle").css("position","relative");
+         dianji +=1;
+         }else{
+          $(".a1").css({"top":'0em'});
+           $(".info").css("height","0em");
+           $(".marketStyle").css("position","fixed");
+           dianji +=1;
+         }
+            });
+
+     //查询购买点
+    $.request({
+        urlType: 'queryPurchase',
+        data: {
+            "access_token": $.getStorage('access_token')
+        }
+    }, function (json) {
+        if(json.success) { 
+        var json=json.data; 
+                dataInfo(json); 
+        }
+        else {
+            //$.toast('网络错误')
+        }
+
+    });
+
+function dataInfo(json){
+    for(var k=0;k<json.length;k++){ 
+      if(json[k].epsflw03005=="03"){
+        arr.push(json[k].epsflw03002);
+      }
+    }
+}
+</script>
+</html>
+
+

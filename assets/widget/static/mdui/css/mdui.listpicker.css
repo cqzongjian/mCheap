@@ -1,0 +1,93 @@
+/**
+ * 选择列表插件
+ * varstion 1.0.0
+ */
+
+.mdui-listpicker {
+	position: relative;
+	border: solid 0.0625rem #ccc;
+	padding: 0;
+	margin: 0.1875rem;
+	height: 11.5625rem;
+	background-color: #fff;
+	overflow: hidden;
+	border-radius: 0.1875rem;
+}
+.mdui-listpicker .mdui-listpicker-inner {
+	width: 100%;
+	height: 100%;
+	position: absolute;
+	left: 0;
+	top: 0;
+	z-index: 1;
+	border-radius: 0.1875rem;
+	-webkit-mask-box-image: -webkit-linear-gradient(bottom, transparent, transparent 5%, #fff 20%, #fff 80%, transparent 95%, transparent);
+	-webkit-mask-box-image: linear-gradient(to top, transparent, transparent 5%, #fff 20%, #fff 80%, transparent 95%, transparent);
+}
+.mdui-ios .mdui-listpicker .mdui-listpicker-inner {
+	width: calc(100% + 0.5rem);
+	padding-right: 0.5rem;
+}
+.mdui-android .mdui-listpicker .mdui-listpicker-inner {
+	overflow-y: auto;
+	-webkit-overflow-scrolling: touch;
+}
+.mdui-listpicker .mdui-listpicker-inner::-webkit-scrollbar {
+	width: 0;
+	height: 0;
+	visibility: hidden;
+}
+.mdui-listpicker ul {
+	list-style-type: none;
+	margin: 0;
+	padding: 0;
+	position: relative;
+}
+.mdui-listpicker ul li {
+	box-sizing: border-box;
+	position: relative;
+	height: 2.25rem;
+	line-height: 2.25rem;
+	text-align: center;
+	color: #555;
+	white-space: nowrap;
+	overflow: hidden;
+	text-overflow: ellipsis;
+}
+.mdui-listpicker.three-dimensional {
+	-webkit-transform-style: preserve-3d;
+	transform-style: preserve-3d;
+}
+.mdui-listpicker.three-dimensional .mdui-listpicker-inner {
+	-webkit-transform-style: preserve-3d;
+	transform-style: preserve-3d;
+}
+.mdui-listpicker.three-dimensional ul {
+	-webkit-transform-style: preserve-3d;
+	transform-style: preserve-3d;
+}
+.mdui-listpicker.three-dimensional ul li {
+	-webkit-transform-style: preserve-3d;
+	transform-style: preserve-3d;
+}
+.mdui-listpicker ul li:last-child {
+	border-bottom: none;
+}
+.mdui-listpicker ul li::first-child {
+	border-top: none;
+}
+.mdui-listpicker .mdui-listpicker-rule {
+	position: absolute;
+	border: solid 0.0625rem #ccc;
+	border-left: none;
+	border-right: none;
+	background-color: #dfd;
+	opacity: 0.5;
+	width: 100%;
+	left: 0;
+	top: 50%;
+	z-index: 0;
+}
+.mdui-listpicker .mdui-listpicker-item-selected {
+	color: green;
+}

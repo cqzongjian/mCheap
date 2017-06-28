@@ -1,0 +1,125 @@
+
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="utf-8">
+<title>your title</title>
+<meta name="viewport"
+	content="target-densitydpi=device-dpi,width=device-width, initial-scale=1,maximum-scale=1, user-scalable=no">
+<meta name="mobile-web-app-capable" content="yes">
+<meta name="apple-mobile-web-app-capable" content="yes">
+<meta name="apple-mobile-web-app-status-bar-style" content="black">
+<link rel="stylesheet" href="../../../static/mdui/css/mdui.min.css">
+<!--扩展组件/第三方/工程css---->
+<style>
+    *{
+        font-family: "Microsoft YaHei";
+    }
+    body{
+        background-color: #ffffff;
+    }
+    .item{
+        padding: 0.5rem 1rem;
+        border-bottom: 1px solid #CCCCCC;
+    }
+    .item-content{
+        text-overflow:ellipsis;
+        overflow: hidden;
+        white-space:nowrap;
+        font-size: 0.8rem;
+        color: #666666;
+    }
+    .item-bottom{
+        margin-top: 0.5rem;
+        color: #666666;
+        font-size: 0.8rem;
+    }
+    .isDeal{
+        text-align: right;
+    }
+    .notDeal{
+        color:#F57F20 ;
+    }
+    .hasDeal{
+        color: #3BA15C;
+    }
+</style>
+</head>
+<body>
+<div class="content">
+    <!--<div class="item">-->
+        <!--<div class="item-title">你是一直猪吗 </div>-->
+        <!--<div class="item-content">你就是一只猪一只猪</div>-->
+        <!--<div class="item-bottom mdui-box">-->
+            <!--<div class="item-time">2015-05-01 12:30</div>-->
+            <!--<div class="isDeal mdui-box-flex-1 notDeal">未处理</div>-->
+        <!--</div>-->
+    <!--</div>-->
+</div>
+<script src="../../../static/mdui/js/mdui.min.js"></script>
+<script src="../../../server.js"></script>
+<script>
+    $.uexWindowReady(function(){
+        $.request({
+            urlType: 'queryUserComplain',
+            data: {
+                "access_token": $.getStorage('access_token')
+            }
+        }, function (data) {
+            if (data.success) {
+                if(data.data.length>0) {
+                    setSuggestList(data.data);
+                }
+                else {
+                    $.toast('你还没有发表过意见哦~')
+                }
+            }
+            else {
+                alert('网络错误')
+            }
+        });
+        function setSuggestList(data){
+            var html='';
+            for(var i=0;i<data.length;i++) {
+                for(x in data[i]){
+                    if(!data[i][x]){
+                        data[i][x]='';
+                    }
+                }
+                html += '<div class="item" data-epssgt01id="' + data[i].epssgt01id + '">';
+                html += '<div class="item-title" >' + data[i].epssgt01001 + '</div>';
+                html += ' <div class="item-content">' + data[i].epssgt01002 + '</div>';
+                html += '<div class="item-bottom mdui-box">';
+                html += '<div class="item-time">' + data[i].createTime + '</div>';
+                if (data[i].epssgt01003 == '1') {
+                    html += '<div class="isDeal mdui-box-flex-1 notDeal">未处理</div>';
+                }
+                else {
+                    html += '<div class="isDeal mdui-box-flex-1 hasDeal">已处理</div>';
+                }
+                html += '</div>';
+                html += '</div>';
+            }
+            $('.content').html(html);
+        }
+        $('.content').on('tap','.item',function(){
+            $.openWin({
+                name:"wtxq",
+    			animId : 2,
+                url:'wgtroot://mCheap/complaint_suggest/ui/wtxq.html',
+                pageParam:{
+                    epssgt01id:$(this).data('epssgt01id'),
+                    detail:$(this).find('.item-content').html(),
+                    time:$(this).find('.item-time').html(),
+                    title:$(this).find('.item-title').html(),
+                    isDeal:$(this).find('.isDeal').html(),
+                }
+            });
+        })
+    });
+	
+	
+	
+</script>
+</body>
+</html>

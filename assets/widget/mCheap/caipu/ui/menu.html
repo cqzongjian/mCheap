@@ -1,0 +1,353 @@
+
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="utf-8">
+<title>your title</title>
+<meta name="viewport"
+	content="target-densitydpi=device-dpi,width=device-width, initial-scale=1,maximum-scale=1, user-scalable=no">
+<meta name="mobile-web-app-capable" content="yes">
+<meta name="apple-mobile-web-app-capable" content="yes">
+<meta name="apple-mobile-web-app-status-bar-style" content="black">
+<link rel="stylesheet" href="../../../static/mdui/css/mdui.min.css">
+	<link rel="stylesheet" href="../../../static/mCheap/css/mCommon.css">
+	<script src="../../../static/mCheap/js/mCheap.config.js"></script>
+<!--扩展组件/第三方/工程css---->
+<style>
+	*{
+		font-family: "Microsoft YaHei";
+		color: #666666;
+	}
+	body{
+		background-color: #FFFFFF;
+		padding-top: 2.75rem;
+		padding-bottom: 3rem;
+		position: relative;
+
+	}
+	.header-box{
+		background-color: #3BA15C;
+		padding: 0;
+	}
+	.header{
+		width: 100%;
+		height: 100%;
+		position: relative;
+	}
+	.back{
+		padding-right: 1rem;
+		padding-left: 1rem;
+		padding-top: 0.75rem;
+		position: absolute;
+		z-index: 100;
+	}
+	.back img{
+		width:auto;
+		height: 1.25rem;
+	}
+	.header-title{
+		text-align: center;
+		position: absolute;
+		width: 100%;
+		height: 100%;
+		top: 0px;
+		line-height: 2.75rem;
+		color: #FFFFFF;
+	}
+	.container{
+		padding-bottom:3rem;
+	}
+	.list{
+		padding: 0.5rem;
+	}
+	.footer{
+		position: fixed;
+		padding:0.75rem 0 ;
+		background-color: #ffffff;
+		bottom: 0;
+		width: 100%;
+		border-top: 1px solid #CCCCCC;
+	}
+	.footer>div{
+		padding-left: 20%;
+	}
+	#save{
+		border-right:1px solid #CCCCCC ;
+		background: url("../images/complete.png") no-repeat 30% center;
+		background-size: auto 1rem;
+	}
+	#xj{
+		background: url("../images/xunjia.png") no-repeat 30% center;
+		background-size: auto 1rem;
+	}
+	.nameBox{
+		width: 100%;
+		padding:0.5rem 0.5rem 0 0.5rem;
+	}
+	#cpname{
+		width: 100%;
+		background-color: #ffffff;
+	}
+	.list-item{
+	    margin-top:1rem;
+		border: 1px solid #CCCCCC;
+		padding: 0.5rem;
+		position: relative;
+	}
+	.delpic{
+		background: url("../images/del.png") no-repeat center;
+		width: 1rem;
+		height: 1rem;
+		background-size: 1rem;
+		position: absolute;
+		top: -0.5rem;
+		right: -0rem;
+		display: none;
+	}
+	.title{
+		color: #3BA15C;
+		font-size: 1.2rem;
+	}
+	.sub{
+		color: #666666;
+	}
+	.plus{
+		background: url("../images/plus.png") no-repeat center;
+		background-size: 1.5rem;
+		width: 2.5rem;
+	}
+	.minus{
+		background: url("../images/minus.png") no-repeat center;
+		background-size: 1.5rem;
+		width: 2.5rem;
+	}
+	.list-item input{
+		width:7rem ;
+		height: 2rem;
+		position: relative;
+		top: 0.5rem;
+		background-color: #DCE0DE;
+		border-radius: 0.3rem;
+		border: none;
+	}
+	.add-new{
+		margin: 0.5rem;
+		padding: 0.5rem;
+		padding-left: 2rem;
+		border: 1px dashed #CCCCCC;
+		background: url("../images/add_new.png") no-repeat  0.5rem center #E6EAE8;
+		background-size: 1rem;
+	}
+</style>
+</head>
+
+<body>
+<!--页面html-->
+<div class="header-box mdui-bar mdui-bar-nav">
+	<div class="header">
+		<div class="back mdui-action-back"><img src="../images/back.png"></div>
+		<div class="header-title">菜谱</div>
+	</div>
+</div>
+<div class="nameBox">
+	<input type="text" id="cpname" placeholder="输入菜品名称(必须)">
+</div>
+<div class="container">
+	<div class="list">
+		<div class="list-item mdui-box">
+            <div class="mdui-box-flex-1">
+            <div class="title">白菜</div>
+            <div class="sub">计量单位：g</div>
+            </div>
+            <div class="mdui-box">
+            <div class="minus"></div>
+            <input type="text" value="100">
+            <div class="plus"></div>
+            </div>
+            <div class="delpic"></div>
+            </div>
+	</div>
+	<div class="add-new">添加新菜品</div>
+</div>
+<div class="footer mdui-box">
+	<div class="mdui-box-flex-1" id="save">保存</div>
+	<div class="mdui-box-flex-1" id="xj">询价</div>
+</div>
+	
+	
+	
+<script src="../../../static/mdui/js/mdui.min.js"></script>
+<script src="../../../server.js"></script>
+	<!--扩展组件/第三方/工程js-->
+	<script>
+    var obj={};
+    var param_xj ;
+	$.uexWindowReady(function() {
+		var pageData=$.pageParam;
+		var epsmym01001=$.strToJson(pageData).epsmym01001;
+		//如果参数是json格式
+		var jsonData=$.strToJson(pageData);
+		var epsrmm01id = jsonData.epsrmm01id;
+
+		$('#cpname').val(jsonData.epsmym01001);
+		var html='';
+		var data=jsonData.userMenuProduct;
+		for(var i=0;i<data.length;i++){
+			html+='<div class="list-item mdui-box" data-cltpro01id="'+data[i].cltpro01id+'">';
+			html+='<div class="mdui-box-flex-1">';
+			html+='<div class="title">'+data[i].cltpro01001+'</div>';
+			html+='<div class="sub"><span>计量单位：g</div>';
+			//html+='<div class="sub"><span>计量单位：</span><span>'+data[i].epsmym02002+'</span></div>';
+			html+='</div>';
+			html+='<div class="mdui-box">';
+			html+='<div class="minus"></div>';
+			html+='<input type="text" value="'+data[i].epsmym02001+'">';
+			html+='<div class="plus"></div>';
+			html+='</div>';
+			html+='<div class="delpic"></div>';
+			html+='</div>';
+		}
+		$('.list').html(html);
+		
+		$(document).on('tap','#save',function(){
+			var epsmym01001 = $("#cpname").val();
+			if(epsmym01001){
+				var pageData=$.pageParam;
+				var epsrtu01id=$.strToJson(pageData).epsrtu01id;
+				var epsmym01id=$.strToJson(pageData).epsmym01id;
+				var list=$('div.list-item');
+				var userMenuProduct=[];
+				for(var i=0;i<list.length;i++){
+					var obj={};
+					obj.cltpro01id=$(list[i]).data("cltpro01id");
+					obj.cltpro01001=$(list[i]).find(".title").html();
+					obj.epsmym02001=$(list[i]).find("input").val();
+					obj.epsmym02002='g';
+					obj.epsmym02003='元/斤';
+					userMenuProduct.push(obj);
+				}
+				var Param={
+					epsmym01001:epsmym01001,      //菜单名称
+					epsrtu01id : "",                //注册用户流水号
+					epsrtu01001 :"",                //注册用户账号
+					epsrmm01id :epsrmm01id,         //推荐菜谱id
+					epsmym01id : epsmym01id,
+					userMenuProduct:userMenuProduct
+				};
+				$.request({
+					urlType:'modifyMenu',
+					data:{
+						"access_token": $.getStorage('access_token'),
+						userMenu : $.jsonToStr(Param)
+					}
+				},function(data){
+					if(data.success) {
+						alert('保存成功');
+                        $.execScript({
+                            winName:'menu_new',
+                            script:"$('.list').append($.getStorage('wdcp_list_new'));"
+                        });
+						$.execScript({
+							winName:'caishi',
+							frameName:'caipu',
+							script:'$("#mzcp").trigger("tap");$("#wdcp").trigger("tap");'
+						});
+					}
+					else {
+						alert('网络错误')
+					}
+				});
+			}else{
+				alert("请输入菜品名！");
+			}
+
+		})
+		
+	});
+	/*点击按钮调用的方法*/
+	/*点击减少按钮调用的方法*/
+	$(document).on('tap', '.minus', function(){
+		var ele=$(this).parent().find('input');
+		var val=ele.val();
+		var newVal=parseInt(val)-10;
+		if(newVal>=0){
+			ele.val(newVal)
+		}else{
+			ele.val('0')
+		}
+	});
+	
+	/*点击增加按钮调用的方法*/
+	$(document).on('tap', '.plus', function(){
+		var ele=$(this).parent().find('input');
+		var val=ele.val();
+		var newVal=parseInt(val)+10;
+		ele.val(newVal);
+	});
+	
+	/*长按增加删除按钮调用的方法*/
+	$(document).on('longtap','.list-item',function(){
+		$(this).find(".delpic").show();
+	});
+	
+	/*点击删除按钮调用的方法*/
+	$(document).on('tap','.delpic',function(){
+		$(this).parent().remove();
+	});		
+	
+	/*点击添加新菜品按钮调用的方法*/
+	$(document).on('tap','.add-new',function(){
+		var str='';
+		$(".list-item").each(function(){
+			var cltpro01id = $(this).data("cltpro01id");
+			str += cltpro01id+',';
+		});
+        var param_select=str.substring(0,str.length-1);
+
+		$.openWin({
+			name:"new_variety",
+			animId : 2,
+			url:'wgtroot://mCheap/caipu/ui/caipu_select.html',
+			pageParam:{
+				param_select :　param_select
+			}
+		});
+	});
+	$(document).on('tap','#xj',function(){
+		var num = $(".list-item").length ;
+		if(num){ //判断菜谱菜品信息不为空
+			var param=[];
+			$(".list-item").each(function(){
+				var obj={};
+				obj.cltpro01id = $(this).data("cltpro01id");
+				obj.cltpro01001 = $(this).find(".title").text();
+				obj.epsmym02001 = $(this).find("input").val();
+				obj.epsmym02002 = 'g';
+				obj.epsmym02003 = "元/斤";
+				param.push(obj);
+			});
+			var param_xj = JSON.stringify(param) ;
+			$.openWin({
+				name:"xj",
+				animId : 2,
+				url:'wgtroot://mCheap/caipu/ui/caipu_market.html',
+				pageParam:{
+					name:"我的菜谱" ,
+					param_xj : param_xj
+				}
+			});
+		}else{
+			alert("菜谱无菜品信息");
+		}
+	});
+	$(document).on('tap','.list-item',function(){
+
+	})
+	
+	
+	
+	
+	
+	</script>
+</body>
+</html>

@@ -1,0 +1,72 @@
+*{
+    font-family: "Microsoft YaHei";
+}
+.tj-list-item{
+
+    padding: 0.5rem 1rem;
+    border-bottom: 1px solid #cccccc;
+    position: relative;
+}
+.tj-list-item:last-child{
+    border: none;
+}
+.tj-list-item>div:nth-child(2){
+    padding-left: 0.5rem;
+}
+.list-item-title{
+    color: #000000;
+    text-overflow:ellipsis;
+    overflow: hidden;
+    white-space:nowrap;
+    height: 1rem;
+    line-height: 1rem;
+    padding-right:3rem;
+}
+.list-item-sub{
+    margin-top: 0.4rem;
+    font-size: 0.75rem;
+    line-height: 1rem;
+    color: #666666;
+}
+.tj-list-item>div>img{
+    width: 5rem;
+    height: auto;
+    border-radius: 5px;
+}
+.tj-list-item>.list-item-dis>img{
+    width: 1rem;
+    height: auto;
+    position: relative;
+    top: 0.2rem;
+}
+.edit{
+    padding-right: 0.7rem;
+    position: absolute;
+    font-size: 0.8rem;
+    color: #3BA15C;
+    right: 1rem;
+    line-height: 0.8rem;
+    top: 0.5rem;
+    background: url("../images/you_2.png") no-repeat center right;
+    background-size: auto 0.8rem;
+}
+.mdui-table-view-cell{
+    padding: 0;
+}
+.mdui-table-view-cell>.mdui-slider-left>.mdui-btn, .mdui-table-view-cell>.mdui-slider-right>.mdui-btn{
+    padding: 0 1rem;
+}
+.add-new{
+    padding: 1rem;
+}
+.add-new>div{
+    width: 100%;
+    height: 3rem;
+    border: 0.1rem dashed #cccccc;
+    padding-left:2.5rem ;
+    background: 0.5rem center url("../images/add_new.png") no-repeat;
+    background-size: 1.5rem 1.5rem;
+    line-height: 3rem;
+    font-size: 1.2rem;
+    color: #666666;
+}

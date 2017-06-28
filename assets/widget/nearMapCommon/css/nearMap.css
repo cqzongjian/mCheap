@@ -1,0 +1,449 @@
+body,html,#map{
+    width: 100%;
+    height: 100%;
+    margin:0px;
+    padding: 0px;
+    overflow: hidden;
+    font-family:"微软雅黑";
+    font-size:45px;
+}
+#map{
+	height: 100%;
+}
+/*去掉百度地图版权*/
+.BMap_cpyCtrl{
+    display: none !important;
+}
+.active{
+	display: block !important;
+}
+/*******************************************弹出气泡的样式start*******************************/
+#greensInfoBox{
+    background-color: #454545;
+    border-radius: 6px;
+    opacity: 0.9;
+    position: absolute;
+    left:-45px;
+    bottom: 45px;
+}
+#greensInfoBox .infoBox-title{
+    color: white;
+    margin:5px 0 5px 6px;
+    font-size: 0.4rem;
+    white-space: nowrap;
+}
+#greensInfoBox .items{
+    color: #D4D4D4;
+    font-size: 0.3rem;
+    margin:0 0 5px 6px;
+    white-space: nowrap;
+}
+#greensInfoBox .items .item-left{
+    display: inline-block;
+    vertical-align: top;
+}
+#greensInfoBox .items .item-right{
+    display: inline-block;
+    vertical-align: top;
+    padding: 0px 6px;
+    white-space: nowrap;
+}
+#greensInfoBox .jiantou{
+   position: absolute;
+   width: 32px;
+   height: 16px;
+   background: url("../images/jian.png") no-repeat;
+   left: 15px;
+   bottom: -15px;
+
+}
+/*******************************************弹出气泡的样式end*******************************/
+
+/*******************************************地图最上面的搜索start***************************/
+#header{
+    position: absolute;
+    top: 0px;
+    width: 100%;
+    height: 44px;
+    background-color: #3BA15C;
+}
+#header .back {
+    visibility: hidden;
+    width: 30px;
+    margin-top: -11px;
+}
+#header .back img{
+    width: 10px;
+    height: 20px;
+    margin-left: 12px;
+}
+#header .now-location {
+    width: 25px;
+    height: 25px;
+    float: right;
+    margin-right: 16px;
+    margin-top: 1px;
+}
+#header .now-location img {
+    width: 25px;
+    height: 25px;
+}
+#header .header-content{
+    position: relative;
+    height: 35px;
+    margin-top: -34px;
+    margin-left: 38px;
+    font-size: 0rem;
+}
+#header .header-near{
+    display: inline-block;
+    vertical-align: top;
+    position: absolute;
+    margin-left: 5px;
+    height: 25px;
+    top: 40%;
+    margin-top: -12.5px;
+    font-size: 0.25rem;
+    line-height: 25px;
+}
+#header .header-near .header-jiantou{
+    display: inline-block;
+    vertical-align: top;
+    width: 12px;
+    height: 6px;
+    background: url("../images/down3.png") no-repeat;
+    position: relative;
+    top: 10px;
+    left: 2px;
+}
+#autoSearch{
+    padding: 2px 30px 2px 50px;
+    height: 24px;
+    /*border-radius: 6px;*/
+    border: 0;
+    outline:none;
+    width: 4rem;
+}
+#header .header-content .nav-content-search{
+    display: inline-block;
+    vertical-align: top;
+    background: url("../images/chazhao.png") center no-repeat;
+    width: 18px;
+    height: 30px;
+    background-size: 100%;
+    position: relative;
+    left: -28px;
+}
+
+/*用户当前位置*/
+/*#header .header-content .nav-nowUser{
+    display: inline-block;
+    vertical-align: top;
+    width: 27px;
+    height: 27px;
+    background: url("../images/findmy.png") center no-repeat;
+    background-size: 100%;
+    position: relative;
+    top: 50%;
+    margin-top: -13px;
+}*/
+/*.nav-nowUser{
+    !*display: inline-block;
+    vertical-align: top;*!
+    width: 27px;
+    height: 27px;
+    background: url("../images/findmy.png") center no-repeat;
+    background-size: 100%;
+    position: absolute;
+    bottom: 13%;
+    left: 8%;
+    z-index: 999;
+}*/
+/*******************************************地图最上面的搜索end***************************/
+
+/*******************************************地图点击附近按钮弹出框的样式start***************************/
+#mengceng{/*蒙层的样式*/
+    opacity: 0.5;
+    background-color: #636363;
+    position: absolute;
+    width: 100%;
+    height: calc(100% - 200px);
+    display:none;
+    top: 160px;
+}
+.typeSelected{/*弹出框里面选中样式*/
+    color: #3ba15c !important;
+    background-color: #cde9d6 !important;
+}
+#popUp{
+    position: absolute;
+    width: 100%;
+    height: 100px;
+    top: 60px;
+    background-color: #fff; 
+    display: none;
+    font-size:0.3rem;
+}
+#popUp .jiantou{
+    position: absolute;
+    width: 26px;
+    height: 16px;
+    background: url("../images/jiantou.png") no-repeat;
+    top: -16px;
+    left: 42px;
+}
+#popUp .popUp-title{
+    width: 65px;
+    height: 50px;
+    line-height: 50px;
+    display: inline-block;
+    vertical-align: top;
+    text-align: center;
+}
+#popUp .item{
+    position: relative;
+    padding: 0px 8px;
+    height: 30px;
+    text-align: center;
+    line-height: 30px;
+    border-radius: 5px;
+    display: inline-block;
+    vertical-align: top;
+    top: 50%;
+    margin-top: -15px;
+    margin-left: 3.5px;
+    background-color: #f0f0f0;
+}
+#popUp .popUp-top{
+    position: relative;
+    width: 100%;
+    height: 50px;
+    border-bottom: 1px solid #ccc;
+}
+
+#popUp .popUp-middle{
+    position: relative;
+    width: 100%;
+    height: 50px;
+    border-bottom: 1px solid #ccc;
+}
+
+#popUp .popUp-bottom{
+    position: relative;
+    width: 100%;
+    height: 50px;
+    background-color: #f7f7f7;
+}
+#popUp .popUp-bottom .reset{
+    position: absolute;
+    width: 65px;
+    height: 30px;
+    line-height: 30px;
+    text-align: center;
+    border: 1px solid #eee;
+    border-radius: 5px;
+    left: 10px;
+    background-color: #fff;
+    top: 50%;
+    margin-top: -15px;
+}
+#popUp .popUp-bottom .finish{
+    position: absolute;
+    width: 65px;
+    height: 30px;
+    line-height: 30px;
+    text-align: center;
+    border: 1px solid #eee;
+    border-radius: 5px;
+    right: 10px;
+    top: 50%;
+    color:#fff;
+    margin-top: -15px;
+    background-color: #3BA15C;
+}
+/*******************************************地图点击附近按钮弹出框的样式end***************************/
+
+/*******************************************显示栏start********************************/
+#nav{
+    position: absolute;
+    top: 44px;
+    width: 100%;
+    height: 36px;
+    background-color: #fff;
+    font-size:0.4rem;
+}
+#navTypes{
+    position: relative;
+    display: inline-block;
+    vertical-align: top;
+    height: 100%;
+}
+#nav .nav-item{
+    position: relative;
+    padding: 0px 10px;
+    height: 25px;
+    text-align: center;
+    line-height: 25px;
+    border-radius: 5px;
+    display: inline-block;
+    vertical-align: top;
+    top: 50%;
+    margin-top: -12px;
+    color: #3ba15c;
+    background-color: #cde9d6;
+    margin-left: 5px;
+}
+#nav .sanjiao{
+    border-style: solid;
+    border-width: 0px 0px 16px 18px;
+    border-color: transparent transparent #3ba15c transparent;
+    width: 0px;
+    height: 0px;
+    position: absolute;
+    top: 14px;
+    right: 0;
+}
+#nav .sanjiao .sanjiao-close{
+    position: absolute;
+    top: -6px;
+    left: -8px;
+    color: #fff;
+    font-size: 0.4rem;
+}
+/*******************************************显示栏end********************************/
+
+/*******************************************市场详细信息start***************************/
+#markersPanel{
+    width:100%;
+    position: absolute;
+    bottom: 0px;
+}
+#markersPanel .title{
+    position: relative;
+    width: 100%;
+    height: 40px;
+    line-height: 40px;
+    background-color: #268DD5;
+    color: white;
+    font-size: 0.4rem;
+    text-align: center;
+    bottom: 0px;
+}
+#markersInfo{
+    position: absolute;
+    width: 100%;
+    background: white;
+    height: 270px;
+    overflow: auto;
+    display: none;
+    bottom: 0px;
+}
+#markersInfo .items{
+    /*width: 90%;*/
+    height: 120px;
+    padding: 0 15px;
+}
+#markersInfo .items .item{
+    width: 100%;
+    height: 40px;
+    margin: 0 auto;
+    line-height: 40px;
+}
+#markersInfo .items .item .item-left{
+    display: inline-block;
+    vertical-align: top;
+    color: #008845;
+    /*font-size: 0.38rem;*/
+    font-size: 0.4rem;
+}
+#markersInfo .items .item .item-middle{
+    display: inline-block;
+    vertical-align: top;
+    color: #008845;
+    /*font-size: 0.38rem;*/
+    font-size: 0.4rem;
+    margin-left: 5px;
+}
+#markersInfo .items .item .item-right{
+    /* width: 18px;
+    height: 16px;
+    display: inline-block;
+    vertical-align: top;
+    background: url("../images/dislike.png") no-repeat;
+    float: right;
+    background-size: cover;
+    position: relative;
+    top: 50%;
+    margin-top: -8px; */
+    width: 18px;
+	height: 16px;
+	float: right;
+	margin-top: 10px;
+}
+.dislike{
+    /* background: url("../images/dislike.png") no-repeat !important; */
+}
+.like{
+    /* background: url("../images/like.png") no-repeat !important; */
+}
+#markersInfo .items .item .item-left2{
+    width: 15px;
+    height: 18px;
+    background: url("../images/dingwei.png") no-repeat;
+    background-size: 100%;
+    display: inline-block;
+    vertical-align: top;
+    position: relative;
+    top: 50%;
+    margin-top: -9px;
+}
+#markersInfo .items .item .item-middle2{
+    display: inline-block;
+    vertical-align: top;
+    color: #888;
+    font-size: 0.5rem;
+    margin-left: 5px;
+    width:5rem;
+    text-overflow:ellipsis; 
+	white-space:nowrap; 
+	overflow:hidden;
+}
+#markersInfo .items .item .item-right2{
+    color: #888;
+    float: right;
+    font-size: 0.2rem;
+    display: inline-block;
+    vertical-align: top;
+}
+#markersInfo .items .item .item-left3{
+    color: #666;
+    font-size: 0.4rem;
+    display: inline-block;
+    vertical-align: top;
+}
+#markersInfo .items .item .item-right3{
+    color: #3BA15C;
+    font-size: 0.4rem;
+    overflow:hidden;
+    display: inline-block;
+    vertical-align: top;
+    float: right;
+}
+/*******************************************市场详细信息end***************************/
+
+/*******************************************导航图标(打开第三方应该)start**************/
+#dhImg{
+    width: 58px;
+    height: 58px;
+    background: url("../images/dh.png") no-repeat;
+    background-size: 100%;
+    position: absolute;
+    bottom: 65px;
+    right: 0px;
+}
+#dhImg .iosDh{
+    width: 58px;
+    height: 58px;
+    display: block;
+}
+/*******************************************导航图标(打开第三方应该)end**************/

@@ -1,0 +1,208 @@
+
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="utf-8">
+<title>your title</title>
+<meta name="viewport"
+	content="target-densitydpi=device-dpi,width=device-width, initial-scale=1,maximum-scale=1, user-scalable=no">
+<meta name="mobile-web-app-capable" content="yes">
+<meta name="apple-mobile-web-app-capable" content="yes">
+<meta name="apple-mobile-web-app-status-bar-style" content="black">
+<link rel="stylesheet" href="../../../static/mdui/css/mdui.min.css">
+<!--扩展组件/第三方/工程css---->
+<style>
+.body-wrapper-box{
+    width : 100%;
+    height: 100%;
+    border:1px solid red;
+}
+.bod{
+   border:1px solid white;
+}
+/*整个div*/
+.whole{
+    overflow:auto;
+    background-color:white;
+}
+/*首行*/
+.first-line{
+    background: rgba(0,212,0,0.1);
+    width:100%;
+    position:fixed;
+    top:0;
+    overflow:auto;
+}
+.first-line-title{
+    font-family:SimHei;
+    font-size:1rem;
+    border:1px solid #D6D6D6;
+    border-radius:0.8rem;
+    padding:0.2rem 0.5rem 0.2rem 0.5rem;
+    background-color:#F4F4F4;
+    margin:1.2rem 0.6rem 1.2rem 0.6rem;
+    position:relative;
+}
+.first-line-img{
+    height:1rem;
+    width:1rem;
+    position:absolute;
+    right:-18%;
+    top:-18%;
+    visibility:hidden;
+}
+.first-line-img-show{
+    height:1rem;
+    width:1rem;
+    position:absolute;
+    right:-18%;
+    top:-18%;
+    visibility:visible;
+}
+.omit{
+    width:2.2rem;
+    position:fixed;
+    right:4%;
+    top:3%;
+}
+.omit-img{
+    width:2rem;
+    height:0.4rem;
+}
+
+/*内容list*/
+.content-img{
+    width:6.8rem;
+    height:5.5rem;
+    border:5px solid #F3F3F3;
+    margin:0.8rem 0.8rem 0.8rem 1.5rem;
+    border-radius:0.5rem;
+}
+.content-title{
+    font-family:SimHei;
+    font-size:1.35rem;
+    padding-bottom:0.5rem;
+}
+.content-unit{
+    font-family:SimHei;
+    font-size:1rem;
+    color:#787878; 
+}
+.content-choice{
+    width:1.6rem;
+    height:1.6rem;
+    margin-left:2rem;
+    visibility:visible;
+}
+.content-boundary{
+    border-bottom:1px solid #E2E2E2;
+    margin-left:1.5rem;
+}
+
+/*底部*/
+.foot-bottom{
+    border:1px solid pink;
+    position:fixed;
+    bottom:0;
+    width:100%;
+    height: 3.5em;
+    background-color:white;
+}
+.foot-img{
+    width:1.5rem;
+    height:1.5rem;
+}
+.foot-save{
+    font-family:SimHei;
+    font-size:1.1rem;
+    color:#33AFA0;
+    padding-left:0.5rem;
+}
+
+</style>
+</head>
+
+<body>
+	<!--页面html-->
+	<div class="mdui-box mdui-box-ver body-wrapper-box whole">
+	    <div class="mdui-box first-line">
+	        <div class="first-line-title">
+	            <img class="first-line-img" src="../images/del.png">白菜 
+	        </div>
+	        <div class="first-line-title">
+	            <img class="first-line-img" src="../images/del.png">白菜 
+	        </div>
+	        <div class="first-line-title">
+	            <img class="first-line-img" src="../images/del.png">白菜 
+	        </div>
+	        <div class="first-line-title">
+	            <img class="first-line-img" src="../images/del.png">白菜 
+	        </div>
+	        <div class="first-line-title">
+	            <img class="first-line-img" src="../images/del.png">白菜 
+	        </div>
+	        <div class="first-line-title">
+	            <img class="first-line-img" src="../images/del.png">白菜 
+	        </div>
+	    </div>
+	    <div class="omit">
+            <img class="omit-img" src="../images/omit.png">
+        </div>
+	    <div class="content">
+		    <div class="mdui-box">
+		        <img class="mdui-box mdui-box-flex-1 content-img" src="../images/tomato.jpg">
+		        <div class="mdui-box mdui-box-flex-9 mdui-box-ver">
+		            <div class="mdui-box mdui-box-flex-1 mdui-box-align-end content-title">萝卜</div>
+		            <div class="mdui-box mdui-box-flex-1 content-unit">计量单位：斤</div>
+		        </div>
+		        <div class="mdui-box mdui-box-flex-9 mdui-box-align-center">
+		            <img class="content-choice" src="../images/righttwo.png">
+		        </div>
+		    </div>
+		    <div class="content-boundary"></div>
+		    
+		    
+		    
+		   
+	    </div>
+	    
+	    
+	    
+	    
+	    <!-- foot -->
+	    <div class="mdui-box mdui-box-align-center mdui-box-pack-center foot-bottom">
+	        <img class="foot-img" src="../images/right.png">
+	        <div class="mdui-box mdui-box-align-center mdui-box-pack-center foot-save">保存</div>
+	    </div>	
+    </div>
+	
+	
+	
+	
+	
+	<script src="../../../static/mdui/js/mdui.min.js"></script>
+	<!--扩展组件/第三方/工程js-->
+	<script>
+	$.uexWindowReady(function(){
+		
+		
+		
+	})
+	
+	/*长按标题钮弹出删除按钮调用的方法*/
+    $(document).on('longtap','.first-line-title',function(){
+		var delimg=$(this).find(".first-line-img");
+		delimg.removeClass("first-line-img");
+		delimg.addClass("first-line-img-show");
+	}); 
+	
+	/*点击删除点删除当前标题*/
+	$(document).on('tap','.first-line-img-show',function(){
+		$(this).parent().remove();
+	});
+	
+	
+	
+	</script>
+</body>
+</html>

@@ -1,0 +1,606 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8">
+    <title>mCollection</title>
+    <meta name="viewport" content="target-densitydpi=device-dpi,width=device-width, initial-scale=1,maximum-scale=1, user-scalable=no">
+    <meta name="apple-mobile-web-app-capable" content="yes">
+    <meta name="apple-mobile-web-app-status-bar-style" content="black">
+    <link rel="stylesheet" href="../../../static/mdui/css/mdui.min.css">
+    <link rel="stylesheet" href="../../../static/mCheap/css/mCommon.css">
+    <link rel="stylesheet" href="../css/market_list.css">
+    <script src="../js/main.js"></script>
+    <style>
+        html,body{
+            height: 100%;
+        }
+        body{
+            position: relative;
+            overflow:hidden;
+        }
+        .seting{
+        }
+        .setting-detail{
+            position: absolute;
+            top: 5.3rem;
+            bottom: 0;
+            width: 100%;
+            background-color: rgba(0,0,0,0.3);
+            display: none;
+            overflow: hidden;
+            z-index: 100;
+        }
+        .item{
+            padding: 0.5rem 0;
+            color: #333333;
+            line-height: 1.5rem;
+            background-color: #ffffff;
+            border-bottom: 1px solid #CCCCCC;
+        }
+        .item>div{
+            border-right: .1rem solid #CCCCCC;
+            width: 50%;
+            text-align: center;
+            position: relative;
+        }
+        .item>div>img{
+            height: 0.3rem;
+            width: auto;
+            position: relative;
+            top: -0.15rem;
+            display: inline-block;
+        }
+        .item>div:last-child{
+            border: none;
+        }
+        .item .item-on{
+            color: #3BA15C;
+        }
+        .detail{
+            line-height: 2rem;
+            background-color: #ffffff;
+            color: #666666;
+            position: relative;
+            z-index: 100;
+        }
+        ul{
+            padding: 0;
+            margin: 0;
+        }
+        li{
+            list-style: none;
+            border-bottom: 1px solid #cccccc;
+            padding-left: 3rem;
+        }
+        li:last-child{
+            border-bottom: none;
+        }
+        .li-on{
+            background: url("../images/lvgou.png") no-repeat 1rem center;
+            background-size:  auto 0.8rem;
+            color: #3BA15C;
+        }
+        .for-near{
+            display: none;
+        }
+        .for-shaixuan{
+            display: none;
+        }
+        .mdui-checkbox input[type=checkbox]:checked:before, .mdui-radio input[type=radio]:checked:before {
+            color: #3BA15C;
+        }
+        .select-box>.mdui-input-row{
+            border-bottom: 1px solid #cccccc;
+        }
+        #gzCaipin{
+            border-bottom: none;
+        }
+        #btn-group{
+            padding:0.5rem 0.5rem 0.5rem 1rem ;
+            background-color: #F7F7F7;
+        }
+        #btn-group>input{
+            display: block;
+        }
+        #rest{
+            float: left;
+        }
+        #confirm{
+            background-color: #3BA15C;
+            color: #FFFFFF;
+            float: right;
+        }
+        .mdui-checkbox input[type=checkbox], .mdui-radio input[type=radio] {
+            right: 0.3rem;
+        }
+        .list{
+            overflow: auto;
+        }
+        .no-data{
+            height: 3rem;
+            text-align: center;
+            line-height: 3rem;
+            border-bottom: 1px solid #CCCCCC;
+        }
+    </style>
+</head>
+<body class="mdui-box">
+<div class="header-box mdui-bar mdui-bar-nav">
+    <div class="header  mdui-box">
+        <div class="back mdui-action-back"><img src="../images/back.png"></div>
+        <div class="mdui-box-flex-1 mdui-box search-box">
+            <div class="mdui-box-flex-1">
+                <form action="">
+                    <input type="text" id="search"  placeholder="请输入市场名称"/>
+                </form>
+            </div>
+            <div class="search-img"><img src="../images/search.png"></div>
+        </div>
+        <div style="width: 2rem;height: 100%"></div>
+        <!--<div class="shaixuan">-->
+            <!--<img src="../images/shaixuan.png">-->
+        <!--</div>-->
+    </div>
+</div>
+<div class="seting">
+    <div class="item mdui-box">
+        <div class="item-near">
+            <div style="display: inline-block; padding-right: .2rem;"></div>
+            <img src="../images/down.png">
+        </div>
+        <div class="item-shaixuan">
+            <div style="display: inline-block;padding-right: .2rem;">筛选</div>
+            <img src="../images/down.png">
+        </div>
+    </div>
+</div>
+<div class="top">
+    <div class="mdui-box top-header">
+        <div class="mdui-box-flex-1" id="vegetable_title"></div>
+        <div class="mdui-box-flex-3" id="lastTime"></div>
+        <div class="islike" id="isFocus"></div>
+        <div class="add"></div>
+    </div>
+    <!--<div class="mdui-box price-detail">-->
+        <!--<div class="mdui-box-flex-1" id="minprice">-->
+            <!--<span>最便宜</span>-->
+            <!--<span></span>-->
+        <!--</div>-->
+        <!--<div class="mdui-box-flex-1" id="maxprice">-->
+            <!--<span>最贵</span>-->
+            <!--<span></span>-->
+        <!--</div>-->
+        <!--<div class="mdui-box-flex-1" id="avgprice">-->
+            <!--<span>平均</span>-->
+            <!--<span></span>-->
+        <!--</div>-->
+        <!--<div class="mdui-box-flex-1" id="lastprice">-->
+            <!--<span>最新</span>-->
+            <!--<span></span>-->
+        <!--</div>-->
+    <!--</div>-->
+</div>
+<!--<div class="mdui-box paixu">-->
+    <!--<div class="mdui-box-flex-1 paixu-item mdui-box" data-zd="cltprc05004" data-item="cp">-->
+        <!--<div class="mdui-box-flex-1">最便宜</div>-->
+        <!--<div class="paixu-item-bg"></div>-->
+    <!--</div>-->
+    <!--<div class="mdui-box-flex-1 paixu-item mdui-box" data-zd="cltprc05005" data-item="zg">-->
+        <!--<div class="mdui-box-flex-1">最贵</div>-->
+        <!--<div class="paixu-item-bg"></div>-->
+    <!--</div>-->
+    <!--<div class="mdui-box-flex-1 paixu-item mdui-box" data-zd="cltprc05006" data-item="avg">-->
+        <!--<div class="mdui-box-flex-1">平均</div>-->
+        <!--<div class="paixu-item-bg"></div>-->
+    <!--</div>-->
+<!--</div>-->
+<div class="list mdui-box-flex-1" id="list">
+    <!--<div class="list-item">-->
+        <!--<div class="list-item-content mdui-box">-->
+            <!--<div class="list-item-img"><img src="../images/market_hongxinglu.jpg"></div>-->
+            <!--<div class="mdui-box-flex-1">-->
+                <!--<div class="list-item-title">红星路农贸市场</div>-->
+                <!--<div>1.2~1.5</div>-->
+                <!--<div class="list-item-price">￥1.5</div>-->
+            <!--</div>-->
+        <!--</div>-->
+        <!--<div class="list-item-dis"><img src="../images/dis.png">&nbsp;1.7km</div>-->
+        <!--<div class="list-item-time">2016-05-23 9:30</div>-->
+    <!--</div>-->
+
+</div>
+<div class="setting-detail">
+    <div class="detail">
+        <div class="for-near">
+            <ul>
+                <li>附近</li>
+                <li>1km</li>
+                <li>2km</li>
+                <li>3km</li>
+                <li>4km</li>
+                <li>全城</li>
+            </ul>
+        </div>
+        <div class="for-shaixuan">
+            <div class="select-option">
+                <div class="select-box">
+                    <!--<div class="mdui-input-row mdui-checkbox" id="nearCs">-->
+                        <!--<label>附近市场</label>-->
+                        <!--<input name="checkbox1"  type="checkbox" data-for="nearCs">-->
+                    <!--</div>-->
+                    <div class="mdui-input-row mdui-checkbox" id="purchasePointCs">
+                        <label>常用地址</label>
+                        <input name="checkbox1"  type="checkbox" data-for="purchasePointCs">
+                    </div>
+                    <div class="mdui-input-row mdui-checkbox" id="focusCs">
+                        <label>我关注的市场</label>
+                        <input name="checkbox1" type="checkbox" data-for="focusCs">
+                    </div>
+                    <div class="mdui-input-row mdui-checkbox" id="jgs">
+                        <label>价格升序</label>
+                        <input name="checkbox1" type="checkbox" data-for="focusCs">
+                    </div>
+                    <div class="mdui-input-row mdui-checkbox" id="jgj">
+                        <label>价格降序</label>
+                        <input name="checkbox1" type="checkbox" data-for="focusCs">
+                    </div>
+
+
+                    <div class="mdui-input-row" id="btn-group">
+                        <input type="button" value="重置" id="rest">
+                        <input type="button" value="确定" id="confirm">
+                    </div>
+                </div>
+        </div>
+    </div>
+    </div>
+    <div class="blank" style="position: absolute; width: 100%; height: 100%;z-index: 1;"></div>
+</div>
+<!--页面-->
+<script src="../../../static/mdui/js/mdui.js"></script>
+<script src="../../../static/mCheap/js/mCheap.config.js"></script>
+<script src="../../../server.js"></script>
+<script src="../../../public.js"></script>
+<script src="../../../static/mCheap/js/scroll.js"></script>
+<script>
+    var marketListClass=function(cltpro01id,isfocus,product){
+        this.item='';
+        this.requestFlag=true;
+        this.cltpro01id=cltpro01id;//产品id
+        this.isfocus=isfocus;//关注
+        this.pageNum=0;//分页的页数
+        this.product=product;
+        this.init=function(){
+            this.request();
+        };
+        this.tabEvent();
+    };
+
+    //请求数据
+    marketListClass.prototype.request=function(){
+        var $this=this;
+        if ($this.isfocus == '1') {
+            $('.islike').addClass('like')
+        }else {
+            $('.islike').addClass('dislike')
+        }
+        var distance = $.getStorage('near');
+        if(distance==5){
+            distance='';
+        }
+        //产品名称
+        $("#vegetable_title").html($this.product.cltpro01001+'<span style="font-size:0.8rem;color: #999999;">&nbsp;(元/斤)</span>');
+        var purchasePointCs = '',focusCs = '',jgpx='';
+        var cltpit01001= $("#search").val()||'';
+        if ($('#purchasePointCs').find('input').attr('checked')) {
+            purchasePointCs = 1;
+        }
+        if ($('#focusCs').find('input').attr('checked')) {
+            focusCs = 1;
+        }
+        if ($('#jgs').find('input').attr('checked')) {
+            jgpx = 'avgu';
+        }
+        if ($('#jgj').find('input').attr('checked')) {
+            jgpx = 'avgd';
+        }
+        $.request({
+            urlType: 'nearMarketPrice',
+            data: {
+                "access_token": $.getStorage('access_token'),
+                cltpro01id: $this.cltpro01id,
+                distance: distance,
+                purchasePointCs: purchasePointCs,
+                focusCs: focusCs,
+                lat: $.getStorage('lat'),
+                log:$.getStorage('log'),
+                cltpit01001:cltpit01001,
+                pageSize:'10',
+                page:$this.pageNum ,
+                jgpx:jgpx||'',
+                epsbht01010:'01', //访问来源标志:01app,02微信,03门户
+                recordMark:'yes', //记录标志,
+                saveParam:'1'//记录所属模块标志
+            }
+        }, function (data) {
+            if (data.success) {
+                //console.log(JSON.stringify(data)+"back数据");
+                if (data.data.length > 0) {
+                    //$("#vegetable_title").html(data.data[0].cltpro01001+'<span style="font-size:0.8rem;color: #999999;">&nbsp;(元/斤)</span>');
+                    //$("#lastTime").html(data.data[0].cltprc05008?data.data[0].cltprc05008:'');
+                    $("#lastTime").html($this.product.time);
+                    $this.creatList(data.data);
+                }else{
+                    if($this.pageNum==0){
+                        $this.creatList(data.data);
+                    }else{
+                        $.toast('没有更多了!');
+                        $this.requestFlag=false;
+                    }
+                }
+            }
+            else {
+//                $.toast('网络错误')
+            }
+        });
+    };
+
+    marketListClass.prototype.creatList=function(data){
+        var html = '',len=data.length;
+        if(len){
+            for (var i = 0; i < len; i++) {
+                var m=0;
+                var j=0;
+                html += '<div class="list-item" data-id="' + data[i].cltpit01id + '">';
+                html +='<div class="list-item-content mdui-box">';
+                html += '<div class="list-item-img"><img  src="' + $.serverSettings.serverPath + '/mobile/mcheap/mcheapAction!getMarketPicture.do?access_token=' + $.getStorage('access_token') + '&url=' + data[i].cltpit02002 + '"/></div>';
+                html += '<div class="mdui-box-flex-1">';
+                html += '<div class="list-item-title" data-log="'+data[i].cltpit01007+'" data-lat="'+data[i].cltpit01008+'">' + data[i].cltpit01001 + '</div>';
+                html += '<div class="list-item-fh">';
+                if(data[i].star) {
+                    for(j;j<parseInt(data[i].star);j++){
+                        html+='<img src="../images/star_01.png" />';
+                        m++;
+                    }
+                    if (parseInt(data[i].star.split('.')[1])>0){
+                        html+='<img src="../images/star_03.png"/>';
+                        m++;
+                    }
+                    if(m<5){
+                        for (j=m;j<5;j++){
+                            html+='<img src="../images/star_02.png"/>';
+                        }
+                    }
+                }else{
+                    for (j=0;j<5;j++){
+                        html+='<img src="../images/star_02.png" />'
+                    }
+                }
+                html+='</div>';
+                html += '<div class="list-item-price">' + '￥' + data[i].cltprc05006+'</div>';
+                html += '</div>';
+                html +='</div>';
+                html += '<div class="list-item-dis"><img src="../images/dis.png">&nbsp;' +data[i].distance + 'km</div>';
+                html += '</div>';
+            }
+            $('.list').append(html);
+            $('img').on('error',function(){
+                $(this).attr('src','../../../public/images/market_default.png');
+            })
+        }else{
+            html='<div class="no-data">暂无数据</div>';
+            $('.list').html(html);
+        }
+    };
+
+    marketListClass.prototype.tabEvent=function(){
+        var $this=this;
+        /*
+         * 页面跳转
+         * */
+        $(document).on('tap','.list-item-content',function(){
+            $.openWin({
+                name:"market",
+                animId : 2,
+                url:'wgtroot://mCheap/market/ui/market.html',
+                pageParam:{
+                    cltpit01id : $(this).parent().attr("data-id"),
+                    cltpro01id : $this.cltpro01id,
+                    log:$(this).find('.list-item-title').data('log'),
+                    lat:$(this).find('.list-item-title').data('lat')
+                }
+            });
+        });
+        /*
+         * 点击关注 取消关注
+         * */
+        $('.islike').on('tap',function(){
+            var that=$(this);
+            if ($(this).hasClass('dislike')) {
+                $.request({
+                    urlType: 'addFocus',
+                    data: {
+                        "access_token":$.getStorage('access_token'),
+                        product: JSON.stringify({
+                            cltpro01id: $this.cltpro01id,
+                            cltpro01001: $('#vegetable_title').text().split('(')[0].trim()
+                        })
+                    }
+                }, function (data) {
+                    if (data.success) {
+                        that.removeClass('dislike').addClass('like');
+                    }else{
+                        //$.toast('网络错误')
+                    }
+                });
+            }else{
+                $.request({
+                    urlType: 'deleteFocus',
+                    data: {
+                        "access_token": $.getStorage('access_token'),
+                        cltpro01id: $this.cltpro01id
+                    }
+                }, function (data) {
+                    if (data.success) {
+                        that.removeClass('like').addClass('dislike');
+                    }else{
+                        //$.toast('网络错误')
+                    }
+                });
+            }
+        });
+        /*
+         * 点击确定按钮
+         * */
+        $('#confirm').on('tap',function(){
+            if(($('#jgs').find('input').attr('checked'))&&($('#jgj').find('input').attr('checked'))){
+                alert('只能选择一种排序方式');
+            }else{
+                $this.pageNum=0;
+                $('#list').html('');
+                $('.paixu-item').removeClass('up');
+                $('.paixu-item-bg').removeClass('paixu-up').removeClass('paixu-down');
+                $('.blank').trigger('tap');
+                $this.request();
+            }
+        });
+        /*
+         * 点击重置按钮
+         * */
+        $('#rest').on('tap',function(){
+            $('input[name="checkbox1"]').each(function(){
+                if(this.checked){
+                    this.checked=false;
+                }
+            });
+        });
+        /*
+         * 点击附近距离列表
+         * */
+        $('.for-near li').on('tap',function(){
+            $this.pageNum=0;
+            $('#list').html('');
+            $(this).siblings().removeClass('li-on');
+            $(this).addClass('li-on');
+            $('.item-near>div:first-child').html($(this).html());
+            $.setStorage('near',$(this).index());
+            $('#confirm').trigger('tap');
+        });
+        /*
+         * 点击蒙层关闭蒙层
+         * */
+        $('.blank').on('tap',function(){
+            $('.item>div').each(function(){
+                if($(this).hasClass('item-on')){
+                    $(this).trigger('tap');
+                }
+            })
+        });
+        /*
+         * 点击上方附近、筛选
+         * */
+        $('.item>div').on('tap',function(){
+            $('.setting-detail').show();
+            var index=$(this).index();
+            var ele= $('.detail>div');
+            if(!$(this).hasClass('item-on')) {
+                $('.item>div>img').prop('src', '../images/down.png');
+                $('.item>div').removeClass('item-on');
+                $(this).find('img').prop('src', '../images/lvup.png');
+                $(this).addClass('item-on');
+                ele.hide();
+                ele.eq(index).show();
+            }
+            else{
+                $(this).find('img').prop('src', '../images/down.png');
+                $(this).removeClass('item-on');
+                ele.eq(index).hide();
+                $('.setting-detail').hide();
+            }
+        });
+        /*
+         * 点击列表进行导航
+         * */
+        $('.list').on('tap','.list-item-dis',function(){
+            var title = ($(this).parent().find('.list-item-title').text()).trim();
+            var log = $(this).parent().find('.list-item-title').data('log');
+            var lat = $(this).parent().find('.list-item-title').data('lat');
+            $.openWin({
+                animId : 2,
+                name: "navigation",
+                url: 'wgtroot://mCheap/map/ui/navigation.html',
+                pageParam: {
+                    lng:log,
+                    lat:lat,
+                    marketName:title
+                }
+            });
+        });
+        /*
+         * 点击add
+         * */
+        $('.top').on('tap','.add',function(){
+            $.request({
+                urlType: 'addmenuProduct',
+                data: {
+                    "access_token": $.getStorage('access_token'),
+                    product: JSON.stringify($this.product)
+                }
+            }, function (data) {
+                if (data.success) {
+                    $.toast('成功添加到我的菜谱');
+                }else if(!data.success){
+                    $.toast(data.message)
+                }else {
+                    $.toast('添加失败')
+                }
+            });
+        });
+        //点击收索方法
+        $(document).on('tap','.search-img',function(){
+            $('.paixu-item').removeClass('up');
+            $('.paixu-item-bg').removeClass('paixu-up').removeClass('paixu-down');
+            $this.pageNum=0;
+            $('#list').html('');
+            $this.request();
+        });
+        /*
+         * 点击回退按钮
+         * */
+        $('.back').on('tap',function(){
+            $.execScript({
+                winName:'search_cp',
+                script:" $('#confirm').trigger('tap');$('.shaixuan').trigger('tap');"
+            });
+        });
+    };
+
+    $.uexWindowReady(function(){
+        var oForm =  document.getElementsByTagName("form")[0];
+        oForm.onsubmit = function(){
+            $('.search-img').trigger('tap');
+            return false;
+        };
+        var pageData = $.pageParam;
+        var cltpro01id=$.strToJson(pageData).cltpro01id;
+        var isfocus=$.strToJson(pageData).isfocus;
+        var product=$.strToJson(pageData).product;
+        var init=new marketListClass(cltpro01id,isfocus,product);
+        init.init();
+        var near= $.getStorage('near')?$.getStorage('near'):0;//当前附近索引
+        var nearArr=['附近','1km','2km','3km','4km','全城'];//附近数组
+        $('.for-near>ul>li').eq(near).addClass('li-on');
+        $('.item-near>div:first-child').html(nearArr[near]);
+        var option = {id:"list",funs:{after:function(){
+            if(init.requestFlag){
+                init.pageNum=init.pageNum+1;
+                init.request();
+            }else{
+                $.toast('没有更多了!');
+            }
+        }}};
+        $.initScroll(option);
+    });
+</script>
+</body>
+</html>

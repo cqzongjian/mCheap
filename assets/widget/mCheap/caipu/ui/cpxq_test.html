@@ -1,0 +1,702 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8">
+    <title>mCollection</title>
+    <meta name="viewport" content="target-densitydpi=device-dpi,width=device-width, initial-scale=1,maximum-scale=1, user-scalable=no">
+    <meta name="apple-mobile-web-app-capable" content="yes">
+    <meta name="apple-mobile-web-app-status-bar-style" content="black">
+    <link rel="stylesheet" href="../../../static/mdui/css/mdui.min.css">
+    <link rel="stylesheet" href="../../../static/mCheap/css/mCommon.css">
+    <link rel="stylesheet" href="../css/caipu.css">
+    <style>
+        *{
+            font-family: "Microsoft YaHei";
+        }
+        body{
+            background-color: #E6EAE8;
+            padding-top: 2.75rem;
+
+        }
+        .header-box{
+            background-color: #3BA15C;
+            padding: 0;
+        }
+        .header{
+            width: 100%;
+            height: 100%;
+            position: relative;
+        }
+        .back{
+            padding-right: 1rem;
+            padding-left: 1rem;
+            padding-top: 0.75rem;
+            position: absolute;
+            z-index: 100;
+        }
+        .back img{
+            width:auto;
+            height: 1.25rem;
+        }
+        .title{
+            text-align: center;
+            position: absolute;
+            width: 100%;
+            height: 100%;
+            top: 0;
+            line-height: 2.75rem;
+            color: #FFFFFF;
+        }
+        .top{
+            padding: 1rem;
+            background-color: #ffffff;
+        }
+        .top-img{
+            width: 5rem;
+        }
+        .top-img>img{
+            width: 5rem;
+            height: auto;
+            border-radius: 0.2rem;
+        }
+        .top-title{
+            font-size: 1.2rem;
+            padding-left: 1rem;
+            color: #000000;
+        }
+        .product-name{
+            color:black;
+        }
+        .avg-price{
+            color:#3BA15C;
+        }
+        .top-sub{
+            padding-left: 1rem;
+            color: #666666;
+            font-size: 1rem;
+        }
+        .top-market{
+            margin:0.25rem 0 0.25rem 1rem;
+        }
+        .top-price{
+            margin-left: 1rem;
+            color: #3BA15C;
+            font-size: 1.2rem;
+        }
+        .price-interval{
+            color: #666666;
+            margin-left: 0.5rem;
+            font-size: 1rem;
+        }
+        .content{
+            margin-top: 1rem;
+            background-color: #ffffff;
+        }
+        .top-comment{
+            line-height: 100%;
+            padding: 0.2rem 0.5rem 0.2rem 0.5rem;
+            border-radius: 1rem;
+            border: 1px solid #F57F20;
+            float: right;
+            color: #F57F20;
+            font-size: 0.8rem;
+        }
+        .add{
+            float: right;
+            width: 1.2rem;
+            height: 1.2rem;
+            background: url("../images/add.png") no-repeat center;
+            background-size: 1.2rem;
+        }
+        .line-one{
+            height: 4.5rem;
+            padding: 1rem;
+            position: relative;
+        }
+        .commentator-price{
+            position: absolute;
+            right: 5%;
+            top: 35%;
+            color: #3BA15C;
+        }
+        .commentator-num{
+            color: #3BA15C;
+        }
+        .div-img{
+            float: left;
+        }
+        .comment-list{
+            border-bottom: 1px solid #B0B0B0;
+        }
+        .commentator{
+            color: black;
+            float: left;
+            margin-left: 1rem;
+            margin-top: 0.75rem;
+        }
+        .commentator-me{
+            color: #3BA15C;
+            float: left;
+            margin-left: 1rem;
+            margin-top: 0.75rem;
+        }
+        .head-img{
+            width: 2.5rem;
+            height: 2.5rem;
+            border-radius: 1.25rem;
+        }
+        .comment-detail{
+            color:black;
+            padding-left: 1rem;
+        }
+        .second-title{
+            border-bottom: 1px solid #B0B0B0;
+        }
+        .comment-time{
+            font-size: 0.9rem;
+            padding-top: 0.2rem;
+            padding-left: 1rem;
+            padding-bottom: 1rem;
+        }
+        .xjbj,.jgzs,.comment-xz,.cjz-info,.bj-info{
+            /*width: 18%;*/
+            padding:1rem 0 0.8rem 0;
+            text-align: center;
+        }
+        .choose{
+            color:#3BA15C;
+            /*width: 18%;*/
+            text-align: center;
+            padding-top: 1rem;
+            padding-bottom: 0.8rem;
+            border-bottom: 0.2rem solid #3BA15C;
+        }
+        /*==================图片框=======================*/
+        .img{
+            z-index: 250;
+            overflow-x:auto;
+        }
+        .person-img{
+            width: 5rem;
+            height: 6rem;
+            border: 1px solid white;
+            text-align: center;
+        }
+        .pic-img{
+            width:5rem;
+            height: 6rem;
+        }
+        .picture-box>img{
+            width: 5rem;
+            height: 100%;
+            margin-left: 0.2rem;
+            margin-right: 0.2rem;
+        }
+        .pictures-box>img{
+            width: 5rem;
+            height: 5rem;
+            margin-left: 0.2rem;
+            margin-right: 0.2rem;
+        }
+
+
+
+        /*==================图片框=======================*/
+        /*==================品种详情=======================*/
+        .jgzs-content{
+            display: none;
+            background-color: white;
+        }
+        .jg-div{
+            padding: 1rem;
+            min-height: 12rem;
+        }
+        .collect-content{
+            background-color: white;
+            margin-left: 1rem;
+            margin-right: 1rem;
+        }
+        .cjz-img-box{
+            text-align: center;
+            padding-top: 2.5rem;
+            padding-bottom: 0.5rem;
+        }
+        .cjz-img{
+            width: 5rem;
+            height: 5rem;
+            border-radius: 2.5rem;
+        }
+        .cjz-name{
+            font-size: 1.2rem;
+            text-align: center;
+            color:black;
+            border-bottom: 1px solid #E6E6E6;
+            padding-bottom: 2rem;
+        }
+        .cj-list{
+            padding-top: 0.5rem;
+            padding-bottom: 0.5rem;
+            padding-left: 1rem;
+            border-bottom: 1px solid #E6E6E6;
+            position: relative;
+        }
+        .cj-time{
+            display: block;
+            position: absolute;
+            right: 5%;
+            top:30%;
+            font-size: 0.9rem;
+        }
+        .bj-sure{
+            position: fixed;
+            bottom: 0;
+            text-align: center;
+            height: 3rem;
+            background-color: #3BA15C;
+            line-height: 3rem;
+            width: 100%;
+            color:white;
+        }
+
+        /*==================评论蒙层=======================*/
+
+        .vertical{
+            margin-top: 0.8rem;
+            color: #666666;
+        }
+
+        #price-input{
+            margin: 0.5rem 0.5rem 0.5rem 0.5rem;
+            width: 5rem;
+            height: 2.5rem;
+        }
+        .set-text{
+            line-height: 3.5rem;
+        }
+        .mc{
+            background-color:#cccccc;
+            width:100%;
+            height:100%;
+            position:fixed;
+            z-index:200;
+            display: none;
+        }
+        .mc-content{
+            background-color: white;
+            z-index: 250;
+            margin-top: 5rem;
+        }
+        .sure{
+            background-color: #3BA15C;
+            width: 100%;
+            position: fixed;
+            bottom: 0;
+            height: 3rem;
+            text-align: center;
+            line-height: 3rem;
+            color: white;
+        }
+        #con-0,#con-2,#con-4,#con-6{
+            display: none;
+        }
+        /*上传中显示蒙层 -->*/
+        .upload-mc{
+            width:100%;
+            height: 100%;
+            background: rgba(0,0,0,0.7);
+            position:fixed;
+            z-index:999;
+            display: none;
+        }
+        .progress_bars{
+            width: 80%;
+            height: 1rem;
+            border-radius: 0.5rem;
+            margin-left: 10%;
+            margin-top: 5rem;
+            border: 1px solid white;
+        }
+        .progress_bar{
+            width: 0%;
+            height: 1rem;
+            border-radius: 0.5rem;
+            background-color: red;
+        }
+        .progress{
+            color: red;
+            text-align:center;
+            width: 100%;
+            margin-top: 0.5rem;
+        }
+        .close-mc{
+            float: right;
+            margin-right: 1rem;
+            margin-top: 1rem;
+            color: white;
+            padding: 0.25rem 0.5rem 0.25rem 0.5rem;
+            border-radius: 1rem;
+            border: 1px solid white;
+        }
+
+        .dislike{
+            background: url("../images/dislike.png")no-repeat center;
+            background-size: 1.2rem 1.2rem;
+            position: absolute;
+            width: 2.75rem;
+            height: 2.75rem;
+            top: 0;
+            right:3%;
+
+        }
+        .like{
+            background: url("../images/like.png")no-repeat center;
+            background-size: 1.2rem 1.2rem;
+            position: absolute;
+            width: 2.75rem;
+            height: 2.75rem;
+            top: 0;
+            right:3%;
+        }
+
+
+
+
+
+
+        .list-item{
+            background: #FAFAFA;
+            /*padding:0.5rem  1rem;*/
+            position: relative;
+            padding: 1rem;
+        }
+        .list-item-title{
+            padding: 0 0 0 1rem;
+            font-weight: 600;
+        }
+        .list-item-price{
+            padding: 0 0 0 1rem;
+            color: #3BA15C;
+        }
+        .list-item-dis{
+            position:absolute;
+            right: 1rem;
+            top: 1rem;
+            font-size: 0.8rem;
+            color: #666666;
+            padding-left: 1rem;
+            background: url("../images/location.png") no-repeat left center;
+            background-size: 0.8rem auto;
+        }
+        .list-item-img>img{
+            width: 5rem;
+            height: 4rem;
+        }
+        .list-item-fh{
+            padding-left: 1rem;
+        }
+        .list-item-fh>img{
+            width: 1rem;
+            height: 1rem;
+        }
+        .no-data{
+            height: 3rem;
+            text-align: center;
+            line-height: 3rem;
+            border-bottom: 1px solid #CCCCCC;
+        }
+
+
+
+        .lists-box{
+            width: 100%;
+            height: 100%;
+        }
+        .chartContainer{
+            padding-bottom: .5rem;
+
+            margin: .5rem;
+            background-color: #ffffff;
+            border-radius: .5rem;
+        }
+        .chartContainer>.chart-title{
+            border-bottom: 1px solid #CCCCCC;
+            text-align: center;
+            color: #3BA15C;
+            font-weight: 600;
+            line-height: 2rem;
+        }
+    </style>
+</head>
+<body>
+<!-- 上传中显示蒙层 -->
+<div class="upload-mc">
+    <div class="progress_bars">
+        <div class="progress_bar"></div>
+    </div>
+    <div class="progress">loading</div>
+</div>
+<div class="mdui-box mdui-box-ver lists-box">
+    <div class="header-box mdui-bar mdui-bar-nav">
+        <div class="header">
+            <div class="back mdui-action-back"><img src="../images/back.png"></div>
+            <div class="title">菜品详情</div>
+            <div class="set-focus"></div>
+        </div>
+    </div>
+    <div class="mc">
+        <div class="close-mc">close</div>
+        <div class="mdui-box mc-content">
+            <div class="set-text">请输入价格:</div>
+            <input type="number" id="price-input"/>
+            <div class="set-text">元</div>
+        </div>
+        <div class="img mdui-box">
+            <div class="picture-box">
+                <!--<img src="../images/add_pic.png">-->
+                <!--<img src="../images/add_pic.png">-->
+                <!--<img src="../images/add_pic.png">-->
+                <!--<img src="../images/add_pic.png">-->
+                <!--<img src="../images/add_pic.png">-->
+                <!--<img src="../images/add_pic.png">-->
+                <!--<img src="../images/add_pic.png">-->
+            </div>
+            <div class="person-img">
+                <a href="#picture">
+                    <img class="pic-img" src="../images/add_pic.png">
+                </a>
+            </div>
+        </div>
+        <div class="sure">确定</div>
+    </div>
+
+
+    <div class="top mdui-box">
+        <div class="top-img"></div>
+        <div class="mdui-box-flex-1">
+            <div class="top-title"><span class="product-name">白菜</span><span class="top-sub">(500g)</span><div class="top-comment">评论</div></div>
+            <div class="top-market">红星路农贸市场</div>
+            <div class="top-price"><span class="avg-price">￥1.50</span><span class="price-interval">(￥1.20~￥1.80)</span><div class="add"></div></div>
+        </div>
+    </div>
+    <div class="content">
+        <!--==========================只有两个tab================================-->
+        <div class="second-title mdui-box">
+            <div class="xjbj mdui-box-flex-1">询价</div>
+            <div class="vertical">|</div>
+            <div class="comment-xz mdui-box-flex-1">评论</div>
+            <div class="vertical">|</div>
+            <!--<div class="pzxq mdui-box-flex-1">品种详情</div>-->
+            <div class="jgzs mdui-box-flex-1">价格走势</div>
+            <div class="vertical">|</div>
+            <div class="cjz-info mdui-box-flex-1">采集者信息</div>
+            <div class="vertical">|</div>
+            <div class="bj-info mdui-box-flex-1">公众报价</div>
+        </div>
+    </div>
+
+    <div class="classify-content mdui-box-flex-1" style="overflow-y: auto;">
+        <div id="con-0" >
+
+            <!--<div class="list-item">
+                <div class="list-item-content mdui-box">
+                    <div class="list-item-img"><img  src="../images/t01f45d14a61adc12ab.jpg"/></div>
+                    <div class="mdui-box-flex-1">
+                        <div class="list-item-title">市场名字</div>
+                        <div class="list-item-fh">
+                            <img src="../images/star_01.png" />
+                            <img src="../images/star_01.png" />
+                            <img src="../images/star_01.png" />
+                            <img src="../images/star_01.png" />
+                            <img src="../images/star_01.png" />
+                        </div>
+                        <div class="list-item-price">35</div>
+                    </div>
+                </div>
+                <div class="list-item-dis">7km</div>
+            </div>-->
+
+
+
+
+        </div>
+        <div id="con-2">
+
+            <!--<div class="comment-list">-->
+            <!--<div class="line-one">-->
+            <!--<div class="div-img"><img class="head-img" src="../images/t01f45d14a61adc12ab.jpg"/></div>-->
+            <!--<div class="commentator">张笑笑</div>-->
+            <!--</div>-->
+            <!--<div class="comment-detail">蔬菜很新鲜，价格很便宜</div>-->
+            <!--<div class="comment-time">2016-08-23 09:02</div>-->
+            <!--</div>-->
+
+        </div>
+        <div id="con-4" class="jgzs-content chartContainer">
+            <div class="chart-title">产品价格走势图1</div>
+            <div id="lineChart1" class="jg-div"></div>
+            <div class="chart-title">产品价格走势图2</div>
+            <div id="lineChart2" class="jg-div"></div>
+
+        </div>
+        <div id="con-6" style="padding-bottom: 5rem;background-color: white">
+
+            <div class="collect-content">
+                <div class="cjz-img-box">
+                    <img src="../images/t01f45d14a61adc12ab.jpg" class="cjz-img"/>
+                </div>
+            </div>
+            <div class="cjz-name">李婷婷</div>
+            <div class="cj-lists">
+                <div class="cj-list">
+                    <span>采集价格: ￥</span>
+                    <span>1.20</span>
+                    <span class="cj-time">2016-08-09 08:15</span>
+                </div>
+            </div>
+
+
+        </div>
+        <div id="con-8">
+
+            <div class="gzbj-content" id="list">
+
+                <!--<div class="comment-list">-->
+                <!--<div class="line-one">-->
+                <!--<div class="div-img"><img class="head-img" src="../images/t01f45d14a61adc12ab.jpg"/></div>-->
+                <!--<div class="commentator">张笑笑</div>-->
+                <!--</div>-->
+                <!--<div class="comment-detail">报价: <span class="bj">35</span> 元</div>-->
+                <!--<div class="pictures-box">-->
+                <!--<img src="../images/add_pic.png">-->
+                <!--<img src="../images/add_pic.png">-->
+                <!--<img src="../images/add_pic.png">-->
+                <!--</div>-->
+                <!--<div class="comment-time">2016-08-23 09:02</div>-->
+                <!--</div>-->
+
+            </div>
+
+            <div class="bj-sure">我要报价</div>
+        </div>
+    </div>
+</div>
+
+<!-- 点击照片显示蒙层 -->
+<div id="picture" class="mdui-popover mdui-popover-action mdui-popover-bottom">
+    <ul class="mdui-table-view"><!--菜单列表-->
+        <li class="mdui-table-view-cell photo">
+            <a href="#">拍照</a>
+        </li>
+        <li class="mdui-table-view-cell album">
+            <a href="#">从相册选取</a>
+        </li>
+    </ul>
+    <ul class="mdui-table-view">
+        <li class="mdui-table-view-cell">
+            <a href="#picture"><b>取消</b></a>
+        </li>
+    </ul>
+</div>
+
+
+
+<!--页面-->
+<script src="../../../static/mdui/js/mdui.js"></script>
+<script src="../../../static/mCheap/js/mCheap.config.js"></script>
+<script src="../../../server.js"></script>
+<script src="../../../public.js"></script>
+<script src="../../../static/mCheap/js/scroll.js"></script>
+<script src="../../../echarts.min.js"></script>
+<script>
+
+
+
+    //列表标题切换F
+    $('.second-title>div').on('tap',function(){
+        if(1){
+            var index=$(this).index();
+            var ele=$('.classify-content>div');
+            if(!$(this).hasClass('choose')){
+                $('.second-title>div').removeClass('choose');
+                $(this).addClass('choose');
+                ele.hide();
+                $('#con-'+index).show();
+            }
+            if(index==4){
+                $('#con-4').show();
+                var myChart1 = echarts.init(document.getElementById("lineChart1"));
+                var myChart2 = echarts.init(document.getElementById("lineChart2"));
+                var option = {
+                    title: {
+                        text: '折线图堆叠'
+                    },
+                    tooltip: {
+                        trigger: 'axis'
+                    },
+                    legend: {
+                        data:['邮件营销','联盟广告','视频广告','直接访问','搜索引擎']
+                    },
+                    grid: {
+                        left: '3%',
+                        right: '4%',
+                        bottom: '3%',
+                        containLabel: true
+                    },
+                    toolbox: {
+                        feature: {
+                            saveAsImage: {}
+                        }
+                    },
+                    xAxis: {
+                        type: 'category',
+                        boundaryGap: false,
+                        data: ['周一','周二','周三','周四','周五','周六','周日']
+                    },
+                    yAxis: {
+                        type: 'value'
+                    },
+                    series: [
+                        {
+                            name:'邮件营销',
+                            type:'line',
+                            stack: '总量',
+                            data:[120, 132, 101, 134, 90, 230, 210]
+                        },
+                        {
+                            name:'联盟广告',
+                            type:'line',
+                            stack: '总量',
+                            data:[220, 182, 191, 234, 290, 330, 310]
+                        },
+                        {
+                            name:'视频广告',
+                            type:'line',
+                            stack: '总量',
+                            data:[150, 232, 201, 154, 190, 330, 410]
+                        },
+                        {
+                            name:'直接访问',
+                            type:'line',
+                            stack: '总量',
+                            data:[320, 332, 301, 334, 390, 330, 320]
+                        },
+                        {
+                            name:'搜索引擎',
+                            type:'line',
+                            stack: '总量',
+                            data:[820, 932, 901, 934, 1290, 1330, 1320]
+                        }
+                    ]
+                };
+                myChart1.setOption(option);
+                myChart2.setOption(option);
+            }
+        }else{
+            alert('数据加载中，请稍等');
+        }
+    });
+
+
+</script>
+</body>
+</html>

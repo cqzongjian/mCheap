@@ -1,0 +1,293 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8">
+    <title>mCollection</title>
+    <meta name="viewport" content="target-densitydpi=device-dpi,width=device-width, initial-scale=1,maximum-scale=1, user-scalable=no">
+    <meta name="apple-mobile-web-app-capable" content="yes">
+    <meta name="apple-mobile-web-app-status-bar-style" content="black">
+    <link rel="stylesheet" href="../../../static/mdui/css/mdui.min.css">
+    <link rel="stylesheet" href="../../../static/mCheap/css/mCommon.css">
+    <style>
+        *{
+            font-family: "Microsoft YaHei";
+        }
+        body{
+            background-color: #E6EAE8;
+            padding-top: 2.75rem;
+
+        }
+        .header-box{
+            background-color: #3BA15C;
+            padding: 0;
+        }
+        .header{
+            width: 100%;
+            height: 100%;
+            position: relative;
+        }
+        .back{
+            padding-right: 1rem;
+            padding-left: 1rem;
+            padding-top: 0.75rem;
+            position: absolute;
+            z-index: 100;
+        }
+        .back img{
+            width:auto;
+            height: 1.25rem;
+        }
+        .title{
+            text-align: center;
+            position: absolute;
+            width: 100%;
+            height: 100%;
+            top: 0px;
+            line-height: 2.75rem;
+            color: #FFFFFF;
+        }
+        /*=============市场头===================*/
+        .market{
+            padding: 1rem;
+            background-color: white;
+        }
+        .market-img{
+            width: 7rem;
+            height: 5rem;
+            border-radius: 0.3rem;
+        }
+        .market-title{
+            display: inline-block;
+            margin-left: 1rem;
+        }
+        .market-describe{
+            width: auto;
+        }
+        .market-comment{
+            line-height: 100%;;
+            border:1px solid #F57F20;
+            font-size: 0.8rem;
+            padding: 0.2rem 0.5rem 0.2rem 0.5rem;
+            border-radius: 1rem;
+            display: inline-block;
+            float: right;
+            color: #F57F20;
+        }
+        .start-box{
+            margin-left: 1rem;
+        }
+        .start-box>img{
+            height: 1rem;
+            width: auto;
+        }
+        .market-address-div{
+            margin-top: 1rem;
+            font-size: 0.8rem;
+            background: url("../image/dis.png")no-repeat left 40%;
+            margin-left: 1rem;
+            background-size: 0.8rem 0.8rem;
+            line-height: 1rem;
+        }
+        .market-address{
+            white-space:nowrap;
+            display: inline-block;
+            margin-left: 1.2rem;
+            width: 8rem;
+            overflow: auto;
+        }
+        .open-time{
+            display: inline-block;
+            margin-left: 1.2rem;
+        }
+        .market-dis{
+            display: inline-block;
+            float: right;
+        }
+        .market-open{
+            font-size: 0.8rem;
+            background: url("../image/time.png") no-repeat left;
+            margin-left: 1rem;
+            background-size: 0.8rem 0.8rem;
+            line-height: 1rem;
+        }
+        /*=============评论内容===================*/
+        .comment-content{
+            margin-top: 1rem;
+            background-color: white;
+        }
+        .content-title{
+            padding:0.8rem 1rem 0.8rem 1rem;
+            border-bottom: 1px solid #B0B0B0;
+        }
+        .comment-list{
+            border-bottom: 1px solid #B0B0B0;
+        }
+        .line-one{
+            height: 4.5rem;
+            padding: 1rem;
+        }
+        .div-img{
+            float: left;
+        }
+        .head-img{
+            width: 2.5rem;
+            height: 2.5rem;
+            border-radius: 1.25rem;
+        }
+        .commentator{
+            color: black;
+            float: left;
+            margin-left: 1rem;
+            margin-top: 0.75rem;
+        }
+        .commentator-me{
+            color: #3BA15C;
+            float: left;
+            margin-left: 1rem;
+            margin-top: 0.75rem;
+        }
+        .comment-detail{
+            color:black;
+            padding-left: 1rem;
+        }
+        .comment-time{
+            color:#666666;
+            font-size: 0.9rem;
+            padding-top: 0.2rem;
+            padding-left: 1rem;
+            padding-bottom: 1rem;
+        }
+    </style>
+</head>
+<body>
+<div>
+    <div class="header-box mdui-bar mdui-bar-nav">
+        <div class="header">
+            <div class="back mdui-action-back"><img src="../image/back.png"></div>
+            <div class="title">药店详情</div>
+        </div>
+    </div>
+    <div class="market mdui-box">
+        <div class="market-img-div">
+            <!--<img src="../image/market_hongxinglu.png" class="market-img"/>-->
+        </div>
+        <div class="market-describe mdui-box-flex-1">
+            <div><span class="market-title"><strong class="market-name">红星路农贸市场</strong></span><span class="market-comment">评论</span></div>
+            <div class="mdui-box start-box">
+            </div>
+            <div class="market-address-div">
+                <span class="market-address"></span>
+                <span class="market-dis"></span>
+            </div>
+            <div class="market-open">
+                <span class="open-time">营业时间：6:30~20:30</span>
+            </div>
+        </div>
+    </div>
+    <div class="comment-content">
+        <div class="content-title">评论</div>
+        <div class="lists">
+            <!--<div class="comment-list">-->
+                <!--<div class="line-one">-->
+                    <!--<div class="div-img"><img class="head-img" src="../images/market_hongxinglu.png"/></div>-->
+                    <!--<div class="commentator">张笑笑</div>-->
+                <!--</div>-->
+                <!--<div class="comment-detail">蔬菜很新鲜，价格很便宜蔬菜很新鲜</div>-->
+                <!--<div class="comment-time">2016-08-23 09:02</div>-->
+            <!--</div>-->
+        </div>
+    </div>
+</div>
+
+
+
+<!--页面-->
+<script src="../../../static/mdui/js/mdui.min.js"></script>
+<script src="../../../static/mCheap/js/mCheap.config.js"></script>
+<script src="../../../server.js"></script>
+<script>
+    var cltpit01id;//保存市场流水号
+    var name;//保存市场流水号
+    var url;//保存图片地zhi
+    $.uexWindowReady(function(){
+        setData();
+        getComment();
+    });
+
+    function setData(){
+        var pageData=$.pageParam;
+        var storeData=$.strToJson(pageData);
+        name=storeData.storeName;
+        cltpit01id = storeData.lsh;
+        url = storeData.picture;
+        var img='<img src="'+ $.serverSettings.serverPath+'/mobile/mcheap/mcheapAction!getMarketPicture.do?access_token='+ $.getStorage('access_token')+'&url='+url+'" class="market-img"/>';
+        $('.market-img-div').html(img);
+        $('.market-name').html(storeData.storeName);
+        $('.market-address').html(storeData.storeAddress);
+        $('.open-time').html(storeData.storeYysj);
+        $('img').on('error',function(){
+            $(this).attr('src','../../../public/images/noImg.jpg');
+        });
+    }
+
+    //获取评论消息
+    function getComment(){
+//        alert('进行请求');
+        $.request({
+            urlType: 'queryYdAssessInfo',
+            data: {
+                "access_token": $.getStorage('access_token'),
+                cltpit01id:cltpit01id //药店流水号
+            }
+        }, function (data) {
+//            alert(JSON.stringify(data)+"返回评论");
+            if (data.success){
+                var html='';
+                var len=data.data.assess.length;
+                for(var i=0;i<len;i++){
+                    html+='<div class="comment-list">';
+                    html+='<div class="line-one">';
+                    if(data.data.assess[i].url){
+                        html+='<div class="div-img"><img class="head-img" src="'+$.serverSettings.serverPath+'/mobile/mcheap/mcheapAction!getComUserPicture.do?access_token=' + $.getStorage('access_token') + '&url=' + data.data.assess[i].url +'"/></div>';
+                    }else{
+                        html+='<div class="div-img"><img class="head-img" src="../image/head.jpg"/></div>';
+                    }
+                    if(data.data.assess[i].isself){
+                        html+='<div class="commentator-me">我</div>';
+                    }else{
+                        html+='<div class="commentator">'+data.data.assess[i].epsrtu01002+'</div>';
+                    }
+                    html+='</div>';
+                    html+='<div class="comment-detail">'+data.data.assess[i].epssgt07002+'</div>';
+                    html+='<div class="comment-time">'+data.data.assess[i].create_time+'</div>';
+                    html+='</div>';
+                }
+                $('.lists').html(html);
+                $('img').on('error',function(){
+                    $(this).attr('src','../../../public/images/noImg.jpg');
+                });
+            }
+            else {
+                alert('网络错误')
+            }
+        });
+    }
+
+    //点评论
+    $(document).on('tap','.market-comment',function(){
+        $.openWin({
+            animId : 2,
+            name: "shop_comment_input",
+            url: 'wgtroot://medicine/medicine_shop/ui/shop_comment_input.html',
+            pageParam: {
+                cltpit01id:cltpit01id,//药店流水号
+                cltpit01001:name,//药店名称
+                url:url
+            }
+        });
+    });
+
+
+</script>
+</body>
+</html>

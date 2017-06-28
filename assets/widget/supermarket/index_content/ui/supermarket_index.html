@@ -1,0 +1,841 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<meta charset="utf-8">
+	<title>mCollection</title>
+	<meta name="viewport" content="target-densitydpi=device-dpi,width=device-width, initial-scale=1,maximum-scale=1, user-scalable=no">
+	<meta name="apple-mobile-web-app-capable" content="yes">
+	<meta name="apple-mobile-web-app-status-bar-style" content="black">
+	<link rel="stylesheet" href="../../../static/mdui/css/mdui.min.css">
+	<link rel="stylesheet" href="../../../static/mCheap/css/mCommon.css">
+	<link rel="stylesheet" href="../css/index_contents.css">
+	<script src="../js/main.js"></script>
+	<style>
+		.cell{
+			border:1px solid #CCCCCC;
+			position: relative;
+			float: left;
+			width: 50%;
+		}
+		.img-box{
+			width: 100%;
+			height: 8rem;
+			padding: 0.25rem;
+		}
+		.img-box>img{
+			width: 100%;
+			height: 8rem;
+		}
+		.drug-detail{
+			padding: 0.5rem;
+		}
+		.drug-name{
+			font-size: 0.8rem;
+			font-weight: 600;
+			overflow: hidden;
+			white-space: nowrap;
+			text-overflow: ellipsis;
+		}
+		.drug-origin{
+			font-size: 0.8rem;
+			color: #7E7E7E;
+			overflow: hidden;
+			white-space: nowrap;
+			text-overflow: ellipsis;
+		}
+		.drug-price{
+			font-weight: 600;
+			color: #F39426;
+		}
+		.avg-price{
+			position: absolute;
+			bottom: 5%;
+			right: 5%;
+			color: white;
+			background-color:#F39426;
+			padding-left: 0.25rem;
+			padding-right: 0.25rem;
+			font-size: 0.8rem;
+			border-radius: 0.5rem;
+		}
+		.usual-drug-title{
+			border-bottom: 1px solid #CCCCCC;
+		}
+	</style>
+</head>
+<body>
+<div class="search-before-content">
+	<div class="searching">努力搜索中...</div>
+</div>
+<div class="search-item-content"></div>
+<div class="header mdui-bar mdui-bar-nav mdui-box " style="padding-left: 0;">
+	<div class="saoma">
+		<img src="../images/back.png">
+	</div>
+	<div class="mdui-box-flex-1 mdui-box search-box">
+		<div class="mdui-box-flex-1">
+			<form action="">
+				<input type="text" id="search" placeholder="产品、超市"/>
+			</form>
+		</div>
+		<div class="search-img"><img src="../images/search-orange.png"></div>
+	</div>
+	<div style="width: 1rem;height: auto;"></div>
+</div>
+<div id="slider" class="mdui-slider">
+	<div class="mdui-slider-group mdui-slider-loop">
+		<!--&lt;!&ndash; 额外增加的一个节点(循环轮播：第一个节点是最后一张轮播) &ndash;&gt;-->
+		<!--<div class="mdui-slider-item mdui-slider-item-duplicate">-->
+			<!--<a href="#">-->
+				<!--<img src="../images/slider/3.jpg">-->
+				<!--<div class="mask"></div>-->
+			<!--</a>-->
+		<!--</div>-->
+		<!--&lt;!&ndash; 第一张 &ndash;&gt;-->
+		<!--<div class="mdui-slider-item">-->
+			<!--<a href="#">-->
+				<!--<img src="../images/slider/1.jpg">-->
+				<!--<div class="mask">-->
+					<!--<div class="mask-title"></div>-->
+					<!--<div class="mask-sub"></div>-->
+				<!--</div>-->
+			<!--</a>-->
+		<!--</div>-->
+		<!--&lt;!&ndash; 第二张 &ndash;&gt;-->
+		<!--<div class="mdui-slider-item">-->
+			<!--<a href="#">-->
+				<!--<img src="../images/slider/2.jpg">-->
+				<!--<div class="mask"></div>-->
+			<!--</a>-->
+		<!--</div>-->
+		<!--&lt;!&ndash; 第三张 &ndash;&gt;-->
+		<!--<div class="mdui-slider-item">-->
+			<!--<a href="#">-->
+				<!--<img src="../images/slider/3.jpg">-->
+				<!--<div class="mask"></div>-->
+			<!--</a>-->
+		<!--</div>-->
+		<!--&lt;!&ndash; 额外增加的一个节点(循环轮播：最后一个节点是第一张轮播) &ndash;&gt;-->
+		<!--<div class="mdui-slider-item mdui-slider-item-duplicate">-->
+			<!--<a href="#">-->
+				<!--<img src="../images/slider/1.jpg">-->
+				<!--<div class="mask"></div>-->
+			<!--</a>-->
+		<!--</div>-->
+	</div>
+	<div class="mdui-slider-indicator">
+		<div class="mdui-indicator mdui-active"></div>
+		<div class="mdui-indicator"></div>
+		<div class="mdui-indicator"></div>
+	</div>
+</div>
+<div class="sort-title">
+	<div class="sort mdui-box">
+		<!--<div class="sort-box" data-id="more">-->
+			<!--<div class="picture-box">-->
+				<!--<img src="../images/1.png" class="pro-img">-->
+			<!--</div>-->
+			<!--<div class="sort-item">皮肤病</div>-->
+		<!--</div>-->
+	</div>
+</div>
+<div style="height: 0.5rem;background-color: #E6EAE8"></div>
+<div class="usual-drug">
+	<div class="usual-drug-title"><img src="../images/hot@2x.png">&nbsp;热门产品</div>
+	<div class="usual-product">
+		<!--<div class="cell">-->
+			<!--<div class="img-box">-->
+				<!--<img src="../images/01.jpg"/>-->
+			<!--</div>-->
+			<!--<div class="drug-detail mdui-box-flex-1">-->
+				<!--<div class="drug-name">药品名字地方来刷卡缴费鲁</div>-->
+				<!--<div class="drug-origin">生地方来刷卡缴费鲁大师及安防监控</div>-->
+				<!--<div class="drug-price">价格展示</div>-->
+				<!--<div class="avg-price">均价</div>-->
+			<!--</div>-->
+		<!--</div>-->
+	</div>
+</div>
+<div style="height: 0.5rem;background-color: #E6EAE8"></div>
+<div class="tj-market">
+	<div class="tj-title"><img src="../images/homefj.png">&nbsp;附近超市</div>
+	<div class="tj-more fj-more">更多&nbsp;<img src="../images/you.png"></div>
+	<div class="tj-list" id="fjcs">
+		<!--<div class="tj-list-item mdui-box">-->
+			<!--<div>-->
+				<!--<img src="../images/qjrs.jpg">-->
+			<!--</div>-->
+			<!--<div class="mdui-box-flex-1">-->
+				<!--<div class="list-item-title">药店的名字</div>-->
+				<!--<div class="star"><img src="../images/star_01.png"/><img src="../images/star_02.png"/></div>-->
+				<!--<div class="market-address">桃蹊路</div>-->
+				<!--<div class="market-yysj">营业时间：</div>-->
+			<!--</div>-->
+			<!--<div class="market-dis">1.7km</div>-->
+		<!--</div>-->
+
+		<!--<div class="tj-list-item mdui-box">-->
+			<!--<div>-->
+				<!--<img src="../images/qjrs.jpg">-->
+			<!--</div>-->
+			<!--<div class="mdui-box-flex-1">-->
+				<!--<div class="list-item-title">药店的名字</div>-->
+				<!--<div class="star"><img src="../images/star_01.png"/><img src="../images/star_02.png"/></div>-->
+				<!--<div class="market-address">桃蹊路</div>-->
+				<!--<div class="market-yysj">营业时间：</div>-->
+			<!--</div>-->
+			<!--<div class="market-dis">1.7km</div>-->
+		<!--</div>-->
+
+		<!--<div class="tj-list-item mdui-box">-->
+			<!--<div>-->
+				<!--<img src="../images/qjrs.jpg">-->
+			<!--</div>-->
+			<!--<div class="mdui-box-flex-1">-->
+				<!--<div class="list-item-title">药店的名字</div>-->
+				<!--<div class="star"><img src="../images/star_01.png"/><img src="../images/star_02.png"/></div>-->
+				<!--<div class="market-address">桃蹊路</div>-->
+				<!--<div class="market-yysj">营业时间：</div>-->
+			<!--</div>-->
+			<!--<div class="market-dis">1.7km</div>-->
+		<!--</div>-->
+	</div>
+</div>
+<!--关注的药店-->
+<div style="height: 0.5rem;background-color: #E6EAE8"></div>
+<div class="tj-market">
+	<div class="tj-title"><img src="../images/like@2x_on.png">&nbsp;关注的超市</div>
+	<div class="tj-more gz-more">更多&nbsp;<img src="../images/you.png"></div>
+	<div class="tj-list" id="gzcs">
+		<!--<div class="tj-list-item mdui-box">-->
+			<!--<div>-->
+				<!--<img src="../images/qjrs.jpg">-->
+			<!--</div>-->
+			<!--<div class="mdui-box-flex-1">-->
+				<!--<div class="list-item-title">药店的名字</div>-->
+				<!--<div class="star"><img src="../images/star_01.png"/><img src="../images/star_02.png"/></div>-->
+				<!--<div class="market-address">桃蹊路</div>-->
+				<!--<div class="market-yysj">营业时间：</div>-->
+			<!--</div>-->
+			<!--<div class="market-dis">1.7km</div>-->
+		<!--</div>-->
+
+		<!--<div class="tj-list-item mdui-box">-->
+			<!--<div>-->
+				<!--<img src="../images/qjrs.jpg">-->
+			<!--</div>-->
+			<!--<div class="mdui-box-flex-1">-->
+				<!--<div class="list-item-title">药店的名字</div>-->
+				<!--<div class="star"><img src="../images/star_01.png"/><img src="../images/star_02.png"/></div>-->
+				<!--<div class="market-address">桃蹊路</div>-->
+				<!--<div class="market-yysj">营业时间：</div>-->
+			<!--</div>-->
+			<!--<div class="market-dis">1.7km</div>-->
+		<!--</div>-->
+
+		<!--<div class="tj-list-item mdui-box">-->
+			<!--<div>-->
+				<!--<img src="../images/qjrs.jpg">-->
+			<!--</div>-->
+			<!--<div class="mdui-box-flex-1">-->
+				<!--<div class="list-item-title">药店的名字</div>-->
+				<!--<div class="star"><img src="../images/star_01.png"/><img src="../images/star_02.png"/></div>-->
+				<!--<div class="market-address">桃蹊路</div>-->
+				<!--<div class="market-yysj">营业时间：</div>-->
+			<!--</div>-->
+			<!--<div class="market-dis">1.7km</div>-->
+		<!--</div>-->
+	</div>
+</div>
+
+
+
+
+
+
+
+<!--*************************************************************************************************************-->
+<!--<div style="height: 0.5rem;background-color: #E6EAE8"></div>-->
+<!--&lt;!&ndash;<div class="tj-focusMarket">&ndash;&gt;-->
+	<!--&lt;!&ndash;<div class="tj-title"><img src="../images/store.png">&nbsp;关注市场</div>&ndash;&gt;-->
+	<!--&lt;!&ndash;<div class="tj-more" id="wdgz">我的关注&nbsp;<img src="../images/you.png"></div>&ndash;&gt;-->
+	<!--&lt;!&ndash;<div class="tj-list">&ndash;&gt;-->
+		<!--&lt;!&ndash;<div class="tj-list-item mdui-box">&ndash;&gt;-->
+		<!--&lt;!&ndash;<div>&ndash;&gt;-->
+		<!--&lt;!&ndash;<img src="../images/qjrs.jpg">&ndash;&gt;-->
+		<!--&lt;!&ndash;</div>&ndash;&gt;-->
+		<!--&lt;!&ndash;<div class="mdui-box-flex-1">&ndash;&gt;-->
+		<!--&lt;!&ndash;<div class="list-item-title">双人青椒肉丝套餐对撒的空间的时间啊</div>&ndash;&gt;-->
+		<!--&lt;!&ndash;<div class="star"><img src="../images/star_01.png"/><img src="../images/star_02.png"/></div>&ndash;&gt;-->
+		<!--&lt;!&ndash;<div class="market-address">桃蹊路</div>&ndash;&gt;-->
+		<!--&lt;!&ndash;<div class="market-yysj">营业时间：</div>&ndash;&gt;-->
+		<!--&lt;!&ndash;</div>&ndash;&gt;-->
+		<!--&lt;!&ndash;<div class="market-dis">1.7km</div>&ndash;&gt;-->
+		<!--&lt;!&ndash;</div>&ndash;&gt;-->
+	<!--&lt;!&ndash;</div>&ndash;&gt;-->
+<!--&lt;!&ndash;</div>&ndash;&gt;-->
+<!--<div class="focusMarket"></div>-->
+<!--<div style="height: 0.5rem;background-color: #E6EAE8" id="for_foucsMarket"></div>-->
+<!--<div class="tj-caipu">-->
+	<!--<div class="tj-title"><img src="../images/cook.png">&nbsp;关注&nbsp;药店</div>-->
+	<!--<div class="tj-more">更多&nbsp;<img src="../images/you.png"></div>-->
+	<!--<div class="tj-list">-->
+		<!--<div class="tj-list-item mdui-box">-->
+			<!--<div>-->
+			    <!--<img src="../images/qjrs.jpg">-->
+			<!--</div>-->
+			<!--<div class="mdui-box-flex-1">-->
+			    <!--<div class="list-item-title">双人青椒肉丝套餐对撒的空间的时间啊</div>-->
+			    <!--<div class="list-item-sub mdui-ellipsis-2">青椒肉丝、炝炒土豆丝、蛋花汤但就是撒开发放大空间付款回到家撒娇点击撒娇</div>-->
+			<!--</div>-->
+		<!--</div>-->
+
+		<!--<div class="tj-list-item mdui-box">-->
+			<!--<div>-->
+				<!--<img src="../images/qjrs.jpg">-->
+			<!--</div>-->
+			<!--<div class="mdui-box-flex-1">-->
+				<!--<div class="list-item-title">双人青椒肉丝套餐对撒的空间的时间啊</div>-->
+				<!--<div class="list-item-sub mdui-ellipsis-2">青椒肉丝、炝炒土豆丝、蛋花汤但就是撒开发放大空间付款回到家撒娇点击撒娇</div>-->
+			<!--</div>-->
+		<!--</div>-->
+	<!--</div>-->
+<!--</div>-->
+<!--<div style="height: 0.5rem;background-color: #E6EAE8"></div>-->
+<!--<div class="tj-like">-->
+	<!--<div class="tj-title"><img src="../images/like.png">&nbsp;常备药品</div>-->
+	<!--&lt;!&ndash;<div class="tj-more" id="wdgz">我的关注&nbsp;<img src="../images/you.png"></div>&ndash;&gt;-->
+	<!--<div class="tj-list">-->
+		<!--&lt;!&ndash;<div class="mdui-box">&ndash;&gt;-->
+		<!--&lt;!&ndash;<div class="mdui-box-flex-1 tj-list-item mdui-box">&ndash;&gt;-->
+		<!--&lt;!&ndash;<div>&ndash;&gt;-->
+		<!--&lt;!&ndash;<img src="../images/qjrs.jpg">&ndash;&gt;-->
+		<!--&lt;!&ndash;</div>&ndash;&gt;-->
+		<!--&lt;!&ndash;<div class="mdui-box-flex-1">&ndash;&gt;-->
+		<!--&lt;!&ndash;<div class="list-item-title">双人青椒肉丝套餐对撒的空间的时间啊</div>&ndash;&gt;-->
+		<!--&lt;!&ndash;<div class="list-item-sub mdui-ellipsis-2">青椒肉丝、炝炒土豆丝、蛋花汤但就是撒开发放大空间付款回到家撒娇点击撒娇</div>&ndash;&gt;-->
+		<!--&lt;!&ndash;</div>&ndash;&gt;-->
+		<!--&lt;!&ndash;</div>&ndash;&gt;-->
+		<!--&lt;!&ndash;<div class="list-item-dis"><img src="../images/dis.png">&nbsp<span>1.7km</span></div>&ndash;&gt;-->
+		<!--&lt;!&ndash;</div>&ndash;&gt;-->
+	<!--</div>-->
+<!--</div>-->
+<!--*************************************************************************************************************-->
+<!--页面-->
+<script src="../../../static/mdui/js/mdui.min.js"></script>
+<!--<script src="../../../static/mCheap/js/mCheap.config.js"></script>-->
+<script src="../../../server.js"></script>
+<script src="../../../static/mCheap/js/btn_click.js"></script>
+<script src="../../../static/mdui/js/imageHandler.js"></script>
+<script src="../../../static/mdui/js/imageConfig.js"></script>
+<script>
+	var flag=true;
+	var priceArr={};//保存搜索框信息
+    var posArr = [];	//存储3分钟前和现在的位置信息
+    var ids = [];		//存储两个医院id，3分钟前和现在
+    var distances = [];	//存储两个医院距离，3分钟前和现在
+	$.uexWindowReady(function(){
+
+        initSuperPage();
+        setInterval(refresh,180000);//3分钟刷新一次
+
+		var oForm =  document.getElementsByTagName("form")[0];
+		oForm.onsubmit = function(){
+			$('.search-img').trigger('tap');
+			return false;
+		};
+
+		/*下拉刷新*/
+        $.setBounce({
+            bounceType:"1",
+            type:"0",
+            startPullCall:function(){
+                //console.log("下拉动作开始");
+            },
+            downEndCall:function(type){
+                //执行刷新数据
+                initSuperPage();
+                //关闭上/下拉刷新效果
+                $.resetBounce(type);
+            }
+        });
+
+	});
+
+
+	function initSuperPage() {
+        requestSortData();//请求分类数据
+        requestHomeNear();//请求附近超市
+        requestFocusStore();//请求关注超市
+        requestHotProduct();//请求热门产品
+    }
+
+
+    //刷新页面
+    function refresh() {
+        var posObj = {
+            log : $.getStorage('log'),
+            lat : $.getStorage('lat')
+        };
+        if(posArr.length>=2){
+            posArr.shift();
+        }
+        posArr.push(posObj);
+        if(posArr.length!=2){
+            return;
+        }
+        var lastLat = posArr[0].lat;
+        var lastLog = posArr[0].log;
+        var curLat = posArr[1].lat;
+        var curLog = posArr[1].log;
+        var distance = getDisance(lastLat, lastLog, curLat, curLog);
+//alert('当前坐标：'+'('+curLat+','+curLog+')'+',上次坐标：'+'('+lastLat+','+lastLog+')'+',距离：'+distance);
+        if(distance>0.1) {	//如果距离大于100km
+            $.request({
+                urlType: 'nearSupermarkets',
+                data: {
+                    "access_token": $.getStorage('access_token'),
+                    log: $.getStorage('log'),
+                    lat:$.getStorage('lat'),
+                    homepage:'yes'
+                }
+            }, function (json) {
+                if (json.success) {
+//console.log("附近超市: "+JSON.stringify(json));
+
+                    for(var i=0,len=json.data.length;i<len;i++){
+                        ids.push(json.data[i].cltpit01id);
+                        distances.push(json.data[i].distance);
+                    }
+                    if(ids.length>=9){
+                        ids.splice(0, 3);
+                    }
+                    if(distances.length>=9){
+                        distances.splice(0, 3);
+                    }
+                    var last_ids = ids.slice(0,3),
+                        cur_ids = ids.slice(3),
+                        last_dis = distances.slice(0,3),
+                        cur_dis = distances.slice(3);
+                    for(var j=0;j<3;j++){
+                        var flag = last_ids[j]!=cur_ids[j] || last_dis[j]!=cur_dis[j]
+                    }
+                    if(flag){
+                        setBanner(json.data);
+                        setHomeNear(json.data);
+                        requestFocusStore();
+                    }
+                }else {
+                    $.alert('网络错误');
+                }
+            });
+        }
+    }
+
+    function getDisance(lat1, lng1, lat2, lng2) {
+        var radLat1 = lat1 * Math.PI / 180.0;
+        var radLat2 = lat2 * Math.PI / 180.0;
+        var a = radLat1 - radLat2;
+        var b = lng1 * Math.PI / 180.0 - lng2 * Math.PI / 180.0;
+        var s = 2 * Math.asin(Math.sqrt(Math.pow(Math.sin(a / 2), 2) + Math.cos(radLat1) * Math.cos(radLat2) * Math.pow(Math.sin(b / 2), 2)));
+        s = s * 6378.137;
+        s = Math.round(s * 10000) / 10000;
+        return s
+    }
+
+
+	//获取热门产品
+	function requestHotProduct(){
+		$.request({
+			urlType:'queryHotGoods',
+			data:{
+				"access_token": $.getStorage('access_token')
+			}
+		},function(json){
+			if(json.success) {
+				var data=json.data;
+				setHotProduct(data);
+			}
+			else {
+				alert('网络错误');
+			}
+		});
+	}
+
+	function setHotProduct(data){
+		var len = data.length;
+		var html='';
+		if(len){
+			for(var i=0;i<len;i++){
+				html +='<div class="cell" data-id="'+data[i].espgds01id+'" data-focus="'+data[i].isfocus+'" data-standard="'+data[i].espgds01002+'" data-picture="'+data[i].espgds01010+'">';
+				html +='<div class="img-box">';
+				html +='<img src="'+ $.serverSettings.serverPath+'/mobile/mcheap/shopAction!getGoodsPicture.do?access_token='+ $.getStorage('access_token')+'&url='+data[i].espgds01010+'"/>';
+				html +='</div>';
+				html +='<div class="drug-detail mdui-box-flex-1">';
+				html +='<div class="drug-name">'+data[i].espgds01001+'</div>';
+				if(data[i].espgds01004){
+					html +='<div class="drug-origin">产地:'+data[i].espgds01004+'</div>';
+				}else{
+					html +='<div class="drug-origin">产地:</div>';
+				}
+				html +='<div class="drug-price">￥'+data[i].price+'</div>';
+				html +='<div class="avg-price">均价</div>';
+				html +='</div>';
+				html +='</div>';
+			}
+			$('.usual-product').html(html);
+		}else{
+
+		}
+	}
+
+	$('.usual-product').on('tap','.cell',function(){
+		$.openWin({
+			name:"product_list_market",
+			animId : 2,
+			url:'wgtroot://supermarket/product_list/ui/product_list_market.html',
+			pageParam: {
+				proName:$(this).find('.drug-name').html(),
+				id:$(this).data('id'),
+				factory:$(this).find('.drug-origin').html(),
+				standard:$(this).data('.standard'),
+				price:$(this).find('.drug-price').html(),
+				focus:$(this).data('focus'),
+				picture:$(this).data('picture')
+			}
+		});
+	});
+
+
+	//获取关注的超市
+	function requestFocusStore(){
+		$.request({
+			urlType:'focusSupermarket',
+			data:{
+				"access_token": $.getStorage('access_token'),
+				homepage:'yes',
+				log: $.getStorage('log'),
+				lat:$.getStorage('lat')
+			}
+		},function(json){
+			if(json.success) {
+				var data=json.data;
+				var gzcs=1;
+				setHomeNear(data,gzcs);
+			}
+			else {
+				alert('网络错误');
+			}
+		});
+	}
+
+	//点击单个按钮
+	//$('.search-box').on('tap','.search-img',function(){
+    $('#search').on('input propertychange', function(){
+		var mc = $("#search").val();
+		if(mc){
+			$('.search-before-content').show();
+			$.request({
+				urlType: 'homeSearch',
+				data: {
+					"access_token": $.getStorage('access_token'),
+					mc : mc
+				}
+			}, function (json) {
+				if (json.success) {
+					$('.search-before-content').hide();
+					var html = '';
+					var len = json.data.length;
+					var data = json.data;
+					if(len==0){
+						html='<div class="search-item">暂无信息</div>';
+						$(".search-item-content").html(html).show();
+					}else{
+						for(var i=0;i<len;i++){
+							html+='<div id="'+i+'" class="search-item" data-id="'+data[i].id+'" data-bz="'+data[i].bz+'">'+data[i].mz+'</div>';
+							if(data[i].bz==1){
+								priceArr[data[i].id]=data[i].supermarktInfo;
+							}else{
+								priceArr[data[i].id]=data[i].goodsInfo;
+							}
+						}
+						$(".search-item-content").html(html).show();
+					}
+				}
+				else {
+					alert('网络错误');
+				}
+			});
+		}else{
+			$.toast("请输入搜索内容");
+		}
+	});
+	/*点击收缩结果消失*/
+	$('.search-item-content').on('tap',function(){
+		$(".search-item-content").hide();
+	});
+
+	/*
+	 * 点击搜索结果跳转
+	 * */
+	$(document).on('tap','.search-item',function(){
+		$(this).css("background-color","green");
+		var id = $(this).data("id");
+		var info = priceArr[id];
+		var bz = $(this).data("bz");
+		if($(this).html()=='暂无信息'){
+			$(".search-item-content").hide();
+		}else{
+			$(".search-item-content").hide();
+			if(bz==1){
+				var range,lsh,tiaoshu,focus,storeStar,storeName,storeAddress,storeYysj,startTime,endTime,distance,picture,log,lat;
+				range = info.cltpit01011;
+				lsh = info.cltpit01id;
+				tiaoshu = info.tiaoshu;
+				focus = info.isfocus;
+				storeStar = info.star;
+				storeName = info.cltpit01001;
+				storeAddress = info.cltpit01004;
+				startTime = info.cltpit01005;
+				endTime = info.cltpit01006;
+				distance = info.distance;
+				picture = info.cltpit02002;
+				log = info.cltpit01007;
+				lat = info.cltpit01008;
+				storeYysj ='营业时间:'+startTime+'~'+endTime+'';
+				jumpToShop_sort(tiaoshu,lsh,range,storeName,storeAddress,storeYysj,storeStar,distance,focus,picture,log,lat);
+			}else{
+				var drugName,standard,factory,price,focus1,picture1;
+				drugName = info.espgds01001;
+				standard = info.espgds01002;
+				factory = info.espgds01004;
+				price = info.price;
+				focus1 = info.isfocus;
+				picture1 = info.espgds01010;
+				$.openWin({
+					name:'product_list_market',
+					animId : 2,
+					url:'wgtroot://supermarket/product_list/ui/product_list_market.html',
+					pageParam:{
+						id : id,
+						proName : drugName,
+						standard : standard,
+						factory : '产地:'+factory,
+						price : price,
+						focus : focus1,
+						picture:picture1
+					}
+				});
+			}
+		}
+	});
+
+
+	function jumpToShop_sort(tiaoshu,lsh,range,storeName,storeAddress,storeYysj,storeStar,distance,focus,picture,log,lat){
+		$.openWin({
+			name:"product_show",
+			animId : 2,
+			url:'wgtroot://supermarket/market_product_show/ui/product_show.html',
+			pageParam:{
+				tiaoshu:tiaoshu,
+				lsh:lsh,
+				range:range,
+				marketName:storeName,
+				address:storeAddress,
+				yytime:storeYysj,
+				star:storeStar,
+				distance:distance,
+				focus:focus,
+				picture:picture,
+				log:log,
+				lat:lat
+			}
+		});
+	}
+
+	//点击单个按钮
+	$('.sort-title').on('tap','.sort-box',function(){
+		var id=$(this).data('id');
+		var name=$(this).data('name');
+		jumpSort(id,name);
+	});
+	//请求分类数据
+	function requestSortData(){
+		$.request({
+			urlType:'bigCategory',
+			data:{
+				"access_token": $.getStorage('access_token'),
+				"homePage":'yes'
+			}
+		},function(json){
+			if(json.success) {
+				var data=json.data;
+				setSort(data);
+			}
+			else {
+				alert('网络错误')
+			}
+		});
+	}
+
+	//请求首页附近超市
+	function requestHomeNear(){
+		$.request({
+			urlType:'nearSupermarkets',
+			data:{
+				"access_token": $.getStorage('access_token'),
+				log: $.getStorage('log'),
+				lat:$.getStorage('lat'),
+				homepage:'yes'
+			}
+		},function(json){
+			if(json.success) {
+				var data=json.data;
+				if(flag){
+					setBanner(data);
+					flag=false;
+				}
+				setHomeNear(data);
+			}
+			else {
+				alert('网络错误');
+			}
+		});
+	}
+	//设置首页附近药店
+	function setHomeNear(data,gzcs){
+		var html='',len = data.length;
+		for(var i=0;i<len;i++){
+			var m=0,j=0;
+			var url=data[i].cltpit02002?data[i].cltpit02002:data[i].picture;
+			html +='<div class="tj-list-item mdui-box" data-tiaoshu="'+data[i].tiaoshu+'" data-lsh="'+data[i].cltpit01id+'" data-star="'+data[i].star+'" data-tiaoshu="'+data[i].tiaoshu+'" data-range="'+data[i].cltpit01011+'" data-focus="'+data[i].isfocus+'" data-picture="'+url+'" data-log="'+data[i].cltpit01007+'" data-lat="'+data[i].cltpit01008+'">';
+			html +='<div>';
+			html +='<img src="'+ $.serverSettings.serverPath+'/mobile/mcheap/mcheapAction!getMarketPicture.do?access_token='+ $.getStorage('access_token')+'&url='+url+'">';
+			html +='</div>';
+			html +='<div class="mdui-box-flex-1">';
+			html +='<div class="list-item-title">'+data[i].cltpit01001+'</div>';
+			html +='<div class="star">';
+			if(data[i].star) {
+				for(j;j<parseInt(data[i].star);j++){
+					html+='<img src="../images/star_01.png" />';
+					m++;
+				}
+				if (parseInt(data[i].star.split('.')[1])>0){
+					html+='<img src="../images/star_03.png"/>';
+					m++;
+				}
+				if(m<5){
+					for (j=m;j<5;j++){
+						html+='<img src="../images/star_02.png"/>';
+					}
+				}
+			}else{
+				for (j=0;j<5;j++){
+					html+='<img src="../images/star_02.png" />'
+				}
+			}
+			html +='</div>';
+			html +='<div class="market-address">地址:'+data[i].cltpit01004+'</div>';
+			html +='<div class="market-yysj">营业时间：'+data[i].cltpit01005+'~'+data[i].cltpit01006+'</div>';
+			html +='</div>';
+			html +='<div class="market-dis">'+data[i].distance+'km</div>';
+			html +='</div>';
+		}
+		if(gzcs){
+			$('#gzcs').html(html);
+		}else{
+			$('#fjcs').html(html);
+		}
+	}
+
+	function jumpSort(id,name){
+		if(id=='more'){
+			$.openWin({
+				name:"sort",
+				animId : 2,
+				url:'wgtroot://supermarket/sort/ui/sort.html',
+				pageParam: {}
+			});
+		}else{
+			$.openWin({
+				name:"big_sort_product",
+				animId : 2,
+				url:'wgtroot://supermarket/sort/ui/big_sort_product.html',
+				pageParam: {
+					id:id,
+					bigName:name
+				}
+			});
+		}
+	}
+
+	//附近超市更多
+	$('.fj-more').on('tap',function(){
+		$.execScript({
+			winName:'supermarket',
+			script:'$(".cs").trigger("tap");'
+		});
+	});
+	//关注超市更多
+	$('.gz-more').on('tap',function(){
+		$.execScript({
+			winName:'supermarket',
+			script:'$(".gz").trigger("tap");'
+		});
+	});
+
+	//跳转到超市
+	$(document).on('tap','.tj-list-item',function(){
+		$.openWin({
+			name:"product_show",
+			animId : 2,
+			url:'wgtroot://supermarket/market_product_show/ui/product_show.html',
+			pageParam: {
+				lsh:$(this).data('lsh'),
+				star:$(this).data('star'),
+				marketName:$(this).find('.list-item-title').html(),
+				address:$(this).find('.market-address').html(),
+				yytime:$(this).find('.market-yysj').html(),
+				distance:$(this).find('.market-dis').html(),
+				tiaoshu:$(this).data('tiaoshu'),
+				range:$(this).data('range'),
+				focus:$(this).data('focus'),
+				picture:$(this).data('picture'),
+				log:$(this).data('log'),
+				lat:$(this).data('lat')
+			}
+		});
+	});
+
+	$('.mdui-slider-loop').on('tap','.mdui-slider-item',function(){
+		$.openWin({
+			name:"product_show",
+			animId : 2,
+			url:'wgtroot://supermarket/market_product_show/ui/product_show.html',
+			pageParam: {
+				lsh:$(this).data('lsh'),
+				star:$(this).data('star'),
+				marketName:$(this).find('.mask-title').html(),
+				address:$(this).find('.mask-sub').html(),
+				yytime:$(this).data('yysj'),
+				distance:$(this).data('dis'),
+				tiaoshu:$(this).data('tiaoshu'),
+				range:$(this).data('range'),
+				focus:$(this).data('focus'),
+				picture:$(this).data('picture'),
+				log:$(this).data('log'),
+				lat:$(this).data('lat')
+			}
+		});
+	});
+
+	//返回大首页
+	$('.saoma').on('tap',function(){
+		$.execScript({
+			winName:'supermarket',
+			script:'$.closeWin()'
+		});
+	});
+</script>
+</body>
+</html>

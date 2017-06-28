@@ -1,0 +1,1418 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8">
+    <title>mCollection</title>
+    <meta name="viewport" content="target-densitydpi=device-dpi,width=device-width, initial-scale=1,maximum-scale=1, user-scalable=no">
+    <meta name="apple-mobile-web-app-capable" content="yes">
+    <meta name="apple-mobile-web-app-status-bar-style" content="black">
+    <link rel="stylesheet" href="../../../static/mdui/css/mdui.min.css">
+    <link rel="stylesheet" href="../../../static/mCheap/css/mCommon.css">
+    <link rel="stylesheet" href="../css/caipu.css">
+    <style>
+        *{
+            font-family: "Microsoft YaHei";
+        }
+        body{
+            background-color: #E6EAE8;
+            padding-top: 2.75rem;
+
+        }
+        .header-box{
+            background-color: #3BA15C;
+            padding: 0;
+        }
+        .header{
+            width: 100%;
+            height: 100%;
+            position: relative;
+        }
+        .back{
+            padding-right: 1rem;
+            padding-left: 1rem;
+            padding-top: 0.75rem;
+            position: absolute;
+            z-index: 100;
+        }
+        .back img{
+            width:auto;
+            height: 1.25rem;
+        }
+        .title{
+            text-align: center;
+            position: absolute;
+            width: 100%;
+            height: 100%;
+            top: 0;
+            line-height: 2.75rem;
+            color: #FFFFFF;
+        }
+        .top{
+            padding: 1rem;
+            background-color: #ffffff;
+        }
+        .top-img{
+            width: 5rem;
+        }
+        .top-img>img{
+            width: 5rem;
+            height: auto;
+            border-radius: 0.2rem;
+        }
+        .top-title{
+            font-size: 1.2rem;
+            padding-left: 1rem;
+            color: #000000;
+        }
+        .product-name{
+            color:black;
+        }
+        .avg-price{
+            color:#3BA15C;
+        }
+        .top-sub{
+            padding-left: 1rem;
+            color: #666666;
+            font-size: 1rem;
+        }
+        .top-market{
+            margin:0.25rem 0 0.25rem 1rem;
+        }
+        .top-price{
+            margin-left: 1rem;
+            color: #3BA15C;
+            font-size: 1.2rem;
+        }
+        .price-interval{
+            color: #666666;
+            margin-left: 0.5rem;
+            font-size: 1rem;
+        }
+        .content{
+            margin-top: 1rem;
+            background-color: #ffffff;
+        }
+        .top-comment{
+            line-height: 100%;
+            padding: 0.2rem 0.5rem 0.2rem 0.5rem;
+            border-radius: 1rem;
+            border: 1px solid #F57F20;
+            float: right;
+            color: #F57F20;
+            font-size: 0.8rem;
+        }
+        .add{
+            float: right;
+            width: 1.2rem;
+            height: 1.2rem;
+            background: url("../images/add.png") no-repeat center;
+            background-size: 1.2rem;
+        }
+        .line-one{
+            height: 4.5rem;
+            padding: 1rem;
+            position: relative;
+        }
+        .commentator-price{
+            position: absolute;
+            right: 5%;
+            top: 35%;
+            color: #3BA15C;
+        }
+        .commentator-num{
+            color: #3BA15C;
+        }
+        .div-img{
+            float: left;
+        }
+        .comment-list{
+            border-bottom: 1px solid #B0B0B0;
+        }
+        .commentator{
+            color: black;
+            float: left;
+            margin-left: 1rem;
+            margin-top: 0.75rem;
+        }
+        .commentator-me{
+            color: #3BA15C;
+            float: left;
+            margin-left: 1rem;
+            margin-top: 0.75rem;
+        }
+        .head-img{
+            width: 2.5rem;
+            height: 2.5rem;
+            border-radius: 1.25rem;
+        }
+        .comment-detail{
+            color:black;
+            padding-left: 1rem;
+        }
+        .second-title{
+            border-bottom: 1px solid #B0B0B0;
+        }
+        .comment-time{
+            font-size: 0.9rem;
+            padding-top: 0.2rem;
+            padding-left: 1rem;
+            padding-bottom: 1rem;
+        }
+        .xjbj,.jgzs,.comment-xz,.cjz-info,.bj-info{
+            /*width: 18%;*/
+            padding:1rem 0 0.8rem 0;
+            text-align: center;
+        }
+        .choose{
+            color:#3BA15C;
+            /*width: 18%;*/
+            text-align: center;
+            padding-top: 1rem;
+            padding-bottom: 0.8rem;
+            border-bottom: 0.2rem solid #3BA15C;
+        }
+        /*==================图片框=======================*/
+        .img{
+            z-index: 250;
+            overflow-x:auto;
+        }
+        .person-img{
+            width: 5rem;
+            height: 6rem;
+            border: 1px solid white;
+            text-align: center;
+        }
+        .pic-img{
+            width:5rem;
+            height: 6rem;
+        }
+        .picture-box>img{
+            width: 5rem;
+            height: 100%;
+            margin-left: 0.2rem;
+            margin-right: 0.2rem;
+        }
+        .pictures-box>img{
+            width: 5rem;
+            height: 5rem;
+            margin-left: 0.2rem;
+            margin-right: 0.2rem;
+        }
+
+
+
+        /*==================图片框=======================*/
+        /*==================品种详情=======================*/
+        .jgzs-content{
+            display: none;
+            background-color: white;
+        }
+        .jg-div{
+            padding: 1rem;
+            min-height: 12rem;
+        }
+        .collect-content{
+            background-color: white;
+            margin-left: 1rem;
+            margin-right: 1rem;
+        }
+        .cjz-img-box{
+            text-align: center;
+            padding-top: 2.5rem;
+            padding-bottom: 0.5rem;
+        }
+        .cjz-img{
+            width: 5rem;
+            height: 5rem;
+            border-radius: 2.5rem;
+        }
+        .cjz-name{
+            font-size: 1.2rem;
+            text-align: center;
+            color:black;
+            border-bottom: 1px solid #E6E6E6;
+            padding-bottom: 2rem;
+        }
+        .cj-list{
+            padding-top: 0.5rem;
+            padding-bottom: 0.5rem;
+            padding-left: 1rem;
+            border-bottom: 1px solid #E6E6E6;
+            position: relative;
+        }
+        .cj-time{
+            display: block;
+            position: absolute;
+            right: 5%;
+            top:30%;
+            font-size: 0.9rem;
+        }
+        .bj-sure{
+            position: fixed;
+            bottom: 0;
+            text-align: center;
+            height: 3rem;
+            background-color: #3BA15C;
+            line-height: 3rem;
+            width: 100%;
+            color:white;
+        }
+
+        /*==================评论蒙层=======================*/
+
+        .vertical{
+            margin-top: 0.8rem;
+            color: #666666;
+        }
+
+        #price-input{
+            margin: 0.5rem 0.5rem 0.5rem 0.5rem;
+            width: 5rem;
+            height: 2.5rem;
+        }
+        .set-text{
+            line-height: 3.5rem;
+        }
+        .mc{
+            background-color:#cccccc;
+            width:100%;
+            height:100%;
+            position:fixed;
+            z-index:200;
+            display: none;
+        }
+        .mc-content{
+            background-color: white;
+            z-index: 250;
+            margin-top: 5rem;
+        }
+        .sure{
+            background-color: #3BA15C;
+            width: 100%;
+            position: fixed;
+            bottom: 0;
+            height: 3rem;
+            text-align: center;
+            line-height: 3rem;
+            color: white;
+        }
+        #con-0,#con-2,#con-4,#con-6{
+            display: none;
+        }
+        /*上传中显示蒙层 -->*/
+        .upload-mc{
+            width:100%;
+            height: 100%;
+            background: rgba(0,0,0,0.7);
+            position:fixed;
+            z-index:999;
+            display: none;
+        }
+        .progress_bars{
+            width: 80%;
+            height: 1rem;
+            border-radius: 0.5rem;
+            margin-left: 10%;
+            margin-top: 5rem;
+            border: 1px solid white;
+        }
+        .progress_bar{
+            width: 0%;
+            height: 1rem;
+            border-radius: 0.5rem;
+            background-color: red;
+        }
+        .progress{
+            color: red;
+            text-align:center;
+            width: 100%;
+            margin-top: 0.5rem;
+        }
+        .close-mc{
+            float: right;
+            margin-right: 1rem;
+            margin-top: 1rem;
+            color: white;
+            padding: 0.25rem 0.5rem 0.25rem 0.5rem;
+            border-radius: 1rem;
+            border: 1px solid white;
+        }
+
+        .dislike{
+            background: url("../images/dislike.png")no-repeat center;
+            background-size: 1.2rem 1.2rem;
+            position: absolute;
+            width: 2.75rem;
+            height: 2.75rem;
+            top: 0;
+            right:3%;
+
+        }
+        .like{
+            background: url("../images/like.png")no-repeat center;
+            background-size: 1.2rem 1.2rem;
+            position: absolute;
+            width: 2.75rem;
+            height: 2.75rem;
+            top: 0;
+            right:3%;
+        }
+
+
+
+
+
+
+        .list-item{
+            background: #FAFAFA;
+            /*padding:0.5rem  1rem;*/
+            position: relative;
+            padding: 1rem;
+        }
+        .list-item-title{
+            padding: 0 0 0 1rem;
+            font-weight: 600;
+        }
+        .list-item-price{
+            padding: 0 0 0 1rem;
+            color: #3BA15C;
+        }
+        .list-item-dis{
+            position:absolute;
+            right: 1rem;
+            top: 1rem;
+            font-size: 0.8rem;
+            color: #666666;
+            padding-left: 1rem;
+            background: url("../images/location.png") no-repeat left center;
+            background-size: 0.8rem auto;
+        }
+        .list-item-img>img{
+            width: 5rem;
+            height: 4rem;
+        }
+        .list-item-fh{
+            padding-left: 1rem;
+        }
+        .list-item-fh>img{
+            width: 1rem;
+            height: 1rem;
+        }
+        .no-data{
+            height: 3rem;
+            text-align: center;
+            line-height: 3rem;
+            border-bottom: 1px solid #CCCCCC;
+        }
+
+        .lists-box{
+            width: 100%;
+            height: 100%;
+        }
+
+        .chartContainer{
+            padding-bottom: .5rem;
+            margin: .5rem;
+            background-color: #ffffff;
+            border-radius: .5rem;
+        }
+        .chartContainer>.chart-title{
+            border-bottom: 1px solid #CCCCCC;
+            text-align: center;
+            color: #3BA15C;
+            font-weight: 600;
+            line-height: 2rem;
+        }
+
+        /*附近相因*/
+        .cheap-near{
+            position: absolute;
+            left: 5%;
+            top:10%;
+            font-size: 0.8rem;
+            color: white;
+            background-color: #FFB006;
+            padding-left: 0.1rem;
+            padding-right: 0.1rem;
+        }
+        /*全区相因*/
+        .cheap-area{
+            position: absolute;
+            left: 5%;
+            top:10%;
+            font-size: 0.8rem;
+            color: white;
+            background-color: #F45627;
+            padding-left: 0.1rem;
+            padding-right: 0.1rem;
+        }
+        /*全市相因*/
+        .cheap-city{
+            position: absolute;
+            left: 5%;
+            top:10%;
+            font-size: 0.8rem;
+            color: white;
+            background-color: #D6050A;
+            padding-left: 0.1rem;
+            padding-right: 0.1rem;
+        }
+
+        .market-address{
+            text-overflow:ellipsis;
+            overflow: hidden;
+            white-space:nowrap;
+            font-size: .8rem;
+            font-weight: normal;
+            color: #666666;
+            height:1rem;
+            line-height: 1rem;
+            padding-left: 1rem;
+            margin-left: 1rem;
+
+            background: url("../images/dis.png") no-repeat left center;
+            background-size: 0.8rem auto;
+        }
+    </style>
+</head>
+<body>
+<!-- 上传中显示蒙层 -->
+<div class="upload-mc">
+    <div class="progress_bars">
+        <div class="progress_bar"></div>
+    </div>
+    <div class="progress">loading</div>
+</div>
+<div class="mdui-box mdui-box-ver lists-box">
+    <div class="header-box mdui-bar mdui-bar-nav">
+        <div class="header">
+            <div class="back mdui-action-back"><img src="../images/back.png"></div>
+            <div class="title">菜品详情</div>
+            <div class="set-focus"></div>
+        </div>
+    </div>
+    <div class="mc">
+        <div class="close-mc">close</div>
+        <div class="mdui-box mc-content">
+            <div class="set-text">请输入价格:</div>
+            <input type="number" id="price-input"/>
+            <div class="set-text">元</div>
+        </div>
+        <div class="img mdui-box">
+            <div class="picture-box">
+                <!--<img src="../images/add_pic.png">-->
+                <!--<img src="../images/add_pic.png">-->
+                <!--<img src="../images/add_pic.png">-->
+                <!--<img src="../images/add_pic.png">-->
+                <!--<img src="../images/add_pic.png">-->
+                <!--<img src="../images/add_pic.png">-->
+                <!--<img src="../images/add_pic.png">-->
+            </div>
+            <div class="person-img">
+                <a href="#picture">
+                    <img class="pic-img" src="../images/add_pic.png">
+                </a>
+            </div>
+        </div>
+        <div class="sure">确定</div>
+    </div>
+
+
+    <div class="top mdui-box">
+        <div class="top-img"></div>
+        <div class="mdui-box-flex-1">
+            <div class="top-title"><span class="product-name">白菜</span><span class="top-sub">(500g)</span><div class="top-comment">评论</div></div>
+            <div class="top-market">红星路农贸市场</div>
+            <div class="top-price"><span class="avg-price">￥1.50</span><span class="price-interval">(￥1.20~￥1.80)</span><div class="add"></div></div>
+        </div>
+    </div>
+    <div class="content">
+        <!--==========================只有两个tab================================-->
+        <div class="second-title mdui-box">
+            <div class="xjbj mdui-box-flex-1">询价</div>
+            <div class="vertical">|</div>
+            <div class="comment-xz mdui-box-flex-1">评论</div>
+            <div class="vertical">|</div>
+            <!--<div class="pzxq mdui-box-flex-1">品种详情</div>-->
+            <div class="jgzs mdui-box-flex-1">价格走势</div>
+            <div class="vertical">|</div>
+            <div class="cjz-info mdui-box-flex-1">采集者信息</div>
+            <div class="vertical">|</div>
+            <div class="bj-info mdui-box-flex-1">公众报价</div>
+        </div>
+    </div>
+
+    <div class="classify-content mdui-box-flex-1" style="overflow-y: auto;">
+        <div id="con-0">
+
+            <!--<div class="list-item">
+                <div class="list-item-content mdui-box">
+                    <div class="list-item-img"><img  src="../images/t01f45d14a61adc12ab.jpg"/></div>
+                    <div class="mdui-box-flex-1">
+                        <div class="list-item-title">市场名字</div>
+                        <div class="cheap-area">全区·相因</div>
+                        <div class="list-item-fh">
+                            <img src="../images/star_01.png" />
+                            <img src="../images/star_01.png" />
+                            <img src="../images/star_01.png" />
+                            <img src="../images/star_01.png" />
+                            <img src="../images/star_01.png" />
+                        </div>
+                        <div class="market-address">hahaha</div>
+                        <div class="list-item-price">35</div>
+                    </div>
+                </div>
+                <div class="list-item-dis">7km</div>
+            </div>-->
+
+
+
+
+        </div>
+        <div id="con-2">
+
+            <!--<div class="comment-list">-->
+            <!--<div class="line-one">-->
+            <!--<div class="div-img"><img class="head-img" src="../images/t01f45d14a61adc12ab.jpg"/></div>-->
+            <!--<div class="commentator">张笑笑</div>-->
+            <!--</div>-->
+            <!--<div class="comment-detail">蔬菜很新鲜，价格很便宜</div>-->
+            <!--<div class="comment-time">2016-08-23 09:02</div>-->
+            <!--</div>-->
+
+        </div>
+
+        <div id="con-4" class="jgzs-content chartContainer">
+            <div class="chart-title">产品前7日价格走势图</div>
+            <div id="lineChart1" class="jg-div"></div>
+            <div class="chart-title">产品周均价走势图</div>
+            <div id="lineChart2" class="jg-div"></div>
+        </div>
+
+        <div id="con-6" style="padding-bottom: 5rem;background-color: white">
+
+            <div class="collect-content">
+            <div class="cjz-img-box">
+            <img src="../images/t01f45d14a61adc12ab.jpg" class="cjz-img"/>
+            </div>
+            </div>
+            <div class="cjz-name">李婷婷</div>
+            <div class="cj-lists">
+            <div class="cj-list">
+            <span>采集价格: ￥</span>
+            <span>1.20</span>
+            <span class="cj-time">2016-08-09 08:15</span>
+            </div>
+            </div>
+
+
+        </div>
+        <div id="con-8">
+
+            <div class="gzbj-content" id="list">
+
+                <!--<div class="comment-list">-->
+                <!--<div class="line-one">-->
+                <!--<div class="div-img"><img class="head-img" src="../images/t01f45d14a61adc12ab.jpg"/></div>-->
+                <!--<div class="commentator">张笑笑</div>-->
+                <!--</div>-->
+                <!--<div class="comment-detail">报价: <span class="bj">35</span> 元</div>-->
+                <!--<div class="pictures-box">-->
+                <!--<img src="../images/add_pic.png">-->
+                <!--<img src="../images/add_pic.png">-->
+                <!--<img src="../images/add_pic.png">-->
+                <!--</div>-->
+                <!--<div class="comment-time">2016-08-23 09:02</div>-->
+                <!--</div>-->
+
+            </div>
+
+            <div class="bj-sure">我要报价</div>
+        </div>
+    </div>
+</div>
+
+<!-- 点击照片显示蒙层 -->
+<div id="picture" class="mdui-popover mdui-popover-action mdui-popover-bottom">
+    <ul class="mdui-table-view"><!--菜单列表-->
+        <li class="mdui-table-view-cell photo">
+            <a href="#">拍照</a>
+        </li>
+        <li class="mdui-table-view-cell album">
+            <a href="#">从相册选取</a>
+        </li>
+    </ul>
+    <ul class="mdui-table-view">
+        <li class="mdui-table-view-cell">
+            <a href="#picture"><b>取消</b></a>
+        </li>
+    </ul>
+</div>
+
+
+
+<!--页面-->
+<script src="../../../static/mdui/js/mdui.js"></script>
+<script src="../../../static/mCheap/js/mCheap.config.js"></script>
+<script src="../../../server.js"></script>
+<script src="../../../public.js"></script>
+<script src="../../../static/mCheap/js/scroll.js"></script>
+<script src="../../../echarts.min.js"></script>
+<script>
+    var cltpro01id;//保存产品id
+    var proName;//保存产品名称
+    var cltpit01id;//保存市场流水号
+    var marketName;//市场名称
+    var flag;//控制开关
+    var myDish={};//添加我的菜谱参数
+    var url;//产品图片
+    var cltprc05001;//保存采集日期
+    var pNum=1;//图片id
+    var pageNum=1;//分页的时候用的
+    var requestFlag=true;
+    var nMpageNum=0;
+    var nMrequestFlag=true;
+    var pageData;
+    var marketData;
+    /*价格走势*/
+    var qstClass=function(area_Id, product_Id){
+        this.area_Id = area_Id;
+        this.product_Id=product_Id;
+        this.init=function(){
+            this.getDayProductInfo(this.area_Id, this.product_Id);
+            this.getWeekProductInfo(this.area_Id, this.product_Id);
+        };
+    };
+    qstClass.prototype={
+        creatLineChart:function(id,data,xName){
+            var myChart = echarts.init(document.getElementById(id));
+            var color=['#7AC840','#4DA2F2','#FFA027','#FF6769','red','#FDD132','#A1E5EE'];
+            var xData=data.timeList;
+            var series=[];
+            Object.defineProperties(data,{
+                timeList:{
+                    enumerable:false
+                }
+            });//将dates属性设置为不可枚举
+//            delete data.dates;//删除dates属性
+            //var legendData=Object.keys(data);
+            var obj={};
+            obj.name=$('.product-name').html();
+            obj.type='line';
+            obj.data=data.priceList;
+            series.push(obj);
+
+            var option = {
+                title: {
+                    text: '价格(元)',
+                    left: '20',
+                    textStyle:{
+                        fontSize:'24'
+                    },
+                    top:'20'
+                },
+                tooltip: {
+                    trigger: 'item',
+                    formatter: '{a} <br/>{b} : {c}'
+                },
+                /*legend: {
+                    right: '20',
+                    data:legendData,
+                    top:'20',
+                    width:'80%',
+                    textStyle:{
+                        fontSize:'24'
+                    }
+                },*/
+                xAxis: {
+                    name: xName,
+                    type: 'category',
+                    splitLine: {show: false},
+                    data:xData
+                    /*axisLabel: {
+                        /!*textStyle:{
+                            fontSize:16
+                        },*!/
+                        rotate: '45',
+                        interval: '0'
+                    }*/
+                },
+                grid: {
+                    left: '3%',
+                    right: '4%',
+                    bottom: '3%',
+                    top:'25%',
+                    containLabel: true
+                },
+                yAxis: {
+                    type: 'value'
+                    /*axisLabel:{
+                        textStyle:{
+                            fontSize:16
+                        }
+                    }*/
+                },
+                series:series,
+                color:color
+            };
+            myChart.setOption(option);
+        }
+    };
+    qstClass.prototype.getDayProductInfo=function(cltpit01id, cltpro01id){
+        //console.log('参数:'+cltpit01id+","+cltpro01id);
+        var that=this;
+        $.request({
+            urlType: 'queryDayProductInfo',
+            data: {
+                "access_token": $.getStorage('access_token'),
+                areaID: cltpit01id,
+                productID: cltpro01id
+            }
+        }, function (data) {
+            if (data.success) {
+                that.creatLineChart('lineChart1',data.data);
+            }
+            else {
+                //$.toast('网络错误');
+            }
+        });
+    };
+
+    qstClass.prototype.getWeekProductInfo=function(cltpit01id, cltpro01id){
+        var that=this;
+        $.request({
+            urlType: 'queryWeekProductInfo',
+            data: {
+                "access_token": $.getStorage('access_token'),
+                areaID: cltpit01id,
+                productID: cltpro01id
+            }
+        }, function (data) {
+            if (data.success) {
+                that.creatLineChart('lineChart2',data.data,'周数');
+            }
+            else {
+                //$.toast('网络错误');
+            }
+        });
+    };
+
+
+
+    $.uexWindowReady(function(){
+        pageData=$.pageParam;
+        marketData=$.strToJson(pageData).marketData;
+
+        //下拉加载更多
+        var option = {id:"list",funs:{after:function(){
+            if(requestFlag){
+                pageNum=pageNum+1;
+                mcheapQueryUserPrice();
+            }else{
+                $.toast('没有更多了!');
+            }
+        }}};
+        $.initScroll(option);
+
+        var option1 = {id:"con-0",funs:{after:function(){
+            if(nMrequestFlag){
+                nMpageNum=nMpageNum+1;
+                requestNearMarketPrice();
+            }else{
+                $.toast('没有更多了!');
+            }
+        }}};
+        $.initScroll(option1);
+
+        closeMask();
+        setTitleData();//设置题目信息
+        setCommentData();//设置评论信息
+        getCollecter();//获取采集者
+        //getProData();//价格走势
+        mcheapQueryUserPrice();//获取报价信息
+        requestNearMarketPrice();
+        getFocus();  //设置是否关注
+    });
+
+    //查询是否关注
+    function getFocus() {
+        $.request({
+            urlType: 'getFocusProductOfStation',
+            data: {
+                "access_token": $.getStorage('access_token'),
+                cltpro01id: cltpro01id,  //产品id
+                cltpit01id: cltpit01id   //市场id
+            }
+        }, function (data) {
+            //console.log(JSON.stringify(data)+"back数据");
+            if (data.data===0) {  //未关注
+                $('.set-focus').removeClass('like').addClass('dislike');
+            } else {  //关注
+                $('.set-focus').removeClass('dislike').addClass('like');
+            }
+        });
+    }
+
+    //请求市场比价界面数据
+    function requestNearMarketPrice(){
+       // alert($.getStorage('near')+"@@@@@@@@@@2");
+
+        $.request({
+            //urlType: 'nearMarketPrice',
+            urlType: 'getProductPriceInAllCollection',
+            data: {
+                "access_token": $.getStorage('access_token'),
+                cltpro01id: cltpro01id,  //询价产品id
+                distance: $.getStorage('near'),
+                lat: $.getStorage('lat'),
+                log:$.getStorage('log'),
+                pageSize:'10',
+                page:nMpageNum,
+                cltpit01001:marketData.data.collectStationDetail.cltpit01011  //市场所在区域代码
+            }
+        }, function (data) {
+            if (data.success) {
+                //console.log(JSON.stringify(data)+"back数据");
+                //ischeaper:便宜标志，1：附近 2：全区 3：全市
+                if (data.data.length > 0) {
+                    nMcreatList(data.data);
+                }else{
+                    if(nMpageNum==0){
+                        nMcreatList(data.data);
+                    }else{
+                        $.toast('没有更多了!');
+                        nMrequestFlag=false;
+                    }
+                }
+            }
+            else {
+//                $.toast('网络错误')
+            }
+        });
+    }
+
+
+    function nMcreatList(data){
+        var html = '',len=data.length;
+        if(len){
+            for (var i = 0; i < len; i++) {
+                var m=0;
+                var j=0;
+                html += '<div class="list-item" data-id="' + data[i].cltpit01id + '">';
+                html +='<div class="list-item-content mdui-box">';
+                html += '<div class="list-item-img"><img  src="' + $.serverSettings.serverPath + '/mobile/mcheap/mcheapAction!getMarketPicture.do?access_token=' + $.getStorage('access_token') + '&url=' + data[i].cltpit02002 + '"/></div>';
+                html += '<div class="mdui-box-flex-1">';
+                html += '<div class="list-item-title" data-log="'+data[i].cltpit01007+'" data-lat="'+data[i].cltpit01008+'">' + data[i].cltpit01001 + '</div>';
+
+                if(data[i].ischeaper === '3') {
+                    html += '<div class="cheap-city">全市·相因</div>';
+                }
+                if(data[i].ischeaper === '2') {
+                    html += '<div class="cheap-area">全区·相因</div>';
+                }
+                if(data[i].ischeaper === '1') {
+                    html += '<div class="cheap-near">附近·相因</div>';
+                }
+
+                html += '<div class="list-item-fh">';
+                if(data[i].star) {
+                    for(j;j<parseInt(data[i].star);j++){
+                        html+='<img src="../images/star_01.png" />';
+                        m++;
+                    }
+                    if (parseInt(data[i].star.split('.')[1])>0){
+                        html+='<img src="../images/star_03.png"/>';
+                        m++;
+                    }
+                    if(m<5){
+                        for (j=m;j<5;j++){
+                            html+='<img src="../images/star_02.png"/>';
+                        }
+                    }
+                }else{
+                    for (j=0;j<5;j++){
+                        html+='<img src="../images/star_02.png" />'
+                    }
+                }
+                html+='</div>';
+                html += '<div class="market-address">'+data[i].cltpit01004+'</div>';
+                html += '<div class="list-item-price">' + '￥' + data[i].cltprc05006+'</div>';
+                html += '</div>';
+                html +='</div>';
+                html += '<div class="list-item-dis">&nbsp;' +data[i].distance + 'km</div>';
+                html += '</div>';
+            }
+            $('#con-0').append(html);
+            $('img').on('error',function(){
+                $(this).attr('src','../../../public/images/market_default.png');
+            })
+        }else{
+            html='<div class="no-data">暂无数据</div>';
+            $('#con-0').html(html);
+        }
+    }
+
+    //点击市场列表跳转
+    $('#con-0').on('tap', '.list-item', function () {
+        $.openWin({
+            name:'market_cpxq',
+            animId : 2,
+            flag : 4,
+            url:'wgtroot://mCheap/market/ui/market.html',
+            pageParam:{
+                cltpit01id:$(this).data('id'),
+                log:$.getStorage('log'),
+                lat:$.getStorage('lat')
+            }
+        });
+    });
+
+
+
+    $('.person-img').on('tap',function(){
+        $('#price-input').blur();
+    });
+
+    $(document).on('tap','.bj-sure',function(){
+       $('.mc').show();
+    });
+
+    $(document).on('tap','.sure',function(){
+        upLoadPrice();
+    });
+
+    function upLoadPrice(){
+        var myPrice=$('#price-input').val();
+        if(myPrice&&!isNaN(myPrice)){
+            $.request({
+                urlType:'mcheapAddUserPrice',
+                data:{
+                    access_token:$.getStorage('access_token'),
+                    cltpit01id:cltpit01id,//市场流水号
+                    cltpit01001:marketName,//市场名称
+                    epsprice01004:myPrice,  //用户报价
+                    epsprice01002:cltpro01id,//产品id
+                    epsprice01003:proName//产品名称
+                }
+            },function(data){
+                if(data.success){
+                    var pic = $(".picture-box>img");
+                    var uploadlen=pic.length;
+                    var bz=data.data;
+                    if(uploadlen){
+                        handleUploadFile(bz);
+                        sendMsg(marketName,proName,myPrice,'01');
+                    }else{
+                        $.toast('报价成功!');
+                        $(".mc").hide();
+                        mcheapQueryUserPrice();
+                        sendMsg(marketName,proName,myPrice,'01');
+                    }
+                }else{
+                    alert('网络错误');
+                }
+            });
+        }else{
+            alert('请输入价格');
+        }
+    }
+
+
+
+   function mcheapQueryUserPrice(){
+       $.request({
+           urlType:'mcheapQueryUserPrice',
+           data:{
+               "access_token": $.getStorage('access_token'),
+               cltpit01id:cltpit01id,
+               epsprice01002:cltpro01id,
+               pageSize:'10',
+               page:pageNum
+           }
+       },function(data){
+           if(data.success) {
+               var lenG=data.data.assess.length;
+               if(lenG){
+                   setBaoJaData(data);
+               }else{
+                   if(pageNum==1){
+                       setBaoJaData(data);
+                   }else{
+                       $.toast('没有更多了!');
+                       requestFlag=false;
+                   }
+               }
+           }
+           else {
+               alert('网络错误')
+           }
+       });
+   }
+
+
+
+    function setBaoJaData(data){
+        var html='';
+        var len=data.data.assess.length,data_1=data.data.assess;
+        for(var i=0;i<len;i++){
+            html +='<div class="comment-list">';
+            html +=' <div class="line-one">';
+            if(data.data.assess[i].userurl){
+                html +=' <div class="div-img"><img class="head-img" src="'+$.serverSettings.serverPath+'/mobile/mcheap/mcheapAction!getComUserPicture.do?access_token=' + $.getStorage('access_token') + '&url=' + data.data.assess[i].userurl +'"/></div>';
+            }else{
+                html +=' <div class="div-img"><img class="head-img" src="../images/head.jpg"/></div>';
+            }
+            html +=' <div class="commentator">'+data_1[i].epsrtu01002+'</div>';
+            html +='</div>';
+            html +=' <div class="comment-detail">报价:'+data_1[i].epsprice01004+' 元</div>';
+            html +='<div class="pictures-box">';
+            var picLen=data_1[i].url.length;
+            if(picLen){
+                for(var x= 0;x<picLen;x++){
+                    html +='<img src="'+$.serverSettings.serverPath+'/mobile/mcheap/mcheapAction!getUserPricePicture.do?access_token=' + $.getStorage('access_token') + '&url=' + data_1[i].url[x].epsprice02002 +'">';
+                }
+            }
+            html +=' </div>';
+            html +='  <div class="comment-time">'+data_1[i].create_time+'</div>';
+            html +=' </div>';
+        }
+        $('.gzbj-content').append(html);
+        $('img').on('error',function(){
+            $(this).attr('src','../../../public/images/noImg.jpg');
+        });
+    }
+
+
+
+    //报价完成后的成功回调
+    function baojiaUploadSuccess(){
+        $('.upload-mc').hide();
+        $('.picture-box').html('');
+        $.toast('图片上传完成');
+        pageNum=1;
+        $('.gzbj-content').html('');
+        mcheapQueryUserPrice();
+        $('.mc').hide();
+    }
+
+
+
+
+    //设置标题数据
+    function setTitleData(){
+        /*var pageData=$.pageParam;
+        marketData=$.strToJson(pageData).marketData;*/
+        cltpro01id = $.strToJson(pageData).cltpro01id;
+        var focus=parseInt($.strToJson(pageData).focus);
+        if(focus){
+            $('.set-focus').addClass('like');
+        }else{
+            $('.set-focus').addClass('dislike');
+        }
+        cltprc05001 = marketData.data.cltprc05001;
+        var collectStationDetail=marketData.data.collectStationDetail;
+        cltpit01id=marketData.data.collectStationDetail.cltpit01id;
+        marketName=collectStationDetail.cltpit01001;
+        $('.top-market').html(marketName);
+        var cSCategoryPriceList=marketData.data.cSCategoryPriceList;
+        var len=cSCategoryPriceList.length;
+        for(var i=0;i<len;i++){
+            var product=cSCategoryPriceList[i].userProductPriceList;
+            for (var x=0;x<product.length;x++){
+                if(product[x].cltpro01id==cltpro01id){
+                    var productName=product[x].cltpro01001;
+                    proName=productName;
+                    $('.product-name').html(productName);
+                    var price='￥'+product[x].cltprc05006;
+                    $('.avg-price').html(price);
+                    var interval='(￥'+product[x].cltprc05004+'~￥'+product[x].cltprc05005+')';
+                    $('.price-interval').html(interval);
+                }
+            }
+        }
+    }
+
+    //获取内容数据
+    function setCommentData(){
+        $.request({
+            urlType:'queryCsAssess',
+            data:{
+                "access_token": $.getStorage('access_token'),
+                epssgt02001:'02',
+                cltpit01id:cltpit01id,
+                cltpro01id:cltpro01id
+            }
+        },function(data){
+            if(data.success) {
+                var html='';
+                var len=data.data.assess.length;
+                for(var i=0;i<len;i++){
+                    html+='<div class="comment-list">';
+                    html+='<div class="line-one">';
+                    if(data.data.assess[i].url){
+                        html+='<div class="div-img"><img class="head-img" src="'+$.serverSettings.serverPath+'/mobile/mcheap/mcheapAction!getComUserPicture.do?access_token=' + $.getStorage('access_token') + '&url=' + data.data.assess[i].url +'"/></div>';
+                    }else{
+                        html+='<div class="div-img"><img class="head-img" src="../images/head.jpg"/></div>';
+                    }
+                    if(data.data.assess[i].isself){
+                        if(data.data.assess[i].epssgt02006){
+                            html+='<div class="commentator-me">我<span class="commentator-price">价格:<span class="commentator-num">'+data.data.assess[i].epssgt02006+'</span>元</span></div>';
+                        }else{
+                            html+='<div class="commentator-me">我</div>';
+                        }
+                    }else{
+                        if(data.data.assess[i].epssgt02006){
+                            html+='<div class="commentator">'+data.data.assess[i].epsrtu01002+'<span class="commentator-price">价格:<span class="commentator-num">'+data.data.assess[i].epssgt02006+'</span>元</span></div>';
+                        }else{
+                            html+='<div class="commentator">'+data.data.assess[i].epsrtu01002+'</div>';
+                        }
+                    }
+                    html+='</div>';
+                    html+='<div class="comment-detail">'+data.data.assess[i].epssgt02002+'</div>';
+                    html+='<div class="comment-time">'+data.data.assess[i].epssgt02005+'</div>';
+                    html+='</div>';
+                }
+                $('#con-2').html(html);
+                $('img').on('error',function(){
+                    $(this).attr('src','../../../public/images/noImg.jpg');
+                });
+                $('.xjbj').trigger('tap');
+            }
+            else {
+                alert('网络错误')
+            }
+        });
+    }
+
+    //列表标题切换
+    $('.second-title>div').on('tap',function(){
+        if(1){
+            var index=$(this).index();
+            var ele=$('.classify-content>div');
+            if(!$(this).hasClass('choose')){
+                $('.second-title>div').removeClass('choose');
+                $(this).addClass('choose');
+                ele.hide();
+                $('#con-'+index).show();
+            }
+            if(index==4){
+                var init = new qstClass(cltpit01id, cltpro01id);
+                init.init();
+                init = null;
+            }
+        }else{
+            alert('数据加载中，请稍等');
+        }
+    });
+
+    //评论
+    $(document).on('tap','.top-comment',function(){
+        $.openWin({
+            name:"cpxq_comment",
+            animId : 2,
+            url:'wgtroot://mCheap/caipu/ui/cpxq_comment.html',
+            pageParam: {
+                cltpit01id:cltpit01id,
+                marketName:marketName,
+                cltpro01id:cltpro01id,
+                cltpro01001:proName,
+                url:url
+            }
+        });
+    });
+
+//    $(document).on('tap','.list-item-content',function(){
+//        $.openWin({
+//            name:"market",
+//            flag:4,
+//            /*animId : 2,*/
+//            url:'wgtroot://mCheap/market/ui/market.html',
+//            pageParam:{
+//                cltpit01id : $(this).parent().attr("data-id"),
+//                cltpro01id : cltpro01id,
+//                log:$(this).find('.list-item-title').data('log'),
+//                lat:$(this).find('.list-item-title').data('lat')
+//            }
+//        });
+//        $.closeWin();
+//    });
+
+    //点添加到菜谱
+    $(document).on('tap','.add',function(){
+        var product = {
+            epsmym01id: '', //菜谱流水号(为空即可)
+            cltpro01id: myDish.cltpro01id, //产品流水号
+            cltpro01001: myDish.cltpro01001, //产品名称
+            epsmym02001: '',//数量(为空即可)
+            epsmym02002: myDish.cltpro01004,//计量单位 对应 cltpro01004
+            epsmym02003: myDish.cltpro01005//民间计量单位 对应 cltpro01005
+        };
+        $.request({
+            urlType: 'addmenuProduct',
+            data: {
+                "access_token": $.getStorage('access_token'),
+                product: JSON.stringify(product)
+            }
+        }, function (data) {
+            if (data.success) {
+                $.toast('成功添加到我的菜谱');
+            }
+            else if(!data.success){
+                $.toast(data.message);
+            }
+            else {
+                $.toast('添加失败');
+            }
+        });
+    });
+
+    function getCollecter(){
+        $.request({
+            urlType: 'queryPriceInfo',
+            data: {
+                "access_token": $.getStorage('access_token'),
+                cltprc05001: cltprc05001,
+                cltpro01id:cltpro01id,
+                cltpit01id:cltpit01id
+            }
+        }, function (data) {
+            if (data.success) {
+                if(data.data){
+//                    alert(JSON.stringify(data)+"^^^^^^^^^^^");
+                    var name = data.data.cltpsn02001||'';
+                    var url = data.data.url||'';
+                    var time = data.data.cltprc02002;
+                    var price = data.data.cltprc02001;
+                    var html='';
+                    html+='<div class="collect-content">';
+                    html+='<div class="cjz-img-box">';
+                    if(url){
+                        html+='<img src="'+url+'" class="cjz-img"/>';
+                    }else{
+                        html+='<img src="../images/head.jpg" class="cjz-img"/>';
+                    }
+                    html+='</div>';
+                    html+='</div>';
+                    html+='<div class="cjz-name">'+name+'</div>';
+                    html+='<div class="cj-lists">';
+                    html+='<div class="cj-list">';
+                    html+='<span>采集价格: ￥</span>';
+                    html+='<span>'+price+'</span>';
+                    html+='<span class="cj-time">'+time+'</span>';
+                    html+='</div>';
+                    html+='</div>';
+                    $('#con-6').html(html);
+                    $('img').on('error',function(){
+                        $(this).attr('src','../../../public/images/noImg.jpg');
+                    });
+                }else{
+
+                }
+            }
+            else {
+                //$.toast('网络错误');
+            }
+        });
+    }
+
+
+    /*
+     拍照上传图片
+     */
+    /*拍照*/
+    $(document).on('tap','.photo',function(){
+        if(pNum<4){
+            uexCamera.open(0,0);
+            uexCamera.cbOpen=function(opId,dataType,data){
+                var html='<img src="'+data+'">';
+                $('.picture-box').append(html);
+                pNum++;
+            }
+        }else{
+            $.toast('亲！最多能上传三张图片！');
+        }
+    });
+
+    /*从本地相册添加照片*/
+    $(document).on('tap','.album',function(){
+        if(pNum<4){
+            uexImageBrowser.pick();
+            uexImageBrowser.cbPick=function (opCode,dataType,data){
+                var html='<img src="'+data+'">';
+                $('.picture-box').append(html);
+                pNum++;
+            }
+        }else{
+            $.toast('亲！最多能上传三张图片！');
+        }
+    });
+    //图片长按事件
+    $(document).on('longtap','.picture-box>img',function(){
+        $(this).remove();
+        pNum--;
+    });
+
+    $('.person-img').on('tap',function(){
+        $('#price-input').blur();
+    });
+
+    $(document).on('tap','.close-mc',function(){
+        $('.mc').hide();
+    });
+
+    $('.header').on('tap','.set-focus',function(){
+        var $this=$(this);
+        if($this.hasClass('dislike')){
+            $.request({
+                urlType: 'addFocus',
+                data: {
+                    "access_token":$.getStorage('access_token'),
+                    product: JSON.stringify({
+                        cltpro01id: cltpro01id,
+                        cltpro01001: proName,
+                        cltpit01id:cltpit01id,
+                        cltpit01001:marketName
+                    })
+                }
+            }, function (data) {
+                if (data.success) {
+                    $.toast('关注成功');
+                    $this.removeClass('dislike').addClass('like');
+                }
+            });
+        }else{
+            $.request({
+                urlType: 'deleteFocus',
+                data: {
+                    "access_token": $.getStorage('access_token'),
+                    cltpro01id: cltpro01id,
+                    cltpit01id:cltpit01id
+                }
+            }, function (data) {
+                if (data.success) {
+                    $.toast('取消关注成功');
+                    $this.removeClass('like').addClass('dislike');
+                }
+            });
+        }
+    });
+
+    //点击返回按钮
+    /*$('.back').on('tap', function () {
+        $.openWin({
+            name:'market',
+            animId : 1,
+            url:'wgtroot://mCheap/market/ui/market.html',
+            pageParam:{
+                cltpit01id:cltpit01id,
+                log:$.getStorage('log'),
+                lat:$.getStorage('lat')
+            }
+        });
+
+    });*/
+
+
+</script>
+</body>
+</html>

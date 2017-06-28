@@ -1,0 +1,116 @@
+<html>
+<head>
+	<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+	<meta name="viewport" content="initial-scale=1.0, user-scalable=no" />
+	<style type="text/css">
+		body, html,#allmap {
+			width: 100%;
+			height: 100%;
+			overflow: hidden;
+			margin:0;
+			font-family:"微软雅黑";
+			font-size:1rem;
+		}
+		.BMap_cpyCtrl{
+			display:none;
+		}
+		.anchorBL{
+			display:none;
+		}
+		#navigation{
+		    width: 58px;
+		    height: 58px;
+		    background: url("../images/navigation.png") no-repeat;
+		    background-size: 100%;
+		    position: absolute;
+		    bottom: 10px;
+		    right: 0px;
+		}
+		#navigation .iosDh{
+		    width: 58px;
+		    height: 58px;
+		    display: block;
+		}
+		#return{
+			position: absolute;
+			top: 20px;
+			left: 10px;
+			font-size:0.5rem;
+		}
+	</style>
+<script type="text/javascript" src="../js/mapkey.js"></script>
+	<title>步行导航检索</title>
+</head>
+<body>
+	<div id="allmap"></div>
+	<img id="return" class="back mdui-action-back" src="../images/return.png">
+	<div id="navigation">
+		<a class="iosDh" href="baidumap://map/marker?location=30.665534,104.067192&title=成都市&src=yourCompanyName|yourAppName"></a>
+	</div>
+</body>
+</html>
+<script src="../../../static/mdui/js/mdui.min.js"></script>
+<script src="../../../static/mCheap/js/mCheap.config.js"></script>
+<script src="../../../server.js"></script>
+<script src="../../../public.js"></script>
+<script type="text/javascript">
+	var marketName;
+	var lng;
+	var llat;
+	var userPhone = {//判断当前用户所用系统
+			"android" : null,
+			"ios" : null,
+		}
+	var epsbht01006 = null;
+	var epsbht01007 = null;
+	var walking;//走路
+	// 百度地图API功能
+	var map = new BMap.Map("allmap");
+	$.uexWindowReady(function(){
+		judgePhone();//判断机型
+		var pageData=$.pageParam;
+		lng=$.strToJson(pageData).lng;
+		llat=$.strToJson(pageData).lat;
+		marketName=$.strToJson(pageData).marketName;
+		var locLevel = 0;
+		var distanceFilter = 1000;//distanceFilter 更新距离，如果设置为 100m,则100m以内不回调定位
+			//以上两参数仅ios支持
+        uexJinlinTrace.openLocation(locLevel, distanceFilter);
+        uexJinlinTrace.onChange = function(lat, log) {
+			if(epsbht01006 == null){
+				 epsbht01006=log;//解决会出现多个的情况
+				 epsbht01007=lat;
+			}
+			guide(epsbht01006,epsbht01007,lng,llat);
+		}
+	});
+	
+	function guide(epsbht01006,epsbht01007,lng,llat) {
+		map.clearOverlays();//清空
+		var p1 = new BMap.Point(epsbht01006,epsbht01007);
+		var p2 = new BMap.Point(lng,llat);
+		if(walking != null)walking.clearResults();//清除上一次的路径
+		walking = new BMap.WalkingRoute(map, {renderOptions:{map: map, autoViewport: true}});
+		walking.search(p1, p2);
+	}
+	$(document).on('tap','#navigation',function(){
+		location_map(llat,lng,marketName);
+	});
+	function judgePhone() {//判断用户所用的机型
+		var u = navigator.userAgent, app = navigator.appVersion;
+		var isAndroid = u.indexOf('Android') > -1 || u.indexOf('Linux') > -1; //android终端或者uc浏览器
+		var isiOS = !!u.match(/\(i[^;]+;( U;)? CPU.+Mac OS X/); //ios终端
+		userPhone["android"] = isAndroid;
+		userPhone["ios"] = isiOS;
+	}
+	function location_map(lat,lng,title){
+		if(userPhone["android"]) {//安卓调用的方法
+			var main = "android.intent.action.VIEW";
+			var add = '{"data":{"scheme":"bdapp://map/direction?destination=latlng:'+""+lat+','+""+lng+'|name:'+title+'&src=yourCompanyName|yourAppName#Intent;scheme=bdapp;package=com.baidu.BaiduMap;end"}}';
+			uexWidget.startApp(1, main, add); 
+		}
+		if(userPhone["ios"]) {//苹果调用的方法
+			$('#navigation .iosDh').attr("href","baidumap://map/marker?location="+lat+","+lng+"&title=成都市&content="+title+"&zoom=20f&src=yourCompanyName|yourAppName");
+		}  
+	}
+</script>

@@ -1,0 +1,367 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8">
+    <title>mCollection</title>
+    <meta name="viewport" content="target-densitydpi=device-dpi,width=device-width, initial-scale=1,maximum-scale=1, user-scalable=no">
+    <meta name="apple-mobile-web-app-capable" content="yes">
+    <meta name="apple-mobile-web-app-status-bar-style" content="black">
+    <link rel="stylesheet" href="../../../static/mdui/css/mdui.min.css">
+    <link rel="stylesheet" href="../../../static/mCheap/css/mCommon.css">
+    <style>
+        *{
+            font-family: "Microsoft YaHei";
+            font-size: 1rem;
+        }
+        .warning-growth-rate{
+            padding: 1rem;
+            background-color: white;
+            position: relative;
+            border-bottom: 1px solid #CCCCCC;
+        }
+        .warning-growth-choose{
+            padding: 1rem;
+            background-color: #F2F2F2;
+            position: relative;
+            border-bottom: 1px solid #CCCCCC;
+        }
+        .input-growth{
+            padding: 1rem;
+            background-color: #F2F2F2;
+            position: relative;
+            border-bottom: 1px solid #CCCCCC;
+            display: none;
+        }
+        .sure{
+            line-height: 2rem;
+            text-align: center;
+            border-radius: 0.5rem;
+            background-color: #3BA15C;
+            color: white;
+            width: 3.5rem;
+            height: 2rem;
+            position: absolute;
+            right: 5%;
+            top:25%;
+        }
+        .growth-num{
+            color: black;
+        }
+        .growth-arrow{
+            background: url("../images/arrow-down.png")no-repeat center;
+            background-size: 1.2rem 0.6rem;
+            width: 3rem;
+            height: 3rem;
+            position: absolute;
+            right: 5%;
+            top:5%;
+        }
+        .growth-arrow-up{
+            background: url("../images/arrow-up.png")no-repeat center;
+            background-size: 1.2rem 0.6rem;
+            width: 3rem;
+            height: 3rem;
+            position: absolute;
+            right: 5%;
+            top:5%;
+        }
+        .growth-right{
+            background: url("../images/allright.png")no-repeat center;
+            background-size: 1.2rem 0.8rem;
+            width: 3rem;
+            height: 3rem;
+            position: absolute;
+            right: 5%;
+            top:5%;
+            display: none;
+        }
+        .show-more{
+            position: absolute;
+            z-index: 2;
+            width: 100%;
+            height: 100%;
+            display: none;
+            background: rgba(0,0,0,0.5);
+        }
+        /*-----------table------------*/
+        .table{
+            color: black;
+            margin:1rem;
+            background-color: white;
+            border-radius: 0.5rem;
+        }
+        .title-row{
+            padding: 1rem;
+        }
+        .title-row:first-child{
+            color: #666666;
+            font-weight: normal;
+        }
+        .pro-name{
+            color: #3BA15C;
+        }
+        .content-row-left{
+            width: 50%;
+            padding: 1rem;
+            border-top: 1px solid #CCCCCC;
+            border-right: 1px solid #CCCCCC;
+        }
+        .content-row{
+            width: 50%;
+            padding: 1rem;
+            border-top: 1px solid #CCCCCC;
+        }
+        .down{
+            background: url("../images/down.png")no-repeat center;
+            background-size: 0.5rem 0.3rem;
+            background-color: #F0F0F0;
+            height: 2.5rem;
+            width: 100%;
+            border-radius: 0 0 0.5rem 0.5rem;
+        }
+        .up{
+            background: url("../images/up.png")no-repeat center;
+            background-size: 0.5rem 0.3rem;
+            background-color: #3BA15C;
+            height: 2.5rem;
+            width: 100%;
+            border-radius: 0 0 0.5rem 0.5rem;
+        }
+        .table-more{
+            display: none;
+        }
+        .upPrice-low{
+            color:#3BA15C;
+        }
+        .upPrice-high{
+            color:#FF6867;
+        }
+        #input-growth{
+            width: 12rem;
+            margin-bottom:0;
+        }
+        .show-growth-rate{
+            color:#FF6867;
+        }
+    </style>
+</head>
+<body>
+    <div class="warning-growth-rate">
+        <div class="mdui-box-flex-1">预警增长率:<span class="growth-num show-growth-rate">40%</span></div>
+        <div class="arrow growth-arrow"></div>
+    </div>
+    <div class="show-more">
+        <div class="input-growth">
+            <input placeholder="请输入0~100内数字" type="text" id="input-growth"/>
+            <div class="sure">确定</div>
+        </div>
+        <div class="warning-growth-choose">
+            <span class="growth-num">30%</span>
+            <div class="growth-right"></div>
+        </div>
+        <div class="warning-growth-choose">
+            <span class="growth-num">40%</span>
+            <div class="growth-right"></div>
+        </div>
+        <div class="warning-growth-choose">
+            <span class="growth-num">50%</span>
+            <div class="growth-right"></div>
+        </div>
+        <div class="warning-growth-choose">
+            <span class="growth-num">自定义</span>
+            <div class="growth-right"></div>
+        </div>
+    </div>
+    <div id="table-content"></div>
+<script src="../../../static/mdui/js/mdui.min.js"></script>
+<script src="../../../static/mCheap/js/mCheap.config.js"></script>
+<script src="../js/echarts.min.js"></script>
+<script src="../../../server.js"></script>
+<script>
+    $.uexWindowReady(function(){
+        var yjtClass=function(){
+            this.init=function(){
+                var proGramData=40;
+                this.request(proGramData,this.callBack);
+            };
+            this.tabEvent();
+        };
+        yjtClass.prototype={
+            request:function(proGramData,callBack){
+                var that=this;
+                $.request({
+                    urlType: 'productPriceWarning',
+                    data: {
+                        "access_token": $.getStorage('access_token'),
+                        zf:proGramData
+                    }
+                }, function (data) {
+                    if (data.success) {
+                        var callBackData=data.data;
+                        that.callBack=callBack;
+                        if(typeof that.callBack =='function'){
+                            that.callBack(callBackData);
+                        }
+                    }
+                    else {
+                        //$.toast('网络错误');
+                    }
+                });
+            },
+            callBack:function(data){
+                $('#table-content').html('');
+                var tableDataList = [];
+                for(var i in data){
+                    var obj={};
+                    obj.key=i;
+                    obj.data=data[i];
+                    tableDataList.push(obj);
+                }
+                for(var j=0;j<tableDataList.length;j++){
+                    var rowHtml = '';
+                    var moreRowHtml = '';
+                    for(var k=0;k<tableDataList[j].data.length;){
+                        if(tableDataList[j].data.length%2==1){
+                            tableDataList[j].data.push({'areaName':'','flag':'','upPrice':''});
+                        }
+                        if(k<3){
+                            rowHtml +='<div class="mdui-box">';
+                            rowHtml +='<div class="mdui-box content-row-left">';
+                            rowHtml +='<div class="mdui-box-flex-1">'+tableDataList[j].data[k].areaName+'</div>';
+                            if(tableDataList[j].data[k].flag=='2'){
+                                rowHtml +='<div class="upPrice-low">'+tableDataList[j].data[k].upPrice+'</div>';
+                            }
+                            if(tableDataList[j].data[k].flag=='1'){
+                                rowHtml +='<div>'+tableDataList[j].data[k].upPrice+'</div>';
+                            }
+                            if(tableDataList[j].data[k].flag=='0'){
+                                rowHtml +='<div class="upPrice-high">'+tableDataList[j].data[k].upPrice+'</div>';
+                            }
+                            rowHtml +='</div>';
+                            rowHtml +='<div class="mdui-box content-row">';
+                            rowHtml +='<div class="mdui-box-flex-1">'+tableDataList[j].data[k+1].areaName+'</div>';
+                            if(tableDataList[j].data[k+1].flag=='2'){
+                                rowHtml +='<div class="upPrice-low">'+tableDataList[j].data[k+1].upPrice+'</div>';
+                            }
+                            if(tableDataList[j].data[k+1].flag=='1'){
+                                rowHtml +='<div>'+tableDataList[j].data[k+1].upPrice+'</div>';
+                            }
+                            if(tableDataList[j].data[k+1].flag=='0'){
+                                rowHtml +='<div class="upPrice-high">'+tableDataList[j].data[k+1].upPrice+'</div>';
+                            }
+                            rowHtml +='</div>';
+                            rowHtml +='</div>';
+                        }else{
+                            moreRowHtml +='<div class="mdui-box">';
+                            moreRowHtml +='<div class="mdui-box content-row-left">';
+                            moreRowHtml +='<div class="mdui-box-flex-1">'+tableDataList[j].data[k].areaName+'</div>';
+                            if(tableDataList[j].data[k].flag=='2'){
+                                moreRowHtml +='<div class="upPrice-low">'+tableDataList[j].data[k].upPrice+'</div>';
+                            }
+                            if(tableDataList[j].data[k].flag=='1'){
+                                moreRowHtml +='<div>'+tableDataList[j].data[k].upPrice+'</div>';
+                            }
+                            if(tableDataList[j].data[k].flag=='0'){
+                                moreRowHtml +='<div class="upPrice-high">'+tableDataList[j].data[k].upPrice+'</div>';
+                            }
+                            moreRowHtml +='</div>';
+                            moreRowHtml +='<div class="mdui-box content-row">';
+                            moreRowHtml +='<div class="mdui-box-flex-1">'+tableDataList[j].data[k+1].areaName+'</div>';
+                            if(tableDataList[j].data[k+1].flag=='2'){
+                                moreRowHtml +='<div class="upPrice-low">'+tableDataList[j].data[k+1].upPrice+'</div>';
+                            }
+                            if(tableDataList[j].data[k+1].flag=='1'){
+                                moreRowHtml +='<div>'+tableDataList[j].data[k+1].upPrice+'</div>';
+                            }
+                            if(tableDataList[j].data[k+1].flag=='0'){
+                                moreRowHtml +='<div class="upPrice-high">'+tableDataList[j].data[k+1].upPrice+'</div>';
+                            }
+                            moreRowHtml +='</div>';
+                            moreRowHtml +='</div>';
+                        }
+                        k=k+2;
+                    }
+                    var tableHtml = '';
+                    tableHtml+='<div class="table">';
+                    tableHtml+='<div class="mdui-box title-row">';
+                    tableHtml+='<div class="mdui-box-flex-1">产品名称:</div>';
+                    tableHtml+='<div class="pro-name">'+tableDataList[j].key+'</div>';
+                    tableHtml+='</div>';
+                    tableHtml+='<div>';
+                    tableHtml+='<div class="normal">';
+                    tableHtml+= rowHtml;
+                    tableHtml+='</div>';
+                    tableHtml+='<div class="table-more">';
+                    tableHtml+= moreRowHtml;
+                    tableHtml+='</div>';
+                    tableHtml+='</div>';
+                    tableHtml+='<div class="down hidden more"></div>';
+                    tableHtml+='</div>';
+                    $('#table-content').append(tableHtml);
+                }
+
+            },
+            tabEvent:function(){
+                var that = this;
+                $(document).on('tap','.arrow',function(){
+                    if($(this).hasClass('growth-arrow')){
+                        $("body").bind("touchmove",function(event){event.preventDefault();});
+                        $('.show-more').show();
+                        $(this).removeClass('growth-arrow').addClass('growth-arrow-up');
+                    }else{
+                        $("body").unbind("touchmove");
+                        $('.show-more').hide();
+                        $(this).removeClass('growth-arrow-up').addClass('growth-arrow');
+                    }
+                });
+                $(document).on('tap','.more',function(){
+                    if($(this).hasClass('hidden')){
+                        $(this).parent().find('.table-more').show();
+                        $(this).removeClass('down').addClass('up');
+                        $(this).removeClass('hidden');
+                    }else{
+                        $(this).parent().find('.table-more').hide();
+                        $(this).removeClass('up').addClass('down');
+                        $(this).addClass('hidden');
+                    }
+                });
+                $(document).on('tap','.warning-growth-choose',function(){
+                    var growthNum = $(this).find('.growth-num').html();
+                    if(growthNum=='自定义'){
+                        $('.input-growth').show();
+                        $(this).parent().find('.growth-num').css('color','black');
+                        $(this).parent().find('.growth-right').hide();
+                        $(this).find('.growth-right').show();
+                    }else{
+                        $('.input-growth').hide();
+                        growthNum = growthNum.substring(0,growthNum.length-1);
+                        $('.warning-growth-rate').find('.growth-num').html(growthNum+'%');
+                        $(this).parent().find('.growth-right').hide();
+                        $(this).parent().find('.growth-num').css('color','black');
+                        $(this).find('.growth-right').show();
+                        $(this).find('.growth-num').css('color','#FF6867');
+                        $('.arrow').trigger('tap');
+                        var growthNumData = parseFloat(growthNum);
+                        that.request(growthNumData,that.callBack);
+                    }
+                });
+                $(document).on('tap','.sure',function(){
+                    var defineNum = $('#input-growth').val();
+                    if(isNaN(defineNum)||defineNum<0||defineNum>100||defineNum==''){
+                        alert('请输入0到100内的数字');
+                    }else{
+                        $('.warning-growth-rate').find('.growth-num').html(defineNum+'%');
+                        var growthNumData = parseFloat(defineNum);
+                        $('.arrow').trigger('tap');
+                        that.request(growthNumData,that.callBack);
+                    }
+                });
+            }
+        };
+        var init=new yjtClass();
+        init.init();
+        init = null;
+    });
+</script>
+</body>
+</html>

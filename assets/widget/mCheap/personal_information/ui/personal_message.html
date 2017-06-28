@@ -1,0 +1,359 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8">
+    <title>mCollection</title>
+    <meta name="viewport" content="target-densitydpi=device-dpi,width=device-width, initial-scale=1,maximum-scale=1, user-scalable=no">
+    <meta name="apple-mobile-web-app-capable" content="yes">
+    <meta name="apple-mobile-web-app-status-bar-style" content="black">
+    <link rel="stylesheet" href="../../../static/mdui/css/mdui.min.css">
+    <link rel="stylesheet" href="../../../static/mCheap/css/mCommon.css">
+    <style>
+        *{
+            font-family: "Microsoft YaHei";
+            color: #666666;
+        }
+        body{
+            background-color: #FFFFFF;
+            padding-top: 2.75rem;
+
+        }
+        .header-box{
+            background-color: #3BA15C;
+            padding: 0;
+        }
+        .header{
+            width: 100%;
+            height: 100%;
+            position: relative;
+        }
+        .back{
+            padding-right: 1rem;
+            padding-left: 1rem;
+           padding-top: 0.75rem;
+            position: absolute;
+            z-index: 100;
+        }
+        .back img{
+            width:auto;
+            height: 1.25rem;
+        }
+        .title{
+            text-align: center;
+            position: absolute;
+            width: 100%;
+            height: 100%;
+            top: 0px;
+            line-height: 2.75rem;
+            color: #FFFFFF;
+        }
+        .person{
+            height: 5rem;
+            border-bottom: 1px solid #cccccc;
+            background-color: #FFFFFF;
+            line-height: 5rem;
+            padding-left: 2rem;
+            font-weight: 600;
+        }
+        /*.person-img>div{
+            width: 3.5rem;
+            height: 3.5rem;
+            border-radius: 3.5rem;
+            border: 0.2rem solid #C0E1CB;
+            margin-top: 0.75rem;
+            margin-right: 0.5rem;
+            /!*background: url("../images/head.jpg") no-repeat center;*!/
+            background-size:2.8rem;
+        }*/
+        .person-img{
+            width: 3.5rem;
+            height: 3.5rem;
+            border-radius: 3.5rem;
+            /*border: 0.2rem solid #C0E1CB;*/
+            margin-top: 0.75rem;
+            margin-right: 0.5rem;
+            /*background: url("../images/head.jpg") no-repeat center;*/
+            background-size:2.8rem;
+        }
+        .pic-img{
+            width: 3.5rem;
+            height: 3.5rem;
+            border-radius: 3.5rem;
+            border: 0.2rem solid #C0E1CB;
+        }
+        .my{
+            padding-left: 2rem;
+            border-bottom: 1px solid #cccccc;
+            border-top: 1px solid #cccccc;
+            background: #FFFFFF;
+            margin-top: 1rem;
+        }
+        .list>.list-item{
+            height: 3rem;
+            line-height: 3rem;
+            border-bottom: 1px solid #cccccc;
+        }
+        .list>.list-item:last-child{
+            border-bottom: none;
+        }
+        .list-item>div:first-child{
+            width: 3rem;
+            font-weight: 600;;
+        }
+        .list-item>.mdui-box-flex-1{
+            text-align: right;
+            text-overflow:ellipsis;
+            overflow: hidden;
+            white-space:nowrap;
+        }
+        .arrow{
+            width: 2rem;
+            background: url("../images/arrow.png") no-repeat center;
+            background-size: auto 0.8rem;
+        }
+        .onTouch{
+            background-color:#F5F5F5;
+        }
+        .mc{
+            width:100%;
+            height: 100%;
+            background: rgba(0,0,0,0.7);
+            position:fixed;
+            z-index:999;
+            display: none;
+        }
+        .progress_bars{
+            width: 80%;
+            height: 1rem;
+            border-radius: 0.5rem;
+            margin-left: 10%;
+            margin-top: 5rem;
+            border: 1px solid white;
+        }
+        .progress_bar{
+            width: 0%;
+            height: 1rem;
+            border-radius: 0.5rem;
+            background-color: red;
+        }
+        .progress{
+            color: red;
+            text-align:center;
+            width: 100%;
+            margin-top: 0.5rem;
+        }
+    </style>
+</head>
+<body>
+<div style="height: 100%;width: 100%;">
+    <!-- 上传中显示蒙层 -->
+    <div class="mc">
+        <div class="progress_bars">
+            <div class="progress_bar"></div>
+        </div>
+        <div class="progress">loading</div>
+    </div>
+    <div class="header-box mdui-bar mdui-bar-nav">
+        <div class="header">
+            <div class="back mdui-action-back"><img src="../images/back.png"></div>
+            <div class="title">个人信息</div>
+        </div>
+    </div>
+    <div class="person mdui-box touch">
+        <div class="mdui-box-flex-1">头像</div>
+        <div>
+            <div class="person-img">
+                <!--<a href="#picture">-->
+                    <!--<img class="pic-img" src="../images/head.jpg">-->
+                <!--</a>-->
+            </div>
+        </div>
+        <div class="arrow"></div>
+    </div>
+    <div class="my list">
+        <div class="list-item mdui-box touch" >
+            <div class="text">账号</div>
+            <div class="mdui-box-flex-1" id="name"></div>
+            <div class="arrow"></div>
+        </div>
+        <div class="list-item mdui-box touch" data-zd="epsrtu01002">
+            <div class="text">昵称</div>
+            <div class="mdui-box-flex-1" id="nic"></div>
+            <div class="arrow"></div>
+        </div>
+        <div class="list-item mdui-box touch" data-zd="epsrtu01009">
+            <div class="text">性别</div>
+            <div class="mdui-box-flex-1" id="sex"></div>
+            <div class="arrow"></div>
+        </div>
+        <div class="list-item mdui-box touch" data-zd="epsrtu01004">
+            <div class="text">电话</div>
+            <div class="mdui-box-flex-1" id="tel"></div>
+            <div class="arrow"></div>
+        </div>
+        <div class="list-item mdui-box touch" data-zd="epsrtu01010">
+            <div class="text">地址</div>
+            <div class="mdui-box-flex-1" id="address"></div>
+            <div class="arrow"></div>
+        </div>
+        <div class="list-item mdui-box touch" data-zd="epsrtu01010">
+            <div class="text">改密码</div>
+            <div class="mdui-box-flex-1" id="change-pwd"></div>
+            <div class="arrow"></div>
+        </div>
+    </div>
+    <!-- 点击照片显示蒙层 -->
+    <div id="picture" class="mdui-popover mdui-popover-action mdui-popover-bottom">
+        <ul class="mdui-table-view"><!--菜单列表-->
+            <li class="mdui-table-view-cell photo">
+                <a href="#">拍照</a>
+            </li>
+            <li class="mdui-table-view-cell album">
+                <a href="#">从相册选取</a>
+            </li>
+        </ul>
+        <ul class="mdui-table-view">
+            <li class="mdui-table-view-cell">
+                <a href="#picture"><b>取消</b></a>
+            </li>
+        </ul>
+    </div>
+</div>
+
+<!--页面-->
+<script src="../../../static/mdui/js/mdui.min.js"></script>
+<script src="../../../static/mCheap/js/mCheap.config.js"></script>
+<script src="../../../public.js"></script>
+<script src="../../../server.js"></script>
+<script>
+    $.uexWindowReady(function(){
+        set_head_img();
+        /*
+         *
+         * */
+        setUserMessage();
+        $(document).on('tap','#nic,#sex,#address',function(){
+            var defaultVal=$(this).html();
+            var winTitle=$(this).siblings('.text').html();
+                $.openWin({
+                name: "set_base",
+    			animId : 2,
+                url: 'wgtroot://mCheap/personal_information/ui/set_base.html',
+                pageParam: {
+                    winTitle:winTitle,
+                    defaultVal:defaultVal,
+                    zd:$(this).parent().data('zd')
+                }
+            });
+        });
+        $('.touch').on('tap',function(){
+            $(this).addClass('onTouch');
+            var ele=$(this);
+            setTimeout(function(){
+                ele.removeClass('onTouch');
+            },200)
+        });
+        function setUserMessage(){
+
+
+
+            var userMessage= JSON.parse($.getStorage('userMessage'));
+
+
+            for(x in userMessage){
+                if(!userMessage[x]){
+                    userMessage[x]='';
+                }
+            }
+            $('#name').html(userMessage.epsrtu01001);
+            $('#nic').html(userMessage.epsrtu01002);
+            if (userMessage.epsrtu01009=='1'){
+                $('#sex').html('男');
+            }
+            else if(userMessage.epsrtu01009=='2'){
+                $('#sex').html('女');
+            }
+            else {
+                $('#sex').html('');
+            }
+            $('#tel').html(userMessage.epsrtu01004);
+            $('#address').html(userMessage.epsrtu01010);
+        }
+    });
+
+    /*拍照*/
+    $(document).on('tap','.photo',function(){
+        uexCamera.open(0,0);
+        uexCamera.cbOpen=function(opId,dataType,data){
+            var uploadUrl =$.serverSettings.serverPath+""+$.serverSettings.urlPath.savePicture+"?access_token="+$.getStorage('access_token');
+            var obj = {
+                uploadId:1,
+                uploadUrl:uploadUrl,
+                data:data
+            };
+            $('.mc').show();
+            fileUpload(obj,uploadSuccess_up);
+            uploadSuccess_up();
+        }
+    });
+
+    /*从本地相册添加照片*/
+    $(document).on('tap','.album',function(){
+        uexImageBrowser.pick();
+        uexImageBrowser.cbPick=function (opCode,dataType,data){
+            var uploadUrl =$.serverSettings.serverPath+""+$.serverSettings.urlPath.savePicture+"?access_token="+$.getStorage('access_token');
+           var obj = {
+                uploadId:1,
+                uploadUrl:uploadUrl,
+                data:data
+            };
+            $('.mc').show();
+            fileUpload(obj,uploadSuccess_up);
+        }
+    });
+
+    //图片上传成功的回调函数
+    function uploadSuccess_up(back_msg){
+        var data=$.strToJson(back_msg);
+        var url =data.data.picurl;
+        $('.pic-img').attr('src',$.serverSettings.serverPath+'/mobile/mcheap/mcheapAction!getUserPicture.do?access_token='+ $.getStorage('access_token')+'&url='+url);
+        $('.mc').hide();
+        $.execScript({
+            winName: 'grzx',
+            script:'$.refreshWin();'
+        });
+    }
+
+    /*拍照完后关闭蒙层*/
+    $('body').on('tap', '.mdui-popover-action li>a', function() {
+        var a = this,
+                parent;
+        //根据点击按钮，反推当前是哪个actionsheet
+        for (parent = a.parentNode; parent != document.body; parent = parent.parentNode) {
+            if (parent.classList.contains('mdui-popover-action')) {
+                break;
+            }
+        }
+        //关闭actionsheet
+        $('#' + parent.id).popover('toggle');
+    });
+
+    //设置头像
+    function set_head_img(){
+        $('.person-img').append('<a href="#picture">'+
+        '<img class="pic-img" src="'+$.serverSettings.serverPath+'/mobile/mcheap/mcheapAction!getUserPicture.do?access_token='+ $.getStorage('access_token')+'">'+
+        '</a>');
+    }
+
+
+    $(document).on('tap','#change-pwd',function(){
+        $.openWin({
+            name: "chang_new_pwd",
+            animId : 2,
+            url: 'wgtroot://mCheap/personal_information/ui/chang_new_pwd.html',
+            pageParam: {}
+        });
+    });
+</script>
+</body>
+</html>

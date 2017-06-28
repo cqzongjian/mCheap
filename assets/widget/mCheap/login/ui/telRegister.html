@@ -1,0 +1,184 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8">
+    <title>mCollection</title>
+    <meta name="viewport" content="target-densitydpi=device-dpi,width=device-width, initial-scale=1,maximum-scale=1, user-scalable=no">
+    <meta name="apple-mobile-web-app-capable" content="yes">
+    <meta name="apple-mobile-web-app-status-bar-style" content="black">
+    <link rel="stylesheet" href="../../../static/mdui/css/mdui.min.css">
+    <link rel="stylesheet" href="../../../static/mCheap/css/mCommon.css">
+    <style>
+        *{
+            font-family: "Microsoft YaHei";
+        }
+        body{
+            background-color: #E6EAE8;
+        }
+        .content{
+            margin-top: 1rem;
+            background-color: #ffffff;
+        }
+        .content>.mdui-box{
+            height: 3rem;
+            line-height: 3rem;
+            overflow:hidden;
+            background-color: #ffffff;
+            border-bottom: 1px solid #CCCCCC;
+            padding:0 1rem;
+        }
+        .content>.mdui-box>div:first-child{
+            width: 4rem;
+        }
+        #tel,#yzm,#pwd{
+            margin: 0;
+            height: 3rem;
+            border: none;
+        }
+        #getYzm{
+            padding: 0.2rem 0.5rem;
+            line-height: 1rem;
+            margin-top: 0.75rem;
+            border: 1px solid #CCCCCC;
+            font-size: 0.8rem;
+            border-radius: 0.1rem;
+        }
+        .register{
+            height: 2.5rem;
+            line-height: 2.5rem;
+            margin: 1rem;
+            color: #ffffff;
+            background-color:#3BA15C ;
+
+            border-radius: 0.3rem;
+            text-align: center;
+        }
+        .hasTap{
+            color:#999999;
+        }
+        .hasSend{
+            background-color: #70927D;
+        }
+    </style>
+</head>
+<body>
+<div class="content">
+    <div class="mdui-box">
+        <div>手机号</div>
+        <div class="mdui-box-flex-1">
+            <input type="number" id="tel" placeholder="请输入手机号码">
+        </div>
+        <div>
+            <div id="getYzm">获取验证码</div>
+        </div>
+    </div>
+    <div class="mdui-box">
+        <div>验证码</div>
+        <div class="mdui-box-flex-1">
+            <input type="number" placeholder="请输入短信验证码" id="yzm">
+        </div>
+    </div>
+    <div class="mdui-box">
+        <div>密码</div>
+        <div class="mdui-box-flex-1">
+            <input type="password" placeholder="6-32位字母数字组合" id="pwd">
+        </div>
+    </div>
+    <div class="register">立即注册</div>
+</div>
+<!--页面-->
+<script src="../../../static/mdui/js/mdui.min.js"></script>
+<script src="../../../static/mCheap/js/mCheap.config.js"></script>
+<script src="../../../server.js"></script>
+<!--扩展组件/第三方/工程js-->
+<script>
+    $.uexWindowReady(function(){
+        $('#getYzm').on('tap',function() {
+            if(!$(this).hasClass('hasTap')) {
+                var tel = $('#tel').val();
+                if (tel.match(/\d{11}/)) {
+                    $.request({
+                        urlType: 'duanxinValidate',
+                        data: {
+                            "access_token": $.getStorage('access_token'),
+                            epsrtu01004: tel
+                        }
+                    }, function (data) {
+                        if (data.success) {
+                            $.toast('验证码已发送');
+                            $('#getYzm').addClass('hasTap');
+                            $('.register').addClass('hasSend');
+                            var time = 1000 * 60;
+                            var inter=setInterval(function () {
+                                if (time>0) {
+                                    var endTime = time / 1000;
+                                    $('#getYzm').html('重新发送(' + endTime + ')');
+                                    time = time - 1000;
+                                }
+                                else{
+                                    $('#getYzm').html('重新发送');
+                                    $('#getYzm').removeClass('hasTap');
+                                    clearInterval(inter);
+                                }
+                            }, 1000);
+                        }
+                        else {
+                            $.toast(data.message)
+                        }
+                    });
+                }
+                else {
+                    $.toast('请输入正确的手机号')
+                }
+            }
+        });
+        $('.register').on('tap',function(){
+            if($(this).hasClass('hasSend')) {
+                var tel = $('#tel').val();
+                var yzm = $('#yzm').val();
+                var pwd = $('#pwd').val();
+                var msg = '';
+                if (pwd == '') {
+                    msg = '请输入密码';
+                }
+                if (yzm == '') {
+                    msg = '请输入验证码';
+                }
+                if (tel == '') {
+                    msg = '请输入手机号';
+                }
+                if (tel != '' && yzm != '' && pwd != '') {
+                    $.request({
+                        urlType: 'dxRegister',
+                        data: {
+                            "access_token": $.getStorage('access_token'),
+                            epsrtu01004: tel,
+                            valiCode: yzm,
+                            password: pwd
+                        }
+                    }, function (data) {
+                        if (data.success) {
+                            $.toast('注册成功');
+                            $.execScript({
+                                winName:'register',
+                                script:'$.closeWin()'
+                            });
+                        }
+                        else {
+                            $.toast(data.message)
+                        }
+                    });
+                }
+                else {
+                    $.toast(msg)
+                }
+            }
+            else{
+                $.toast('请先获取验证码')
+            }
+        })
+
+    });
+</script>
+</body>
+</html>

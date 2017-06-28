@@ -1,0 +1,119 @@
+
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="utf-8">
+<title>your title</title>
+<meta name="viewport"
+	content="target-densitydpi=device-dpi,width=device-width, initial-scale=1,maximum-scale=1, user-scalable=no">
+<meta name="mobile-web-app-capable" content="yes">
+<meta name="apple-mobile-web-app-capable" content="yes">
+<meta name="apple-mobile-web-app-status-bar-style" content="black">
+<link rel="stylesheet" href="../../../static/mdui/css/mdui.min.css">
+<!--扩展组件/第三方/工程css---->
+<style>
+	*{
+		font-family: "Microsoft YaHei";
+		color: #666666;
+	}
+	body{
+		background-color: #FFFFFF;
+	}
+	.title{
+		border-bottom: 1px solid #CCCCCC;
+	}
+	.btn-group{
+		padding: 1rem;
+	}
+	.btn-group>div{
+		width: 47%;
+		text-align: center;
+		color: #ffffff;
+		line-height: 2.5rem;
+		border-radius: 0.3rem;
+	}
+	a{
+		color: #ffffff;
+	}
+	.tel{
+		background-color: #FF9F22;
+		margin-right: 6%;
+	}
+	.send{
+		background-color: #3BA15C;
+	}
+	#content{
+		height: 8rem;
+	}
+	.other{
+		padding-right: 1rem;
+		text-align: right;
+	}
+	input{
+		border: none!important;
+		margin-bottom: 0!important;
+	}
+
+	textarea{
+		border: none!important;
+		margin-bottom: 0!important;
+	}
+	input::-webkit-input-placeholder {
+		color:#666666!important;
+		font-weight: 600;
+　　}
+</style>
+</head>
+
+<body>
+<div class="title">
+	<input type="text" id="title" placeholder="主题"/>
+</div>
+<div class="content">
+	<textarea placeholder="内容" id="content" maxlength="300"></textarea>
+</div>
+<div class="other">300字</div>
+<div class="btn-group mdui-box">
+	<div class="tel"><a href="tel:12358">拨打12358</a></div>
+	<div class="send">发送</div>
+</div>
+<script src="../../../static/mdui/js/mdui.min.js"></script>
+<script src="../../../server.js"></script>
+<!--扩展组件/第三方/工程js-->
+<script>
+$.uexWindowReady(function(){
+});
+/*点击发送按钮调用的方法*/
+$(".send").on('tap',function(){
+	var epssgt01001 =$('#title').val();
+	if(epssgt01001=='主题'){
+		epssgt01001='';
+	}
+	var epssgt01002 =$('#content').val();
+	var param = {epssgt01id:'',epsrtu01id:'',epssgt01001:epssgt01001,epssgt01002:epssgt01002,
+				 eosrtu01pid:'',createBy:'',createTime:'',createName:'',epssgt01003:''};
+	var userComp =JSON.stringify(param);
+	if(epssgt01001&&epssgt01002){
+		$.request({
+			urlType:'editUserComplain',
+			data:{
+				"access_token": $.getStorage('access_token'),
+				 userComp : userComp
+			}
+		},function(data){
+			if(data.success) {
+				$.toast("谢谢你的意见!");
+				$("#title").val('');
+				$("#content").val('');
+			}
+			else {
+                //$.toast('网络错误');
+			}
+		});
+	}else{
+		$.toast("请先输入内容");
+	}
+});
+</script>
+</body>
+</html>

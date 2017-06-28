@@ -1,0 +1,85 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8">
+    <title>mCollection</title>
+    <meta name="viewport" content="target-densitydpi=device-dpi,width=device-width, initial-scale=1,maximum-scale=1, user-scalable=no">
+    <meta name="apple-mobile-web-app-capable" content="yes">
+    <meta name="apple-mobile-web-app-status-bar-style" content="black">
+    <link rel="stylesheet" href="../../../static/mdui/css/mdui.min.css">
+    <link rel="stylesheet" href="../../../static/mCheap/css/mCommon.css">
+    <link rel="stylesheet" href="../../nav/css/base_top.css">
+    <style>
+        body{
+            background-color: #E6EAE8;
+        }
+        .top{
+            padding: 1rem;
+            background-color: #ffffff;
+        }
+        .top-img{
+            width: 5rem;
+        }
+        .top-img>img{
+            width: 5rem;
+            height: auto;
+            border-radius: 0.2rem;
+        }
+        .top-title{
+            margin-top: 0.2rem;
+            padding-left: 1rem;
+            color: #000000;
+        }
+        .top-sub{
+            margin-top: 0.5rem;
+            padding-left: 1rem;
+            color: #666666;
+            font-size: 0.8rem;
+        }
+        .content{
+            margin-top: 1rem;
+            padding: 1rem;
+            padding-top: 0;
+            background-color: #ffffff;
+        }
+    </style>
+</head>
+<body>
+<div class="header-box mdui-bar mdui-bar-nav">
+    <div class="header">
+        <div class="back mdui-action-back"><img src="../images/back.png"></div>
+        <div class="title">制作方法</div>
+    </div>
+</div>
+<div class="top mdui-box">
+    <div class="top-img"></div>
+    <div class="mdui-box-flex-1">
+        <div class="top-title"></div>
+        <div class="top-sub mdui-ellipsis-2"></div>
+    </div>
+</div>
+<div  class="content">
+</div>
+<!--页面-->
+<script src="../../../static/mdui/js/mdui.min.js"></script>
+<script src="../../../static/mCheap/js/mCheap.config.js"></script>
+<script src="../../../server.js"></script>
+<!--扩展组件/第三方/工程js-->
+<script>
+    $.uexWindowReady(function() {
+        var pageData=$.pageParam;
+        $.log('pageData:'+pageData);
+        var jsonData=$.strToJson(pageData);
+        $('.top-title').html(jsonData.param_zz.epsrmm02001);
+        $('.top-sub').html(jsonData.param_zz.epsrmm02002);
+        $('.content').html(jsonData.param_zz.epsrmm02003);
+        var url = jsonData.param_zz.epsrmm05003;
+        var image = '<img src="'+ $.serverSettings.serverPath+'/mobile/mcheap/mcheapAction!getDishPicture.do?access_token='+ $.getStorage('access_token')+'&url='+url+'"/>';
+        $('.top-img').html(image);
+        $('.content').find('img').each(function(){
+            $(this).attr('src','http://182.150.36.126:8082'+$(this).attr('src'))
+        })
+    })
+</script>
+</body>
+</html>

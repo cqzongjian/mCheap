@@ -1,0 +1,157 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8">
+    <title>mCollection</title>
+    <meta name="viewport" content="target-densitydpi=device-dpi,width=device-width, initial-scale=1,maximum-scale=1, user-scalable=no">
+    <meta name="apple-mobile-web-app-capable" content="yes">
+    <meta name="apple-mobile-web-app-status-bar-style" content="black">
+    <link rel="stylesheet" href="../../static/mdui/css/mdui.min.css">
+    <link rel="stylesheet" href="../../static/mCheap/css/mCommon.css">
+    <link rel="stylesheet" href="../css/livelihood.css">
+    <style>
+        body{
+            height: 100%;
+            width: 100%;
+            background-color: #D8E2DB;
+            overflow: hidden;
+            padding-top: 2.75rem;
+        }
+        .navigation{
+            background:#D8E2DB;
+            width: 100%;
+        }
+        .jt{
+            width: 50%;
+            padding:1rem 0.5rem 0 1rem;
+        }
+        .jy{
+            width: 50%;
+            padding:1rem 1rem 0 0.5rem;
+        }
+        .sdq{
+            width: 50%;
+            padding:1rem 0.5rem 0 1rem;
+        }
+        .dsdx{
+            width: 50%;
+            padding:1rem 1rem 0 0.5rem;
+        }
+        .lvy{
+            width: 50%;
+            padding:1rem 0.5rem 0 1rem;
+        }
+        .qt{
+            width: 50%;
+            padding:1rem 1rem 0 0.5rem;
+        }
+        .img_s{
+            width: 100%;
+
+        }
+    </style>
+</head>
+<body>
+<div class="header-box mdui-bar mdui-bar-nav">
+
+    <!--标题-->
+    <div class="header">
+        <div class="back mdui-action-back"><img src="../images/back.png"></div>
+        <div class="title">民生服务</div>
+    </div>
+</div>
+
+<!--导航-->
+<!--交通,教育-->
+<div class="navigation mdui-box mdui-box-ver">
+    <div class="mdui-box ">
+        <div class="jt mdui-box-flex-1">
+            <img class="img_s" src="../images/01.png"/>
+        </div>
+        <div class="jy mdui-box-flex-1">
+            <img class="img_s" src="../images/02.png"/>
+        </div>
+    </div>
+    <!--水电气,电视电信-->
+    <div class="mdui-box ">
+        <div class="sdq mdui-box-flex-1">
+            <img class="img_s" src="../images/03.png"/>
+        </div>
+        <div class="dsdx mdui-box-flex-1">
+            <img class="img_s" src="../images/04.png"/>
+        </div>
+    </div>
+    <!--旅游,其他-->
+    <div class="mdui-box ">
+        <div class="lvy mdui-box-flex-1">
+            <img class="img_s" src="../images/05.png"/>
+        </div>
+        <div class="qt mdui-box-flex-1">
+            <img class="img_s" src="../images/06.png"/>
+        </div>
+    </div>
+
+</div>
+
+<script src="../../static/mdui/js/mdui.min.js"></script>
+<script src="../../static/mCheap/js/mCheap.config.js"></script>
+<script>
+    $.uexWindowReady(function(){
+
+    });
+    $(".jt").on("tap",function(){
+        $.openWin({
+            name:'livelihood_transportation',
+            url:'wgtroot://livelihood/ui/livelihood_transportation.html',  //wgtroot即工程widget目录
+            animId:2,
+            pageParam:{}
+        });
+    });
+
+    $(".jy").on("tap",function(){
+        $.openWin({
+            name:'livelihood_education',
+            url:'wgtroot://livelihood/ui/livelihood_education.html',  //wgtroot即工程widget目录
+            animId:2,
+            pageParam:{}
+        });
+    });
+
+    $(".sdq").on("tap",function(){
+        $.openWin({
+            name:'livelihood_telecom',
+            url:'wgtroot://livelihood/ui/livelihood_telecom.html',  //wgtroot即工程widget目录
+            animId:2,
+            pageParam:{}
+        });
+    });
+
+    $(".dsdx").on("tap",function(){
+        $.openWin({
+            name:'livelihood_gas_electricity_water',
+            url:'wgtroot://livelihood/ui/livelihood_gas_electricity_water.html',  //wgtroot即工程widget目录
+            animId:2,
+            pageParam:{}
+        });
+    });
+
+    $(".lvy").on("tap",function(){
+        $.openWin({
+            name:'livelihood_tourism',
+            url:'wgtroot://livelihood/ui/livelihood_tourism.html',  //wgtroot即工程widget目录
+            animId:2,
+            pageParam:{}
+        });
+    });
+
+    $(".qt").on("tap",function(){
+        $.openWin({
+            name:'livelihood_other',
+            url:'wgtroot://livelihood/ui/livelihood_other.html',  //wgtroot即工程widget目录
+            animId:2,
+            pageParam:{}
+        });
+    });
+</script>
+</body>
+</html>

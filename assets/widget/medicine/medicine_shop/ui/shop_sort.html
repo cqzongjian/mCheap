@@ -1,0 +1,319 @@
+﻿<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8">
+    <title>mCollection</title>
+    <meta name="viewport" content="target-densitydpi=device-dpi,width=device-width, initial-scale=1,maximum-scale=1, user-scalable=no">
+    <meta name="apple-mobile-web-app-capable" content="yes">
+    <meta name="apple-mobile-web-app-status-bar-style" content="black">
+    <link rel="stylesheet" href="../../../static/mdui/css/mdui.min.css">
+    <link rel="stylesheet" href="../../../static/mCheap/css/mCommon.css">
+    <style>
+        *{
+            font-family: "Microsoft YaHei";
+            color: #666666;
+        }
+        body{
+            background-color: #ffffff;
+            padding-top: 2.75rem;
+        }
+        .header-box{
+            background-color: #3BA15C;
+            padding: 0;
+        }
+        .header{
+            width: 100%;
+            height: 100%;
+            position: relative;
+        }
+        .back{
+            padding-right: 1rem;
+            padding-left: 1rem;
+            padding-top: 0.75rem;
+            position: absolute;
+            z-index: 100;
+        }
+        .back img{
+            width:auto;
+            height: 1.25rem;
+        }
+        .title{
+            text-align: center;
+            position: absolute;
+            width: 100%;
+            height: 100%;
+            top: 0;
+            line-height: 2.75rem;
+            color: #FFFFFF;
+        }
+        .list-item>div:first-child{
+            padding-left: 2rem;
+        }
+
+
+
+
+
+
+        .sort-title-box{
+            background-color: #68d9be;
+            border-bottom: 1px solid #cccccc;
+        }
+        .bottom-sort-title-box{
+            background-color: #FAFAFA;
+        }
+        .list>.list-item{
+            height: 3rem;
+            line-height: 3rem;
+            border-bottom: 1px solid #cccccc;
+        }
+        .arrow{
+            width: 2rem;
+            background: url("../image/arrow.png") no-repeat center;
+            background-size: auto 0.8rem;
+        }
+        .list-title{
+            background-color: white;
+        }
+        .list{
+
+        }
+        .up-down{
+            width: 5rem;
+            height: auto;
+            margin-right: 0.5rem;
+        }
+        .down{
+            background: url("../image/down.png") no-repeat center;
+            background-size: 3rem 1.5rem;
+        }
+        .up{
+            background: url("../image/up.png") no-repeat center;
+            background-size: 3rem 1.5rem;
+        }
+        .bottom-sort-box{
+            display: none;
+        }
+        /*==============药店信息==================*/
+        .list-box{
+            padding-top: 0.5rem;
+            padding-left: 1rem;
+            padding-bottom: 0.5rem;
+            border-bottom: 0.2rem solid #cccccc;
+            border-top: 1px solid #cccccc;
+        }
+        .market-img-box{
+            width: 7rem;
+            height: 5rem;
+        }
+        .touch>div:first-child{
+            padding-left: 3rem;
+        }
+        .market-detail{
+            padding-left: 1rem;
+        }
+        .address{
+            font-size: 0.8rem;
+            padding-left: 1rem;
+            background: url("../image/dis.png")no-repeat left center;
+            background-size: 0.8rem auto;
+        }
+        .time{
+            font-size: 0.8rem;
+            padding-left: 1rem;
+            background: url("../image/time.png")no-repeat left center;
+            background-size: 0.8rem auto;
+        }
+        .market-list-name{
+            font-weight: 600;
+        }
+        .start-img-box>img{
+            width: 1rem;
+            height: 1rem;
+        }
+    </style>
+</head>
+<body>
+<div class="header-box mdui-bar mdui-bar-nav">
+    <div class="header">
+        <div class="back mdui-action-back"><img src="../image/back.png"></div>
+        <div class="title">药店分类</div>
+    </div>
+</div>
+
+<div class="content">
+    <div class="mdui-box list-box">
+        <div class="img-box">
+            <!--<img src="../image/market_hongxinglu.png" class="market-img-box"/>-->
+        </div>
+        <div class="market-detail mdui-box-flex-1">
+            <div class="market-list-name"></div>
+            <div class="start-img-box">
+                <img src="../image/star.png"/>
+                <img src="../image/star.png"/>
+                <img src="../image/star.png"/>
+                <img src="../image/star.png"/>
+                <img src="../image/star.png"/>
+            </div>
+            <div class="address"></div>
+            <div class="time"></div>
+        </div>
+    </div>
+    <div class="sort-box">
+
+
+    </div>
+</div>
+
+
+
+
+
+
+<!--页面-->
+<script src="../../../static/mdui/js/mdui.min.js"></script>
+<script src="../../../static/mCheap/js/mCheap.config.js"></script>
+<script src="../../../server.js"></script>
+<script>
+    var thisPageData={};
+    $.uexWindowReady(function(){
+        setStoreDate();
+        requestSort();
+    });
+    function requestSort(){
+//        alert(thisPageData.lsh+"流水号");
+        $.request({
+            urlType:'pharmacyOfCategory',
+            data:{
+                "access_token": $.getStorage('access_token'),
+                cltpit01id :thisPageData.lsh
+            }
+        },function(json){
+            if(json.success) {
+//				alert(JSON.stringify(json));
+                var data = json.data;
+                setData(data);
+            }
+            else {
+                alert('网络错误')
+            }
+        });
+    }
+
+    //设置数据
+    function setData(data){
+        var len=data.length, i, j,html='';
+        for(i=0;i<len;i++){
+            var lent=data[i].smallname.length,sortData=data[i].smallname;
+//            html +='<div class="sort-box">';
+            html +='<div class="sort-title-box list list-title">';
+            html +='<div class="list-item mdui-box">';
+            html +='<div class="mdui-box-flex-1">'+data[i].midname+'</div>';
+            html +='<div class="up-down down"></div>';
+            html +='</div>';
+            html +='</div>';
+            html +='<div class="bottom-sort-box">';
+            for(j=0;j<lent;j++){
+                html +='<div class="bottom-sort-title-box list">';
+                html +='<div class="list-item mdui-box touch">';
+                html +='<div class="mdui-box-flex-1 little-title">'+sortData[j].smallname+'</div>';
+                html +='<div class="arrow"></div>';
+                html +='</div>';
+                html +='</div>';
+            }
+            html +='</div>';
+//            html +='</div>';
+            $('.sort-box').html(html);
+        }
+    }
+
+
+    $(document).on('tap','.bottom-sort-title-box',function(){
+        $.openWin({
+            flag:4,
+            name:"shop_drug_list",
+            animId : 2,
+            url:'wgtroot://medicine/medicine_shop/ui/shop_drug_list.html',
+            pageParam: {
+                pageName:'sort',
+                tinyName:$(this).find('.mdui-box-flex-1').html(),
+                midName:$(this).parent().prev().find('.mdui-box-flex-1').html(),
+                lsh:thisPageData.lsh,
+                storeStar:thisPageData.storeStar,
+                storeName:$('.market-list-name').html(),
+                storeAddress:$('.address').html(),
+                storeYysj:$('.time').html(),
+                tiaoshu:thisPageData.tiaoshu,
+                focus:thisPageData.focus,
+                range:thisPageData.range,
+                picture:thisPageData.picture,
+                log:thisPageData.log,
+                lat:thisPageData.lat
+            }
+        });
+    });
+
+    //设置药店数据
+    function setStoreDate(){
+        var pageData=$.pageParam;//得到页面参数
+        pageData=$.strToJson(pageData);
+        thisPageData.picture=pageData.picture;
+        var img='<img src="'+ $.serverSettings.serverPath+'/mobile/mcheap/mcheapAction!getMarketPicture.do?access_token='+ $.getStorage('access_token')+'&url='+thisPageData.picture+'" class="market-img-box"/>';
+        $('.img-box').html(img);
+        thisPageData.range=pageData.range;
+        thisPageData.lsh=pageData.lsh;
+        thisPageData.tiaoshu=pageData.tiaoshu;
+        thisPageData.focus=pageData.focus;
+        thisPageData.storeStar=pageData.storeStar;
+        thisPageData.log=pageData.log;
+        thisPageData.lat=pageData.lat;
+        $('.market-list-name').html(pageData.storeName);
+        $('.address').html(pageData.storeAddress);
+        $('.time').html(pageData.storeYysj);
+        var star=thisPageData.storeStar,html='';
+        if(star) {
+            var m= 0,j= 0;
+            for(j;j<parseInt(star);j++){
+                html+='<img src="../image/star_01.png" />';
+                m++;
+            }
+            if (parseInt(star.split('.')[1])>0){
+                html+='<img src="../image/star_03.png"/>';
+                m++;
+            }
+            if(m<5){
+                for (j=m;j<5;j++){
+                    html+='<img src="../image/star_02.png"/>';
+                }
+            }
+        } else{
+            for (j=0;j<5;j++){
+                html+='<img src="../image/star_02.png" />'
+            }
+        }
+        $('.start-img-box').html(html);
+    }
+
+//    $('.start-img').on('tap',function(){
+//        $('.start-img-box>img').each(function(e){
+//            if(e<2){
+//                $(this).attr('src','../image/star-s.png');
+//            }
+//        });
+//    });
+
+    //点击事件
+    $('.content').on('tap','.up-down',function(){
+        if($(this).hasClass('down')){
+            $(this).parents().next().show();
+            $(this).removeClass('down').addClass('up');
+        }else{
+            $(this).parents().next().hide();
+            $(this).removeClass('up').addClass('down');
+        }
+    });
+
+
+</script>
+</body>
+</html>

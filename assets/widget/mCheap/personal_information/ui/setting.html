@@ -1,0 +1,175 @@
+
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="utf-8">
+<title>your title</title>
+<meta name="viewport"
+	content="target-densitydpi=device-dpi,width=device-width, initial-scale=1,maximum-scale=1, user-scalable=no">
+<meta name="mobile-web-app-capable" content="yes">
+<meta name="apple-mobile-web-app-capable" content="yes">
+<meta name="apple-mobile-web-app-status-bar-style" content="black">
+<link rel="stylesheet" href="../../../static/mdui/css/mdui.min.css">
+    <link rel="stylesheet" href="../../../static/mCheap/css/mCommon.css">
+    <script src="../../../static/mCheap/js/mCheap.config.js"></script>
+<!--扩展组件/第三方/工程css---->
+<style>
+.body-wrapper-box{
+    font-family:SimHei;
+    font-size:1rem;
+    width : 100%;
+    height: 100%;
+}
+.push-msg-div{
+    height: 3rem;
+    width: 100%;
+    background-color: white;
+    border-top:1px solid  #BBBDBC;
+    border-bottom:1px solid #BBBDBC;
+}
+.push-msg-span{
+    margin-left: 1.5rem;
+    margin-top: 0.8rem;
+    display:inline-block;
+}
+.flag-div{
+    width: 3rem;
+    height: 1.5rem;
+    border: 1px solid black;
+    margin-top:0.75rem;
+    float: right;
+    margin-right: 1.5rem;
+    border-radius: 0.75rem;
+    background-color: white;
+}
+.flag{
+    height: 1.5rem;
+    width: 1.5rem;
+    border-radius: 0.75rem;
+    background-color: white;
+    border: 1px solid black;
+    float: left;
+}
+.version{
+    height: 3rem;
+    width: 100%;
+    border-bottom:1px solid #BBBDBC;
+    background: url('../images/arrow.png') no-repeat 90% center white;
+    padding-top:0.8rem;
+    padding-left: 1.5rem;
+    background-size:0.5rem 1rem;
+}
+#logout{
+    height: 3rem;
+    width: 100%;
+    border-bottom:1px solid #BBBDBC;
+    background-color: white;
+    margin-top: 1rem;
+    border-top:1px solid  #BBBDBC;
+    border-bottom:1px solid #BBBDBC;
+    text-align: center;
+    line-height: 3rem;
+    display: none;
+}
+</style>
+</head>
+
+<body>
+	<!--页面html-->
+	<div class="body-wrapper-box bod">
+        <div class="push-msg-div">
+            <span class="push-msg-span">推送消息</span>
+            <div class="flag-div">
+                <div class="flag"></div>
+            </div>
+        </div>
+        <div class="version">版本更新</div>
+        <div id="logout">退出登录</div>
+    </div>
+
+	<script src="../../../static/mdui/js/mdui.min.js"></script>
+    <script src="../../../server.js"></script>
+	<!--扩展组件/第三方/工程js-->
+	<script>
+	$.uexWindowReady(function(){
+        uexWidgetOne.getCurrentWidgetInfo();
+        uexWidgetOne.cbGetCurrentWidgetInfo = cbGetCurrentWidgetInfo;
+
+        var pushMesFlag =$.getStorage('pushMesFlag');
+        var userMessage =$.getStorage('userMessage');
+        if(userMessage){
+            $("#logout").show();
+        }
+        if(pushMesFlag=='1'){
+            $('.flag-div').css('background-color','green');
+            $('.flag').css('float','right');
+        }
+
+        //点击开关
+        $(document).on('tap','.flag-div',function(){
+            if($(this).css("background-color")=="green"){
+                $('.flag-div').css('background-color','white');
+                $('.flag').css('float','left');
+                pushMesFlag = '0';
+                $.setStorage('pushMesFlag',pushMesFlag);
+                $.execScript({
+                    winName:'root',
+                    frameName:'index',
+                    script:"push_message();$('.push').css('display','none');"
+                });
+                uexJPush.stopPush();
+            }else{
+                $('.flag-div').css('background-color','green');
+                $('.flag').css('float','right');
+                pushMesFlag = '1';
+                $.setStorage('pushMesFlag',pushMesFlag);
+                $.execScript({
+                    winName:'root',
+                    script:'push_message()'
+                });
+                uexJPush.resumePush();
+            }
+        });
+
+        $('#logout').on('tap',function(){
+            $.request({
+                urlType:'logout',
+                data:{
+                    "access_token": $.getStorage('access_token')
+                }
+            },function(data){
+                if(data.success) {
+                    $.setStorage('userMessage', '');
+                    $.execScript({
+                        winName:'grzx',
+                        script:'$.refreshWin()'
+                    });
+                    $.toast(data.message);
+                    $.execScript({
+                        winName:'base_top',
+                        script:"$.closeWin();"
+                    });
+
+                }
+            });
+        });
+
+        $('.version').on('tap',function(){
+            $.openWin({
+                name:"version",
+                animId : 2,
+                url:'wgtroot://mCheap/personal_information/ui/version.html',
+                pageParam:{}
+            });
+        })
+	});
+
+    function cbGetCurrentWidgetInfo(opId,dataType,data){
+        var obj = eval('('+data+')');
+        var version_curr=obj.version;
+        $.setStorage('version_curr',version_curr);
+    }
+	
+	</script>
+</body>
+</html>

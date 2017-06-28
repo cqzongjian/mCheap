@@ -1,0 +1,143 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8">
+    <title>mCollection</title>
+    <meta name="viewport" content="target-densitydpi=device-dpi,width=device-width, initial-scale=1,maximum-scale=1, user-scalable=no">
+    <meta name="apple-mobile-web-app-capable" content="yes">
+    <meta name="apple-mobile-web-app-status-bar-style" content="black">
+    <link rel="stylesheet" href="../../../static/mdui/css/mdui.min.css">
+    <link rel="stylesheet" href="../../../static/mCheap/css/mCommon.css">
+    <link rel="stylesheet" href="../css/caipu.css">
+</head>
+<body>
+<div class="header-box mdui-bar mdui-bar-nav">
+    <div class="header">
+        <!--<div class="back"><img src="../images/back.png"></div>-->
+        <div class="title">菜谱</div>
+    </div>
+</div>
+<div class="sort mdui-box">
+    <div class="mdui-box-flex-1 sort-item">
+        <div id="jrcp" class="sort-item-text">今日菜谱</div>
+    </div>
+    <div class="sort-item-gap">|</div>
+    <div class="mdui-box-flex-1 sort-item">
+        <div id="mzcp" class="sort-item-text">每周菜谱</div>
+    </div>
+    <div class="sort-item-gap">|</div>
+    <div class="mdui-box-flex-1 sort-item">
+        <div id="wdcp" class="sort-item-text">我的菜谱</div>
+    </div>
+</div>
+<div class="mdui-content" id="content_box"></div>
+<!--页面-->
+<script src="../../../static/mdui/js/mdui.min.js"></script>
+<script src="../../../static/mCheap/js/mCheap.config.js"></script>
+<script>
+    $.uexWindowReady(function(){
+        var ele=$('.sort-item');
+        ele.on('tap',function(){
+            var target=$(this).find('.sort-item-text');
+            if(!target.hasClass('sort-item-on')) {
+                ele.find('.sort-item-text').removeClass('sort-item-on');
+                target.addClass('sort-item-on');
+                var text = $(this).find('.sort-item-text').text();
+                if (text == '今日菜谱') {
+                    $.openFrameByEle('content_box', {
+                        name: 'caipu_tj',
+                        winName:'caishi',
+                        url: 'wgtroot://mCheap/caipu/ui/caipu_tj.html',
+                        pageParam: {}
+                    });
+                    $.closeFrame('caipu_wd');
+                    $.closeFrame('caipu_everyweek');
+                }
+                else if (text == '我的菜谱') {
+                    $.openFrameByEle('content_box', {
+                        name: 'caipu_wd',
+                        winName: 'caishi',
+                        url: 'wgtroot://mCheap/caipu/ui/caipu_wd.html',
+                        pageParam: {}
+                    });
+                    $.closeFrame('caipu_tj');
+                    $.closeFrame('caipu_everyweek');
+                }
+                else if(text=='每周菜谱'){
+                    $.openFrameByEle('content_box', {
+                        name: 'caipu_everyweek',
+                        winName: 'caishi',
+                        url: 'wgtroot://mCheap/caipu/ui/caipu_everyweek.html',
+                        pageParam: {}
+                    });
+                    $.closeFrame('caipu_tj');
+                    $.closeFrame('caipu_wd');
+                }
+            }
+        });
+        ele.eq(0).trigger('tap');
+        $('.back').on('tap',function(){
+            $.execScript({
+                winName:'caishi',
+                script:'$(".footer-item-a").eq(0).trigger("tap")'
+            });
+        });
+
+    });
+    function triggerActive(){
+        var text = $('.sort-item-on').text();
+        if (text == '今日菜谱') {
+            $.openFrameByEle('content_box', {
+                name: 'caipu_tj',
+                winName:'caishi',
+                url: 'wgtroot://mCheap/caipu/ui/caipu_tj.html',
+                pageParam: {}
+            });
+            $.closeFrame('caipu_wd');
+            $.closeFrame('caipu_everyweek');
+        }
+        else if (text == '我的菜谱') {
+            $.openFrameByEle('content_box', {
+                name: 'caipu_wd',
+                winName: 'caishi',
+                url: 'wgtroot://mCheap/caipu/ui/caipu_wd.html',
+                pageParam: {}
+            });
+            $.closeFrame('caipu_tj');
+            $.closeFrame('caipu_everyweek');
+        }
+        else if(text=='每周菜谱'){
+            $.openFrameByEle('content_box', {
+                name: 'caipu_everyweek',
+                winName: 'caishi',
+                url: 'wgtroot://mCheap/caipu/ui/caipu_everyweek.html',
+                pageParam: {}
+            });
+            $.closeFrame('caipu_tj');
+            $.closeFrame('caipu_wd');
+        }
+    }
+    function openClose(){
+        $.closeFrame("caipu_wd");
+        $.openFrameByEle('content_box', {
+            name: 'caipu_wd',
+            winName: 'caishi',
+            url: 'wgtroot://mCheap/caipu/ui/caipu_wd.html',
+            pageParam: {}
+        });
+    }
+    //打开新的win的示例方法
+    //			var frameData = {};
+    //			frameData.top_nav_title = title;
+    //			frameData.frameUrl = frameUrl;
+    //			frameData.framePageData = {};
+    //			frameData.winName = 'top_first';
+    //			$.openWin({
+    //				name:"top_first",
+    //				animId : 2,
+    //				url:'wgtroot://index.html',
+    //				pageParam: frameData
+    //			});
+</script>
+</body>
+</html>

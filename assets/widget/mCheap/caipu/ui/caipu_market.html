@@ -1,0 +1,913 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8">
+    <title>mCollection</title>
+    <meta name="viewport" content="target-densitydpi=device-dpi,width=device-width, initial-scale=1,maximum-scale=1, user-scalable=no">
+    <meta name="apple-mobile-web-app-capable" content="yes">
+    <meta name="apple-mobile-web-app-status-bar-style" content="black">
+    <link rel="stylesheet" href="../../../static/mdui/css/mdui.min.css">
+    <link rel="stylesheet" href="../../../static/mCheap/css/mCommon.css">
+    <link rel="stylesheet" href="../css/caipu_market.css">
+    <style>
+
+
+
+        .second-title{
+            background-color: white;
+            width: 100%;
+            border-bottom: 1px solid #B0B0B0;
+        }
+        .cj-imgs,.comment-xz{
+            width: 49%;
+            text-align: center;
+            padding-top: 1rem;
+            padding-bottom: 0.8rem;
+        }
+        .vertical{
+            margin-top: 0.8rem;
+            color: #666666;
+        }
+        .choose{
+            color:#3BA15C;
+            text-align: center;
+            padding-top: 1rem;
+            padding-bottom: 0.8rem;
+            border-bottom: 0.2rem solid #3BA15C;
+        }
+        #con-0,#con-2{
+            height: 100%;
+            display: none;
+            overflow-y: auto;
+        }
+        .classify-content{
+            overflow-y: auto;
+        }
+
+        .xs-item{
+            color: black;
+            background-color: white;
+            width: 25%;
+            height: 2.5rem;
+            line-height: 2.5rem;
+            text-align: center;
+            border: 1px solid #CCCCCC;
+        }
+        .xs-item-on{
+            color: green;
+            background-color: white;
+            width: 25%;
+            height: 2.5rem;
+            line-height: 2.5rem;
+            text-align: center;
+            border: 1px solid #CCCCCC;
+        }
+
+        /*----------------------筛选---------------------*/
+        .sx-box{
+            color: black;
+            background: url("../images/down.png")no-repeat 88%;
+            background-size: 0.7rem 0.5rem;
+            width: 100%;
+            padding: 0.5rem 0.5rem 0.5rem 1rem;
+            background-color: white;
+            border-bottom: 1px solid #CCCCCC;
+        }
+        .sx-box-on{
+            color: green;
+            background: url("../images/lvup.png")no-repeat 88%;
+            background-size: 0.7rem 0.5rem;
+            width: 100%;
+            padding: 0.5rem 0.5rem 0.5rem 1rem;
+            background-color: white;
+            border-bottom: 1px solid #CCCCCC;
+        }
+        .distance-item{
+            border-bottom: 1px solid #CCCCCC;
+            padding: 0.5rem 0.5rem 0.5rem 1rem;
+            background-color: white;
+        }
+        .distance-item-on{
+            background: url("../images/greenright.png")no-repeat 90%;
+            background-size: 1.2rem 0.8rem;
+            padding: 0.5rem 0.5rem 0.5rem 1rem;
+            background-color: white;
+            color: green;
+            border-bottom: 1px solid #CCCCCC;
+        }
+        .my-item-choose{
+            position: relative;
+            height: 3rem;
+            background-color: white;
+        }
+        .reset{
+            position: absolute;
+            left: 5%;
+            top:15%;
+            padding: 0.25rem;
+            border: 1px solid #CCCCCC;
+        }
+        .sure{
+            position: absolute;
+            right: 5%;
+            top:15%;
+            padding: 0.25rem;
+            border: 1px solid #CCCCCC;
+        }
+        .choose-distance{
+            display: none;
+        }
+        .no-data{
+            width:100%;
+            color:white;
+            height:3rem;
+            text-align: center;
+            line-height: 3rem;
+            background-color: #3BA15C;
+        }
+        .px{
+            /*display: none;*/
+        }
+
+    </style>
+</head>
+<body>
+<div class="header-box mdui-bar mdui-bar-nav">
+    <div class="header">
+        <div class="back mdui-action-back"><img src="../images/back.png"></div>
+        <div class="title">菜谱</div>
+    </div>
+</div>
+<div class="search-before-content">
+    <div class="searching">正在询价，请稍后</div>
+</div>
+<div class="sort">
+    <div class="second-title mdui-box">
+        <div class="comment-xz ">市场询价</div>
+        <div class="vertical">|</div>
+        <div class="cj-imgs ">组合询价</div>
+    </div>
+</div>
+<div class="classify-content">
+    <div id="con-3">
+
+    </div>
+    <div class="container" id="con-0">
+        <div class="mdui-box px">
+            <div class="xs-item">价格升序</div>
+            <div class="xs-item">价格降序</div>
+            <div class="xs-item">距离升序</div>
+            <div class="xs-item">距离降序</div>
+        </div>
+        <div class="con-one-content"></div>
+        <!--<div class="my-item-choose mdui-box">-->
+            <!--<div class="sure">确定</div>-->
+        <!--</div>-->
+
+        <!--<div class="list">-->
+            <!--<div class="list-item">-->
+                <!--<div class="list-item-title">三色路农贸市场</div>-->
+                <!--<div class="list-item-price mdui-box">-->
+                    <!--<div class="total-text">总价:</div>-->
+                    <!--<div class="total-price">￥11.30元</div>-->
+                <!--</div>-->
+                <!--<div class="list-tiny-title mdui-box">-->
+                    <!--<div class="tiny-title mdui-box-flex-1">菜名</div>-->
+                    <!--<div class="boundary">|</div>-->
+                    <!--<div class="tiny-title mdui-box-flex-1">单价</div>-->
+                    <!--<div class="boundary">|</div>-->
+                    <!--<div class="tiny-title mdui-box-flex-1">数量</div>-->
+                    <!--<div class="boundary">|</div>-->
+                    <!--<div class="tiny-title mdui-box-flex-1">总价</div>-->
+                <!--</div>-->
+                <!--<div class="cell-box-show">-->
+                    <!--<div class="cell-box mdui-box">-->
+                        <!--<div class="cell mdui-box-flex-1">白菜</div>-->
+                        <!--<div class="cell mdui-box-flex-1">￥11.30元</div>-->
+                        <!--<div class="cell mdui-box-flex-1">1斤</div>-->
+                        <!--<div class="cell mdui-box-flex-1">￥11.30元</div>-->
+                    <!--</div>-->
+                    <!--<div class="cell-box mdui-box">-->
+                        <!--<div class="cell mdui-box-flex-1">白菜</div>-->
+                        <!--<div class="cell mdui-box-flex-1">￥11.30元</div>-->
+                        <!--<div class="cell mdui-box-flex-1">1斤</div>-->
+                        <!--<div class="cell mdui-box-flex-1">￥11.30元</div>-->
+                    <!--</div>-->
+                <!--</div>-->
+                <!--<div class="list-item-dis">1.8km</div>-->
+            <!--</div>-->
+            <!--<div class="detail">-->
+                <!--<div class="cell-box mdui-box">-->
+                    <!--<div class="cell mdui-box-flex-1">白菜</div>-->
+                    <!--<div class="cell mdui-box-flex-1">￥11.30元</div>-->
+                    <!--<div class="cell mdui-box-flex-1">1斤</div>-->
+                    <!--<div class="cell mdui-box-flex-1">￥11.30元</div>-->
+                <!--</div>-->
+                <!--<div class="cell-box mdui-box">-->
+                    <!--<div class="cell mdui-box-flex-1">白菜</div>-->
+                    <!--<div class="cell mdui-box-flex-1">￥11.30元</div>-->
+                    <!--<div class="cell mdui-box-flex-1">1斤</div>-->
+                    <!--<div class="cell mdui-box-flex-1">￥11.30元</div>-->
+                <!--</div>-->
+            <!--</div>-->
+            <!--<div class="drop dropdown"></div>-->
+        <!--</div>-->
+
+
+        <!--<div class="list">-->
+        <!--<div class="list-item">-->
+        <!--<div class="list-item-title">三色路农贸市场</div>-->
+        <!--<div class="list-item-price mdui-box">-->
+        <!--<div>平均<span>￥11.20</span></div>-->
+        <!--<div>最新<span>￥11.30</span></div>-->
+        <!--</div>-->
+        <!--<div class="list-item-dis">1.8km</div>-->
+        <!--</div>-->
+        <!--<div class="detail">-->
+        <!--<div class="mdui-box">-->
+        <!--<div class="mdui-box-flex-1">白菜</div>-->
+        <!--<div>￥1.20</div>-->
+        <!--</div>-->
+        <!--<div class="mdui-box">-->
+        <!--<div class="mdui-box-flex-1">白菜</div>-->
+        <!--<div>￥1.20</div>-->
+        <!--</div>-->
+        <!--<div class="mdui-box">-->
+        <!--<div class="mdui-box-flex-1">白菜</div>-->
+        <!--<div>￥1.20</div>-->
+        <!--</div>-->
+        <!--<div class="mdui-box">-->
+        <!--<div class="mdui-box-flex-1">白菜</div>-->
+        <!--<div>￥1.20</div>-->
+        <!--</div>-->
+        <!--<div class="mdui-box">-->
+        <!--<div class="mdui-box-flex-1">白菜</div>-->
+        <!--<div>￥1.20</div>-->
+        <!--</div>-->
+        <!--<div class="mdui-box">-->
+        <!--<div class="mdui-box-flex-1">白菜</div>-->
+        <!--<div>￥1.20</div>-->
+        <!--</div>-->
+        <!--</div>-->
+        <!--<div class="drop dropdown"></div>-->
+        <!--</div>-->
+        <!--<div class="list">-->
+        <!--<div class="list-item">-->
+        <!--<div class="list-item-title">三色路农贸市场</div>-->
+        <!--<div class="list-item-price mdui-box">-->
+        <!--<div>平均<span>￥11.20</span></div>-->
+        <!--<div>最新<span>￥11.30</span></div>-->
+        <!--</div>-->
+        <!--<div class="list-item-dis">1.8km</div>-->
+        <!--</div>-->
+        <!--<div class="detail">-->
+        <!--<div class="mdui-box">-->
+        <!--<div class="mdui-box-flex-1">白菜</div>-->
+        <!--<div>￥1.20</div>-->
+        <!--</div>-->
+        <!--<div class="mdui-box">-->
+        <!--<div class="mdui-box-flex-1">白菜</div>-->
+        <!--<div>￥1.20</div>-->
+        <!--</div>-->
+        <!--<div class="mdui-box">-->
+        <!--<div class="mdui-box-flex-1">白菜</div>-->
+        <!--<div>￥1.20</div>-->
+        <!--</div>-->
+        <!--<div class="mdui-box">-->
+        <!--<div class="mdui-box-flex-1">白菜</div>-->
+        <!--<div>￥1.20</div>-->
+        <!--</div>-->
+        <!--<div class="mdui-box">-->
+        <!--<div class="mdui-box-flex-1">白菜</div>-->
+        <!--<div>￥1.20</div>-->
+        <!--</div>-->
+        <!--<div class="mdui-box">-->
+        <!--<div class="mdui-box-flex-1">白菜</div>-->
+        <!--<div>￥1.20</div>-->
+        <!--</div>-->
+        <!--</div>-->
+        <!--<div class="drop dropdown"></div>-->
+        <!--</div>-->
+        <!--<div class="list">-->
+        <!--<div class="list-item">-->
+        <!--<div class="list-item-title">三色路农贸市场</div>-->
+        <!--<div class="list-item-price mdui-box">-->
+        <!--<div>平均<span>￥11.20</span></div>-->
+        <!--<div>最新<span>￥11.30</span></div>-->
+        <!--</div>-->
+        <!--<div class="list-item-dis">1.8km</div>-->
+        <!--</div>-->
+        <!--<div class="detail">-->
+        <!--<div class="mdui-box">-->
+        <!--<div class="mdui-box-flex-1">白菜</div>-->
+        <!--<div>￥1.20</div>-->
+        <!--</div>-->
+        <!--<div class="mdui-box">-->
+        <!--<div class="mdui-box-flex-1">白菜</div>-->
+        <!--<div>￥1.20</div>-->
+        <!--</div>-->
+        <!--<div class="mdui-box">-->
+        <!--<div class="mdui-box-flex-1">白菜</div>-->
+        <!--<div>￥1.20</div>-->
+        <!--</div>-->
+        <!--<div class="mdui-box">-->
+        <!--<div class="mdui-box-flex-1">白菜</div>-->
+        <!--<div>￥1.20</div>-->
+        <!--</div>-->
+        <!--<div class="mdui-box">-->
+        <!--<div class="mdui-box-flex-1">白菜</div>-->
+        <!--<div>￥1.20</div>-->
+        <!--</div>-->
+        <!--<div class="mdui-box">-->
+        <!--<div class="mdui-box-flex-1">白菜</div>-->
+        <!--<div>￥1.20</div>-->
+        <!--</div>-->
+        <!--</div>-->
+        <!--<div class="drop dropdown"></div>-->
+        <!--</div>-->
+    </div>
+    <div class="container" id="con-2">
+        <div class="sx-box sx-title">筛选</div>
+        <div class="choose-distance">
+            <div class="distance">
+                <div class="distance-item">附近</div>
+                <div class="distance-item">1km</div>
+                <div class="distance-item">2km</div>
+                <div class="distance-item">3km</div>
+                <div class="distance-item">4km</div>
+                <div class="distance-item">全城</div>
+            </div>
+        </div>
+        <div class="con-two-content"></div>
+
+        <!--<div class="list">-->
+            <!--<div class="list-item">-->
+                <!--<div class="list-item-title">三色路农贸市场</div>-->
+                <!--<div class="list-item-price mdui-box">-->
+                    <!--<div>平均<span>￥11.20</span></div>-->
+                    <!--<div>最新<span>￥11.30</span></div>-->
+                <!--</div>-->
+                <!--<div class="list-item-dis">1.8km</div>-->
+            <!--</div>-->
+            <!--<div class="detail">-->
+                <!--<div class="mdui-box">-->
+                    <!--<div class="mdui-box-flex-1">白菜</div>-->
+                    <!--<div>￥1.20</div>-->
+                <!--</div>-->
+                <!--<div class="mdui-box">-->
+                    <!--<div class="mdui-box-flex-1">白菜</div>-->
+                    <!--<div>￥1.20</div>-->
+                <!--</div>-->
+                <!--<div class="mdui-box">-->
+                    <!--<div class="mdui-box-flex-1">白菜</div>-->
+                    <!--<div>￥1.20</div>-->
+                <!--</div>-->
+                <!--<div class="mdui-box">-->
+                    <!--<div class="mdui-box-flex-1">白菜</div>-->
+                    <!--<div>￥1.20</div>-->
+                <!--</div>-->
+                <!--<div class="mdui-box">-->
+                    <!--<div class="mdui-box-flex-1">白菜</div>-->
+                    <!--<div>￥1.20</div>-->
+                <!--</div>-->
+                <!--<div class="mdui-box">-->
+                    <!--<div class="mdui-box-flex-1">白菜</div>-->
+                    <!--<div>￥1.20</div>-->
+                <!--</div>-->
+            <!--</div>-->
+            <!--<div class="drop dropdown"></div>-->
+        <!--</div>-->
+
+        <!--<div class="list">-->
+            <!--<div class="list-item">-->
+                <!--<div class="list-item-title">三色路农贸市场</div>-->
+                <!--<div class="list-item-price mdui-box">-->
+                    <!--<div>平均<span>￥11.20</span></div>-->
+                    <!--<div>最新<span>￥11.30</span></div>-->
+                <!--</div>-->
+                <!--<div class="list-item-dis">1.8km</div>-->
+            <!--</div>-->
+            <!--<div class="detail">-->
+                <!--<div class="mdui-box">-->
+                    <!--<div class="mdui-box-flex-1">白菜</div>-->
+                    <!--<div>￥1.20</div>-->
+                <!--</div>-->
+                <!--<div class="mdui-box">-->
+                    <!--<div class="mdui-box-flex-1">白菜</div>-->
+                    <!--<div>￥1.20</div>-->
+                <!--</div>-->
+                <!--<div class="mdui-box">-->
+                    <!--<div class="mdui-box-flex-1">白菜</div>-->
+                    <!--<div>￥1.20</div>-->
+                <!--</div>-->
+                <!--<div class="mdui-box">-->
+                    <!--<div class="mdui-box-flex-1">白菜</div>-->
+                    <!--<div>￥1.20</div>-->
+                <!--</div>-->
+                <!--<div class="mdui-box">-->
+                    <!--<div class="mdui-box-flex-1">白菜</div>-->
+                    <!--<div>￥1.20</div>-->
+                <!--</div>-->
+                <!--<div class="mdui-box">-->
+                    <!--<div class="mdui-box-flex-1">白菜</div>-->
+                    <!--<div>￥1.20</div>-->
+                <!--</div>-->
+            <!--</div>-->
+            <!--<div class="drop dropdown"></div>-->
+        <!--</div>-->
+
+    </div>
+</div>
+<!--页面-->
+<script src="../../../static/mdui/js/mdui.js"></script>
+<script src="../../../static/mCheap/js/mCheap.config.js"></script>
+<script src="../../../server.js"></script>
+<script src="../../../public.js"></script>
+<script>
+    var epsrmm01id;
+    var wdcp_xj;
+    var name;
+    $.uexWindowReady(function(){
+    	var pageData=$.pageParam;//得到页面参数
+        pageData=$.strToJson(pageData);
+        epsrmm01id = pageData.epsrmm01id||'';
+        wdcp_xj=pageData.param_xj||'';
+        name = pageData.name||'';
+        var near= $.getStorage('near')||'';
+        if(name=="推荐菜谱"){
+            tjcpRequestMarketData(epsrmm01id);
+            tjcpRequestBestData(epsrmm01id);
+            setDistance(near);
+        }else{ //我的菜谱询价
+            wdcpRequestMarketData(wdcp_xj);
+            wdcpRequestBestData(wdcp_xj);
+            setDistance(near);
+        }
+        $('.comment-xz').trigger('tap');
+    });
+
+    //推荐菜谱页面过来进行市场询价请求数据
+    function tjcpRequestMarketData(epsrmm01id,flat){
+        $.request({
+            urlType:'getRecommendMenuprice',
+            data:{
+                "access_token": $.getStorage('access_token'),
+                menuId : epsrmm01id ,
+                falt : flat||'',
+                lat : $.getStorage('lat'),
+                log : $.getStorage('log')
+            }
+        },function(data){
+            if(data.success) {
+                if(data.data.length==1){
+                    $('.px').hide();
+                }
+                $('.search-before-content').hide();
+                if(data.data.length==0){
+                    $.toast("附近无商场");
+                    $('.con-one-content').html('');
+                }else{
+                    set_list(data);
+                }
+            }
+            else {
+                $('.search-before-content').hide();
+                //$.toast('网络错误')
+            }
+        });
+    }
+
+    //推荐菜谱页面过来进行最优询价请求数据
+    function tjcpRequestBestData(epsrmm01id){
+        $.request({
+            urlType:'getecommendMenuOptimalPrice',
+            data:{
+                "access_token": $.getStorage('access_token'),
+                epsrmm01id : epsrmm01id ,
+                distance:$.getStorage('near')||'',
+                lat : $.getStorage('lat') ,
+                log : $.getStorage('log')
+            }
+        },function(data){
+            if(data.success) {
+                $('.search-before-content').hide();
+                if(data.data.length==0){
+                    $.toast("附近无商场");
+                    $('.con-two-content').html('');
+                }else{
+                    var bz=1;
+                    set_list(data,bz);
+                }
+            }
+            else {
+                $('.search-before-content').hide();
+                //$.toast('网络错误')
+            }
+        });
+    }
+
+    //我的菜谱过来进行市场询价
+    function wdcpRequestMarketData(wdcp_xj,flat){
+        $.request({
+            urlType:'getUserPrice',
+            data:{
+                "access_token": $.getStorage('access_token'),
+                productsList : wdcp_xj ,
+                falt : flat||'',
+                distance:$.getStorage('near')||'',
+                lat : $.getStorage('lat'),
+                log : $.getStorage('log')
+            }
+        },function(data){
+            if(data.success) {
+                if(data.data.length==1){
+                    $('.px').hide();
+                }
+                $('.search-before-content').hide();
+                if(data.data.length==0){
+                    $.toast("附近无商场");
+                    $('.con-one-content').html('');
+                }else{
+                    set_list(data);
+                }
+            }
+            else {
+                $('.search-before-content').hide();
+                //$.toast('网络错误')
+            }
+        });
+    }
+
+    //我的菜谱过来进行最优询价
+    function wdcpRequestBestData(wdcp_xj){
+        $.request({
+            urlType:'getMenuOptimalPrice',
+            data:{
+                "access_token": $.getStorage('access_token'),
+                productsList : wdcp_xj ,
+                distance:$.getStorage('near')||'',
+                lat : $.getStorage('lat'),
+                log : $.getStorage('log')
+            }
+        },function(data){
+            if(data.success) {
+                $('.search-before-content').hide();
+                if(data.data.length==0){
+                    $.toast("附近无商场");
+                    $('.con-two-content').html('');
+                }else{
+                    var bz=1;
+                    set_list(data,bz);
+                }
+            }
+            else {
+                $('.search-before-content').hide();
+                //$.toast('网络错误')
+            }
+        });
+    }
+
+    //点击导航按钮进行导航
+    $(document).on('tap','.list-item-dis',getThere);
+    function getThere(){
+        var title = ($(this).parent().find(".list-item-title").text()).trim();
+        var log = $(this).parent().parent().data('log');
+        var lat = $(this).parent().parent().data('lat');
+        $.openWin({
+            animId : 2,
+            name: "navigation",
+            url: 'wgtroot://mCheap/map/ui/navigation.html',
+            pageParam: {
+                lng:log,
+                lat:lat,
+                marketName:title
+            }
+        });
+    }
+
+
+    $(document).on('tap','.drop',function(){
+        if($(this).hasClass('dropdown')) {
+            $(this).removeClass('dropdown').addClass('dropup');
+            $(this).siblings('.detail').show();
+        }
+        else {
+            $(this).removeClass('dropup').addClass('dropdown');
+            $(this).siblings('.detail').hide();
+        }
+    });
+
+    //加载数据的方法
+    function set_list(data,bz){
+        var len=data.data.length;
+        if(len){
+            var html='';
+            for(var i=0;i<len;i++){
+                var menuNum=data.data[i].menuProductPrice.length;
+                html+='<div class="list" data-log="'+data.data[i].cltpit01007+'" data-lat="'+data.data[i].cltpit01008+'">';
+                html+='<div class="list-item">';
+                html+='<div class="list-item-title">'+data.data[i].cltpit01001+'</div>';
+                html+='<div class="list-item-price mdui-box">';
+                html+='<div class="total-text">总价:</div>';
+                html+='<div class="total-price">￥'+data.data[i].totalNew+'元</div>';
+                html+='</div>';
+                html+='<div class="list-tiny-title mdui-box">';
+                html+='<div class="tiny-title mdui-box-flex-1">菜名</div>';
+                html+='<div class="boundary">|</div>';
+                html+='<div class="tiny-title mdui-box-flex-1">单价</div>';
+                html+='<div class="boundary">|</div>';
+                html+='<div class="tiny-title mdui-box-flex-1">数量</div>';
+                html+='<div class="boundary">|</div>';
+                html+='<div class="tiny-title mdui-box-flex-1">总价</div>';
+                html+='</div>';
+                html+='<div class="cell-box-show">';
+                if(data.data[i].menuProductPrice[0].cltpro01001){
+                    html+='<div class="cell-box mdui-box">';
+                    html+='<div class="cell mdui-box-flex-1">'+data.data[i].menuProductPrice[0].cltpro01001+'</div>';
+                    html+='<div class="cell mdui-box-flex-1">￥'+data.data[i].menuProductPrice[0].newPrice+''+data.data[i].menuProductPrice[0].epsmym02003+'</div>';
+                    html+='<div class="cell mdui-box-flex-1">'+data.data[i].menuProductPrice[0].epsmym02001+''+data.data[i].menuProductPrice[0].epsmym02002+'</div>';
+                    html+='<div class="cell mdui-box-flex-1">￥'+data.data[i].menuProductPrice[0].totalNew+'元</div>';
+                    html+='</div>';
+                }
+                if(data.data[i].menuProductPrice[1]){
+                    if(data.data[i].menuProductPrice[1].cltpro01001){
+                        html+='<div class="cell-box mdui-box">';
+                        html+='<div class="cell mdui-box-flex-1">'+data.data[i].menuProductPrice[1].cltpro01001+'</div>';
+                        html+='<div class="cell mdui-box-flex-1">￥'+data.data[i].menuProductPrice[1].newPrice+''+data.data[i].menuProductPrice[1].epsmym02003+'</div>';
+                        html+='<div class="cell mdui-box-flex-1">'+data.data[i].menuProductPrice[1].epsmym02001+''+data.data[i].menuProductPrice[1].epsmym02002+'</div>';
+                        html+='<div class="cell mdui-box-flex-1">￥'+data.data[i].menuProductPrice[1].totalNew+'元</div>';
+                        html+='</div>';
+                    }
+                }else{
+
+                }
+                html+='</div>';
+                if(data.data[i].distance!='03'){
+                    html += '<div class="list-item-dis">' + data.data[i].distance + 'km</div>';
+                }
+                html+='</div>';
+                html+='<div class="detail">';
+                if(menuNum>2){
+                    for(var j=2;j<menuNum;j++){
+                        html+='<div class="cell-box mdui-box">';
+                        html+='<div class="cell mdui-box-flex-1">'+data.data[i].menuProductPrice[j].cltpro01001+'</div>';
+                        html+='<div class="cell mdui-box-flex-1">￥'+data.data[i].menuProductPrice[j].newPrice+''+data.data[i].menuProductPrice[j].epsmym02003+'</div>';
+                        html+='<div class="cell mdui-box-flex-1">'+data.data[i].menuProductPrice[j].epsmym02001+''+data.data[i].menuProductPrice[j].epsmym02002+'</div>';
+                        html+='<div class="cell mdui-box-flex-1">￥'+data.data[i].menuProductPrice[j].totalNew+'元</div>';
+                        html+='</div>';
+                    }
+                }
+                html+='</div>';
+                if(menuNum>2){
+                    html+='<div class="drop dropdown"></div>';
+                }
+                html+='</div>';
+
+
+//                html+='<div class="list" data-log="'+data.data[i].cltpit01007+'" data-lat="'+data.data[i].cltpit01008+'">';
+//                html+='<div class="list-item">';
+//                html+='<div class="list-item-title">'+data.data[i].cltpit01001+'</div>';
+//                html+='<div class="list-item-price mdui-box">';
+//                html+='<div>平均<span>￥'+data.data[i].totalAvg+'</span></div>';
+//                html+='<div>最新<span>￥'+data.data[i].totalNew+'</span></div>';
+//                html+='</div>';
+//                if(data.data[i].distance!='03'){
+//                    html += '<div class="list-item-dis">' + data.data[i].distance + 'km</div>';
+//                }
+//                html+='</div>';
+//                html+='<div class="detail">';
+//                for(var j=0;j<data.data[i].menuProductPrice.length;j++){
+//                    html+='<div class="mdui-box">';
+//                    html+='<div class="mdui-box-flex-1">'+data.data[i].menuProductPrice[j].cltpro01001+'</div>';
+//                    html+='<div>￥'+data.data[i].menuProductPrice[j].newPrice+'<span style="font-size: .8rem; color: #666666;">(元/斤)</span></div>';
+//                    html+='</div>';
+//                }
+//                html+='</div>';
+//                html+='<div class="drop dropdown"></div>';
+//                html+='</div>';
+            }
+            if(bz){
+                $('.con-two-content').html(html);
+            }else{
+                $('.con-one-content').html(html);
+            }
+        }else{
+            if(bz){
+                $('.con-two-content').html('<div class="no-data">暂无数据</div>');
+            }else{
+                $('.con-one-content').html('<div class="no-data">暂无数据</div>');
+            }
+        }
+    }
+
+
+
+    //    //加载数据的方法
+//    function set_list(data,bz){
+//        var len=data.data.length;
+//        if(len){
+//            var html='';
+//            for(var i=0;i<len;i++){
+////                var html='';
+//                html+='<div class="list" data-log="'+data.data[i].cltpit01007+'" data-lat="'+data.data[i].cltpit01008+'">';
+//                html+='<div class="list-item">';
+//                html+='<div class="list-item-title">'+data.data[i].cltpit01001+'</div>';
+//                html+='<div class="list-item-price mdui-box">';
+//                html+='<div>平均<span>￥'+data.data[i].totalAvg+'</span></div>';
+//                html+='<div>最新<span>￥'+data.data[i].totalNew+'</span></div>';
+//                html+='</div>';
+//                if(data.data[i].distance!='03'){
+//                    html += '<div class="list-item-dis">' + data.data[i].distance + 'km</div>';
+//                }
+//                html+='</div>';
+//                html+='<div class="detail">';
+//                for(var j=0;j<data.data[i].menuProductPrice.length;j++){
+//                    html+='<div class="mdui-box">';
+//                    html+='<div class="mdui-box-flex-1">'+data.data[i].menuProductPrice[j].cltpro01001+'</div>';
+//                    html+='<div>￥'+data.data[i].menuProductPrice[j].newPrice+'<span style="font-size: .8rem; color: #666666;">(元/斤)</span></div>';
+//                    html+='</div>';
+//                }
+//                html+='</div>';
+//                html+='<div class="drop dropdown"></div>';
+//                html+='</div>';
+////                var obj={};
+////                obj.distance=parseFloat(data.data[i].distance);
+////                obj.html=html;
+////                arr.push(obj);
+//            }
+//            //            var arr=[];
+//
+//            if(bz){
+//                $('.con-two-content').html(html);
+//            }else{
+//                $('.con-one-content').html(html);
+//            }
+////            arr.sort(getSortFun('asc', 'distance'));
+////            if(name){
+////                for(var m = 0; m < arr.length; m++){
+////                    $('#con-3').append(arr[m].html);
+////                }
+////            }else{
+////                for(var m = 0; m < arr.length; m++){
+////                    if(bz){
+////                        $('#con-2').append(arr[m].html);
+////                    }else{
+////                        $('#con-0').append(arr[m].html);
+////                    }
+////                }
+////                $('.comment-xz').trigger('tap');
+////            }
+//        }else{
+//            if(bz){
+//                $('.con-two-content').html('<div class="no-data">暂无数据</div>');
+//            }else{
+//                $('.con-one-content').html('<div class="no-data">暂无数据</div>');
+//            }
+//        }
+//    }
+
+    //列表标题切换
+    $(document).on('tap','.second-title>div',function(){
+        if(1){
+            var index=$(this).index();
+            var ele=$('.classify-content>div');
+            if(!$(this).hasClass('choose')){
+                $('.second-title>div').removeClass('choose');
+                $(this).addClass('choose');
+                ele.hide();
+                $('#con-'+index).show();
+            }
+        }else{
+            $.toast('数据加载中，请稍等');
+        }
+    });
+
+//    function getSortFun(order, sortBy) {
+//        var ordAlpah = (order == 'asc') ? '>' : '<';
+//        var sortFun = new Function('a', 'b', 'return a.' + sortBy + ordAlpah + 'b.' + sortBy + '?1:-1');
+//        return sortFun;
+//    }
+
+    //距离点击事件
+    $('.distance>div').on('tap',function(){
+        $('.distance>div').each(function(){
+            $(this).removeClass('distance-item-on').addClass('distance-item');
+        });
+        $('.sx-l').html($(this).html());
+        $(this).addClass('distance-item-on');
+        var item=$(this).html();
+        conTwoTap(name,item);
+        $('.sx-title').trigger('tap');
+    });
+
+    $('#con-2').on('tap','.sx-title',function(){
+        if($(this).hasClass('sx-box')){
+            $(this).removeClass('sx-box').addClass('sx-box-on');
+            $('.choose-distance').show();
+        }else{
+            $(this).removeClass('sx-box-on').addClass('sx-box');
+            $('.choose-distance').hide();
+        }
+    });
+
+    $('.px>div').on('tap',function(){
+        $('.px>div').each(function(){
+            $(this).removeClass('xs-item-on');
+        });
+        $(this).addClass('xs-item-on');
+        var item=$(this).html();
+        conOneTap(name,item);
+    });
+
+    function conOneTap(name,item){
+        if(item){
+            var px = setPx(item);
+            if(name=='推荐菜谱'){//推荐菜谱过来
+                tjcpRequestMarketData(epsrmm01id,px);
+            }else{
+                wdcpRequestMarketData(wdcp_xj,px);
+            }
+        }else{
+            $.toast('请选择一项进行排序!')
+        }
+    }
+
+    function conTwoTap(name,item){
+        if(item){
+            if(name=='推荐菜谱'){
+                tjcpRequestBestData(epsrmm01id,getDistance(item));
+            }else{
+                wdcpRequestBestData(wdcp_xj,getDistance(item));
+            }
+        }else{
+            $.toast('请选择一项进行排序!');
+        }
+    }
+
+
+    //设置排序
+    function setPx(px){
+        switch(px){
+            case '价格升序':return 'jgu';
+                break;
+            case '价格降序':return 'jgd';
+                break;
+            case '距离升序':return 'jlu';
+                break;
+            case '距离降序':return 'jld';
+                break;
+        }
+    }
+
+    //找距离
+    function getDistance(far){
+        var distance=$('.distance-item'),title=$('.sx-title');
+        switch(far){
+            case '附近':$.setStorage('near','0');
+                title.html('附近');
+                break;
+            case '1km':$.setStorage('near','1');
+                title.html('1km');
+                break;
+            case '2km':$.setStorage('near','2');
+                title.html('2km');
+                break;
+            case '3km':$.setStorage('near','3');
+                title.html('3km');
+                break;
+            case '4km':$.setStorage('near','4');
+                title.html('4km');
+                break;
+            case '全城':$.setStorage('near','5');
+                title.html('全城');
+                break;
+        }
+    }
+
+    //找距离
+    function setDistance(far){
+        var distance=$('.distance-item'),title=$('.sx-title');
+        switch(far){
+            case '0':distance.eq(0).addClass('distance-item-on');
+                title.html('附近');
+                break;
+            case '1':distance.eq(1).addClass('distance-item-on');
+                title.html('1km');
+                break;
+            case '2':distance.eq(2).addClass('distance-item-on');
+                title.html('2km');
+                break;
+            case '3':distance.eq(3).addClass('distance-item-on');
+                title.html('3km');
+                break;
+            case '4':distance.eq(4).addClass('distance-item-on');
+                title.html('4km');
+                break;
+            case '5':distance.eq(5).addClass('distance-item-on');
+                title.html('全城');
+                break;
+        }
+    }
+</script>
+</body>
+</html>

@@ -1,0 +1,264 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8">
+    <title>mCollection</title>
+    <meta name="viewport" content="target-densitydpi=device-dpi,width=device-width, initial-scale=1,maximum-scale=1, user-scalable=no">
+    <meta name="apple-mobile-web-app-capable" content="yes">
+    <meta name="apple-mobile-web-app-status-bar-style" content="black">
+    <link rel="stylesheet" href="../../../static/mdui/css/mdui.min.css">
+    <link rel="stylesheet" href="../../../static/mCheap/css/mCommon.css">
+    <style>
+        *{
+            font-family: "Microsoft YaHei";
+            color: #666666;
+        }
+        body{
+            background-color: #ffffff;
+        }
+        .list-item{
+            position: relative;
+            padding: 0.5rem 1rem;
+            border-bottom: 1px solid #CCCCCC;
+
+        }
+        .item-img{
+            margin-right: .5rem;
+            width:5rem ;
+        }
+        .item-img>img{
+            width: 5rem;
+            height: 4rem;
+            border-radius: 5px;
+        }
+        .item-title{
+            text-overflow:ellipsis;
+            overflow: hidden;
+            white-space:nowrap;
+            color: #000000;
+        }
+        .item-address,.item-yysj,.item-dis{
+            text-overflow:ellipsis;
+            overflow: hidden;
+            white-space:nowrap;
+            height: 1rem;
+            line-height: 1rem;
+            color: #666666;
+            font-size: .8rem;
+        }
+        .item-address{
+            background: url("../images/dis.png") no-repeat left center;
+            background-size: 0.8rem auto;
+            padding-left: 1rem;
+        }
+        .item-yysj{
+            background: url("../images/time.png") no-repeat left center;
+            background-size: 0.8rem auto;
+            padding-left: 1rem;
+        }
+        .item-star{
+            height: 1rem;
+            line-height: 1rem;
+        }
+        .item-star>img{
+            height: 0.8rem;
+            width: auto;
+        }
+        .item-islike{
+            position: absolute;
+            right: 0;
+            top: 0;
+            padding: .5rem 1rem;
+            height: 2.6rem;
+            width: 3rem;
+        }
+        .like{
+            background: url("../images/like.png") no-repeat center;
+            background-size: auto 1rem;
+        }
+        .dislike{
+            background: url("../images/dislike.png") no-repeat center;
+            background-size: auto 1rem;
+        }
+    </style>
+</head>
+<body>
+<div id="content">
+    <!--<div class="list-item">-->
+        <!--<div class="item-container mdui-box">-->
+            <!--<div class="item-img"></div>-->
+            <!--<div class="mdui-box-flex-1">-->
+                <!--<div class="item-title">看得见卡是看得见</div>-->
+                <!--<div class="item-star">dsahadkskds</div>-->
+                <!--<div class="mdui-box">-->
+                    <!--<div class="item-address mdui-box-flex-1">dsadhsajdjasj</div>-->
+                    <!--<div class="item-dis">1.7km</div>-->
+                 <!--</div>-->
+            <!--<div class="item-yysj">dsjakdsa</div>-->
+            <!--</div>-->
+        <!--</div>-->
+        <!--<div class="item-islike dislike"></div>-->
+    <!--</div>-->
+</div>
+
+
+<!--页面-->
+<script src="../../../static/mdui/js/mdui.min.js"></script>
+<script src="../../../static/mCheap/js/mCheap.config.js"></script>
+<script src="../../../server.js"></script>
+ <script src="../../../public.js"></script>
+<script>
+    var marketMore=function(){
+        this.lat= $.getStorage('lat');
+        this.log= $.getStorage('log');
+        this.init=function(){
+            this.request();
+            this.events();
+            this.isLikeTap();
+        }
+    };
+    function sortDataByKey(data,key,desc){
+        return data.sort(function(a,b){
+            return desc?b[key]-a[key]:a[key]-b[key];
+        })
+    }
+    marketMore.prototype={
+        setList:function(data){
+            var len=data.length,
+                    i= 0,
+                    html='';
+            data=sortDataByKey(data,'distance',false);
+            for(i;i<len;i++){
+                var m=0;
+                var j=0;
+                html+='<div class="list-item">';
+                html+='<div class="item-container mdui-box" data-cltpit01id="'+data[i].cltpit01id+'" data-log="'+data[i].cltpit01007+'" data-lat="'+data[i].cltpit01008+'">';
+                html+='<div class="item-img">';
+                html+='<img src="'+$.serverSettings.serverPath+'/mobile/mcheap/mcheapAction!getMarketPicture.do?access_token='+$.getStorage('access_token')+'&url='+data[i].url+'">';
+                html+='</div>';
+                html+='<div class="mdui-box-flex-1">';
+                html+='<div class="item-title">'+data[i].cltpit01001+'</div>';
+                html += '<div class="item-star">';
+                if(data[i].star) {
+                    for(j;j<parseInt(data[i].star);j++){
+                        html+='<img src="../images/star_01.png" />';
+                        m++;
+                    }
+                    if (parseInt(data[i].star.split('.')[1])>0){
+                        html+='<img src="../images/star_03.png"/>';
+                        m++;
+                    }
+                    if(m<5){
+                        for (j=m;j<5;j++){
+                            html+='<img src="../images/star_02.png"/>';
+                        }
+                    }
+                }
+                else{
+                    for (j=0;j<5;j++){
+                        html+='<img src="../images/star_02.png" />'
+                    }
+                }
+                html+='</div>';
+                html+='<div class="mdui-box">';
+                html+='<div class="item-address mdui-box-flex-1">'+data[i].cltpit01004+'</div>';
+                html+='<div class="item-dis">'+data[i].distance+'km</div>';
+                html+='</div>';
+                html+='<div class="item-yysj">营业时间：'+data[i].cltpit01005 + '~' + data[i].cltpit01006+'</div>';
+                html+='</div>';
+                html+='</div>';
+                if(data[i].isfocus=='0') {
+                    html += '<div class="item-islike dislike"></div>';
+                }
+                else {
+                    html += '<div class="item-islike like"></div>';
+                }
+                html+='</div>';
+            }
+            $('#content').html(html);
+            this.imgError('#content','../images/market_default.png');
+        },
+        /*
+         * 页面事件
+         * */
+        events:function(){
+            $('#content').on('tap','.item-container',function(){
+                $.openWin({
+                    name:'market',
+                    animId : 2,
+                    url:'wgtroot://mCheap/market/ui/market.html',
+                    pageParam:{
+                        cltpit01id:$(this).data('cltpit01id'),
+                        lat:$(this).data('lat'),
+                        log:$(this).data('log')
+                    }
+                });
+            });
+        },
+        /*
+         * 页面请求
+         * */
+        request:function(){
+            var that=this;
+            $.request({
+                urlType: 'focusStation',
+                data: {
+                    "access_token": $.getStorage('access_token'),
+                    lat: that.lat,//经度
+                    log: that.log//纬度
+                }
+            }, function (data) {
+//                alert(JSON.stringify(data));
+                if (data.success) {
+                    if (data.data.length > 0) {
+                        that.setList(data.data);
+                    }
+                }
+                else {
+                    //$.toast('网络错误');
+                }
+            });
+        },
+        /*
+         * 点击关注、取消关注
+         * */
+        isLikeTap:function(){
+            $('#content').on('tap','.item-islike',function(){
+                var target=$(this);
+                var cltpit01id=target.parent().find('.item-container').data('cltpit01id');
+                if($(this).hasClass('like')){
+                    $.request({
+                        urlType:'deleteFocusStation',
+                        data:{
+                            "access_token": $.getStorage('access_token'),
+                            cltpit01id:cltpit01id
+                        }
+                    },function(data){
+                        if(data.success) {
+                            target.removeClass('like').addClass('dislike');
+                            target.parent().remove();
+                        }
+                        else {
+                            //$.toast('网络错误')
+                        }
+                    });
+                }
+            });
+        },
+        /*
+         * 处理图片加载错误
+         * */
+        imgError:function(selector,img){
+            $(selector).find('img').on('error',function(){
+                $(this).prop('src',img)
+            })
+        }
+    };
+    $.uexWindowReady(function(){
+        var pageData = $.pageParam;
+        var init=new marketMore();
+        init.init();
+    });
+</script>
+</body>
+</html>

@@ -1,0 +1,258 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8">
+    <title>mCollection</title>
+    <meta name="viewport" content="target-densitydpi=device-dpi,width=device-width, initial-scale=1,maximum-scale=1, user-scalable=no">
+    <meta name="apple-mobile-web-app-capable" content="yes">
+    <meta name="apple-mobile-web-app-status-bar-style" content="black">
+    <link rel="stylesheet" href="../../../static/mdui/css/mdui.min.css">
+    <link rel="stylesheet" href="../../../static/mCheap/css/mCommon.css">
+    <link rel="stylesheet" href="../css/market_more.css">
+    <style>
+        .no-data{
+            height: 3rem;
+            text-align: center;
+            line-height: 3rem;
+            border-bottom: 1px solid #CCCCCC;
+        }
+    </style>
+</head>
+<body>
+<div class="header-box mdui-bar mdui-bar-nav">
+    <div class="header  mdui-box">
+        <div class="back mdui-action-back"><img src="../images/back.png"></div>
+        <div class="mdui-box-flex-1 mdui-box search-box">
+            <div class="mdui-box-flex-1">
+                <input type="text" id="search"  placeholder="请输入市场名称"/>
+            </div>
+            <div class="search-img"><img src="../images/search.png"></div>
+        </div>
+        <!--<div class="shaixuan">-->
+            <!--<img src="../images/shaixuan.png">-->
+        <!--</div>-->
+    </div>
+</div>
+<div class="list" id="list">
+    <!--<div class="list-item">-->
+        <!--<div class="item-container mdui-box">-->
+            <!--<div class="item-img"></div>-->
+            <!--<div class="mdui-box-flex-1">-->
+                <!--<div class="item-title">看得见卡是看得见</div>-->
+                <!--<div class="item-star">dsahadkskds</div>-->
+                <!--<div class="mdui-box">-->
+                    <!--<div class="item-address mdui-box-flex-1">dsadhsajdjasj</div>-->
+                    <!--<div class="item-dis">1.7km</div>-->
+                <!--</div>-->
+                <!--<div class="item-yysj">dsjakdsa</div>-->
+            <!--</div>-->
+        <!--</div>-->
+        <!--<div class="item-islike dislike"></div>-->
+    <!--</div>-->
+</div>
+<!--页面-->
+<script src="../../../static/mdui/js/mdui.js"></script>
+<script src="../../../static/mCheap/js/mCheap.config.js"></script>
+<script src="../../../static/mCheap/js/scroll.js"></script>
+<script src="../../../server.js"></script>
+<script>
+    var marketMore=function(){
+        this.requestFlag=true;
+        this.pageNum=0;//分页的页数
+        this.lat= $.getStorage('lat');
+        this.log= $.getStorage('log');
+        this.init=function(){
+            this.request();
+            this.events();
+            this.isLikeTap();
+        }
+    };
+    function sortDataByKey(data,key,desc){
+        return data.sort(function(a,b){
+            return desc?b[key]-a[key]:a[key]-b[key];
+        })
+    }
+    marketMore.prototype={
+        setList:function(data){
+            var len=data.length,
+                i= 0,
+                html='';
+//            data=sortDataByKey(data,'distance',false);
+            if(len){
+                for(i;i<len;i++){
+                    var m=0;
+                    var j=0;
+                    html+='<div class="list-item">';
+                    html+='<div class="item-container mdui-box" data-cltpit01id="'+data[i].cltpit01id+'" data-log="'+data[i].cltpit01007+'" data-lat="'+data[i].cltpit01008+'">';
+                    html+='<div class="item-img">';
+                    html+='<img src="'+$.serverSettings.serverPath+'/mobile/mcheap/mcheapAction!getMarketPicture.do?access_token='+$.getStorage('access_token')+'&url='+data[i].cltpit02002+'">';
+                    html+='</div>';
+                    html+='<div class="mdui-box-flex-1">';
+                    html+='<div class="item-title">'+data[i].cltpit01001+'</div>';
+                    html += '<div class="item-star">';
+                    if(data[i].star) {
+                        for(j;j<parseInt(data[i].star);j++){
+                            html+='<img src="../images/star_01.png" />';
+                            m++;
+                        }
+                        if (parseInt(data[i].star.split('.')[1])>0){
+                            html+='<img src="../images/star_03.png"/>';
+                            m++;
+                        }
+                        if(m<5){
+                            for (j=m;j<5;j++){
+                                html+='<img src="../images/star_02.png"/>';
+                            }
+                        }
+                    }
+                    else{
+                        for (j=0;j<5;j++){
+                            html+='<img src="../images/star_02.png" />'
+                        }
+                    }
+                    html+='</div>';
+                    html+='<div class="mdui-box">';
+                    html+='<div class="item-address mdui-box-flex-1">'+data[i].cltpit01004+'</div>';
+                    html+='<div class="item-dis">'+data[i].distance+'km</div>';
+                    html+='</div>';
+                    html+='<div class="item-yysj">营业时间：'+data[i].cltpit01005 + '~' + data[i].cltpit01006+'</div>';
+                    html+='</div>';
+                    html+='</div>';
+                    if(data[i].isfocus=='0') {
+                        html += '<div class="item-islike dislike"></div>';
+                    }else{
+                        html += '<div class="item-islike like"></div>';
+                    }
+                    html+='</div>';
+                }
+                $('.list').append(html);
+                this.imgError('.list','../images/market_default.png');
+            }else{
+                html='<div class="no-data">暂无数据</div>';
+                $('.list').html(html);
+            }
+        },
+        /*
+        * 页面事件
+        * */
+        events:function(){
+            var that=this;
+            $('.search-img').on('tap',function(){
+                that.pageNum=0;
+                $('#list').html('');
+                that.request();
+            });
+            $('.list').on('tap','.item-container',function(){
+                $.openWin({
+                    name:'market',
+                    animId : 2,
+                    url:'wgtroot://mCheap/market/ui/market.html',
+                    pageParam:{
+                        cltpit01id:$(this).data('cltpit01id'),
+                        lat:$(this).data('lat'),
+                        log:$(this).data('log')
+                    }
+                });
+            });
+        },
+        /*
+        * 页面请求
+        * */
+        request:function(){
+            var that=this;
+            $.request({
+                urlType: 'moreCollections',
+                data: {
+                    "access_token": $.getStorage('access_token'),
+                    lat: that.lat,//经度
+                    log: that.log,//纬度
+                    cltpit01001:$('#search').val(),
+                    pageSize:'10',
+                    page:that.pageNum
+                }
+            }, function (data) {
+                if (data.success) {
+                    if (data.data.length > 0) {
+                        that.setList(data.data);
+                    }else{
+                        if(that.pageNum==0){
+                            that.setList(data.data);
+                        }else{
+                            $.toast('没有更多了!');
+                            that.requestFlag=false;
+                        }
+                    }
+                }else {
+//                    $.toast('网络错误');
+                }
+            });
+        },
+        /*
+        * 点击关注、取消关注
+        * */
+        isLikeTap:function(){
+            $('.list').on('tap','.item-islike',function(){
+                var target=$(this);
+                var cltpit01id=target.parent().find('.item-container').data('cltpit01id');
+                if($(this).hasClass('like')){
+                    $.request({
+                        urlType:'deleteFocusStation',
+                        data:{
+                            "access_token": $.getStorage('access_token'),
+                            cltpit01id:cltpit01id
+                        }
+                    },function(data){
+                        if(data.success) {
+                            target.removeClass('like').addClass('dislike');
+                        }
+                        else {
+                            //$.toast('网络错误')
+                        }
+                    });
+                }
+                else{
+                    $.request({
+                        urlType:'addFocusStation',
+                        data:{
+                            "access_token": $.getStorage('access_token'),
+                            focusCollectStation:JSON.stringify({
+                                cltpit01id:cltpit01id
+                            })
+                        }
+                    },function(data){
+                        if(data.success) {
+                            target.removeClass('dislike').addClass('like');
+                        }
+                        else {
+                            //$.toast('网络错误')
+                        }
+                    });
+                }
+            });
+        },
+        /*
+        * 处理图片加载错误
+        * */
+        imgError:function(selector,img){
+            $(selector).find('img').on('error',function(){
+                $(this).prop('src',img)
+            })
+        }
+    };
+    $.uexWindowReady(function(){
+    	var pageData = $.pageParam;
+        var init=new marketMore();
+        init.init();
+        var option = {id:"list",funs:{after:function(){
+            if(init.requestFlag){
+                init.pageNum=init.pageNum+1;
+                init.request();
+            }else{
+                $.toast('没有更多了!');
+            }
+        }}};
+        $.initScroll(option);
+    });
+</script>
+</body>
+</html>

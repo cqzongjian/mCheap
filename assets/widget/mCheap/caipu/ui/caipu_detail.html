@@ -1,0 +1,189 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8">
+    <title>mCollection</title>
+    <meta name="viewport" content="target-densitydpi=device-dpi,width=device-width, initial-scale=1,maximum-scale=1, user-scalable=no">
+    <meta name="apple-mobile-web-app-capable" content="yes">
+    <meta name="apple-mobile-web-app-status-bar-style" content="black">
+    <link rel="stylesheet" href="../../../static/mdui/css/mdui.min.css">
+    <link rel="stylesheet" href="../../../static/mCheap/css/mCommon.css">
+    <link rel="stylesheet" href="../css/caipu_detail.css">
+    <script src="../js/caipu_detail.js"></script>
+</head>
+<body>
+<div class="header-box mdui-bar mdui-bar-nav">
+    <div class="header">
+        <div class="back mdui-action-back"><img src="../images/back.png"></div>
+        <div class="title">菜谱</div>
+    </div>
+</div>
+<div class="top">
+    <div class="mdui-box top-header">
+        <div class="mdui-box-flex-1"></div>
+        <div class="add"></div>
+    </div>
+    <div class="mdui-box cailiao-detail">
+        <!--<div class="mdui-box-flex-1">-->
+            <!--<span></span>-->
+            <!--<span>200g</span>-->
+        <!--</div>-->
+        <!--<div class="mdui-box-flex-1">-->
+            <!--<span>猪肉</span>-->
+            <!--<span>200g</span>-->
+        <!--</div>-->
+        <!--<div class="mdui-box-flex-1">-->
+            <!--<span>猪肉</span>-->
+            <!--<span>200g</span>-->
+        <!--</div>-->
+        <!--<div class="mdui-box-flex-1">-->
+            <!--<span>猪肉</span>-->
+            <!--<span>200g</span>-->
+        <!--</div>-->
+        <!--<div class="mdui-box-flex-1">-->
+            <!--<span>猪肉</span>-->
+            <!--<span>200g</span>-->
+        <!--</div>-->
+    </div>
+</div>
+<div style="height: 0.5rem;background-color: #E6EAE8"></div>
+<div class="list">
+    <!--<div class="list-item mdui-box">-->
+        <!--<div class="list-item-img"><img src="../images/01/qjrs.jpg"></div>-->
+        <!--<div class="mdui-box-flex-1">-->
+            <!--<div class="list-item-title">红星路农贸市场好久发货及时交付</div>-->
+            <!--<div class="list-item-sub mdui-box">还记得刷卡机的开始电话回家啊废话建安费开朗大方</div>-->
+        <!--</div>-->
+        <!--<div class="list-item-more">制作方法</div>-->
+    <!--</div>-->
+    <!--<div class="list-item mdui-box">-->
+        <!--<div class="list-item-img"><img src="../images/01/qjrs.jpg"></div>-->
+        <!--<div class="mdui-box-flex-1">-->
+            <!--<div class="list-item-title">红星路农贸市场好久发货及时交付</div>-->
+            <!--<div class="list-item-sub mdui-box mdui-ellipsis-2">还记得刷卡机的开始</div>-->
+        <!--</div>-->
+        <!--<div class="list-item-more">制作方法</div>-->
+    <!--</div>-->
+    <!--<div class="list-item mdui-box">-->
+        <!--<div class="list-item-img"><img src="../images/01/qjrs.jpg"></div>-->
+        <!--<div class="mdui-box-flex-1">-->
+            <!--<div class="list-item-title">红星路农贸市场好久发货及时交付</div>-->
+            <!--<div class="list-item-sub mdui-box">还记得刷卡机的开始</div>-->
+        <!--</div>-->
+        <!--<div class="list-item-more">制作方法</div>-->
+    <!--</div>-->
+    <!--<div class="list-item mdui-box">-->
+        <!--<div class="list-item-img"><img src="../images/01/qjrs.jpg"></div>-->
+        <!--<div class="mdui-box-flex-1">-->
+            <!--<div class="list-item-title">红星路农贸市场好久发货及时交付</div>-->
+            <!--<div class="list-item-sub mdui-box">还记得刷卡机的开始</div>-->
+        <!--</div>-->
+        <!--<div class="list-item-more">制作方法</div>-->
+    <!--</div>-->
+    <!--<div class="list-item mdui-box">-->
+        <!--<div class="list-item-img"><img src="../images/01/qjrs.jpg"></div>-->
+        <!--<div class="mdui-box-flex-1">-->
+            <!--<div class="list-item-title">红星路农贸市场好久发货及时交付</div>-->
+            <!--<div class="list-item-sub mdui-box">还记得刷卡机的开始</div>-->
+        <!--</div>-->
+        <!--<div class="list-item-more">制作方法</div>-->
+    <!--</div>-->
+</div>
+<div class="footer">
+    <div>询价</div>
+</div>
+<!--页面-->
+<script src="../../../static/mdui/js/mdui.min.js"></script>
+<script src="../../../static/mCheap/js/mCheap.config.js"></script>
+<script src="../../../server.js"></script>
+<script>
+
+
+    $.uexWindowReady(function(){
+    	var pageData=$.pageParam;//得到页面参数
+
+        pageData=$.strToJson(pageData);
+        var epsrmm01id = pageData.epsrmm01id;
+
+        (function(){
+            //点击制作方法跳转到指定页面
+            $('.list').on('tap','.list-item',function(){
+                var id = $(this).data("id");
+                var param_zz;
+                for(var i=0;i<arr.length;i++){
+                    if(id==arr[i].key){
+                        param_zz = arr[i].value;
+                    }
+                }
+                $.openWin({
+                    name:"make_way",
+        			animId : 2,
+                    url:'wgtroot://mCheap/caipu/ui/make_way.html',
+                    pageParam:{
+                        param_zz : param_zz
+                    }
+                });
+            });
+            $('.footer').on('tap',function(){
+                $.openWin({
+                    name:"xj",
+        			animId : 2,
+                    url:'wgtroot://mCheap/caipu/ui/caipu_market.html',
+                    pageParam:{
+                    	epsrmm01id : epsrmm01id ,
+                        name:"推荐菜谱"
+                    }
+                });
+            })
+        })();
+
+        //将推荐菜谱添加到我的菜谱
+        $(document).on('tap','.add',fn_add);
+        function fn_add(){
+            $.request({
+                urlType:'addRecommendMenu',
+                data:{
+                    "access_token": $.getStorage('access_token'),
+                    epsrmm01id : epsrmm01id
+                }
+            },function(data){
+                if(data.success) {
+                    alert('添加成功！');
+                }
+                else {
+                    $.toast(data.message)
+                }
+            });
+        }
+        
+        
+        var arr=[];//记录制作方法数据
+        $('.top-header>div:first-child').html(pageData.name);//设置标题
+        /*
+        * 请求菜谱内容
+        * */
+        $.request({
+            urlType:'recommendDetail',
+            data:{
+                "access_token": $.getStorage('access_token'),
+                epsrmm01id : epsrmm01id
+            }
+        },function(data){
+            if(data.success) {
+                var len = data.data.recommendMenuDishDetail.length;
+                for(var i=0;i<len;i++){
+                    var obj ={};
+                    obj.key = data.data.recommendMenuDishDetail[i].epsrmm02id;
+                    obj.value = data.data.recommendMenuDishDetail[i];
+                    arr.push(obj);
+                }
+                setData(data);
+            }
+            else {
+                alert('网络错误')
+            }
+        });
+    });
+</script>
+</body>
+</html>

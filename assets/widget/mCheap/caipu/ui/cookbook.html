@@ -1,0 +1,205 @@
+
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="utf-8">
+<title>your title</title>
+<meta name="viewport"
+	content="target-densitydpi=device-dpi,width=device-width, initial-scale=1,maximum-scale=1, user-scalable=no">
+<meta name="mobile-web-app-capable" content="yes">
+<meta name="apple-mobile-web-app-capable" content="yes">
+<meta name="apple-mobile-web-app-status-bar-style" content="black">
+<link rel="stylesheet" href="../../../static/mdui/css/mdui.min.css">
+<!--扩展组件/第三方/工程css---->
+<style>
+.body-wrapper-box{
+    width : 100%;
+    height: 100%;
+    border:1px solid red;
+}
+.bod{
+   border:1px solid white;
+}
+/*单个大选项*/
+.menu{
+    margin-left:1rem;
+    margin-top:1rem;
+    margin-right:1rem;
+    background-color:white;
+    border:1px solid #C7C9C8;
+}
+.mar_bottom{
+    margin-bottom:1rem;
+}
+/*单个大选项*/
+/*第一行*/
+.address{
+    color:#3BA15C;
+    font-family:SimHei;
+    font-size:1.5rem;
+    padding-left:1rem;
+    padding-top:1rem;
+    padding-bottom:1rem;
+}
+.location{
+    padding-top:1rem;
+    position:relative;
+}
+#location{
+    height:1rem;
+    width:0.8rem;
+    position:absolute;
+    right:0.2rem;
+}
+.distance{
+    font-family:SimHei;
+    padding-top:0.8rem;
+    font-size:1.2rem;
+    color:#878787;
+}
+/*第一行*/
+
+/*第二行*/
+.avg_title{
+    padding-left:1rem;
+    font-family:SimHei;
+    font-size:1.2rem;
+}
+.new_title{
+    font-family:SimHei;
+    font-size:1.2rem;
+}
+/*第二行*/
+
+/*第三行*/
+.price_whole{
+    padding-left:1rem;
+    padding-bottom:1rem;
+    padding-top:0.5rem;
+    position:relative;
+}
+.log{
+    font-family:SimHei;
+    font-size:1.8rem;
+    color:#3BA15C;
+}
+.price{
+    font-family:SimHei;
+    font-size:1.8rem;
+    color:#3BA15C;
+}
+.arraow{
+    padding-top:0.2rem;
+}
+#arraow{
+    position:absolute;
+    top:0;
+    right:2rem;
+    height:1.5rem;
+    width:1rem;
+}
+/*第三行*/
+</style>
+</head>
+
+<body>
+	<!--页面html-->
+	<div id="body" class="mdui-box mdui-box-ver body-wrapper-box" style="overflow:auto;">
+	    <div class="mdui-box mdui-box-ver menu">
+	        <!--***********第一部分 **********-->
+	        <div class="mdui-box mdui-box-flex-1 bod">
+	            <div class="mdui-box mdui-box-flex-2 address">
+	        三色路农贸市场
+		        </div>
+		        <div class="mdui-box mdui-box-flex-5 location">
+		            <img id="location" src="../images/location.png">
+		        </div>
+		        <div class="mdui-box mdui-box-flex-1 distance">1.8km</div> 
+	        </div>
+	        <!--***********第一部分 **********-->
+	        
+	        <!--***********第二部分 **********-->
+	        <div class="mdui-box mdui-box-flex-1">
+	            <div class="mdui-box mdui-box-flex-1 avg_title">平均</div>
+	            <div class="mdui-box mdui-box-flex-2 new_title">最新</div>
+	        </div>
+	        <!--***********第二部分 **********-->
+	        
+	        <!--***********第三部分 **********-->
+	        <div class="mdui-box mdui-box-flex-1 price_whole">
+	            <div class="mdui-box mdui-box-flex-2">
+	                <span class="log">¥</span>
+	                <div class="price">11.20</div>
+	            </div>
+	            <div class="mdui-box mdui-box-flex-5 bod">
+	                <span class="log">¥</span>
+	                <div class="price">11.20</div>
+	            </div>
+	            <div class="mdui-box mdui-box-flex-2 arraow">
+	                <img id="arraow" src="../images/arrow.png">
+	            </div>
+	        </div>
+	        <!--***********第三部分 **********-->   
+	    </div>
+    </div>
+	
+	
+	
+	
+	
+	<script src="../../../static/mdui/js/mdui.min.js"></script>
+	<!--扩展组件/第三方/工程js-->
+	<script>
+	$.uexWindowReady(function(){ 
+		
+	})
+	$(".address").on("tap",function fn_addmenu(){
+		
+		alert("****");
+		var title=222;
+		var distance=1.8;
+		var time1=11.20;
+		var time2=11.20;
+		for(var i=0;i<5;i++){
+			$(".body-wrapper-box").append(
+				"<div class='mdui-box mdui-box-ver menu'>"+
+			        "<div class='mdui-box mdui-box-flex-1 bod'>"+
+			            "<div class='mdui-box mdui-box-flex-2 address'>"+title+"</div>"+
+				        "<div class='mdui-box mdui-box-flex-5 location'>"+
+				            "<img id='location' src='../images/location.png'>"+
+				        "</div>"+
+				        "<div class='mdui-box mdui-box-flex-1 distance'>"+distance+"km</div>"+
+			        "</div>"+
+			        "<div class='mdui-box mdui-box-flex-1'>"+
+			            "<div class='mdui-box mdui-box-flex-1 avg_title'>平均</div>"+
+			            "<div class='mdui-box mdui-box-flex-2 new_title'>最新</div>"+
+			        "</div>"+
+			        "<div class='mdui-box mdui-box-flex-1 price_whole'>"+
+			            "<div class='mdui-box mdui-box-flex-2'>"+
+			                "<span class='log'>¥</span>"+
+			                "<div class='price'>"+time1+"</div>"+
+			            "</div>"+
+			            "<div class='mdui-box mdui-box-flex-5 bod'>"+
+			                "<span class='log'>¥</span>"+
+			                "<div class='price'>"+time2+"</div>"+
+			            "</div>"+
+			            "<div class='mdui-box mdui-box-flex-1 arraow'>"+
+			                "<img id='arraow' src='../images/arrow.png'>"+
+			            "</div>"+
+			        "</div>"+ 
+			    "</div>"
+			);
+		}
+		$("#body>div:last-child").addClass("mar_bottom");
+		
+		 
+		 
+		
+		
+	});
+	
+	
+		
+	</script>
+</body>
+</html>

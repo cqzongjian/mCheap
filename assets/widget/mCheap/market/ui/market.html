@@ -1,0 +1,442 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8">
+    <title>mCollection</title>
+    <meta name="viewport" content="target-densitydpi=device-dpi,width=device-width, initial-scale=1,maximum-scale=1, user-scalable=no">
+    <meta name="apple-mobile-web-app-capable" content="yes">
+    <meta name="apple-mobile-web-app-status-bar-style" content="black">
+    <link rel="stylesheet" href="../../../static/mdui/css/mdui.min.css">
+    <link rel="stylesheet" href="../../../static/mCheap/css/mCommon.css">
+    <link rel="stylesheet" href="../css/market.css">
+    <style>
+        .mc{
+            height: 100%;
+            width: 100%;
+            position: fixed;
+            z-index: 200;
+            background: rgba(0,0,0,0.3);
+            overflow: auto;
+            display:none;
+        }
+        .qq-img,.weichat-img,.xinlang-img{
+            width: 3rem;
+            height: 3rem;
+            /*border: 1px solid red;*/
+        }
+        .qq-share-div{
+            padding: 1rem;
+            text-align: center;
+        }
+        .qq-share-txt{
+            text-align: center;
+        }
+        .share-box{
+            position: absolute;
+            bottom: 0;
+            height: 15rem;
+            width: 100%;
+            background-color:white;
+        }
+        .share-div{
+            margin-top: 1rem;
+            border-top: 1px solid #666666;
+            padding: 1rem 2rem 2rem 2rem;
+        }
+        .share-cancel{
+            background-color: #f0f0f0;
+            border: 1px solid #CCCCCC;
+            padding: 0.5rem;
+            text-align: center;
+        }
+        .cheap-item{
+            color: #666666;
+            font-weight: 600;
+            padding: 0.5rem;
+            text-align: center;
+            width: 25%;
+            border: 1px solid #CCCCCC;
+        }
+        .cheap-item-on{
+            color: #3BA15C;
+            font-weight: 600;
+            padding: 0.5rem;
+            text-align: center;
+            width: 25%;
+            border: 1px solid #CCCCCC;
+        }
+        .search-before-content{
+            height: 100%;
+            width: 100%;
+            position: fixed;
+            z-index: 999;
+            background: rgba(0,0,0,0.3);
+            overflow: auto;
+        }
+        .searching{
+            color: white;
+            margin-top: 10rem;
+            width: 100%;
+            text-align: center;
+        }
+    </style>
+</head>
+<body>
+<div class="search-before-content">
+    <div class="searching">数据载入中，请稍后</div>
+</div>
+
+<div class="mc">
+    <div class="share-box">
+        <div class="mdui-box">
+            <div class="mdui-box-flex-1" style="visibility: hidden;">
+                <div class="qq-share-div">
+                    <img src="" class="qq-img"/>
+                </div>
+                <div class="qq-share-txt">QQ好友</div>
+            </div>
+            <div class="mdui-box-flex-1">
+                <div class="qq-share-div">
+                    <img src="../images/weixinlog.png" class="weichat-img"/>
+                </div>
+                <div class="qq-share-txt">微信好友</div>
+            </div>
+            <div class="mdui-box-flex-1" style="visibility: hidden;">
+                <div class="qq-share-div">
+                    <img src="" class="xinlang-img"/>
+                </div>
+                <div class="qq-share-txt">新浪微博</div>
+            </div>
+        </div>
+        <div class="share-div">
+            <div class="share-cancel">取消</div>
+        </div>
+    </div>
+
+</div>
+<div class="header-box mdui-bar mdui-bar-nav">
+    <div class="header  mdui-box">
+        <div class="back mdui-action-back"><img src="../images/back.png"></div>
+        <div class="mdui-box-flex-1 mdui-box search-box">
+            <div class="mdui-box-flex-1">
+                <form action="">
+                    <input type="text" id="search"  placeholder="请输入菜品名称"/>
+                </form>
+            </div>
+            <div class="search-img"><img src="../images/search.png"></div>
+        </div>
+        <div class="header-right">
+            <img src="../images/share.png">
+        </div>
+    </div>
+</div>
+<div class="market-top">
+
+    <!--<div class="mask"></div>-->
+    <!--<img src="../images/market_hongxinglu.png">-->
+    <!--<div class="market-name"></div>-->
+    <!--<div class="market-position"><span></span>&nbsp;&nbsp;&nbsp;<span class="market-dis"></span></div>-->
+    <!--<div class="market-yysj">营业时间（6:30-19:30）</div>-->
+    <!--<div class="market-qt mdui-box">-->
+        <!--&lt;!&ndash;<div class="mdui-box-flex-1">蔬菜指数&nbsp;&nbsp;<span></span></div>&ndash;&gt;-->
+        <!--<div class="mdui-box-flex-1">最低价格品种数&nbsp;&nbsp;<span></span></div>-->
+        <!--<div class="isLike">老子</div>-->
+    <!--</div>-->
+
+</div>
+<div class="sort mdui-box">
+
+    <!--<div class="mdui-box-flex-1 sort-item">-->
+        <!--<div class="sort-item-text">蔬菜</div>-->
+    <!--</div>-->
+    <!--<div class="sort-item-gap">|</div>-->
+    <!--<div class="mdui-box-flex-1 sort-item">-->
+        <!--<div class="sort-item-text">蔬菜</div>-->
+    <!--</div>-->
+    <!--<div class="sort-item-gap">|</div>-->
+    <!--<div class="mdui-box-flex-1 sort-item">-->
+        <!--<div class="sort-item-text">蔬菜</div>-->
+    <!--</div>-->
+    <!--<div class="sort-item-gap">|</div>-->
+    <!--<div class="mdui-box-flex-1 sort-item">-->
+        <!--<div class="sort-item-text">蔬菜</div>-->
+    <!--</div>-->
+    <!--<div class="sort-item-gap">|</div>-->
+    <!--<div class="mdui-box-flex-1 sort-item">-->
+        <!--<div class="sort-item-text">蔬菜</div>-->
+    <!--</div>-->
+
+</div>
+
+<div class="mdui-box cheap-sort">
+    <!--<div class="cheap-item">附近相因</div>-->
+    <!--<div class="cheap-item">全区相因</div>-->
+    <!--<div class="cheap-item">全市相因</div>-->
+    <!--<div class="cheap-item">全部</div>-->
+</div>
+
+<div class="market-data">
+
+    <!--<div class="market-data-item market-data-cheap mdui-box">-->
+        <!--<div class="cheap-icon">相音·全市</div>-->
+        <!--<div class="mdui-box-flex-1 item-detail">-->
+            <!--<div class="data-name">白菜</div>-->
+            <!--<div class="data-price">￥1.20</div>-->
+        <!--</div>-->
+        <!--<div class="add"></div>-->
+    <!--</div>-->
+
+</div>
+
+<!--页面-->
+<script src="../../../static/mdui/js/mdui.min.js"></script>
+<script src="../../../static/mCheap/js/mCheap.config.js"></script>
+<script src="../js/market.js"></script>
+<script src="../../../server.js"></script>
+<script src="../../../public.js"></script>
+<script src="../../../static/mCheap/js/wechat.js"></script>
+<script>
+
+    var nowSortId;
+    var marketData;
+    var bdjd;
+    var bdwd;
+    var marketName;
+    $.uexWindowReady(function(){
+        weChat.init();
+    	/**************************************************/
+        var oForm =  document.getElementsByTagName("form")[0];
+        oForm.onsubmit = function(){
+            $('.search-img').trigger('tap');
+            return false;
+        };
+    	var pageData=$.pageParam;
+    	var cltpit01id=$.strToJson(pageData).cltpit01id;
+        var cltpro01id=$.strToJson(pageData).cltpro01id||'';
+        var lat = $.strToJson(pageData).lat;
+        var log = $.strToJson(pageData).log;
+
+        (function() {
+            $.request({
+                urlType: 'stationPrice',
+                data: {
+                    "access_token": $.getStorage('access_token'),
+                    cltpit01id: cltpit01id,
+                    cltpro01id:cltpro01id,
+                    lat:$.getStorage('lat'),
+                    log:$.getStorage('log'),
+                    epsbht01010:'01', //访问来源标志:01app,02微信,03门户
+                    recordMark:'yes', //记录标志,
+                    saveParam:'1' //记录所属模块标志
+                }
+            }, function (data) {
+                marketData=data;
+                if (data.success) {
+                    //console.log(JSON.stringify("--->"+data.data.collectStationDetail.cltpit01011));
+                    setMarketData(data);
+                    $('.search-before-content').hide();
+                    $('#xy').trigger('tap');
+                }
+                else {
+                    $('.search-before-content').hide();
+                    alert('网络错误');
+                }
+            });
+        })();
+
+        //市场页面查询功能
+        $('.header-box').on('tap','.search-img',fn_search);
+        $('#search').on('input propertychange', fn_search2);  //搜索框内容改变时触发
+        function fn_search(){
+            var cltpro01001= $('#search').val();
+            if(cltpro01001){
+                $.request({
+                    urlType: 'stationPrice',
+                    data: {
+                        "access_token": $.getStorage('access_token'),
+                        cltpit01id: cltpit01id,
+                        lat:$.getStorage('lat'),
+                        log:$.getStorage('log'),
+                        cltpro01001:cltpro01001
+                    }
+                }, function (data) {
+                    if (data.success) {
+                        setMarketData(data);
+                    }
+                    else {
+                        alert('网络错误');
+                    }
+                });
+            }else{
+                $.toast("请输入查询内容");
+            }
+        }
+        function fn_search2(){
+            var cltpro01001= $('#search').val();
+            $.request({
+                urlType: 'stationPrice',
+                data: {
+                    "access_token": $.getStorage('access_token'),
+                    cltpit01id: cltpit01id,
+                    lat:$.getStorage('lat'),
+                    log:$.getStorage('log'),
+                    cltpro01001:cltpro01001
+                }
+            }, function (data) {
+                if (data.success) {
+                    setMarketData(data);
+                }
+                else {
+                    alert('网络错误');
+                }
+            });
+        }
+
+        $('.market-data').on('tap','.item-detail',function(){
+            $.openWin({
+                name:"cpxq",
+    			animId : 2,
+                url:'wgtroot://mCheap/caipu/ui/cpxq.html',
+                pageParam:{
+                    cltpro01id:$(this).parent().data('id'),
+                    marketData:marketData,
+                    focus:$(this).data('isfocus')
+                }
+            });
+        });
+        /*
+        * 关注、取消关注
+        * */
+        $(document).on('tap','.isLike',function(){
+            var that=$(this);
+            if($(this).hasClass('like')){
+                $.request({
+                    urlType:'deleteFocusStation',
+                    data:{
+                        "access_token": $.getStorage('access_token'),
+                        cltpit01id:cltpit01id
+                    }
+                },function(data){
+                    if(data.success) {
+                        that.removeClass('like').addClass('dislike');
+                    }
+                    else {
+                        //$.toast('网络错误')
+                    }
+                });
+            }
+            else{
+                $.request({
+                    urlType:'addFocusStation',
+                    data:{
+                        "access_token": $.getStorage('access_token'),
+                        focusCollectStation:JSON.stringify({
+                            cltpit01id:cltpit01id
+                        })
+                    }
+                },function(data){
+                    if(data.success) {
+                        that.removeClass('dislike').addClass('like');
+                    }
+                    else {
+                        //$.toast('网络错误')
+                    }
+                });
+            }
+        });
+
+        //导航
+        $('.market-top').on('tap','.market-name',function(){
+            if(($(this).html())=='该市场暂无产品信息'){
+                alert('无市场信息');
+            }else{
+                $.openWin({
+                    animId : 2,
+                    name: "navigation",
+                    url: 'wgtroot://mCheap/map/ui/navigation.html',
+                    pageParam: {
+                        lng:bdjd,
+                        lat:bdwd,
+                        marketName:marketName
+                    }
+                });
+            }
+        });
+
+        $('.market-top').on('tap','.market-position',function(){
+           $('.market-name').trigger('tap');
+        });
+
+        $('.market-data').on('tap','.add',function(){
+                var product = {
+                    epsmym01id: '', //菜谱流水号(为空即可)
+                    cltpro01id: $(this).parent().data('id'), //产品流水号
+                    cltpro01001: $(this).parent().data('cltpro01001'), //产品名称
+                    epsmym02001: '',//数量(为空即可)
+                    epsmym02002: $(this).parent().data('cltpro01004'),//计量单位 对应 cltpro01004
+                    epsmym02003: $(this).parent().data('cltpro01005')//民间计量单位 对应 cltpro01005
+                };
+//            alert(JSON.stringify(product));
+                $.request({
+                    urlType: 'addmenuProduct',
+                    data: {
+                        "access_token": $.getStorage('access_token'),
+                        product: JSON.stringify(product)
+                    }
+                }, function (data) {
+                    if (data.success) {
+                        $.toast('成功添加到我的菜谱');
+                    }
+                    else if(!data.success){
+                        $.toast(data.message)
+                    }
+                    else {
+                        $.toast('添加失败')
+                    }
+                });
+        });
+
+        //点评论进评论页面
+        $(document).on('tap','.comment',function(){
+            $.openWin({
+                animId : 2,
+                name: "market_comment",
+                url: 'wgtroot://mCheap/market/ui/market_comment.html',
+                pageParam: {
+                    marketData:marketData
+                }
+            });
+        });
+
+    });
+
+    //点分享
+    $(document).on('tap','.header-right',function(){
+        $('.mc').show();
+    });
+
+    //注册微信
+    $(document).on('tap','.weichat-img',function(){
+        var option={
+            thumbImg:'../images/share_vagetable.png',//(必选)(大小必须小于32k)
+            wedpageUrl:'https://open.weixin.qq.com/connect/oauth2/authorize?appid=wx884671f313119520&redirect_uri=http://xm.yhxzdz.com/gongyi/maicai/vegetable/index/ui/caishi_index.html&response_type=code&scope=snsapi_base&state=123#wechat_redirect',//(必选)链接的地址
+            scene:'0',//(必选)发送的目标场景 0-会话场景 1-朋友圈场景
+            title:'找相因',//(必选)链接的标题
+            description:marketName//(必选)描述
+        };
+        weChat.shareLink(option);
+    });
+
+    //点击取消
+    $(document).on('tap','.share-cancel',function(){
+        $('.mc').hide();
+    });
+
+    //修改评论的数字
+    function changeCommentNum(){
+        var num = parseInt($('.comment-num').html())+1;
+        $('.comment-num').html(num);
+    }
+</script>
+</body>
+</html>

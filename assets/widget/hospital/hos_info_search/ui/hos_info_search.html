@@ -1,0 +1,263 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8">
+    <title>mCollection</title>
+    <meta name="viewport" content="target-densitydpi=device-dpi,width=device-width, initial-scale=1,maximum-scale=1, user-scalable=no">
+    <meta name="apple-mobile-web-app-capable" content="yes">
+    <meta name="apple-mobile-web-app-status-bar-style" content="black">
+    <link rel="stylesheet" href="../../../static/mdui/css/mdui.min.css">
+    <link rel="stylesheet" href="../../../static/mCheap/css/mCommon.css">
+    <link rel="stylesheet" href="../css/host_search.css">
+
+</head>
+<body>
+<div>
+    <div class="header-box mdui-bar mdui-bar-nav">
+        <div class="header">
+            <div class="back mdui-action-back"><img src="../images/back.png"></div>
+            <div class="title">详情查询</div>
+        </div>
+    </div>
+</div>
+<div class="mdui-box mdui-box-ver lists-box">
+    <div class="search-box mdui-box">
+        <input type="text" id="search" class="mdui-box-flex-6" placeholder=""/>
+        <div class="search-img mdui-box-flex-1">查询</div>
+    </div>
+    <div class="mdui-box-flex-1" id="list">
+
+        <!--<div class="list-item ypxq" >-->
+        <!--<div class="item-content mdui-box datacode">-->
+        <!--<div class="item-img">-->
+        <!--<img src="../images/blg.jpg">-->
+        <!--</div>-->
+        <!--<div class="mdui-box-flex-1">-->
+        <!--<div class="item-title med_name"> AAAA</div>-->
+        <!--<div class="mdui-box item-bottom">-->
+        <!--<div class="item-price mdui-box-flex-1 chandi">BBBB</div>-->
+        <!--<div class="item-time num">CCCC</div>-->
+        <!--</div>-->
+        <!--<div class="mdui-box item-bottom">-->
+        <!--<div class="item-price mdui-box-flex-1 mddicen_price">DDD</div>-->
+        <!--<div class="item-time medicen_time">EEE</div>-->
+        <!--</div>-->
+        <!--</div>-->
+        <!--</div>-->
+        <!--</div>-->
+
+
+    </div>
+</div>
+<!--页面-->
+<script src="../../../static/mdui/js/mdui.js"></script>
+<script src="../../../static/mCheap/js/mCheap.config.js"></script>
+<script src="../../../server.js"></script>
+<script src="../../../static/mCheap/js/scroll.js"></script>
+<script>
+    var obj={pageNum:1,requestFlag:true};
+    $.uexWindowReady(function(){
+        var option = {id:"list",funs:{after:function(){
+            if(obj.requestFlag&&obj.mc){
+                obj.pageNum=obj.pageNum+1;
+                if(obj.title=='药品信息'){
+                    getHosMedicineData();
+                }else{
+                    getHospitalService();
+                }
+            }else{
+                $.toast('没有更多了!');
+            }
+        }}};
+        $.initScroll(option);
+
+        var pageData = $.strToJson($.pageParam);
+        initSerch(pageData);
+    });
+
+    function initSerch(pageData){
+        obj.title=pageData.title;
+        if(obj.title=='药品信息'){
+            $('#search').attr('placeholder','药品');
+        }else{
+            $('#search').attr('placeholder','医疗服务');
+        }
+        obj.hos_cltmdc01009=pageData.hos_cltmdc01009;
+        obj.hos_name=pageData.hos_name;
+        $('.title').html(obj.title);
+    }
+
+    /*
+     获取医院药品详细信息
+     @param id 医院id
+     @param type 症状名称
+     */
+    function getHosMedicineData(){
+        $.request({
+            urlType: 'hosmedicen_content',
+            data:{
+                "access_token": $.getStorage('access_token'),
+                "cltmdc01009":obj.hos_cltmdc01009,
+                page:obj.pageNum ,
+                pageSize:'10',
+                cltmdc01001:obj.mc||''
+            }
+        },function(data){
+            if(data.success) {
+                var json=data.data;
+                if(json.length){
+                    setHosmedicenContent(json);
+                }else{
+                    if(obj.pageNum==1){
+                        setHosmedicenContent(json);
+                    }else{
+                        $.toast('没有更多了!');
+                        obj.requestFlag=false;
+                    }
+                }
+            }
+        })
+    }
+
+
+    /*
+     设置医院药品详细信息
+     */
+    function setHosmedicenContent(data){
+        var htmlSet = "",len=data.length;
+        if(len){
+            for(var m = 0;m<len;m++){
+                htmlSet += '<div class="list-item ypxq" >';
+                htmlSet += '<div class="item-content mdui-box datacode" id="'+data[m].drugStandardCode +'"> ';
+                htmlSet += '<div class="item-img"><img src="../images/blg.jpg"></div>';
+                htmlSet += '<div class="mdui-box-flex-1">';
+                htmlSet +='<div class="item-title med_name">';
+                htmlSet += data[m].cltmdc01001;
+                htmlSet += '</div>';
+                htmlSet += '<div class="mdui-box item-bottom">';
+                htmlSet += '<div class="item-price mdui-box-flex-1 chandi">产地:';
+                htmlSet += data[m].cltmdc01005;
+                htmlSet +='</div>';
+                htmlSet +='<div class="item-time num">';
+                htmlSet += data[m].cltmdc01004;
+                htmlSet +='</div>';
+                htmlSet +='</div>';
+                htmlSet += '<div class="mdui-box item-bottom">';
+                htmlSet += '<div class="item-price mdui-box-flex-1 mddicen_price">￥';
+                htmlSet +=data[m].cltmdc01007;
+                htmlSet += '</div>';
+                htmlSet +='<div class="item-time medicen_time">';
+                htmlSet +=data[m].cltmdc01010;
+                htmlSet +='</div>';
+                htmlSet += '</div>';
+                htmlSet +='</div>';
+                htmlSet +='</div>';
+                htmlSet +='</div>';
+            }
+            $("#list").append(htmlSet);
+        }else{
+            htmlSet='<div class="no-data">暂无数据</div>';
+            $("#list").html(htmlSet);
+        }
+    }
+    function getHospitalService(){
+        $.request({
+            urlType: 'hosiptalService',
+            data:{
+                "access_token": $.getStorage('access_token'),
+                clthtp01id:obj.hos_cltmdc01009,
+                page:obj.pageNum ,
+                pageSize:'10',
+                cltmds01002:obj.mc||'', //医疗服务标志
+                clthtp01001:obj.hos_name //医院名称
+            }
+        },function(data){
+            if(data.success) {
+                var lend=data.data.length;
+                if(lend){
+                    setHosmeService(data.data);
+                }else{
+                    if(obj.pageNum==1){
+                        setHosmeService(data.data);
+                    }else{
+                        $.toast('没有更多了!');
+                        obj.requestFlag=false;
+                    }
+                }
+            }
+        })
+    }
+
+    /*
+     * 设置医院服务相关信息
+     **/
+    function setHosmeService(data){
+        var html ="",len=data.length;
+        if(len){
+            for( var i = 0;i<len;i++){
+                html +='<div class="list-item">';
+                html +='<div class="item-content mdui-box">';
+                html +='<div class="mdui-box-flex-1">';
+                html += data[i].cltmds01002; //医疗服务名称
+                html +='</div>';
+                html += '<div class="mdui-box item-bottom">';
+                html += '<div class="item-price mdui-box-flex-1">';
+                html +=  data[i].cltmds01006;
+                html+= '</div>';
+                html +='<div class="item-time">元/';
+                html +=data[i].cltmds01005;
+                html +='</div>';
+                html += '</div>';
+                html += '</div>';
+                html += '</div>';
+                html += '</div>';
+            }
+            $("#list").append(html);
+        }else{
+            html='<div class="no-data">暂无数据</div>';
+            $("#list").html(html);
+        }
+    }
+
+
+    $('.search-img').on('tap',function(){
+        $('#list').html('');
+        obj.pageNum=1;
+        obj.mc=$('#search').val();
+        if(obj.mc){
+            if(obj.title=='药品信息'){
+                getHosMedicineData();
+            }else{
+                getHospitalService();
+            }
+        }else{
+            $.toast('请输入您要查询的内容!');
+        }
+    });
+
+    $(document).on('click','.ypxq',function(){
+        var code = $(this).find("div .datacode").attr("id");
+        var medtitles =$(this).find("div .med_name").text();
+        var medchandis = $(this).find("div .chandi").text();
+        var medprices = $(this).find("div .mddicen_price").text();
+        var medtimes = $(this).find("div .medicen_time").text();
+        var num = $(this).find("div .num").text();
+        $.openWin({
+            name: "hos_medicine",
+            animId : 2,
+            url: 'wgtroot://hospital/hos_medicine/ui/hos_medicine.html',
+            pageParam:{
+                code:code,
+                title:medtitles,
+                chandi:medchandis,
+                price:medprices,
+                time:medtimes,
+                num:num,
+                clthtp01id:obj.hos_cltmdc01009,
+                clthtp01001:obj.hos_name
+            }
+        });
+    });
+</script>
+</body>
+</html>

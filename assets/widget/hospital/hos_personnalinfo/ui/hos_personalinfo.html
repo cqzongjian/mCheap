@@ -1,0 +1,201 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8">
+    <title>hos_personalinfo</title>
+    <meta name="viewport" content="target-densitydpi=device-dpi,width=device-width, initial-scale=1,maximum-scale=1, user-scalable=no">
+    <meta name="apple-mobile-web-app-capable" content="yes">
+    <meta name="apple-mobile-web-app-status-bar-style" content="black">
+    <link rel="stylesheet" href="../../../static/mdui/css/mdui.min.css">
+    <link rel="stylesheet" href="../../../static/mCheap/css/mCommon.css">
+    <style>
+        *{
+            font-family: "Microsoft YaHei";
+            color: #666666;
+        }
+        body{
+            padding-top: 2.75rem;
+             background-color: #E6EAE8;
+        }
+        .title{
+            width: 100%;
+            height: 100%;
+            color: #FFFFFF;
+            text-align: center;
+            line-height:2.75rem ;
+
+        }
+        .header{
+            background-color: #0eb7ed;
+        }
+        .message{
+            margin-left: 1rem;
+            margin-top: 0.75rem;
+            padding-right: 0.5rem;
+            position: absolute;
+            right: 1rem;
+            top: 0;
+        }
+        .message>img{
+            width:auto;
+            height: 1.25rem
+        }
+        /*.message>.message-num{*/
+            /*position: absolute;*/
+            /*display: block;*/
+            /*border-radius: 0.8rem;*/
+            /*background-color:#3BA15C ;*/
+            /*top:-0.5rem;*/
+            /*left: 1.2rem;*/
+            /*color: #FFFFFF;*/
+            /*font-weight: normal;*/
+            /*font-size: 0.8rem;*/
+            /*height: 0.8rem;*/
+
+        /*}*/
+        .message-num{
+            position: absolute;
+            top: -0.5rem;
+            left: 0.5rem;
+            height: 0.9rem;
+            width: 1.5rem;
+            border-radius: 0.5rem;
+            background-color: #F25923;
+            color: white;
+            line-height: 1rem;
+            font-size: 0.7rem;
+            text-align: center;
+            border: 1px solid white;
+        }
+        .person{
+            height: 5rem;
+            border-bottom: 1px solid #cccccc;
+            background-color: #FFFFFF;
+            line-height: 5rem;
+            padding-left: 2rem;
+            font-weight: 600;
+            font-size: 1.3rem;
+            display: none;
+        }
+        .person-img>img{
+            width: 3.5rem;
+            height: 3.5rem;
+            border-radius: 3.5rem;
+            border: 0.2rem solid #C0E1CB;
+            margin-top: 0.75rem;
+            margin-right: 0.5rem;
+            /*background: url("../images/head.jpg") no-repeat center;*/
+            background-size:2.8rem;
+        }
+        .my{
+            padding-left: 2rem;
+            border-bottom: 1px solid #cccccc;
+            border-top: 1px solid #cccccc;
+            background: #FFFFFF;
+            margin-top: 1rem;
+        }
+        .list>.list-item{
+            height: 3rem;
+            line-height: 3rem;
+            border-bottom: 1px solid #cccccc;
+        }
+        .list-img,.suggest-img,.setting-img{
+            width: 1.5rem;
+        }
+        #wdgz>.list-img{
+            background: url("../image/shopping-bag.png") no-repeat left center;
+            background-size: auto 1rem;
+        }
+        #gmd>.list-img{
+            background: url("../image/flag.png") no-repeat left center;
+            background-size: auto 1rem;
+        }
+        #wdcp>.list-img{
+            background: url("../image/basket.png") no-repeat left center;
+            background-size: auto 1rem;
+        }
+        .list>.list-item:last-child{
+            border-bottom: none;
+        }
+        .suggest,.setting{
+            height: 3rem;
+            border-bottom: 1px solid #cccccc;
+            line-height: 3rem;
+            background: #FFFFFF;
+            margin-top: 1rem;
+            padding-left: 2rem;
+            display: block;
+        }
+        .suggest-img{
+            background: url("../image/writing.png") no-repeat left center;
+            background-size: auto 1rem;
+        }
+        .setting-img{
+            background: url("../image/settings.png") no-repeat left center;
+            background-size: auto 1rem;
+        }
+        .arrow{
+            width: 2rem;
+            background: url("../image/arrow.png") no-repeat center;
+            background-size: auto 0.8rem;
+        }
+        .onTouch{
+            background-color:#F5F5F5;
+        }
+    </style>
+</head>
+<body>
+<div class="header mdui-bar mdui-bar-nav mdui-box ">
+    <div class="title">我的</div>
+
+</div>
+<div class="person mdui-box touch">
+    <div class="person-img">
+        <!--<img id="head"/>-->
+    </div>
+    <div class="mdui-box-flex-1 user"></div>
+    <div class="arrow"></div>
+</div>
+<div class="my list">
+    <div class="list-item mdui-box touch"  id="wdgz">
+        <div class="list-img"></div>
+        <div class="mdui-box-flex-1">我的关注</div>
+        <div class="arrow"></div>
+    </div>
+    <!--<div class="list-item mdui-box touch" id="gmd">-->
+        <!--<div class="list-img"></div>-->
+        <!--<div class="mdui-box-flex-1">常用地址</div>-->
+        <!--<div class="arrow"></div>-->
+    <!--</div>-->
+    <!--<div class="list-item mdui-box touch" id="wdcp">-->
+        <!--<div class="list-img"></div>-->
+        <!--<div class="mdui-box-flex-1">我的菜谱</div>-->
+        <!--<div class="arrow"></div>-->
+    <!--</div>-->
+
+</div>
+
+
+
+<!--页面-->
+<script src="../../../static/mdui/js/mdui.js"></script>
+<script src="../../../static/mCheap/js/mCheap.config.js"></script>
+<script src="../../../server.js"></script>
+<script src="../../../public.js"></script>
+<script>
+
+    $.uexWindowReady(function(){
+
+        });
+        $('#wdgz').on('tap',function(){
+            $.openWin({
+                name: "wdgz",
+    			animId : 2,
+                url: 'wgtroot://hospital/hos_focus/ui/wdgz.html',
+                pageParam: {}
+            });
+        });
+
+</script>
+</body>
+</html>

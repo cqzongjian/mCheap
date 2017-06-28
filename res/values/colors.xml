@@ -1,0 +1,39 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<resources>
+
+    <color name="start_bg_color">#FFFFFF</color>
+    <color name="red">#FFFF0000</color>
+    <color name="orange">#FFFF9900</color>
+    <color name="gray">#FF717171</color>
+    <color name="white">#FFFFFFFF</color>
+    <color name="transparent">#00000000</color>
+    <color name="half_transparent">#30000000</color>
+    <color name="black">#000000</color>
+    <color name="pink">#FFFF00FF</color>
+    <color name="browser_title_stroke_color">#FF9A9A9A</color>
+    <color name="blue">#2162BD</color>
+    <color name="menu_press">#FF00599F</color>
+    <color name="dialog_bg">#1B252F</color>
+    <!-- Widgetone use -->
+    <color name="widget_dialog_title_line_color">#666666</color>
+    <color name="widget_bg_color">#333333</color>
+    <color name="activity_window_background_color">#60000000</color>
+      <!-- platform_dialog -->
+    <color name="platform_dialog_top">#ffffff</color>
+    <color name="platform_dialog_buttom_nomal">#ffffff</color>
+    <color name="platform_dialog_buttom_pressed">#cdcccc</color>
+    <color name="platform_dialog_line">#b0adad</color>
+    <color name="platform_dialog_text_blue">#3DB8FE</color>
+    <color name="platform_dialog_text_default">#4c4c4c</color>
+    <!-- Audio use -->
+	<color name="plugin_audio_half_transparent">#30000000</color>
+
+	<!-- checkversion -->
+	<color name="plugin_check_version_dialog_top">#006a3d</color>
+    <color name="plugin_check_version_dialog_buttom_nomal">#ddd9d9</color>
+    <color name="plugin_check_version_dialog_buttom_pressed">#cdcccc</color>
+    <color name="plugin_check_version__dialog_line">#b0adad</color>
+    
+    	<!-- 微信 -->
+  <color name="plugin_uexweixin_transparent_background">#50000000</color> 
+</resources>

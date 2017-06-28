@@ -1,0 +1,84 @@
+<!DOCTYPE html>
+<html>
+<head lang="en">
+    <meta charset="UTF-8">
+    <meta name="viewport" content="target-densitydpi=device-dpi,width=device-width, initial-scale=1,maximum-scale=1,user-scalable=no">
+    <meta name="apple-mobile-web-app-capable" content="yes">
+    <meta name="apple-mobile-web-app-status-bar-style" content="black">
+    <title>消息</title>
+    <link rel="stylesheet" href="../../../static/mdui/css/mdui.min.css">
+    <link rel="stylesheet" href="../../../static/mCollection/css/mCommon.css"/>
+    <link rel="stylesheet" href="../css/news.css"/>
+    <style>
+    .mdui-table-view:after{
+    height: 0;
+    background-color: transparent;
+}
+
+.mdui-table-view-cell:after{
+    background-color: transparent;
+}
+
+
+.mdui-table-view:before{
+    background-color: transparent;
+}
+
+
+.mdui-table-view-divider:after{
+    background-color: transparent;
+}
+
+
+.mdui-table-view-cell{
+    padding:0.8rem 0 0.8rem 0 ;
+}
+</style>
+</head>
+<body>
+<div class="mdui-content content" >
+    <ul id="OA_task_1" class="mdui-table-view myUl" >
+        <li class="mdui-table-view-cell" style="border: none;border-bottom: 1px solid #B3B5B4;">
+            <div class="mdui-slider-right mdui-disabled">
+                <a class="mdui-btn mdui-btn-red">删除</a>
+            </div>
+            <div class="mdui-slider-handle mdui-box-ver mdui-box myAll">
+                <div class="mdui-box ">
+                    <div class="mdui-box mdui-box-flex-1 mdui-box-align-center title" >
+                        <div style="color:black;">系统消息</div>
+                        <span class="new-log">NEW</span>
+                    </div>
+                    <div class="mdui-box  mdui-box-pack-end" style="font-family:SimHei;">2016-10-10</div>
+                </div>
+                <div class="text">恭喜获得50元恭喜获得50元恭喜获得50元农贸市场50元恭喜获得50元代恭喜获得50元金券一张</div>
+            </div>
+        </li>
+    </ul>
+
+</div>
+
+
+<script  src="../../../static/mdui/js/mdui.min.js"></script>
+<script>
+	$.uexWindowReady (function(){/* 
+		for(var i=0;i<5;i++){
+			$("#OA_task_1").append('<li class="mdui-table-view-cell" style="border: none;border-bottom: 1px solid #B3B5B4;"> ' +
+				    '<div class="mdui-slider-right mdui-disabled"> <a class="mdui-btn mdui-btn-red">删除</a> </div>' +
+				    ' <div class="mdui-slider-handle mdui-box-ver mdui-box myAll"> <div class="mdui-box "> ' +
+				    '<div class="mdui-box mdui-box-flex-1 mdui-box-align-center title" > <div class="circle"></div> ' +
+				    '<div>系统消息</div> </div> <div class="mdui-box  mdui-box-pack-end">2016-10-10</div> </div> ' +
+				    '<div class="text">恭喜获得50元恭喜获得50元恭喜获得50元农贸市场50元恭喜获得50元代恭喜获得50元金券一张</div> </div> </li>')
+		} */
+	})
+    $('#OA_task_1').on('tap', '.mdui-btn', function(event) {
+        var elem = this;
+//         $.confirm('确认删除该条记录？', function(opId, dataType, data) {
+//             if (data == 0) {
+                var li = elem.parentNode.parentNode;
+                li.parentNode.removeChild(li);
+//             }
+//         });
+    });
+</script>
+</body>
+</html>

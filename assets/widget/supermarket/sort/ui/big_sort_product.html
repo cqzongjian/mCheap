@@ -1,0 +1,805 @@
+﻿<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8">
+    <title>mCollection</title>
+    <meta name="viewport" content="target-densitydpi=device-dpi,width=device-width, initial-scale=1,maximum-scale=1, user-scalable=no">
+    <meta name="apple-mobile-web-app-capable" content="yes">
+    <meta name="apple-mobile-web-app-status-bar-style" content="black">
+    <link rel="stylesheet" href="../../../static/mdui/css/mdui.min.css">
+    <link rel="stylesheet" href="../../../static/mCheap/css/mCommon.css">
+    <style>
+        *{
+            font-family: "Microsoft YaHei";
+        }
+        html{
+            height: 100%;
+            overflow: hidden;
+        }
+        body{
+            overflow: hidden;
+            background-color: #FFFFFF;
+            padding-top: 2.75rem;
+        }
+        .search-img{
+            height:1.75rem;
+            line-height: 1.75rem;
+            margin-right: 0.5rem;
+            margin-top: 0.25rem;
+            margin-bottom: 0.25rem;
+        }
+        .search-img>img{
+            width: 1.25rem;
+            height: 1.25rem;
+        }
+        /*--------------------------------------------*/
+        .header{
+            background-color: #F39426;
+        }
+        .saoma{
+            padding-right: 1rem;
+            padding-top: 0.75rem;
+            padding-left: 0.625rem;
+        }
+        .saoma>img{
+            width:auto;
+            height: 1.25rem;
+        }
+        #search{
+            border: none;
+            height: 1.75rem;
+        }
+        .search-box{
+            border: 1px solid #cccccc;
+            border-radius: 5px;
+            background-color: #FFFFFF;
+            height: 1.75rem;
+            margin-top: 0.5rem;
+            margin-bottom: 0.5rem;
+            overflow: hidden;
+        }
+        .searching{
+            color: white;
+            margin-top: 10rem;
+            width: 100%;
+            text-align: center;
+        }
+        .search-item{
+            text-align: center;
+            padding: 0.5rem 0 0.5rem 0;
+            border-bottom:1px solid green;
+            background-color: white;
+        }
+        .search-item-content{
+            height: 100%;
+            width: 100%;
+            position: fixed;
+            z-index: 999;
+            background: rgba(0,0,0,0.3);
+            overflow: auto;
+            display:none;
+        }
+        .search-before-content{
+            height: 100%;
+            width: 100%;
+            position: fixed;
+            z-index: 999;
+            background: rgba(0,0,0,0.3);
+            overflow: auto;
+            display:none;
+        }
+        .mask{
+            position: absolute;
+            width: 100%;
+            top: 0;
+            bottom: 0;
+            z-index: 999;
+            background-color:rgba(0,0,0,0.3);
+            color: #ffffff;
+        }
+        .sore{
+            background-color: white;
+            width: 35%;
+            height: 25rem;
+            overflow-y:auto;
+        }
+        .bottom-sore-box{
+            width: 65%;
+            overflow-y: auto;
+            background-color: #F2F2F2;
+            height: 25rem;
+        }
+        .sore-item{
+            color: black;
+            height: 3.5rem;
+            width: 100%;
+            border-bottom: 1px solid #cccccc;
+            padding-left: 1rem;
+            line-height: 3.5rem;
+            overflow: hidden;
+            white-space:nowrap;
+            text-overflow:ellipsis;
+        }
+        .sore-item-title{
+            background-color: white;
+            color: black;
+            height: 3.5rem;
+            width: 100%;
+            border-bottom: 1px solid #cccccc;
+            padding-left: 1rem;
+            line-height: 3.5rem;
+            overflow: hidden;
+            white-space:nowrap;
+            text-overflow:ellipsis;
+        }
+        .product-content{
+            overflow-y:auto;
+            width: 100%;
+            height: 92.5%;
+            /*display: none;*/
+        }
+        .row{
+            border: 1px solid #CCCCCC;
+            background-color: white;
+            position: relative;
+            float: left;
+            width: 50%;
+        }
+        .drug-detail{
+            padding: 0.5rem;
+        }
+        .img-box{
+            width: 100%;
+            height: 8rem;
+            padding: 0.25rem;
+        }
+        .img-box>img{
+            width: 100%;
+            height: 8rem;
+        }
+        .avg-price{
+            position: absolute;
+            bottom: 5%;
+            right: 5%;
+            color: white;
+            background-color:#F39426;
+            padding-left: 0.25rem;
+            padding-right: 0.25rem;
+            font-size: 0.8rem;
+            border-radius: 0.5rem;
+        }
+        .drug-name{
+            font-size: 0.8rem;
+            font-weight: 600;
+            overflow: auto;
+        }
+        .drug-origin,.standard{
+            font-size: 0.8rem;
+            color: #7E7E7E;
+            height: auto;
+        }
+        .drug-price{
+            font-weight: 600;
+            color: #F39426;
+        }
+        .choose-box{
+            position: relative;
+            height: 3rem;
+            padding: 0.5rem 1rem 0.5rem 1rem;
+            border-bottom: 1px solid black;
+            border-top: 1px solid black;
+        }
+        .choose-box-hide{
+            /*z-index: 3;*/
+            background-color: white;
+            position: relative;
+            height: 3rem;
+            padding: 1rem;
+            border-bottom: 1px solid black;
+            border-top: 1px solid black;
+        }
+        .top-sort-name{
+            font-weight: 600;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+        }
+        .tiny-sort-name{
+            background: url("../image/oaw.png")no-repeat left;
+            background-size: 0.5rem 0.8rem;
+            margin-left: 0.5rem;
+            padding-left: 1rem;
+            display: flex;
+            color: #F39426;
+            justify-content: center;
+            align-items: center;
+        }
+        .choose-sx{
+            text-align: right;
+            position: absolute;
+            right: 5%;
+            top: 20%;
+        }
+        .sx-img{
+            width: 3rem;
+            height: 1.5rem;
+        }
+
+        /*==========分类别=====================*/
+        .classify{
+            height: 92.5%;
+            width: 100%;
+            background: rgba(0,0,0,0.2);
+            z-index:2;
+            display: none;
+        }
+        .no-data{
+            height: 3rem;
+            text-align: center;
+            line-height: 3rem;
+            border-bottom: 1px solid #CCCCCC;
+        }
+        /*==========大分类=====================*/
+        .big-sort{
+            height: 3rem;
+            width: 100%;
+        }
+        .show-one{
+
+        }
+        .choose-move-name{
+            margin-top: 0.75rem;
+            overflow-x:auto;
+        }
+        .choose-big-title{
+            color:#F39426;
+            font-size: 1.2rem;
+            font-weight: 600;
+            display: none;
+            justify-content: center;
+            align-items: center;
+            padding: 1rem;
+        }
+        .choose-more{
+            height: 3rem;
+            width: 3rem;
+        }
+        .choose-more>img{
+            margin-top: 1rem;
+            margin-left: 0.9rem;
+            width: 1.2rem;
+            height: 1rem;
+        }
+        .big-name{
+            color: black;
+            padding-left: 0.25rem;
+            padding-right: 0.25rem;
+        }
+        .big-name-on{
+            color: #F39426;
+            padding-left: 0.25rem;
+            padding-right: 0.25rem;
+        }
+
+        .show-big-sort{
+            border-top: 1px solid #CCCCCC;
+            position: fixed;
+            background-color:white;
+            z-index: 100;
+            width: 100%;
+            height: 100%;
+            display: none;
+        }
+        .show-big-name{
+            color: black;
+            background-color: white;
+            margin: 0.5rem;
+            border: 1px solid #CCCCCC;
+            border-radius: 1rem;
+            display:inline-block;
+            padding: 0.5rem;
+        }
+        .show-big-name-on{
+            color:#F39426;
+            background-color: white;
+            margin: 0.5rem;
+            border: 1px solid #CCCCCC;
+            border-radius: 1rem;
+            display:inline-block;
+            padding: 0.5rem;
+        }
+
+        /*==========大分类=====================*/
+    </style>
+
+
+
+</head>
+<body>
+<div class="search-before-content">
+    <div class="searching">努力搜索中...</div>
+</div>
+<div class="search-item-content"></div>
+<div class="header mdui-bar mdui-bar-nav mdui-box " style="padding-left: 0;">
+    <div class="saoma">
+        <img src="../image/back.png">
+    </div>
+    <div class="mdui-box-flex-1 mdui-box search-box">
+        <div class="mdui-box-flex-1">
+            <input type="text" id="search" placeholder="商品..."/>
+        </div>
+        <div class="search-img"><img src="../image/search-orange.png"></div>
+    </div>
+    <div style="width: 1rem;height: auto;"></div>
+</div>
+<div class="mdui-box mdui-box-ver" style="height: 100%;">
+    <div class="big-sort mdui-box">
+        <div class="choose-big-title"></div>
+        <div class="choose-move-name mdui-box-flex-1 mdui-box">
+
+            <!--<div class="big-name">大类1</div>-->
+            <!--<div class="big-name">大类2</div>-->
+            <!--<div class="big-name">大类3</div>-->
+            <!--<div class="big-name">大类4</div>-->
+
+        </div>
+        <div class="choose-more">
+            <img src="../image/triangle_down.png"/>
+        </div>
+    </div>
+    <div class="show-big-sort">
+        <div class="show-big-sort-box" style="padding: 1rem">
+
+            <!--<div class="show-big-name">大类1</div>-->
+            <!--<div class="show-big-name">大类2</div>-->
+            <!--<div class="show-big-name">大类3</div>-->
+            <!--<div class="show-big-name">大类4</div>-->
+
+        </div>
+    </div>
+    <div class="classify">
+        <div class="choose-box-hide mdui-box">
+            <div class="top-sort-name"></div>
+            <div class="tiny-sort-name"></div>
+            <div class="choose-sx mdui-box-flex-1">
+                <img src="../image/sx_orange.png" class="sx-img"/>
+            </div>
+        </div>
+
+        <div class="mdui-box">
+            <div class="sore">
+                <!--<div class="sore-item-title" data-id="1">白癜风1</div>-->
+            </div>
+            <div class="bottom-sore-box">
+                <!--<div class="sore-item">神经病1</div>-->
+            </div>
+
+        </div>
+    </div>
+    <div class="mdui-box-flex-1 mdui-box-ver mdui-box" >
+        <div class="choose-box mdui-box">
+            <div class="top-sort-name"></div>
+            <div class="tiny-sort-name"></div>
+            <div class="choose-sx mdui-box-flex-1">
+                <img src="../image/sx1.png" class="sx-img"/>
+            </div>
+        </div>
+
+
+        <div class="product-content mdui-box-flex-1" id="list">
+
+            <!--<div class="row">-->
+                <!--<div class="img-box">-->
+                    <!--<img src="../image/01.jpg"/>-->
+                <!--</div>-->
+                <!--<div class="drug-detail mdui-box-flex-1">-->
+                    <!--<div class="drug-name">药品名字地方来刷卡缴费鲁</div>-->
+                    <!--<div class="drug-origin">生地方来刷卡缴费鲁大师及安防监控</div>-->
+                    <!--<div class="drug-price">价格展示</div>-->
+                    <!--<div class="avg-price">均价</div>-->
+                <!--</div>-->
+            <!--</div>-->
+
+        </div>
+    </div>
+</div>
+<!--页面-->
+<script src="../../../static/mdui/js/mdui.js"></script>
+<script src="../../../static/mCheap/js/mCheap.config.js"></script>
+<script src="../../../server.js"></script>
+<script src="../../../static/mCheap/js/scroll.js"></script>
+<script>
+    var requestFlag=true;//请求开关
+    var pageNum=1;
+    var page = {};//保存分类小标题
+    var topSortName;//保存中类名字
+    var flag;//判断开关
+    var flag1;//判断开关
+    $.uexWindowReady(function(){
+        //加载更多
+        var option = {id:"list",funs:{after:function(){
+            if(requestFlag){
+                var big=$('.choose-big-title').html();
+                var mid=$('.top-sort-name').html();
+                var small=$('.tiny-sort-name').html();
+                var proName=$("#search").val();
+                pageNum=pageNum+1;
+                requestProductData(big,mid,small,proName,pageNum);
+            }else{
+                $.toast('没有更多了!');
+            }
+        }}};
+        $.initScroll(option);
+
+        $('.top-sort-name').hide();
+        $('.tiny-sort-name').hide();
+        var pageData=$.pageParam;//得到页面参数
+        pageData=$.strToJson(pageData);
+        var bigSortId = pageData.id;
+        $('.choose-big-title').html(pageData.bigName);
+        requestSortData(bigSortId);//请求大类下所有小类
+        requestFlag=true;
+        requestProductData(pageData.bigName,'','','',pageNum);//请求商品数据
+        requestAllBigSortData(pageData.bigName);//请求所有大类数据
+    });
+    //大类列表切换
+    $('.show-big-sort').on('tap','div',function(){
+        var name = $(this).html();
+        $('.show-big-sort-box>div').each(function(){
+            if($(this).hasClass('show-big-name-on')){
+                $(this).removeClass('show-big-name-on').addClass('show-big-name');
+            }
+        });
+        var ele=$('.choose-move-name>div');
+        ele.removeClass('big-name-on').addClass('big-name');
+        ele.each(function(){
+            if($(this).html()==name){
+                $(this).removeClass('big-name').addClass('big-name-on');
+            }
+        });
+        $(this).addClass('show-big-name-on');
+        requestSortData($(this).data('id'));
+        pageNum=1;
+        $('#list').html('');
+        requestFlag=true;
+        requestProductData($(this).html(),'','','',pageNum);
+        $('.choose-big-title').html($(this).html());
+        $('.top-sort-name').hide();
+        $('.tiny-sort-name').hide();
+        $('.choose-more').trigger('tap');
+        $('.classify').hide();
+        $('.bottom-sore-box').html('');
+    });
+
+    $('.choose-move-name').on('tap','div',function(){
+        var name = $(this).html();
+        $('.choose-move-name>div').each(function(){
+            if($(this).hasClass('big-name-on')){
+                $(this).removeClass('big-name-on').addClass('big-name');
+            }
+        });
+        var ele=$('.show-big-sort-box>div');
+        ele.removeClass('show-big-name-on').addClass('show-big-name');
+        ele.each(function(){
+            if($(this).html()==name){
+                $(this).removeClass('show-big-name').addClass('show-big-name-on');
+            }
+        });
+        $(this).addClass('big-name-on');
+        requestSortData($(this).data('id'));
+        pageNum=1;
+        $('#list').html('');
+        requestFlag=true;
+        requestProductData($(this).html(),'','','',pageNum);
+        $('.choose-big-title').html($(this).html());
+        $('.top-sort-name').hide();
+        $('.tiny-sort-name').hide();
+        $('.classify').hide();
+        $('.bottom-sore-box').html('');
+    });
+
+
+
+    //请求所有大类数据
+    function requestAllBigSortData(bigName){
+        $.request({
+            urlType:'bigCategory',
+            data:{
+                "access_token": $.getStorage('access_token')
+            }
+        },function(json){
+            if(json.success) {
+//                alert(JSON.stringify(json));
+                var data=json.data;
+                setBigSortData(data);
+                $('.choose-move-name>div').each(function(){
+                    if($(this).html()==bigName){
+                        $(this).removeClass('big-name').addClass('big-name-on');
+                    }
+                });
+            }
+            else {
+                alert('网络错误')
+            }
+        });
+    }
+    //设置大类数据
+    function setBigSortData(data){
+        var len=data.length,htmlOne='',htmlTwo='', i,j;
+        for(i=0;i<len;i++){
+            htmlOne +='<div class="big-name" data-id="'+data[i].bigId+'">'+data[i].bigType+'</div>';
+            htmlTwo +='<div class="show-big-name" data-id="'+data[i].bigId+'">'+data[i].bigType+'</div>';
+        }
+        $('.choose-move-name').html(htmlOne);
+        $('.show-big-sort-box').html(htmlTwo);
+    }
+
+    //请求所有商品数据
+    function requestProductData(big,mid,small,proName,pageNum){
+        $.request({
+            urlType:'queryMinorSortGoods',
+            data:{
+                "access_token": $.getStorage('access_token'),
+                big:big?big:'',
+                mid:mid?mid:'',
+                small:small?small:'',
+                espgds01001:proName?proName:'',//输入搜索的时候搜索内容
+                pageSize:'10',
+                page:pageNum
+            }
+        },function(json){
+            if(json.success) {
+                var data=json.data;
+                if(data.goods.length){
+                    setData(data);
+                }else{
+                    if(pageNum==1){
+                        setData(data);
+                    }else{
+                        $.toast('没有更多了!');
+                        requestFlag=false;
+                    }
+                }
+            }
+            else {
+                alert('网络错误')
+            }
+        });
+    }
+
+    //请求大类下的小类数据
+    function requestSortData(bigSortId){
+        $.request({
+            urlType:'category',
+            data:{
+                "access_token": $.getStorage('access_token'),
+                epscat01002:bigSortId
+            }
+        },function(json){
+            if(json.success){
+                var data=json.data;
+                setSort(data);
+//                $('.sore>div').each(function(){
+//                    if($(this).html()==midName){
+//                        $(this).trigger('tap');
+//                    }
+//                });
+                $('.bottom-sore-box>div').each(function(){
+                    if($(this).html()==$('.tiny-sort-name').html()){
+                        $(this).css('color','#F39426');
+                    }
+                });
+            }
+            else {
+                alert('网络错误')
+            }
+        });
+    }
+
+    //跳转到药店列表页
+    $('.product-content').on('tap','.row',function(){
+        $.openWin({
+            name:"product_list_market",
+            animId : 2,
+            url:'wgtroot://supermarket/product_list/ui/product_list_market.html',
+            pageParam: {
+                proName:$(this).find('.drug-name').html(),
+                id:$(this).data('id'),
+                factory:$(this).find('.drug-origin').html(),
+                standard:$(this).data('.standard'),
+                price:$(this).find('.drug-price').html(),
+                focus:$(this).data('focus'),
+                picture:$(this).data('picture')
+            }
+        });
+    });
+
+    //设置总体分类数据
+    function setSort(data,midName){
+        var len = data.length,i,j= 0,htmlOne='';
+        for(i=0;i<len;i++){
+            var htmlTwo='';
+            var leng = data[i].smallCategories.length,smallname=data[i].smallCategories;
+            htmlOne +='<div class="sore-item-title" data-id="'+data[i].midId+'">'+data[i].midType+'</div>';
+            htmlTwo +='<div class="sore-item" data-id="'+data[i].midId+'" data-name="'+data[i].midType+'">全部</div>';
+            for(j=0;j<leng;j++){
+                htmlTwo +='<div class="sore-item" data-id="'+smallname[j].smallId+'">'+smallname[j].smallType+'</div>';
+            }
+            page[data[i].midType] = htmlTwo;
+        }
+        $('.sore').html(htmlOne);
+//		alert(JSON.stringify(page));
+        chooseMidName(midName);
+    }
+
+    //点击大类选项
+    function chooseMidName(midName){
+        for(var a in page){
+            if(midName==a){
+                $('.bottom-sore-box').html(page[a]);
+            }
+        }
+    }
+
+    /*
+     * 搜索框
+     * */
+    //$('.search-box').on('tap','.search-img',function(){
+    $('#search').on('input propertychange', function(){
+        $('.classify').hide();
+        var mc = $("#search").val();
+        if(mc){
+            $('.search-before-content').show();
+            pageNum=1;
+            $('#list').html('');
+            requestFlag=true;
+            requestProductData('','','',mc,pageNum);
+            $('.top-sort-name').html('').hide();
+            $('.tiny-sort-name').html('').hide();
+        }else{
+            $.toast("请输入搜索内容");
+        }
+    });
+
+    //点击小分类获取商品列表
+    $('.bottom-sore-box').on('tap','.sore-item',function(){
+        flag=1;
+        $('.tiny-sort-name').show();
+        $('.sore>div').each(function(){
+            if($(this).css('color')=='#F39426'){
+                $('.top-sort-name').html($(this).html()).show();
+            }
+        });
+        var tinyName = $('.tiny-sort-name').html();
+        $('.bottom-sore-box>div').each(function(){
+            $(this).css('color','black');
+            if(tinyName==$(this).html()){
+                $(this).css('color','#F39426');
+            }
+        });
+        $('.tiny-sort-name').html($(this).html()).show();
+        $('.classify').hide();
+        pageNum=1;
+        $('#list').html('');
+        if($(this).html()=='全部'){
+            requestFlag=true;
+            requestProductData('',$(this).data('name'),'','',pageNum);
+        }else{
+            requestFlag=true;
+            requestProductData('','',$(this).html(),'',pageNum);
+        }
+    });
+
+    //点击大分类进行列表切换
+    $('.sore').on('tap','.sore-item-title',function(){
+//        $('.top-sort-name').show();
+
+        $('.top-sort-name').html($(this).html()).show();
+        $('.sore>div').each(function(){
+            $(this).css('color','black');
+            $(this).css('background-color','white');
+        });
+        $(this).css('color','#F39426');
+        $(this).css('background-color','#F2F2F2');
+        var midname = $(this).html();
+        chooseMidName(midname);
+    });
+
+    //
+    function setData(data){
+        $('.search-before-content').hide();
+        var len = data.goods.length;
+        var html='';
+        if(len){
+            for(var i=0;i<len;i++){
+                html +='<div class="row" data-id="'+data.goods[i].espgds01id+'" data-focus="'+data.goods[i].isfocus+'" data-standard="'+data.goods[i].espgds01002+'" data-picture="'+data.goods[i].espgds01010+'">';
+                html +='<div class="img-box">';
+                html +='<img src="'+ $.serverSettings.serverPath+'/mobile/mcheap/shopAction!getGoodsPicture.do?access_token='+ $.getStorage('access_token')+'&url='+data.goods[i].espgds01010+'"/>';
+                html +='</div>';
+                html +='<div class="drug-detail mdui-box-flex-1">';
+                html +='<div class="drug-name">'+data.goods[i].espgds01001+'</div>';
+                if(data.goods[i].espgds01004){
+                    html +='<div class="drug-origin">产地:'+data.goods[i].espgds01004+'</div>';
+                }else{
+                    html +='<div class="drug-origin">产地:</div>';
+                }
+                html +='<div class="drug-price">￥'+data.goods[i].price+'</div>';
+                html +='<div class="avg-price">均价</div>';
+                html +='</div>';
+                html +='</div>';
+            }
+            $('.product-content').append(html);
+        }else{
+            html='<div class="no-data">暂无数据</div>';
+            $('.product-content').html(html);
+        }
+    }
+
+    $('.choose-box').on('tap','.choose-sx',function(){
+        //判断小类是否隐藏
+        if($(".tiny-sort-name").css("display")== 'none'){
+            flag1=1;    //元素为隐藏
+        }else{
+            flag1=0;     //元素为显现
+        }
+        $('.tiny-sort-name').hide();
+        flag=0;
+        topSortName=$('.top-sort-name').html();
+//        $('.top-sort-name').show();
+        var tinyName = $('.tiny-sort-name').html();
+        if(tinyName){
+            $('.bottom-sore-box>div').each(function(){
+                $(this).css('color','black');
+                if($(this).html()==$('.tiny-sort-name').html()){
+                    $(this).css('color','#F39426');
+                }
+            });
+        }
+        $('.classify').show();
+    });
+
+    $('.classify').on('tap','.choose-sx',function(){
+        $('.classify').hide();
+        $('.bottom-sore-box>div').each(function(){
+            if(flag==1){//点了小类的
+                $('.sore>div').each(function(){
+                    if($(this).css('color')=='#F39426'){
+                        $('.top-sort-name').html($(this).html());
+                    }
+                })
+            }else{
+                if(flag1==1){
+                    $('.top-sort-name').html(topSortName);
+                }else{
+                    $('.tiny-sort-name').show();
+                    $('.top-sort-name').html(topSortName);
+                }
+            }
+        });
+    });
+
+
+
+    //点更多大类
+    $(document).on('tap','.choose-more',function(){
+        if($(this).hasClass('choose-more-on')){
+            $('.show-big-sort').hide();
+            $(this).find('img').attr('src','../image/triangle_down.png');
+            $(this).removeClass('choose-more-on');
+        }else{
+            $('.show-big-sort').show();
+            $(this).find('img').attr('src','../image/triangle_up.png');
+            $(this).addClass('choose-more-on');
+        }
+    });
+    $(document).on('tap','.search-before-content',function(){
+        $('.search-before-content').hide();
+    });
+
+    //返回大首页
+    $('.saoma').on('tap',function(){
+        $.closeWin();
+    });
+</script>
+</body>
+</html>

@@ -1,0 +1,426 @@
+﻿<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8">
+    <title>mCollection</title>
+    <meta name="viewport" content="target-densitydpi=device-dpi,width=device-width, initial-scale=1,maximum-scale=1, user-scalable=no">
+    <meta name="apple-mobile-web-app-capable" content="yes">
+    <meta name="apple-mobile-web-app-status-bar-style" content="black">
+    <link rel="stylesheet" href="static/mdui/css/mdui.min.css">
+    <link rel="stylesheet" href="mCheap/nav/css/base.css">
+    <link rel="stylesheet" href="static/mCheap/css/mCommon.css">
+    <style>
+        .mine-done{
+            display: none;
+            position: fixed;
+            bottom: 0;
+            width: 100%;
+            height: 5rem;
+            background-color: #007aff;
+        }
+    </style>
+</head>
+<body>
+<div class="content" id="content_box"></div>
+<nav class="mdui-bar mdui-bar-tab mdui-bar-footer" id="footer">
+    <div class="footer-item">
+        <div class="footer-item-a">
+            <img src="mCheap/nav/image/home.png">
+            <img class="img-on" src="mCheap/nav/image/home_on.png">
+            <div>买菜</div>
+        </div>
+    </div>
+    <div class="footer-item">
+        <div class="footer-item-a">
+            <img src="mCheap/nav/image/palce.png">
+            <img class="img-on" src="mCheap/nav/image/palce_on.png">
+            <div>附近</div>
+        </div>
+    </div>
+    <div class="footer-item">
+        <div class="footer-item-a">
+            <img src="mCheap/nav/image/caipu.png">
+            <img class="img-on" src="mCheap/nav/image/caipu_on.png">
+            <div>菜谱</div>
+        </div>
+    </div>
+    <div class="footer-item">
+        <div class="footer-item-a">
+            <img src="mCheap/nav/image/friend.png">
+            <img class="img-on" src="mCheap/nav/image/friend_on.png">
+            <div>我的</div>
+        </div>
+    </div>
+</nav>
+<!--页面-->
+<script src="static/mdui/js/mdui.min.js"></script>
+<script src="static/mCheap/js/mCheap.config.js"></script>
+<script src="public.js"></script>
+<script src="server.js"></script>
+<script src="push.js"></script>
+<script>
+    var nowData={};//首页请求token参数对象
+    $.uexWindowReady(function(){
+        getRegistration_ID();
+        uexJPush.onReceiveNotification = onReceiveNotification;
+        function onReceiveNotification(info){
+            /*$.execScript({
+                winName:'root',
+                frameName:'index',
+                script:' getPushHistoryMessage();'
+            });*/
+            getPushHistoryMessage();
+            getNotReadNum(refreshMsgNum);
+        }
+
+        uexJPush.onReceiveNotificationOpen=function(data){
+            $.openWin({
+                name:"base_top",
+                animId : 2,
+                url:'wgtroot://mCheap/nav/ui/base_top.html',
+                pageParam:{
+                    frameName:'message',
+                    frameUrl: 'wgtroot://mCheap/message/ui/message.html',
+                    winTitle:'消息'
+                }
+            });
+        };
+        window.setInterval("pushProductCutPrice()",180000);
+
+
+
+        if(!$.getStorage("isFirst") === "1"){
+            $.setStorage("isFirst","1");
+            $.openFrame({
+                name:"guide",
+                winName:'root',
+                url:'wgtroot://welcome.html',
+                pageParam: {}
+            });
+        }else{
+            $.openFrame({
+                name:"default",
+                winName:'root',
+                url:'wgtroot://default.html',
+                pageParam: {}
+            });
+        }
+
+
+        var init=new indexClass();
+        init.setPosition();
+        init._checkVersion();
+        init.events();
+        /* 不能获取到附近索引则设置附近为索引5 */
+        if(!$.getStorage('near')){
+            $.setStorage('near','5')
+        }
+        /*获取到用户设备信息后发送请求*/
+        uexDevice.getInfo('16');
+        uexDevice.cbGetInfo=function (opCode,dataType,data){
+            var device = eval('('+data+')');
+            $.setStorage('mac',device.macAddress);//用户终端mac地址
+            if($.getStorage('access_token')){
+                nowData.access_token = $.getStorage('access_token');
+            }
+            else {
+                nowData.mac=device.macAddress;
+            }
+            setTimeout(function(){
+                if (nowData.mac) {
+                    nowData.epsbht01008='1';//用户终端类型
+                    nowData.epsbht01006= $.getStorage('log');
+                    nowData.epsbht01007= $.getStorage('lat');
+                    nowData.comeFlag='01'; //访问来源标志:01app,02微信,03门户
+                    nowData.recordMark='yes'; //记录标志
+                    nowData.saveParam='0';//记录所属模块标志
+                    $.request({
+                        urlType: 'gettoken',
+                        data: nowData
+                    }, function (json) {
+                        if (json.access_token) {
+                            $.setStorage('access_token', json.access_token);
+                            push_message();
+                            getNotReadNum(refreshMsgNum);//设置消息推送
+                            $.setStorage('push_flag', "1");
+                        }
+                    });
+                }else{
+                    nowData.unicode=$.getStorage('registerID');//用户设备号
+                    nowData.epsbht01006= $.getStorage('log');
+                    nowData.epsbht01007= $.getStorage('lat');
+                    nowData.comeFlag='01'; //访问来源标志:01app,02微信,03门户
+                    nowData.recordMark='yes'; //记录标志
+                    nowData.saveParam='0';//记录所属模块标志
+                    $.request({
+                        urlType: 'gettoken',
+                        data: nowData
+                    }, function () {
+
+                    },null,function(){
+
+                    });
+                }
+            },500);
+        };
+
+        //机器关机后第二次打开软件
+        if( $.getStorage('push_flag')=='1'){
+            push_message();
+            getNotReadNum(refreshMsgNum);
+        }
+        window.setInterval("push_getRoundStationNames_message()",600000);
+        window.setInterval("push_getStationCheapProducts_message()",180000);
+        window.setInterval("push_getFocusProductsInfo_message()",840000);
+        window.setInterval("push_getFocusStationInfo_message()",960000);
+
+
+
+        (function (){//底部点击操作
+            var ele=$('.footer-item-a');
+            ele.on('tap',function(){
+                if(!$(this).hasClass('footer-item-on')) {
+                    ele.removeClass('footer-item-on');
+                    ele.find('.img-on').hide();
+                    ele.find('img:first-child').show();
+                    $(this).addClass('footer-item-on');
+                    $(this).find('.img-on').show();
+                    $(this).find('img:first-child').hide();
+                    var text = $(this).find('div').text();
+                    switch (text) {
+                        case '买菜':
+                            //点击首页执行
+                            $.openFrameByEle('content_box',{
+                                name:'index_content',
+                                winName:'root',
+                                url:'wgtroot://mCheap/index_content/ui/index_content.html',
+                                pageParam:{}
+                            });
+                            break;
+                        case '附近':
+                            //点击附近执行
+                            $.openFrameByEle('content_box',{
+                                name:"fujin",
+                                winName:'root',
+                                url:'wgtroot://nearMapCommon/ui/nearMap.html',
+                                pageParam:{
+                                	moduleId:"greensNearby"//这个key不能打双引号
+                                }
+                            });
+                            /*$.execScript({
+                                winName:'root',
+                                frameName:'fujin',
+                                script:"openFrame();"
+                            });*/
+                            break;
+                        case '菜谱':
+                            //点击菜谱执行
+                            $.openFrameByEle('content_box',{
+                                name:'caipu',
+                                winName:'root',
+                                url:'wgtroot://mCheap/caipu/ui/caipu.html',
+                                pageParam:{}
+                            });
+                            $.execScript({
+                                winName:'caishi',
+                                frameName:'caipu',
+                                script:'triggerActive()'
+                            });
+                            break;
+                        case '我的':
+                            //点击我的执行
+                            $.openFrameByEle('content_box',{
+                                name:'wode',
+                                winName:'root',
+                                //url:'wgtroot://mCheap/personal_information/ui/personal_information.html',
+                                url:'wgtroot://mCheap/personal_information/ui/wd.html',
+                                pageParam:{}
+                            });
+                            break;
+                    }
+                }
+            });
+            ele.eq(0).trigger('tap');
+        })();
+//        //获取经纬度
+//        var nowData={};
+//        openLocation();
+//        uexLocation.onChange = function(lat, log) {
+//            nowData.lat=lat;
+//            nowData.log=log;
+//            //alert(nowData.lat)
+//            uexDevice.getInfo('16');
+//        };
+//
+//        uexDevice.cbGetInfo=function (opCode,dataType,data){
+//            var device = eval('('+data+')');
+//           nowData.mac=device.macAddress;
+//            $.post();
+//        };
+//
+    });
+
+    function toIndex(){
+        $.closeFrame("guide");
+        $.openFrame({
+            name:"index_content",
+            winName:'root',
+            url:'wgtroot://mCheap/index_content/ui/index_content.html',
+            pageParam: {}
+        });
+    }
+
+    function pushProductCutPrice(){
+        $.request({
+            urlType: 'productCutPrice',
+            data:{
+                "access_token": $.getStorage('access_token'),
+                epsbht01006:$.getStorage('log'), //用户经度
+                epsbht01007:$.getStorage('lat'), //用户纬度
+                registerId :$.getStorage('registerID')//用户设备号
+            }
+        }, function (json) {
+            if (json) {
+
+            }
+        },null,function(){});
+    }
+
+    var indexClass=function(){};
+    indexClass.prototype={
+        /*
+         * 获取经纬度并设置到本地存储
+         * */
+        setPosition:function(){
+            $.setStorage('log','');
+            $.setStorage('lat','');
+            var nowLat,nowLog;
+
+            uexJinlinTrace.openLocation(0, 10);
+            uexJinlinTrace.onChange = function(lat, log) {
+                nowLat=lat;
+                nowLog=log;
+                $.setStorage('log',log);
+                $.setStorage('lat',lat);
+                //500ms后无法获取位置，则判断为未开启定位,初始化位置为空
+                setTimeout(function(){
+                    if(!nowLat){
+                        $.setStorage('log','');
+                        $.setStorage('lat','');
+                    }
+                },500);
+            };
+        },
+        /*
+         * 检测版本
+         * */
+        _checkVersion:function(){
+            if(this.getDate()==$.getStorage("checkDate"))return;
+            uexCheckVersion.onStatus = function(code, msg){
+                switch (code) {
+                    case 0: //失败包括地址出错，下载文件出错等
+                        alert(msg);
+                        break;
+                    case 1: //成功
+                        //alert(msg);
+                        break;
+                }
+            };
+            var url = $.serverSettings.serverPath+$.serverSettings.urlPath.checkVersion;
+            //版本更新检测地址
+            uexCheckVersion.checkVersion(url);
+            //$.setStorage("checkFlag","1");
+            $.setStorage("checkDate",this.getDate());
+        },
+        /*
+         * 点击事件集
+         * */
+        events:function(){
+            /*点击菜市*/
+            $(".maic").on('tap',function(){
+                $.openWin({
+                    name:"caishi",
+                    animId : 2,
+                    url:'wgtroot://mCheap/nav/ui/caishi_base.html',
+                    pageParam: {}
+                });
+            });
+            /* 点击个人中心 */
+            $('.header-left').on('tap',function(){
+                $.openWin({
+                    name:"grzx",
+                    animId : 2,
+                    url:'wgtroot://mCheap/grzx/ui/grzx.html',
+                    pageParam: {}
+                });
+            });
+            /*点击医院菜单调用的方法*/
+            $(".kb").on('tap',function(){
+                $.openWin({
+                    name:"hos_list",
+                    animId : 2,
+                    url:'wgtroot://hospital/hos_index/ui/hos_index.html',
+                    pageParam: {}
+                });
+            });
+            /*点击消息*/
+            $('.message').on('tap',function(){
+                $.openWin({
+                    name:"message",
+                    animId : 2,
+                    url:'wgtroot://mCheap/message/ui/message.html',
+                    pageParam: {}
+                });
+            });
+            /*点击关闭按钮调用的方法*/
+            $("#close").on('tap',function(){
+                $("#mc").css("display","none");
+            });
+            /*点击超市*/
+            $(".cs").on('tap',function(){
+                $.openWin({
+                    name:"supermarket",
+                    animId : 2,
+                    url:'wgtroot://supermarket/nav/ui/supermarket_base.html',
+                    pageParam: {}
+                });
+            });
+            /*点击买药*/
+            $(".my").on('tap',function(){
+                $.openWin({
+                    name:"medicine",
+                    animId : 2,
+                    url:'wgtroot://medicine/nav/ui/medicine_base.html',
+                    pageParam: {}
+                });
+            });
+            /*点击民生服务*/
+            $(".livelihood").on('tap',function(){
+                $.openWin({
+                    name:"livelihood",
+                    animId : 2,
+                    url:'wgtroot://livelihood/ui/livelihood.html',
+                    pageParam: {}
+                });
+            });
+            /*点击建议投诉*/
+            $(".suggest").on('tap',function(){
+                $.openWin({
+                    name:"suggest",
+                    animId : 2,
+                    url:'wgtroot://mCheap/complaint_suggest/ui/suggest.html',
+                    pageParam:{}
+                });
+            });
+        },
+        /*获取年月日*/
+        getDate:function () {
+            var date = new Date();
+            var month = date.getMonth() < 10 ? "0" + (date.getMonth() + 1) : "" + date.getMonth() + 1;
+            var day = date.getDate() < 10 ? "0" + date.getDate() : "" + date.getDate();
+            return date.getFullYear() + "-" + month + "-" + day;    //获取完整的年份(4位,1970-????)
+        }
+    };
+</script>
+</body>
+</html>

@@ -1,0 +1,171 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<meta charset="utf-8">
+	<title>mCollection</title>
+	<meta name="viewport" content="target-densitydpi=device-dpi,width=device-width, initial-scale=1,maximum-scale=1, user-scalable=no">
+	<meta name="apple-mobile-web-app-capable" content="yes">
+	<meta name="apple-mobile-web-app-status-bar-style" content="black">
+	<link rel="stylesheet" href="../../../static/mdui/css/mdui.min.css">
+	<link rel="stylesheet" href="../../../static/mCheap/css/mCommon.css">
+	<link rel="stylesheet" href="../css/search.css">
+	<script src="../js/main.js"></script>
+</head>
+<body>
+<div class="search-before-content">
+	<div class="searching">努力搜索中...</div>
+</div>
+<div class="search-item-content"></div>
+<div class="header mdui-bar mdui-bar-nav mdui-box " style="padding-left: 0;">
+	<div class="saoma mdui-action-back">
+		<img src="../images/back.png">
+	</div>
+	<div class="mdui-box-flex-1 mdui-box search-box">
+		<div class="mdui-box-flex-1">
+			<form action="">
+			    <input type="text" id="search" placeholder="产品、市场、区域"/>
+			</form>
+		</div>
+		<div class="search-img"><img src="../images/search.png"></div>
+	</div>
+	<div class="message" style="visibility: hidden">
+		<img src="../images/message.png">
+		<div class="num message-num"></div>
+	</div>
+</div>
+<div id="page_content">
+</div>
+<!--页面-->
+<script src="../../../static/mdui/js/mdui.js"></script>
+<script src="../../../static/mCheap/js/mCheap.config.js"></script>
+<script src="../../../server.js"></script>
+<script src="../../../public.js"></script>
+<script src="../../../static/mCheap/js/btn_click.js"></script>
+<script src="../../../static/mdui/js/imageHandler.js"></script>
+<script src="../../../static/mdui/js/imageConfig.js"></script>
+<!--<script src="../../../static/mdui/js/list.js"></script>-->
+<script>
+	var priceArr={};
+
+	$.uexWindowReady(function(){
+        $('#search').focus();
+        uexWindow.showSoftKeyboard();
+
+
+        var oForm =  document.getElementsByTagName("form")[0];
+		oForm.onsubmit = function(){
+			$('.search-img').trigger('tap');
+			return false;
+		};
+
+
+	});
+
+
+	/*点击收缩结果消失*/
+    /*$('.search-item-content').on('tap',function(){
+        $(".search-item-content").hide();
+
+    });*/
+
+	/*
+	 * 搜索框
+	 * */
+	$('.search-box').on('tap','.search-img',doSearchPro);
+	$('#search').on('input propertychange', doSearchPro);  //搜索框内容改变时触发
+	function doSearchPro(){
+		var mc = $("#search").val();
+        var html = '';
+		if(mc){
+			$('.search-before-content').show();
+			$.request({
+				urlType: 'querySC',
+				data: {
+					"access_token": $.getStorage('access_token'),
+					mc : mc
+				}
+			}, function (json) {
+				if (json.success) {
+//					alert(JSON.stringify(json)+"back");
+					$('.search-before-content').hide();
+					var len = json.data.length;
+					var data = json.data;
+					if(len==0){
+						html='<div class="search-item">暂无信息</div>';
+						$("#page_content").html(html).show();
+					}else{
+						for(var i=0;i<len;i++){
+							if(data[i].log){
+								html+='<div id="'+i+'" class="search-item" data-id="'+data[i].id+'" data-bz="'+data[i].bz+'" data-log="'+data[i].log+'" data-lat="'+data[i].lat+'">'+data[i].mz+'</div>';
+							}else{
+								html+='<div id="'+i+'" class="search-item" data-id="'+data[i].id+'" data-bz="'+data[i].bz+'">'+data[i].mz+'</div>';
+							}
+							if(data[i].scPrice){
+								var arr=[];
+								arr.push(data[i].scPrice.cltprc05004);
+								arr.push(data[i].scPrice.cltprc05005);
+								arr.push(data[i].scPrice.cltprc05006);
+								arr.push(data[i].scPrice.cltprc05007);
+								priceArr[data[i].id]=arr;
+							}
+						}
+						$("#page_content").html(html).show();
+					}
+				}
+				else {
+					alert('网络错误');
+				}
+			});
+		}else{
+			//$.toast("请输入搜索内容");
+            //html='<div class="search-item">请输入搜索内容</div>';
+            //$(".search-item-content").html(html).hide();
+            //$("body,html").css({"overflow":"auto"});
+		}
+	}
+	/*
+	 * 点击搜索结果跳转
+	 * */
+	$(document).on('tap','.search-item',function(){
+		//$(this).css("background-color","green");
+		var id = $(this).data("id");
+		var price=priceArr[id];
+		var bz = $(this).data("bz");
+		//$(".search-item-content").hide();
+		if(bz==1){
+			$.openWin({
+				name:'market',
+				animId : 2,
+				url:'wgtroot://mCheap/market/ui/market.html',
+				pageParam:{
+					cltpit01id : id,
+					price:price,
+					log:$(this).data("log"),
+					lat:$(this).data("lat")
+				}
+			});
+		}else{
+			$.openWin({
+				name:'market_list',
+				animId : 2,
+				url:'wgtroot://mCheap/market_list/ui/market_list.html',
+				pageParam:{
+					cltpro01id : id,
+					price:price
+				}
+			});
+		}
+	});
+	/*$('.saoma').on('tap',function(){
+		$.execScript({
+			winName:'caishi',
+			script:'$.closeWin()'
+		});
+	});*/
+
+
+
+
+</script>
+</body>
+</html>

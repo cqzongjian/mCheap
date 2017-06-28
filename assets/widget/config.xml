@@ -1,0 +1,23 @@
+<?xml version="1.0" encoding="utf-8" standalone="no"?>
+<widget appId="20" channelCode="000" height="480" pid="" sreensize="4.5" version="1.1.1" viewmode="application" widgetId="" width="320">
+    
+    <name>MDUI</name>
+    <description/>
+    <author />
+    <icon src="logo.png"/>
+    <license href=""/>
+    <!--<content encoding="utf-8" src="index_container.html"/>-->
+    <content encoding="utf-8" src="caishi_base.html"/>
+    <updateurl/>
+    <logserverip/>
+    <obfuscation>false</obfuscation>
+    <bgcolor/>
+    <orientation>1</orientation>
+    <debug/>
+    <partobfuscation>false</partobfuscation>
+    <webapp/>
+    <config desc="uexJPush" type="KEY">
+		<param platform="Android" name="$UEXJPUSH_PACKAGE$" value="com.yinhai.mCheap"/>
+        <param platform="Android" name="$UEXJPUSH_APPKEY$" value="6436a5b5d21c7dc11bfd6140"/>
+    </config>
+</widget>

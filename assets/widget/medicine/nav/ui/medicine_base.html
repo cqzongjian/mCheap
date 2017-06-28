@@ -1,0 +1,110 @@
+﻿<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8">
+    <title>mCollection</title>
+    <meta name="viewport" content="target-densitydpi=device-dpi,width=device-width, initial-scale=1,maximum-scale=1, user-scalable=no">
+    <meta name="apple-mobile-web-app-capable" content="yes">
+    <meta name="apple-mobile-web-app-status-bar-style" content="black">
+    <link rel="stylesheet" href="../../../static/mdui/css/mdui.min.css">
+    <link rel="stylesheet" href="../css/base.css">
+    <link rel="stylesheet" href="../../../static/mCheap/css/mCommon.css">
+</head>
+<body>
+<div class="content" id="content_box"></div>
+<nav class="mdui-bar mdui-bar-tab mdui-bar-footer" id="footer">
+    <div class="footer-item">
+        <div class="footer-item-a">
+            <img src="../image/my.png">
+            <img class="img-on" src="../image/my_on.png">
+            <div>买药</div>
+        </div>
+    </div>
+    <div class="footer-item">
+        <div class="footer-item-a">
+            <img src="../image/palce.png">
+            <img class="img-on" src="../image/palce_on.png">
+            <div>附近</div>
+        </div>
+    </div>
+    <div class="footer-item">
+        <div class="footer-item-a yd">
+            <img src="../image/yd.png">
+            <img class="img-on" src="../image/yd_on.png">
+            <div>药店</div>
+        </div>
+    </div>
+    <div class="footer-item">
+        <div class="footer-item-a gz">
+            <img src="../image/focus_mr.png">
+            <img class="img-on" src="../image/focus_my.png">
+            <div>关注</div>
+        </div>
+    </div>
+</nav>
+<!--页面-->
+<script src="../../../static/mdui/js/mdui.min.js"></script>
+<script src="../../../static/mCheap/js/mCheap.config.js"></script>
+<script src="../../../server.js"></script>
+<script>
+    $.uexWindowReady(function(){
+        (function (){//底部点击操作
+            var ele=$('.footer-item-a');
+            ele.on('tap',function(){
+                if(!$(this).hasClass('footer-item-on')) {
+                    ele.removeClass('footer-item-on');
+                    ele.find('.img-on').hide();
+                    ele.find('img:first-child').show();
+                    $(this).addClass('footer-item-on');
+                    $(this).find('.img-on').show();
+                    $(this).find('img:first-child').hide();
+                    var text = $(this).find('div').text();
+                    switch (text) {
+                        case '买药':
+                            //点击首页执行
+                            $.openFrameByEle('content_box',{
+                                name:'medicine_index',
+                                winName:'medicine',
+                                url:'wgtroot://medicine/index_content/ui/medicine_index.html',
+                                pageParam:{}
+                            });
+                            break;
+                        case '附近':
+                            //点击附近执行
+                            $.openFrameByEle('content_box',{
+                                name:"nearMap",
+                                winName:'medicine',
+                                url:'wgtroot://nearMapCommon/ui/nearMap.html',
+                                pageParam:{
+                                    moduleId:"buyDrugs"
+                                }
+                            });
+                            break;
+                        case '药店':
+                            //点击菜谱执行
+                            $.openFrameByEle('content_box',{
+                                name:'shop_lists',
+                                winName:'medicine',
+                                url:'wgtroot://medicine/shop_list/ui/shop_lists.html',
+                                pageParam:{}
+                            });
+                            break;
+                        case '关注':
+                            //点击我的执行
+                            $.openFrameByEle('content_box',{
+                                forceRefresh:true,
+                                name:'focus',
+                                winName:'medicine',
+                                url:'wgtroot://medicine/personal_information/ui/focus.html',
+                                pageParam:{}
+                            });
+                            break;
+                    }
+                }
+            });
+            ele.eq(0).trigger('tap');
+        })();
+    });
+</script>
+</body>
+</html>

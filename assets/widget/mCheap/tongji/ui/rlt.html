@@ -1,0 +1,175 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8">
+    <title>mCollection</title>
+    <meta name="viewport" content="target-densitydpi=device-dpi,width=device-width, initial-scale=1,maximum-scale=1, user-scalable=no">
+    <meta name="apple-mobile-web-app-capable" content="yes">
+    <meta name="apple-mobile-web-app-status-bar-style" content="black">
+    <link rel="stylesheet" href="../../../static/mdui/css/mdui.min.css">
+    <link rel="stylesheet" href="../../../static/mCheap/css/mCommon.css">
+    <style>
+        *{
+            color: #666666;
+        }
+        .top{
+            height: 2rem;
+            line-height: 2rem;
+            padding: 0 1rem;
+            background-color: #ffffff;
+            font-weight: 600;
+            border-bottom: 1px solid #CCCCCC;
+        }
+        .arrowRight{
+            width:1rem ;
+            background: url("../images/right.png") no-repeat right center;
+            background-size: auto 1rem;
+        }
+        .chartBox{
+            margin: .5rem;
+            background-color: #ffffff;
+            border-radius: .5rem;
+        }
+        .chartBox>.title{
+            border-bottom: 1px solid #CCCCCC;
+            text-align: center;
+            color: #3BA15C;
+            font-weight: 600;
+            line-height: 2rem;
+        }
+    </style>
+</head>
+<body class="mdui-box">
+<div class="top mdui-box">
+    <div class="mdui-box-flex-1 product-name" data-id="2133">白菜</div>
+    <div class="arrowRight"></div>
+</div>
+<div class="chartBox mdui-box-flex-1 mdui-box mdui-box-ver">
+    <div class="title">产品价格热力图</div>
+    <div id="map" class="mdui-box-flex-1"></div>
+</div>
+<script src="../../../static/mdui/js/mdui.min.js"></script>
+<script src="../../../static/mCheap/js/mCheap.config.js"></script>
+<script src="../../../server.js"></script>
+<script src="../js/mapkey.js"></script>
+<script src="../js/headMap.js"></script>
+<script>
+    function Rlt(product_Id){
+        this.map = new BMap.Map("map");
+        this.product_Id=product_Id;
+        this.gradient={//热力图颜色的渐变区域
+            .33:'rgb(34, 139, 34)',//这个区间(1到33)
+            .66:'rgb(255, 255, 0)',
+            1:'rgb(255, 0, 0)'
+        };
+        this.options = {//只有这个参数
+            "radius":10, //热力图的半径
+            "visible":true, //热力图是否显示
+            "gradient":this.gradient,//热力图颜色的渐变区域
+            "opacity":70//热力的透明度
+        };
+        this.heatmapOverlay = new BMapLib.HeatmapOverlay(this.options);
+        this.init=function(){
+            this.events();
+            this.request(this.product_Id);
+        };
+    }
+
+    Rlt.prototype={
+        createMap:function(){
+            var self = this;
+            var map = self.map;
+            var point = new BMap.Point(104.067192,30.665534);
+            var myIcon = new BMap.Icon("../images/icondwbz-31.png", new BMap.Size(30, 45), //红色标注
+                    {
+                        anchor : new BMap.Size(13, 46),   //调整图片在地图上得位置
+                        imageOffset: new BMap.Size(0, 0)
+                    });
+            var marker = new BMap.Marker(point,{icon: myIcon,"onedata":"1"});
+            //map.addOverlay(marker);    //添加标注
+            map.centerAndZoom(point, 15);
+        },
+        createHeadMap:function(data){
+            this.map.addOverlay(this.heatmapOverlay);//添加热力图到地图上
+            this.heatmapOverlay.setDataSet(data);//data是热力图的详细数据
+        },
+        openHead:function(headMap){
+            headMap.toggle();
+        },
+        request:function(cltpro01id){
+            var self = this;
+            var result={};
+            $.request({
+                urlType: 'thermodynamicMap',
+                data: {
+                    "access_token": $.getStorage('access_token'),
+                    cltpro01id:cltpro01id
+                }
+            }, function (data) {
+                if (data.success) {
+                    data=data.data;
+                    var seriesData=data.seriesData;
+                    var str=data.address;
+                    var arr=[];
+                    var address=JSON.parse(str.replace(/\'/g,'"'));
+                    result.max=data.maxPrice;
+                    var slen=seriesData.length;
+                    for(var i=0;i<slen;i++){
+                        var obj={};
+                        obj.lng=address[seriesData[i].name][0];
+                        obj.lat=address[seriesData[i].name][1];
+                        obj.count=seriesData[i].value;
+                        arr.push(obj)
+                    }
+                    result.data=arr;
+                    self.createMap();//引入百度地图
+                    self.createHeadMap(result);//引入热力图
+                }
+                else {
+                    //$.toast('网络错误');
+                }
+            });
+        },
+        events:function(){
+            $('.top').on('tap',function(){
+                $.openWin({
+                    name:"selectProduct",
+                    animId : 2,
+                    url:'wgtroot://mCheap/tongji/ui/selectProduct.html',
+                    pageParam:{
+                        wName:'rlt'
+                    }
+                });
+            });
+        }
+    };
+
+    $.uexWindowReady(function() {
+        var product_Id = $('.product-name').data('id');
+        var init = new Rlt(product_Id);
+        init.init();
+        init = null;
+    });
+
+    function changeProduct(){
+        var name = [];
+        var proId = '';
+        var productName = '';
+        for(var t=0;t<arguments.length;t++){
+            if(t!=arguments.length-1){
+                name[t]=String.fromCharCode(arguments[t]);
+            }else{
+                proId=arguments[t];
+            }
+        }
+        for(var s=0;s<name.length;s++){
+            productName +=name[s];
+        }
+        $('.product-name').html(productName).data('id',proId);
+        var newPro=new Rlt(proId);
+        newPro.init();
+        newPro = null;
+    }
+</script>
+</body>
+</html>

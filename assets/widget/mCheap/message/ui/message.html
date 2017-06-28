@@ -1,0 +1,305 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8">
+    <title>mCollection</title>
+    <meta name="viewport" content="target-densitydpi=device-dpi,width=device-width, initial-scale=1,maximum-scale=1, user-scalable=no">
+    <meta name="apple-mobile-web-app-capable" content="yes">
+    <meta name="apple-mobile-web-app-status-bar-style" content="black">
+    <link rel="stylesheet" href="../../../static/mdui/css/mdui.min.css">
+    <link rel="stylesheet" href="../../../static/mCheap/css/mCommon.css">
+    <style>
+        *{
+            font-family: "Microsoft YaHei";
+            color: #666666;
+        }
+        body{
+            background-color: #E6EAE8;
+        }
+        .message-item{
+            padding-top: 1rem;
+            padding-left: 1rem;
+            border-bottom: 1px solid #cccccc;
+            background-color: #FFFFFF;
+        }
+        .container{
+            padding-bottom: 0.5rem;
+            border-bottom: 1px solid #CCCCCC;
+        }
+        .message-item-title{
+            color: #000000;
+            font-size: 1.2rem;
+        }
+        .message-item-content{
+           margin-top: 0.5rem;
+            overflow: hidden;
+            text-overflow:ellipsis;
+            white-space:nowrap;
+        }
+        .message-item-bottom{
+            padding: 0.5rem 1rem 0.5rem 0;
+        }
+        .message-item-bottom>div:last-child{
+            margin-right: 1rem;
+            padding-right: 1rem;
+            color: #000000;
+            background: url("../images/arrow.png") no-repeat right center;
+            background-size: auto 0.8rem;
+        }
+        .onTouch{
+            background-color:#F5F5F5;
+
+        }
+        .mdui-table-view-cell{
+            padding:0;
+            margin-top:0.5rem;
+        }
+        .mes_detail{
+            display: none;
+        }
+        .marker{
+            color: #F57F20;
+            display: block;
+            float: right;
+            margin-right: 2rem;
+            font-size: 1rem;
+        }
+        .search-before-content{
+            height: 100%;
+            width: 100%;
+            position: fixed;
+            z-index: 999;
+            background: rgba(0,0,0,0.3);
+            overflow: auto;
+        }
+        .searching{
+            color: white;
+            margin-top: 10rem;
+            width: 100%;
+            text-align: center;
+        }
+
+        .header-box{
+            background-color: #3BA15C;
+            padding: 0;
+        }
+        .header{
+            width: 100%;
+            height: 100%;
+            position: relative;
+        }
+        .title{
+            text-align: center;
+            position: absolute;
+            width: 100%;
+            height: 100%;
+            top: 0;
+            line-height: 2.75rem;
+            color: #FFFFFF;
+        }
+        .back{
+            padding-right: 1rem;
+            padding-left: 1rem;
+            padding-top: 0.75rem;
+            position: absolute;
+            z-index: 100;
+        }
+        .back img{
+            width:auto;
+            height: 1.25rem;
+        }
+        .clean{
+            text-align: center;
+            position: absolute;
+            top: 0;
+            right: 5%;
+            line-height: 2.75rem;
+            color: #FFFFFF;
+            padding-left:0.5rem;
+            padding-right: 0.5rem;
+        }
+        .no-data{
+            background-color: white;
+            height: 3rem;
+            text-align: center;
+            line-height: 3rem;
+            border-bottom: 1px solid #CCCCCC;
+        }
+        #content_list{
+            padding-top: 2.75rem;
+        }
+    </style>
+</head>
+<body>
+<div class="search-before-content">
+    <div class="searching">载入中，请稍后</div>
+</div>
+<div class="header-box mdui-bar mdui-bar-nav">
+    <div class="header">
+        <div class="back mdui-action-back"><img src="../images/back.png"></div>
+        <div class="title">消息</div>
+        <div class="clean">清空</div>
+    </div>
+</div>
+<div id="content_list">
+
+    <!--<div class="mdui-table-view-cell">
+        <div class="mdui-slider-right mdui-disabled ">
+            <a class="mdui-btn mdui-btn-red delete">删除</a>
+        </div>
+        <div class=" mdui-slider-handle message-item touch">
+            <div class="container">
+                <div class="message-item-title">附近推荐<span class="marker">未读</span></div>
+                <div class="message-item-content mdui-ellipsis-2">回家萨达萨达姐姐的房间</div>
+            </div>
+            <div class="message-item-bottom mdui-box">
+                <div class="mdui-box-flex-1">2016-06-28</div>
+                <div>查看详情</div>
+            </div>
+        </div>
+    </div>-->
+
+
+</div>
+<!--页面-->
+<script src="../../../static/mdui/js/mdui.min.js"></script>
+<script src="../../../static/mCheap/js/mCheap.config.js"></script>
+<script src="../../../push.js"></script>
+<script src="../js/message_common.js"></script>
+<script src="../../../server.js"></script>
+<script src="../../../public.js"></script>
+<script>
+    var msgNum=0;//用于统计未读消息条数
+
+    //var cltpush01idArr=[{cltpush01id:123},{cltpush01id:456},{cltpush01id:789}];
+    var cltpush01idArr=[];
+
+    $.uexWindowReady(function(){
+        set_data();
+    });
+
+    $('.clean').on('tap',function(){
+        if($('.each-message').length==0){
+            $.alert('没有消息！');
+            return;
+        }
+        if(confirm("确定要清空数据吗？")){
+            $.request({
+                urlType:'deleteAllPushMessage',
+                data:{
+                    "access_token": $.getStorage('access_token'),
+                    cltpush01id:JSON.stringify(cltpush01idArr)
+                }
+            },function(json){
+                if(json.success) {
+                    $.toast('删除成功');
+                    $('#content_list').html('<div class="no-data">暂无消息</div>');
+                    refreshMsgNum(0);
+                }else{
+                    $.toast('删除失败');
+                }
+            });
+        }
+    });
+
+    //点详情
+    $('#content_list').on('tap','.touch',function(){
+        var cltpush01004 = $(this).parent().data('cltpush01004');
+        var cltpush01id = $(this).parent().find('.delete').data('cltpush01id');
+        var content_detail = $(this).parent().find('.message-item-content').html();
+        var time = $(this).parent().find('.time').html();
+        if(cltpush01004=='0'){
+            markHaveRead(cltpush01id);
+            $(this).parent().find('.marker').html('已读');
+            msgNum=msgNum-1;
+        }
+        $.openWin({
+            name:'message_detail',
+			animId : 2,
+            url:'wgtroot://mCheap/message/ui/message_detail.html',
+            pageParam:{
+                cltpush01004 : cltpush01004,
+                cltpush01id : cltpush01id,
+                content_detail :　content_detail,
+                time : time,
+                unreadMsgNum:msgNum
+            }
+        });
+    });
+
+    //点删除
+    $(document).on('tap','.delete',function(){
+        var cltpush01id = $(this).data('cltpush01id');
+        var cltpush01004=$(this).parents().data('cltpush01004');
+        if(cltpush01004=='0'){
+            msgNum=msgNum-1;
+            refreshMsgNum(msgNum);
+        }
+        del_message(cltpush01id,cltpush01idArr);
+        $(this).parent().parent().remove();
+    });
+
+    //删除消息
+    function reDelMsg(cltpush01id){
+        $('.delete').each(function(){
+            if($(this).data('cltpush01id')==cltpush01id){
+                $(this).parent().parent().remove();
+            }
+        })
+    }
+
+    //数据加载
+    function set_data(){
+        $.request({
+            urlType:'getPushHistoryMessageMore',
+            data:{
+                "access_token": $.getStorage('access_token')
+            }
+        },function(json){
+            if(json.success) {
+                $('.search-before-content').hide();
+                var data = json.data;
+                var html = '';
+                var len = json.data.length;
+                if(len){
+                    for(var i=0;i<len;i++){
+                        var obj={};
+                        obj.cltpush01id=data[i].cltpush01id;
+                        cltpush01idArr.push(obj);
+                        html +='<div class="mdui-table-view-cell each-message" data-cltpush01004="'+data[i].cltpush01004+'">';
+                        html +='<div class="mdui-slider-right mdui-disabled ">';
+                        html +='<a class="mdui-btn mdui-btn-red delete" data-cltpush01id="'+data[i].cltpush01id+'">删除</a>';
+                        html +='</div>';
+                        html +='<div class=" mdui-slider-handle message-item touch">';
+                        html +='<div class="container">';
+                        if(data[i].cltpush01004=='0'){
+                            msgNum++;
+                            html +='<div class="message-item-title">'+data[i].cltpush01001+'<span class="marker">未读</span></div>';
+                        }else{
+                            html +='<div class="message-item-title">'+data[i].cltpush01001+'<span class="marker">已读</span></div>';
+                        }
+                        html +='<div class="message-item-content">'+data[i].cltpush01002+'</div>';
+                        html +='</div>';
+                        html +='<div class="message-item-bottom mdui-box">';
+                        html +='<div class="mdui-box-flex-1 time">'+data[i].cltpush01003+'</div>';
+                        //html +='<div class="detail" data-cltpush01004="'+data[i].cltpush01004+'"><span class="mes_detail">'+str+'</span>查看详情</div>';
+                        html +='<div class="detail">查看详情</div>';
+                        html +='</div>';
+                        html +='</div>';
+                        html +='</div>';
+                    }
+                    $("#content_list").html(html);
+                }else{
+                    alert("暂无推送消息");
+                }
+            }
+            else {
+                $('.search-before-content').hide();
+                alert('网络错误')
+            }
+        });
+    }
+
+</script>
+</body>
+</html>

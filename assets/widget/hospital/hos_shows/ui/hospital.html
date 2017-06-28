@@ -1,0 +1,766 @@
+﻿<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8">
+    <title>mCollection</title>
+    <meta name="viewport" content="target-densitydpi=device-dpi,width=device-width, initial-scale=1,maximum-scale=1, user-scalable=no">
+    <meta name="apple-mobile-web-app-capable" content="yes">
+    <meta name="apple-mobile-web-app-status-bar-style" content="black">
+    <link rel="stylesheet" href="../../../static/mdui/css/mdui.min.css">
+    <link rel="stylesheet" href="../css/base.css">
+    <link rel="stylesheet" href="../../../static/mCheap/css/mCommon.css">
+    <link rel="stylesheet" href="../../../mCheap/market_list/css/market_list.css">
+</head>
+<style>
+.search-before-content{
+    height:100%;
+    width:100%;
+    position:fixed;
+    z-index:999;
+    background: rgba(0,0,0,0.3);
+    overflow: auto;
+    display:none;
+}
+    .searching{
+        color:white;
+        margin-top: 10rem;
+    width: 100%;
+        text-align: center;
+    }
+    .search-item-content{
+        height:100%;
+        width:100%;
+        position: fixed;
+        z-index:999;
+        background-color: rgba(0,0,0,0.3);
+        overflow:auto;
+        display:none;
+    }
+    .header{
+        background-color: #0eb7ed;
+    }
+.mdui-bar
+{position:fixed;
+    z-index:10;
+    right:0;
+    left:0;
+    height:2.75rem;
+    padding-right:.625rem;
+    padding-left:.625rem;
+    border-bottom:0;
+    background-color:#f7f7f7;
+    -webkit-box-shadow:0 0 .0625rem rgba(0,0,0,.85);
+    box-shadow:0 0 .0625rem rgba(0,0,0,.85);
+    -webkit-backface-visibility:hidden;
+    backface-visibility:hidden
+}
+    .saoma{
+        padding-right:1rem;
+        padding-top:0.75rem;
+        padding-left:0.625rem;
+    }
+    .saoma>img{
+        width:auto;
+        height:1.25rem;
+    }
+    .message{
+        margin-left: 1rem;
+        margin-top:0.75rem;
+        padding-right:0.5rem;
+        position:relative;
+    }
+    .message>img{
+        width:auto;
+        height:1.25rem;
+    }
+.mdui-box-flex-1{box-flex:1;-webkit-box-flex:1}
+.mdui-box {
+    display: -webkit-box;
+}
+    .search-box{
+        border:1px solid #cccccc;
+        border-radius:5px;
+        background-color: #ffffff;
+        height:1.75rem;
+        margin-top:0.5rem;
+        margin-bottom:0.5rem;
+        overflow: hidden;
+    }
+    .search-img{
+        height:1.75rem;
+        line-height: 1.75rem;
+        margin-right:0.5rem;
+        margin-top:0.25rem;
+        marign-bottom:0.25rem;
+        padding-left:2rem;
+    }
+    .search-img>img{
+        width:1.25rem;
+        height:1.25rem;
+    }
+#search{
+    border: none;
+    height: 1.75rem;
+}
+.header{
+    background-color: #0eb7ed;
+}
+  .sort{
+      padding-top:1rem;
+      padding-bottom:1rem;
+  }
+    .sort>div>a{
+        display:block;
+        width:3rem;
+        margin:0 auto;
+        text-align:center;
+        color:#000000;
+    }
+html,body{
+    height: 100%;
+}
+body{
+    position: relative;
+    overflow:hidden;
+}
+.seting{
+}
+.setting-detail{
+    position: absolute;
+    top: 5.3rem;
+    bottom: 0;
+    width: 100%;
+    background-color: rgba(0,0,0,0.3);
+    display: none;
+    overflow: hidden;
+    z-index: 100;
+}
+.item{
+    padding: 0.5rem 0;
+    color: #333333;
+    line-height: 1.5rem;
+    background-color: #ffffff;
+    border-bottom: 1px solid #CCCCCC;
+}
+.item>div{
+    border-right: .1rem solid #CCCCCC;
+    width: 50%;
+    text-align: center;
+    position: relative;
+}
+.item>div>img{
+    height: 0.3rem;
+    width: auto;
+    position: relative;
+    top: -0.15rem;
+    display: inline-block;
+}
+.item>div:last-child{
+    border: none;
+}
+.item .item-on{
+    color: #0eb7ed;
+}
+.detail{
+    line-height: 2rem;
+    background-color: #ffffff;
+    color: #666666;
+    position: relative;
+    z-index: 100;
+}
+ul{
+    padding: 0;
+    margin: 0;
+}
+li{
+    list-style: none;
+    border-bottom: 1px solid #cccccc;
+    padding-left: 3rem;
+}
+li:last-child{
+    border-bottom: none;
+}
+.li-on{
+    background: url("../image/lvgou.png") no-repeat 1rem center;
+    background-size:  auto 0.8rem;
+    color: #0eb7ed;
+}
+.for-near{
+    display: none;
+}
+.for-shaixuan{
+    display: none;
+}
+.mdui-checkbox input[type=checkbox]:checked:before, .mdui-radio input[type=radio]:checked:before {
+    color: #0eb7ed;
+}
+.select-box>.mdui-input-row{
+    border-bottom: 1px solid #cccccc;
+}
+#gzCaipin{
+    border-bottom: none;
+}
+#btn-group{
+    padding:0.5rem 0.5rem 0.5rem 1rem ;
+    background-color: #F7F7F7;
+}
+#btn-group>input{
+    display: block;
+}
+#rest{
+    float: left;
+}
+#confirm{
+    background-color: #0eb7ed;
+    color: #FFFFFF;
+    float: right;
+}
+.mdui-checkbox input[type=checkbox], .mdui-radio input[type=radio] {
+    right: 0.3rem;
+}
+.list{
+    overflow: auto;
+}
+.islike{
+    position:absolute;
+    right:2.2rem;
+    top:1.2rem;
+    width:2rem;
+    height:2rem;
+    font-size:0.9rem;
+
+}
+.dislike{
+    background: url("../image/dislike.png") no-repeat right top;
+    background-size:auto 1rem;
+}
+.like,.add,.dislike{
+    position: absolute;
+    width: 1rem;
+    height: 1rem;
+    background-size: auto 0.9rem;
+    background-repeat: no-repeat;
+    background-position: center;
+    top:1.2rem;
+}
+.like{
+    right: 2rem;
+    top:1.2rem;
+    background-image:url("../image/like.png");
+}
+
+.list-item-dis{
+    position: absolute;
+    right: 0;
+    padding-right: 1rem;
+    top: 2.5rem;
+    padding-top: 0.65rem;
+    font-size: 0.8rem;
+}
+.list-item-dis{
+    width: 1rem;
+    height: 1rem;
+    position: absolute;
+    bottom: 12%;
+    right: 10%;
+}
+.level-div{
+        clear:none;
+        float: left;
+    }
+.star{
+    height: 1rem;
+    line-height: 1rem;
+}
+.star>img{
+    height: 0.8rem;
+    width: auto;
+}
+.market-address{
+    background: url("../image/dis.png") no-repeat left center;
+    background-size: 0.8rem auto;
+}
+.market-yysj{
+    background: url("../image/time.png") no-repeat left center;
+    background-size: 0.8rem auto;
+}
+.market-dis{
+    position: absolute;
+    top: 0.7rem;
+    right: 1rem;
+    font-size: 0.9rem;
+    color: #666666;
+}
+.market-address,.market-yysj{
+
+    text-overflow:ellipsis;
+    overflow: hidden;
+    white-space:nowrap;
+    font-size: .8rem;
+    font-weight: normal;
+    color: #666666;
+    height:1rem;
+    line-height: 1rem;
+    padding-left: 1rem;
+}
+.hospital-address{
+    text-overflow: ellipsis;
+    overflow: hidden;
+    white-space: nowrap;
+    height: 1rem;
+    font-size:0.6rem;margin-left:.6rem;}
+.list-item-price{
+    height: auto;
+    margin-left:.5rem;
+    width: 4.5rem;;
+    font-weight: 600;
+    font-size: 0.8rem;
+    background-color: #0eb7ed;
+    color: #ffffff;
+    padding-left: 0.5rem;
+    border:.1rem solid;
+    -moz-border-radius: 15px;
+    -webkit-border-radius: 15px;
+    border-radius:15px;
+}
+</style>
+<body>
+<div class = "search-before-content">
+    <div class="searching">努力搜索中...</div>
+</div>
+<div class="search-item-content"></div>
+<div class="header mdui-bar mdui-bar-nav mdui-box" style="padding-left:0;">
+    <div class="saoma">
+        <img src="../image/back.png">
+    </div>
+    <div class="mdui-box-flex-1 mdui-box search-box">
+        <div class="mdui-box-flex-1">
+            <form action="">
+                <input type="text" id="search" placeholder="医院">
+            </form>
+        </div>
+        <div class="search-img"><img src="../image/search.png"></div>
+    </div>
+</div>
+<!--筛选 -->
+<div class="seting">
+    <div class="item mdui-box">
+        <div class="item-near">
+            <div style="display: inline-block;padding-right: .2rem;">全城</div>
+            <img src="../image/down.png">
+        </div>
+        <div class="item-shaixuan">
+            <div style="display: inline-block;padding-right: .2rem;">筛选</div>
+            <img src="../image/down.png">
+        </div>
+    </div>
+</div>
+
+<div class="setting-detail">
+    <div class="detail">
+        <div class="for-near">
+            <ul>
+                <li>附近</li>
+                <li>1km</li>
+                <li>2km</li>
+                <li>3km</li>
+                <li>4km</li>
+                <li>全城</li>
+                </ul>
+        </div>
+        <div class="for-shaixuan">
+            <div class="select-option">
+                <div class="select-first">
+                <div class="mdui-input-row mdui-checkbox" id="purchasePointCs">
+                    <label>常用地址</label>
+                    <input name="checkbox1"  type="checkbox" data-for="buypotin">
+                </div>
+                <div class="mdui-input-row mdui-checkbox" id="focusCs">
+                    <label>我关注的医院</label>
+                    <input name="checkbox1" type="checkbox" data-for="focus">
+                </div>
+                <div class="mdui-input-row mdui-checkbox level-div" id="level" style="width:33% !important;">
+                <label style="font-weight: 600">等级</label>
+            </div>
+                </div>
+                <div class="selectedLevel">
+                <div class="mdui-input-row mdui-checkbox level-div" id="sanjia" style="width:33% !important;" >
+                    <label>三甲</label>
+                    <input name="checkbox1" type="checkbox" data-for="0301">
+                </div>
+                <div class="mdui-input-row mdui-checkbox level-div" id="sanyi" style="width:34% !important;" >
+                    <label>三乙</label>
+                    <input name="checkbox1" type="checkbox" data-for="0302">
+                </div>
+                <div class="mdui-input-row mdui-checkbox level-div" id="sanbing" style="width:33% !important;" >
+                    <label>三丙</label>
+                    <input name="checkbox1" type="checkbox" data-for="0303">
+                </div>
+                <div class="mdui-input-row mdui-checkbox level-div" id="erjia" style="width:33% !important;" >
+                    <label>二甲</label>
+                    <input name="checkbox1" type="checkbox" data-for="0201">
+                </div>
+                <div class="mdui-input-row mdui-checkbox level-div" id="eryi" style="width:34% !important;" >
+                    <label>二乙</label>
+                    <input name="checkbox1" type="checkbox" data-for="0202">
+                </div>
+                <div class="mdui-input-row mdui-checkbox level-div" id="erbing" style="width:33% !important;" >
+                    <label>二丙</label>
+                    <input name="checkbox1" type="checkbox" data-for="0203">
+                </div>
+                <div class="mdui-input-row mdui-checkbox level-div" id="yijia" style="width:33% !important;" >
+                    <label>一甲</label>
+                    <input name="checkbox1" type="checkbox" data-for="0101">
+                </div>
+                <div class="mdui-input-row mdui-checkbox level-div" id="yiyi" style="width:34% !important;" >
+                    <label>一乙</label>
+                    <input name="checkbox1" type="checkbox" data-for="0102">
+                </div>
+                <div class="mdui-input-row mdui-checkbox level-div" id="yibing" style="width:33% !important;" >
+                    <label>一丙</label>
+                    <input name="checkbox1" type="checkbox" data-for="0103">
+                </div>
+                <div class="mdui-input-row mdui-checkbox level-div" id="unknown" style="width:33% !important;" >
+                    <label>未知</label>
+                    <input name="checkbox1" type="checkbox" data-for="unknown">
+                </div>
+                <div class="mdui-input-row mdui-checkbox level-div" id="allSelect" style="width:34% !important;" >
+                    <label style="font-weight: 600">全选</label>
+                    <input name="checkbox1" type="checkbox" data-for="allSelect" id="all">
+                </div>
+                </div>
+                <div class="mdui-input-row" id="btn-group">
+                    <input type="button" value="重置" id="rest">
+                    <input type="button" value="确定" id="confirm">
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="blank" style="position: absolute; width: 100%; height: 100%;z-index: 1;"></div>
+</div>
+<div class="list mdui-box-flex-1 contentInfo">
+    <!--<div class="list-item">-->
+        <!--<div class="list-item-content mdui-box">-->
+            <!--<div class="list-item-img"><img src="../image/kb.png"></div>-->
+            <!--<div class="mdui-box-flex-1">-->
+                <!--<div class="list-item-title">四川华西医院</div>-->
+                <!--<div class="list-item-price">二甲医院</div>-->
+                <!--<div  class ="hospital-address">成都市武侯区华西坝旁dsfsdfsdfsdfsdfsdfsdf</div>-->
+            <!--</div>-->
+        <!--</div>-->
+        <!--<div class="islike dislike"></div>-->
+        <!--<div class="list-item-dis">1.7km</div>-->
+    <!--</div>-->
+    <!--<div class="list-item">-->
+        <!--<div class="list-item-content mdui-box">-->
+            <!--<div class="list-item-img"><img src="../image/kb.png"></div>-->
+            <!--<div class="mdui-box-flex-1">-->
+                <!--<div class="list-item-title">四川华西医院</div>-->
+                <!--<div class="list-item-price">二甲医院</div>-->
+                <!--<div class ="hospital-address">成都市武侯区华西坝旁</div>-->
+            <!--</div>-->
+        <!--</div>-->
+        <!--<div class="islike dislike"></div>-->
+        <!--<div class="list-item-dis"><img src="../image/dis.png" ><span style="font-size: .8rem;">&nbsp;1.7km</span></div>-->
+    <!--</div>-->
+    <!--<div class="list-item">-->
+        <!--<div class="list-item-content mdui-box">-->
+            <!--<div class="list-item-img"><img src="../image/kb.png"></div>-->
+            <!--<div class="mdui-box-flex-1">-->
+                <!--<div class="list-item-title">四川华西医院</div>-->
+                <!--<div class="list-item-price">国家二甲医院</div>-->
+                <!--<div style="font-size:0.6rem">成都市武侯区华西坝旁</div>-->
+
+            <!--</div>-->
+        <!--</div>-->
+        <!--<div class="islike dislike"></div>-->
+        <!--<div class="list-item-dis"><img src="../image/dis.png">&nbsp;1.7km</div>-->
+    <!--</div>-->
+    <!--<div class="list-item">-->
+        <!--<div class="list-item-content mdui-box">-->
+            <!--<div class="list-item-img"><img src="../image/kb.png"></div>-->
+            <!--<div class="mdui-box-flex-1">-->
+                <!--<div class="list-item-title">四川华西医院</div>-->
+                <!--<div class="list-item-price">国家二甲医院</div>-->
+                <!--<div style="font-size:0.6rem">成都市武侯区华西坝旁</div>-->
+
+            <!--</div>-->
+        <!--</div>-->
+        <!--<div class="islike dislike"></div>-->
+        <!--<div class="list-item-dis" ><img src="../image/dis.png">&nbsp;1.7km</div>-->
+    <!--</div>-->
+    <!--<div class="list-item">-->
+    <!--<div class="list-item-content mdui-box">-->
+        <!--<div class="list-item-img"><img src="../image/kb.png"></div>-->
+        <!--<div class="mdui-box-flex-1">-->
+            <!--<div class="list-item-title">四川华西医院</div>-->
+            <!--<div class="list-item-price">国家二甲医院</div>-->
+            <!--<div style="font-size:0.6rem">成都市武侯区华西坝旁</div>-->
+
+        <!--</div>-->
+    <!--</div>-->
+        <!--<div class="islike dislike"></div>-->
+    <!--<div class="list-item-dis"><img src="../image/dis.png">&nbsp;1.7km</div>-->
+<!--</div>-->
+    <!--<div class="list-item">-->
+        <!--<div class="list-item-content mdui-box">-->
+            <!--<div class="list-item-img"><img src="../image/kb.png"></div>-->
+            <!--<div class="mdui-box-flex-1">-->
+                <!--<div class="list-item-title">四川华西医院</div>-->
+                <!--<div class="list-item-price">国家二甲医院</div>-->
+                <!--<div style="font-size:0.6rem">成都市武侯区华西坝旁</div>-->
+
+            <!--</div>-->
+        <!--</div>-->
+        <!--<div class="islike dislike"></div>-->
+        <!--<div class="list-item-dis"><img src="../image/dis.png">&nbsp;1.7km</div>-->
+    <!--</div>-->
+    <!--<div class="list-item">-->
+        <!--<div class="list-item-content mdui-box">-->
+            <!--<div class="list-item-img"><img src="../image/kb.png"></div>-->
+            <!--<div class="mdui-box-flex-1">-->
+                <!--<div class="list-item-title">四川华西医院</div>-->
+                <!--<div class="list-item-price">二甲医院</div>-->
+                <!--<div class ="hospital-address">成都市武侯区华西坝旁</div>-->
+
+            <!--</div>-->
+        <!--</div>-->
+        <!--<div class="islike dislike"></div>-->
+        <!--<div class="list-item-dis"><img src="../image/dis.png">&nbsp;1.7km</div>-->
+<!--</div>-->
+</div>
+<!--页面-->
+<script src="../../../static/mdui/js/mdui.js"></script>
+<script src="../../../static/mCheap/js/mCheap.config.js"></script>
+<script src="../../../public.js"></script>
+<script src="../../../server.js"></script>
+<script src="../../../hospital/js/hos_main.js"></script>
+<script>
+/**
+ * 上拉下拉刷新
+ * */
+$.uexWindowReady(function(){
+    var oForm =  document.getElementsByTagName("form")[0];
+    oForm.onsubmit = function(){
+        $('.search-img').trigger('tap');
+        return false;
+    };
+    //请求附近医院信息
+    requestnearHos();
+});
+function requestnearHos(){
+    $.request({
+        urlType:'hosContent',
+        data:{
+            'access_token':$.getStorage('access_token')
+        }
+    },function(data){
+        if(data.success){
+            setNearMarket(data.data,true);
+        }
+    })
+}
+
+/*
+ 用于设置医院等级全选与反选
+ */
+$("#allSelect").on("click","#allSelect",function(){
+    if($(this).children()[1].checked){
+        $(".selectedLevel input").each(function(){
+            this.checked = true;
+        });
+    }else{
+        $(".selectedLevel input").each(function(){
+            this.checked = false;
+        });
+    }
+});
+/*
+设置医院等级选择获取医院信息
+*/
+$('.selectedLevel').on("click","input",function(){
+})
+$('.for-near li').on('click',function () {
+    var that = $(this);
+    var dis;
+    if (that.text() == '全城') {
+        requestnearHos();
+    }else if(that.text() == '附近'){
+        requestnearHos();
+    }else{
+        dis = that.text().substring(0,1)
+    }
+    $(this).siblings().removeClass('li-on');
+    $(this).addClass('li-on');
+    $('.item-near>div:first-child').html($(this).html());
+    $('.setting-detail').hide();
+    $('.item>div').removeClass('item-on');
+    $('.item>div>img').prop('src', '../image/down.png');
+    clickConfirm("","","",dis,"");
+});
+$('.search-img').on('tap',function () {
+    var hos = $("#search").val();
+    if(hos == "null"||hos==null||hos == ""){
+       hos = ""
+    }
+    $("#search").val("");
+    clickConfirm("","","","",hos);
+
+});
+/**
+ * 点击 附近和筛选
+ */
+ $('.item>div').on('tap',function(){
+     var index=$(this).index();
+     var ele= $('.detail>div');
+     if(!$(this).hasClass('item-on')) {
+         $('.setting-detail').show();
+         $('.item>div>img').prop('src', '../image/down.png');
+         $('.item>div').removeClass('item-on');
+         $(this).find('img').prop('src', '../image/lvup.png');
+         $(this).addClass('item-on');
+         ele.hide();
+         ele.eq(index).show();
+     }
+     else{
+         $(this).find('img').prop('src', '../image/down.png');
+         $(this).removeClass('item-on');
+         ele.eq(index).hide();
+         $('.setting-detail').hide();
+     }
+ });
+
+$('#rest').on('tap',function(event){
+    $('input[name="checkbox1"]').each(function(){
+        if(this.checked){
+            this.checked=false;
+        }
+    });
+});
+
+$('#confirm').on('tap',function(){
+    var levelAraay = [];
+    var levelcode = {};
+    var purchasePointCs = '';
+    var focus = "";
+    $('.paixu-item').removeClass('up');
+    $('.paixu-item-bg').removeClass('paixu-up').removeClass('paixu-down');
+    $('.blank').trigger('tap');
+    $(".selectedLevel input").each(function(){
+       if(this.checked == true) {
+           var code =  $(this).data("for"),levelcode = {"code":code};
+           levelAraay.push(levelcode);
+       }
+    });
+    $(".select-first input").each(function(){
+        if(this.checked == true ){
+            if($(this).data("for") == 'buypotin' ){
+                purchasePointCs = $(this).data("for");
+            }else if($(this).data('for') == 'focus'){
+                focus = $(this).data('for');
+            }
+        }
+    });
+    clickConfirm(JSON.stringify(levelAraay),purchasePointCs,focus,"","");
+
+});
+/*
+ 点击确定之后向后台发送请求
+ */
+function  clickConfirm(level,purchasePointCs,focus,distance,mc){
+    $.request({
+        urlType:'allhosiptalLeve',
+        data:{
+            'access_token':$.getStorage('access_token'),
+            level:level||'',//医院等级
+            log:$.getStorage('log'),//经度
+            lat:$.getStorage('lat'),//纬度
+            mc:mc,
+            myFocus:focus,
+            buyPoint:purchasePointCs,
+            nearDistance:distance
+        }
+    },function(data){
+        if(data.success){
+            if(distance == ''&& mc==''){
+            if(!$(".item-shaixuan").hasClass('item-on')) {
+                $('.setting-detail').show();
+                $('.item>div>img').prop('src', '../image/down.png');
+                $('.item>div').removeClass('item-on');
+                $(".item-shaixuan").find('img').prop('src', '../image/lvup.png');
+                $(".item-shaixuan").addClass('item-on');
+                $('.detail>div').hide();
+                $('.detail>div').eq(1).show();
+            }
+            else{
+                $(".item-shaixuan").find('img').prop('src', '../image/down.png');
+                $(".item-shaixuan").removeClass('item-on');
+                $('.detail>div').eq(1).hide();
+                $('.setting-detail').hide();
+            }}
+            setNearMarket(data.data,true);
+           // setNearMarket(data.data,true);
+        }
+    })
+}
+
+/**
+ * 点击蒙层关闭弹窗
+ */
+  $('.blank').on('tap',function(){
+      $('.item>div').each(function(){
+          if($(this).hasClass('item-on')){
+              $(this).trigger('click');
+          }
+      })
+  });
+/**
+ * 点击关注
+  */
+$('.islike').on('tap',function(){
+        var that=$(this);
+        if (that.hasClass('dislike')) {
+            that.removeClass('dislike').addClass('like');
+        }
+        else {
+            that.removeClass('like').addClass('dislike');
+        }
+});
+/**
+ * 点击跳转到医院详细信息
+ */
+    $(".contentInfo").on("click",".list-item-content",function(){
+        var cltpit01id = $(this).data("clthtp01id");
+        var title = $(this).data("clthtp01001");
+        var address = $(this).data("clthtp01006");
+        var distance = $(this).data("distance")||'';
+        var clthtp01013 = $(this).data("clthtp01013");
+        var time = $(this).data("clthtp01011");
+        var isfocus = $(this).data("isfocus");
+        var log = $(this).data("log");
+        var lat = $(this).data("lat");
+        $.openWin({
+            name:'hos_main',
+            animId : 2,
+            url:'wgtroot://hospital/hos_main/ui/hos_main.html',
+            pageParam:{
+                cltpit01id:cltpit01id,
+                title:title,
+                address:address,
+                distance:distance,
+                clthtp01013:clthtp01013,
+                time:time,
+                focus:isfocus,
+                log:log,
+                lat:lat
+            }
+        });
+    });
+
+
+$('.saoma').on('tap',function(){
+    $.closeWin();
+});
+</script>
+</body>
+</html>

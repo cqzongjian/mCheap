@@ -1,0 +1,406 @@
+body, html{width: 100%;height: 100%;margin:0;font-family:"微软雅黑";font-size:45px;}
+	#allmap {height:95%;width:100%;overflow: hidden;}
+	
+	.marketStyle{
+	bottom:0rem;
+    background-color: #268DD5;
+    color: white;
+    font-size: 0.44rem;
+    height: 0.9rem;
+    text-align: center;
+    width: 100%;
+    position: fixed;
+	}
+	.marketS{
+	    line-height: 0.955rem;
+	}
+	.BMap_cpyCtrl
+    {
+    display:none; 
+    }
+    .anchorBL{
+    display:none; 
+    }
+    	
+	.frameStyle{
+	    position: absolute;
+    border: 2px solid #009900;
+    border-radius: 8px;
+    height: 2em;
+    right: 6em;
+    top:1.5em;
+    width:15em;
+	}
+	.imgStyle{
+        left: 5.2em;
+        position: absolute;
+        top: 0.57em;
+        width: 0.4em;
+	}
+	.frameS{
+	text-align: center;
+    position: relative;
+    height: 1.2em;
+    background-color: #009900;
+    
+	}
+	.imgarrow{
+	    height: 0.48em;
+        left: 0.3em;
+        position: absolute;
+        top: 0.53em;
+        width: 0.3em;
+	}
+	
+	.qipao{
+	    background-color: #454545;
+        border-bottom-left-radius: 6px;
+        border-bottom-right-radius: 6px;
+        border-top-left-radius: 6px;
+        border-top-right-radius: 6px;
+        display: inline-block;
+        height: 2.1rem;
+        left: 6.4rem;
+        min-width: 5.3rem;
+        opacity: 0.9;
+        padding-bottom: 0.05rem;
+        padding-right: 0.2rem;
+        position: absolute;
+        top: -2.5rem; 
+        
+    /*     left: 6.2rem;
+        min-width: 5.3rem;
+        opacity: 0.9;
+        padding-bottom: 0.05rem;
+        padding-right: 0.2rem;
+        position: absolute;
+        top: -2.6rem;  */
+        
+	}
+	.qipaonew{
+	    background-color: #454545;
+        border-bottom-left-radius: 6px;
+        border-bottom-right-radius: 6px;
+        border-top-left-radius: 6px;
+        border-top-right-radius: 6px;
+        display: inline-block;
+        height: 2.1rem;
+        left: 6.4rem;
+        min-width: 5.3rem;
+        opacity: 0.9;
+        padding-bottom: 0.05rem;
+        padding-right: 0.2rem;
+        position: absolute;
+        top:-1.85rem
+	}
+	.title{
+	color: white;
+    font-size: 0.42rem;
+    height: 0.7rem;
+    line-height: 1rem;
+    margin-left: 0.23rem;
+	}
+	.priceIndex{
+     color: #D4D4D4;
+    font-size: 0.36rem;
+    height: 0.7rem;
+    margin-left: 0.23rem;
+    position: relative;
+	}
+	.priceIndex>div{
+	 line-height: 0.72rem;
+    position: absolute;
+    top: 0.1rem;
+	} 
+	.priceIndex>span{
+	   /* font-size: 0.36rem;*/
+        line-height: 0.95rem;
+        margin-left: 1.7rem;
+        position: absolute;
+	}
+	.varietNum{
+	  color: #D4D4D4;
+        font-size: 0.36rem;
+        height: 0.7rem;
+        margin-left: 0.23rem;
+        position: relative;
+	}
+	.varietNum>div{
+        margin-top: 0.17rem;
+        position: absolute;
+	}
+	.varietNum>span{
+	 left: 2.75rem;
+    position: absolute;
+    top: 0.2rem;
+	}
+	.arrow{
+	    left: 0.4rem;
+        position: absolute;
+        top: 2.1rem;
+	}
+	
+	/*页面下方样式*/
+	.placeall{
+	    
+	}
+	
+	.titleplace{
+	    height: 0.85rem;
+        margin-left: 0.25rem;
+        position: relative;
+	}
+	.titleplace>div:first-child{
+	     color: #008845;
+        float: left;
+        font-size: 0.38rem;
+        margin-top: 0.2rem;
+        position: absolute;
+        width: 6.3rem;
+    }
+    .titleplace>img{
+      float: left;
+        margin-top: 0.28rem;
+        position: absolute;
+        right: 0.35rem;
+        width: 0.4rem;
+    }
+	.titleplace>div:nth-child(2){
+    color: #008845;
+	float: left;
+	font-size: 0.38rem;
+	margin-left: 0.5rem;
+	margin-top: 0.2rem;
+	position: absolute;
+	}
+	
+    .specificplace{
+    height: 0.85rem;
+	margin-left: 0.3rem;
+	position: relative;
+    }
+    .specificplace>img{
+     float: left;
+    line-height: 0.85rem;
+    margin-top: 0.2rem;
+    position: absolute;
+    width: 0.3rem;
+    }
+   
+    .specificplace>div:nth-child(2){
+       color: #888;
+        float: left;
+        font-size: 0.3rem;
+        line-height: 0.8rem;
+        margin-left: 0.4rem;
+        position: absolute;
+    }
+    .specificplace>div:nth-child(3){
+       color: #888;
+        float: left;
+        font-size: 0.3rem;
+        margin-right: 0.1rem;
+        margin-top: 0.2rem;
+        position: absolute;
+        right: 0.23rem;
+    }
+    .vegeprice{
+        border-bottom-color: #CCC;
+        border-bottom-style: solid;
+        border-bottom-width: 0.03rem;
+        height: 0.85rem;
+        margin-left: 0.3rem;
+        position: relative;
+    }
+    .vegeprice>div:nth-child(1){
+        clear: both;
+        color: #666;
+        float: left;
+        font-size: 0.36rem;
+        line-height: 0.85rem;
+    }
+    .vegeprice>div:nth-child(2){
+        color: #3BA15C;
+        font-size:0.36rem;
+        line-height:0.8rem;
+        margin-top: 0.1rem;
+        overflow-x: hidden;
+        overflow-y: hidden;
+        position: absolute;
+        right: 0.3rem;
+    }
+    .mintype{
+       height: 0.85rem;
+        margin-left: 0.085rem;
+        position: relative;
+    }
+    .mintype>div:nth-child(1){
+        clear: both;
+        color: #666;
+        float: left;
+        font-size: 0.36rem;
+        line-height: 0.75rem;
+        margin-left: 0.2rem;
+        margin-top: 0.1rem;
+    }
+    .mintype>div:nth-child(2){
+        color: #3BA15C;
+        font-size: 0.36rem;
+        line-height: 0.75rem;
+        margin-top: 0.1rem;
+        overflow-x: hidden;
+        overflow-y: hidden;
+        position: absolute;
+        right: 0.3rem;
+    }
+    
+    
+    .display{
+        
+    }
+    .shiyan{
+        background-color: white;
+border-bottom-color: #CCC;
+border-bottom-style: solid;
+border-bottom-width: 0.03rem;
+/* height: 3.45rem; */
+ height:2.6rem;
+    }
+    .info{
+       /* height: 6em;*/
+         background: white;
+      height: 0em;
+        overflow: auto;          
+    }
+    .a1{
+        position: relative;
+    }
+    
+    .c1{
+    top: -0.35rem;
+    text-align: center;
+    z-index: 1;
+    height: 0rem;
+    width: auto;
+    position: relative;
+    }
+    .imghddq{
+       position: absolute;
+    top: 0.6rem;
+    width: 0.4rem;
+    margin-left: 6.1rem;
+    z-index: 1001;
+    }
+    .imgdw{
+	    position: absolute;
+	    top: 0.65rem;
+	    width: 0.3rem;
+	    margin-left:0.15rem;
+	    z-index: 1001;
+	}
+	.imgdv{
+	    position: absolute;
+	    top: 0.65rem;
+	    width: 0.4rem;
+	    margin-left: -0.45rem;
+	    z-index: 1001;
+	}
+	.textStyle{
+	/* top: -0.35rem; */
+	height: 0.8rem;
+    position: relative;
+    width: 4.5rem;
+    border: 2px;
+    border-radius: 6px;
+    padding-left: 0.5rem;	  
+    padding-right: 0.5rem;      
+	}
+	.navigationSt{
+	font-size: 0.25rem;
+	left: 3.7rem;
+	position: relative;
+	top: -1.15rem;
+	}
+	.dhimg{
+	left: 6.5rem;
+	position: absolute;
+	bottom: 1.5rem;
+	width: 1.3rem;
+	}
+	.backcolor{
+	}
+	.precervation{
+	}
+	
+	.nearly{
+          border-radius: 6px;
+     left: 0.1rem; 
+    top: 0.46rem;
+    width: 1.0rem;
+    position: absolute;
+    height: 0.8rem;
+    background-color: white;
+    }
+    .nearfj{
+      line-height: 0.8rem;
+    font-size: 0.3rem;
+    margin-left: 0.1rem;
+    position: absolute;
+    }
+    .nearim{
+    z-index: 1;
+    margin-left: 0.22rem;
+    position: absolute;
+    top: 0.35rem;
+    width: 0.2rem;
+    
+    }
+    .nearlv{
+    z-index: 1;
+    margin-left: 0.22rem;
+    position: absolute;
+    top: 0.4rem;
+    width: 0.2rem;
+    display:none;
+    }
+    .nearlb{
+   /*  color: #008b45; */
+    line-height: 0.65rem;    
+    font-size: 0.35rem;
+    height: 0.65rem;
+    margin-left: 1.3rem;
+    
+        }
+        .nearlbt{
+    /* color: #008b45; */
+    line-height: 0.65rem;
+    font-size: 0.35rem;
+    height: 0.65rem;
+    margin-left: 1.3rem;
+    pointer-events: none;
+        }
+        .nearlbs{
+            display:none;
+              background-color: white;
+            top: 1.3rem;
+            height: 4.0rem;
+            position: absolute;
+            width: 100%;
+            z-index: 2;         
+        }
+        .mengc{
+        opacity: 0.5;
+	    background-color: #636363;
+	    position: absolute;
+	    width: 100%;
+	    height: 100%;
+	    Z-INDEX: 1;
+	    display:none;
+        }
+        .bdbtm{
+        border-bottom: 1px solid #ccc;
+        position:relative;
+        }
+        .jlstyle{
+        
+        }

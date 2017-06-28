@@ -1,0 +1,198 @@
+<!DOCTYPE html>
+<html>
+<head>
+	 <meta http-equiv="Content-Type" content="text/html; charset=utf-8"/>
+	 <!-- 屏幕适应手机分辨率 -->
+    <meta name="viewport" content="initial-scale=1.0, user-scalable=no"/>
+<!--
+ <meta name="viewport" content="target-densitydpi=device-dpi,width=device-width, initial-scale=1,maximum-scale=1, user-scalable=no">
+-->  
+    <meta name="apple-mobile-web-app-capable" content="yes">
+    <meta name="apple-mobile-web-app-status-bar-style" content="black">
+    <!-- 地图关于菜品的样式 -->	
+	<link rel="stylesheet" href="../css/nearMap.css">
+	<!-- 百度地图的API -->
+	<script type="text/javascript" src="../plugins/mapkey.js"></script>
+	<!-- 封装AppCan以及Jquery  -->
+	<script type="text/javascript" src="../plugins/mdui.js"></script>
+	<!-- 鼠标点击marker时候弹出来的气泡插件 -->
+	 <script type="text/javascript" src="../plugins/infobox.js"></script> 
+ 	<title>价格地图</title>
+
+ 	<!-- 引入向后台交互时候的配置  -->
+	<script src="../../server.js"></script>
+	<!-- 各模块里面的配置  -->
+	<script src="../js/mapCommon/infosConfig.js"></script>
+	<!-- 节点绑定 -->
+	<script src="../js/mapCommon/bindDom.js"></script>
+	<!-- 得到用户坐标后的回调方法-->
+	<script src="../js/mapCommon/userCallBack.js"></script>
+	<!-- 公用百度地图模块 -->
+	<script src="../js/mapCommon/bdMap.js"></script>
+	<!-- 卖菜附近模块 -->
+	<script src="../js/greensNearby/greensNearby.js"></script>
+	<!-- 卖药附近模块 -->
+	<script src="../js/buyDrugs/buyDrugs.js"></script>
+	<!-- 超市附近模块 -->
+	<script src="../js/buyThings/buyThings.js"></script>
+	<!-- 看病附近模块 -->
+	<script src="../js/seeDoctor/seeDoctor.js"></script>
+</head>
+<!-- 样式是让当你长按时候文字不能被选中以及复制 -->
+<body style="-webkit-user-select: none;">
+	<!-- 地图的容器 -->
+  	<div id="map"></div>
+	<!--<div class="nav-nowUser"></div>-->
+	<!-- 地图的头部 -->
+    <div id="header">
+		<div class="back mdui-action-back">
+			<img src="../images/back.png">
+		</div>
+        <div class="header-content">
+            <div class="header-near">
+                <span style="margin-left:5px">筛选</span>
+                <div class="header-jiantou"></div>
+            </div>
+            <input id="autoSearch" placeholder="请输入地址" type="text" class="textStyle"/>
+			<div class="now-location nav-nowUser">
+				<img src="../images/findmy.png">
+			</div>
+			<div class="nav-content-search"></div>
+            <!--<div class="nav-nowUser"></div>-->
+        </div>
+    </div>
+    <!-- 弹出框 -->
+    <div id="popUp">
+    	<div class="jiantou"></div>
+    	<div class="popUp-top">
+    		<div class="popUp-title">距离</div>
+    		<div class="item" data-distance="1">1km</div>
+    		<div class="item" data-distance="3">3km</div>
+    		<div class="item" data-distance="5">5km</div>
+    		<div class="item" data-distance="10">10km</div>
+    		<div class="item" data-distance="">全城</div>
+    	</div>
+		<!-- TODO 选择买菜、买药、看病、超市-->
+    	<!--<div class="popUp-middle">
+    		<div class="popUp-title">场所</div>
+    		&lt;!&ndash; <div class="item" data-type="allMarkers">所有</div> &ndash;&gt;
+    		<div class="item" data-type="greensNearby">买菜</div>
+    		<div class="item" data-type="buyDrugs">买药</div>
+    		<div class="item" data-type="seeDoctor">看病</div>
+    		<div class="item" data-type="buyThings">超市</div>
+    	</div>-->
+    	<div class="popUp-bottom">
+    		<div class="reset">重置</div>
+    		<div class="finish">完成</div>
+    	</div>
+    </div>
+    <!-- 蒙城 -->
+    <div id="mengceng"></div>
+    <!-- 显示栏 -->
+    <div id="nav">
+        <div class="nav-item">
+            <span id="juli"></span>
+           <!--  <div class="sanjiao">
+                <span class="sanjiao-close">x</span>
+            </div> -->
+        </div>
+        <div id="navTypes">
+            <!-- <div class="nav-item">
+                <span>买菜</span>
+                <div class="sanjiao">
+                    <span class="sanjiao-close">x</span>
+                </div> 
+            </div> -->
+        </div>
+    </div>
+	<!-- 智能搜素弹出来的面板 -->
+  	<div id="searchResultPanel"></div>
+    <!--市场的详细信息面板 -->
+    <div id="markersPanel">
+    	<div class="title">一共为你找到0个服务点</div>
+    	<div id="markersInfo">
+    		<!-- <div class="items">
+    			<div class="item">
+	    			<div class="item-left">1.</div>
+	    			<div class="item-middle">双源农贸市场</div>
+	    			<div class="item-right"></div>
+	    		</div>
+	    		<div class="item">
+	    			<div class="item-left2"></div>
+	    			<div class="item-middle2">大源北二街38号</div>
+	    			<div class="item-right2">1.5km</div>
+	    		</div>
+	    		<div class="item">
+	    			<div class="item-left3">最低价格品种数</div>
+	    			<div class="item-right3">空</div>
+	    		</div>
+    		</div> -->
+    	</div>
+    </div>
+    <!-- 导航图标(打开第三方应用) -->
+    <div id="dhImg">
+    	<!-- <a class="iosDh" href="baidumap://map/marker?location=30.665534,104.067192&title=成都市&src=yourCompanyName|yourAppName"></a> -->
+    	<a class="iosDh" href="#"></a>  	
+    </div>
+   
+
+</body>
+</html>
+<script>
+	var typeFlag;//打开的是哪个模块
+	var userLon;//当前用户的经度
+	var userLat;//当前用户的纬度
+	var inputLon = null;//用户输入位置的经度
+	var inputLat = null;//用户输入位置的纬度
+	var userMarker;//当前用户的所在位置的marker(也是用户输入地址时候的marker)
+	var userPhone = {//判断当前用户所用系统
+		"android" : null,
+		"ios" : null,
+	}
+	var pageIndex = 0;//默认第一次进入
+	if($.getStorage('distance') == null) {//用户第一次进来,如何设置得内存是空，则默认设置为0(distance代表用户距离)
+		$.setStorage("distance",3);
+	}
+	var distancenear = $.getStorage('distance');//从手机内存获取用户所选取的距离
+	$("#juli").text(distancenear+"km");//记录用户的选择的距离
+	$.uexWindowReady(function() { //这个方法要写在所有的方法的前面
+		judgePhone();//判断用户所用的系统(android还是ios)
+		pageIndex++;
+		if(userPhone["ios"] && pageIndex == 2)return;//当ios系统进入时,点击input输入框时(ios系统会再一次进入这里面,当进入的时候就直接return防止出现BUG)
+		
+		//$("body").bind("touchmove",function(event){event.preventDefault();});
+		typeFlag = ($.strToJson($.pageParam).moduleId == "")?typeFlag:$.strToJson($.pageParam).moduleId;//得到页面参数
+		bdMapObj.moduleId = typeFlag;//某个模块
+		bdMapObj.selectModules = [typeFlag];//选择多个模块
+		getUserPosition();//获取用户所在的经纬度
+	});
+	
+	/*************************创建模块***********************************/
+		bdMapObj = new BdMapObj();//创建地图实例
+		bdMapObj.init();//传入的是买菜附近地图模块
+
+		greensObj = new GreensObj();//创建买菜附近实例
+		greensObj.init();
+
+		buyDrugsObj = new BuyDrugsObj();//创建买药附近实例
+		buyDrugsObj.init();
+
+		buyThingsObj = new BuyThingsObj();//创建逛超市附近实例
+		buyThingsObj.init();
+		
+		seeDoctorObj = new SeeDoctorObj();//创建看病附近实例
+		seeDoctorObj.init();
+		//这两个方法必须要写在uexWindowReady这个方法之前(不能放进去要不然ios系统输入关键字提示会有问题并且下面marker市场的点击事件也有问题)
+		bindBodyDom();//绑定页面的节点
+		bdMapObj.showTips();
+
+
+		/*返回*/
+    /*$('.back').on('tap',function(){
+        $.execScript({
+            winName:'caishi',
+            script:'$(".footer-item-a").eq(0).trigger("tap")'
+        });
+    });*/
+	
+</script>

@@ -1,0 +1,544 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<meta charset="utf-8">
+	<title>mCollection</title>
+	<meta name="viewport" content="target-densitydpi=device-dpi,width=device-width, initial-scale=1,maximum-scale=1, user-scalable=no">
+	<meta name="apple-mobile-web-app-capable" content="yes">
+	<meta name="apple-mobile-web-app-status-bar-style" content="black">
+	<link rel="stylesheet" href="../../../static/mdui/css/mdui.min.css">
+	<link rel="stylesheet" href="../../../static/mCheap/css/mCommon.css">
+	<link rel="stylesheet" href="../css/single_sore.css">
+	<style>
+		.sore{
+			background-color: white;
+			width: 35%;
+			height: 25rem;
+			overflow-y:auto;
+		}
+		.bottom-sore-box{
+			width: 65%;
+			overflow-y: auto;
+			background-color: #F2F2F2;
+			height: 25rem;
+		}
+		.sore-item{
+			background-color: #F2F2F2;
+			color: black;
+			height: 3.5rem;
+			width: 100%;
+			border-bottom: 1px solid #cccccc;
+			padding-left: 1rem;
+			line-height: 3.5rem;
+			overflow: hidden;
+			white-space:nowrap;
+			text-overflow:ellipsis;
+		}
+		.sore-item-title{
+			background-color: white;
+			color: black;
+			height: 3.5rem;
+			width: 100%;
+			border-bottom: 1px solid #cccccc;
+			padding-left: 1rem;
+			line-height: 3.5rem;
+			overflow: hidden;
+			white-space:nowrap;
+			text-overflow:ellipsis;
+		}
+		.product-content{
+			overflow-y:auto;
+			width: 100%;
+			/*height: 90%;*/
+			/*display: none;*/
+		}
+		.row{
+			width: 100%;
+			border-bottom: 1px solid #cccccc;
+		}
+		.drug-detail{
+			padding: 0.5rem;
+			position: relative;
+		}
+		.img-box{
+			margin: 1rem 0.5rem 1rem 1rem;
+		}
+
+		.drug-img{
+			width: 6rem;
+			height: auto;
+		}
+		.drug-name{
+			font-size: 0.8rem;
+			/*width: 6.5rem;*/
+			font-weight: 600;
+			overflow: auto;
+			/*white-space:nowrap;*/
+			/*text-overflow:ellipsis;*/
+		}
+		.drug-origin,.standard{
+			font-size: 0.8rem;
+			color: #7E7E7E;
+			/*width: 6.5rem;*/
+			height: auto;
+		}
+		.drug-price{
+			font-weight: 600;
+			color: #78B468;
+		}
+		.gz{
+			width: 1.2rem;
+			height: 1.2rem;
+		}
+		.set-like{
+			display: none;
+			position: absolute;
+			bottom: 5%;
+			right: 5%;
+			padding: 0.5rem;
+		}
+		/*.choose-box{*/
+			/*position: relative;*/
+			/*height: 10%;*/
+			/*padding: 1rem;*/
+			/*border-bottom: 1px solid black;*/
+		/*}*/
+		.choose-box-hide,.choose-box{
+			height: 3rem;
+			/*z-index: 3;*/
+			background-color: white;
+			position: relative;
+			/*height: 10%;*/
+			padding: 1rem;
+			border-bottom: 1px solid black;
+		}
+		.top-sort-name{
+			font-weight: 600;
+			display: flex;
+			justify-content: center;
+			align-items: center;
+		}
+		.tiny-sort-name{
+			background: url("../image/turn.png")no-repeat left;
+			background-size: 0.5rem 0.8rem;
+			margin-left: 0.5rem;
+			padding-left: 1rem;
+			display: flex;
+			color: green;
+			justify-content: center;
+			align-items: center;
+		}
+		.choose-sx{
+			text-align: right;
+			position: absolute;
+			right: 5%;
+			top: 25%;
+		}
+		.sx-img{
+			width: 3rem;
+			height: 1.5rem;
+		}
+
+		/*==========分类别=====================*/
+		.classify{
+			position: fixed;
+			height: 100%;
+			width: 100%;
+			background: rgba(0,0,0,0.2);
+			z-index:2;
+			display: none;
+		}
+		.classify-show{
+			height: 100%;
+		}
+		.no-data{
+			height: 3rem;
+			text-align: center;
+			line-height: 3rem;
+			border-bottom: 1px solid #CCCCCC;
+		}
+	</style>
+
+
+
+</head>
+<body>
+<div class="search-before-content">
+	<div class="searching">努力搜索中...</div>
+</div>
+<div class="search-item-content"></div>
+<div class="header mdui-bar mdui-bar-nav mdui-box " style="padding-left: 0;">
+	<div class="saoma">
+		<img src="../image/back.png">
+	</div>
+	<div class="mdui-box-flex-1 mdui-box search-box">
+		<div class="mdui-box-flex-1">
+			<input type="text" id="search" placeholder="请根据药品名进行查询..."/>
+		</div>
+		<div class="search-img"><img src="../image/search.png"></div>
+	</div>
+	<div style="width: 1rem;height: auto;"></div>
+</div>
+
+<div class="classify mdui-box mdui-box-ver" id="classify">
+	<div class="choose-box-hide mdui-box">
+		<div class="top-sort-name">皮肤病</div>
+		<div class="tiny-sort-name">白癜风</div>
+		<div class="choose-sx mdui-box-flex-1">
+			<img src="../image/sx2.png" class="sx-img"/>
+		</div>
+	</div>
+
+	<div class="mdui-box mdui-box-flex-1" style="overflow-y: auto">
+		<div class="sore">
+			<!--<div class="sore-item-title" data-id="1">白癜风</div>-->
+		</div>
+		<div class="bottom-sore-box">
+			<!--<div class="sore-item">神经病</div>-->
+		</div>
+
+	</div>
+</div>
+<div class="classify-show mdui-box mdui-box-ver">
+    <div class="choose-box mdui-box">
+		<div class="top-sort-name">皮肤病</div>
+		<div class="tiny-sort-name">白癜风</div>
+		<div class="choose-sx mdui-box-flex-1">
+			<img src="../image/sx1.png" class="sx-img"/>
+		</div>
+	</div>
+
+
+	<div class="product-content mdui-box-flex-1" id="list">
+		<!--<div class="row mdui-box">-->
+			<!--<div class="img-box">-->
+				<!--<img src="../image/01.jpg" class="drug-img"/>-->
+			<!--</div>-->
+			<!--<div class="drug-detail mdui-box-flex-1">-->
+				<!--<div class="drug-name">药品名字地方来刷卡缴费鲁</div>-->
+				<!--<div class="drug-origin">生地方来刷卡缴费鲁大师及安防监控</div>-->
+				<!--<div class="drug-price">价格展示</div>-->
+				<!--<div class="set-like">-->
+					<!--<img src="../image/dislike.png" class="gz"/>-->
+				<!--</div>-->
+			<!--</div>-->
+		<!--</div>-->
+
+	</div>
+</div>
+<!--页面-->
+<script src="../../../static/mdui/js/mdui.js"></script>
+<script src="../../../static/mCheap/js/mCheap.config.js"></script>
+<script src="../../../server.js"></script>
+<script src="../../../static/mCheap/js/scroll.js"></script>
+<script>
+	var requestFlag=true;//请求开关
+	var pageNum=1;
+	var page = {};//保存分类小标题
+	var topSortName;//保存中类名字
+	var flag;//判断开关
+	var flag1;//判断开关
+	$.uexWindowReady(function(){
+		var option = {id:"list",funs:{after:function(){
+			if(requestFlag){
+				var mc = $("#search").val();
+				var smallname = $('.tiny-sort-name').html();
+				var midname = $('.top-sort-name').html();
+				pageNum=pageNum+1;
+				requsetMedicineDetail(midname,smallname,mc,pageNum);
+			}else{
+				$.toast('没有更多了!');
+			}
+		}}};
+		$.initScroll(option);
+
+		var pageData=$.pageParam;//得到页面参数
+		pageData=$.strToJson(pageData);
+		var pageName = pageData.pageName;
+		//判断是从哪个页面过来的
+		if(pageData.pageName=='sort'){//大分类页面过来滴
+			$('.tiny-sort-name').show();
+			requestSortData();
+			var smallname = pageData.tinyName;
+			requestFlag=true;
+			requsetMedicineDetail('',smallname,'',pageNum);
+		}else{//首页过来滴
+			comeFromHomePage();
+			var midname = pageData.midName;
+			requestFlag=true;
+			requsetMedicineDetail(midname,'','',pageNum);
+		}
+	});
+
+	//从首页过来
+	function comeFromHomePage(){
+		$('.tiny-sort-name').hide();
+		requestSortData();
+	}
+
+    //请求分类数据
+	function requestSortData(){
+		$.request({
+			urlType:'medicineType',
+			data:{
+				"access_token": $.getStorage('access_token')
+			}
+		},function(json){
+			if(json.success){
+//				alert(JSON.stringify(json));
+				var data=json.data;
+				$('.content').html('');
+				var pageData=$.pageParam;//得到页面参数
+				pageData=$.strToJson(pageData);
+				var midName = pageData.midName;
+				var tinyName = pageData.tinyName?pageData.tinyName:'';
+				$('.top-sort-name').html(midName);
+				$('.tiny-sort-name').html(tinyName);
+				setSort(data,midName);
+				$('.sore>div').each(function(){
+					if($(this).html()==midName){
+						$(this).trigger('tap');
+					}
+				});
+				$('.bottom-sore-box>div').each(function(){
+					if($(this).html()==$('.tiny-sort-name').html()){
+						$(this).css('color','green');
+					}
+				});
+			}
+			else {
+				alert('网络错误')
+			}
+		});
+	}
+
+	//跳转到药店列表页
+	$('.product-content').on('tap','.row',function(){
+		$.openWin({
+			name:"shop_list",
+			animId : 2,
+			url:'wgtroot://medicine/shop_list/ui/shop_list.html',
+			pageParam: {
+				drugName:$(this).find('.drug-name').html(),
+				id:$(this).data('id'),
+				midName:$('.top-sort-name').html(),
+				tinyName:$('.tiny-sort-name').html(),
+				factory:$(this).find('.drug-origin').html(),
+				standard:$(this).find('.standard').html(),
+				price:$(this).find('.drug-price').html(),
+				focus:$(this).data('focus'),
+				picture:$(this).data('picture')
+			}
+		});
+	});
+
+    //设置总体分类数据
+    function setSort(data,midName){
+		var len = data.length,i,j= 0,htmlOne='';
+		for(i=0;i<len;i++){
+			var htmlTwo='';
+			var leng = data[i].smallname.length,smallname=data[i].smallname;
+			htmlOne +='<div class="sore-item-title" data-id="'+data[i].midid+'">'+data[i].midname+'</div>';
+			for(j=0;j<leng;j++){
+				htmlTwo +='<div class="sore-item" data-id="'+smallname[j].id+'">'+smallname[j].smallname+'</div>';
+			}
+			page[data[i].midname] = htmlTwo;
+		}
+		$('.sore').html(htmlOne);
+//		alert(JSON.stringify(page));
+		chooseMidName(midName);
+	}
+
+	//点击大类选项
+	function chooseMidName(midName){
+		for(var a in page){
+			if(midName==a){
+				$('.bottom-sore-box').html(page[a]);
+			}
+		}
+	}
+
+	/*
+	 * 搜索框
+	 * */
+	//$('.search-box').on('tap','.search-img',function(){
+    $('#search').on('input propertychange', function(){
+		$('.classify').hide();
+		var mc = $("#search").val();
+		if(mc){
+			pageNum=1;
+			$('#list').html('');
+			$('.search-before-content').show();
+			requestFlag=true;
+			requsetMedicineDetail('','',mc,pageNum);
+			$('.top-sort-name').html('').hide();
+			$('.tiny-sort-name').html('').hide();
+		}else{
+			$.toast("请输入搜索内容");
+		}
+	});
+
+	//点击小分类获取药品列表
+	$('.bottom-sore-box').on('tap','.sore-item',function(){
+		$('#list').html('');
+		flag=1;
+		$('.tiny-sort-name').show();
+		$('.sore>div').each(function(){
+			if($(this).css('color')=='green'){
+				$('.top-sort-name').html($(this).html());
+			}
+		});
+		var tinyName = $('.tiny-sort-name').html();
+		$('.bottom-sore-box>div').each(function(){
+			$(this).css('color','black');
+			if(tinyName==$(this).html()){
+				$(this).css('color','green');
+			}
+		});
+		$('.tiny-sort-name').html($(this).html()).show();
+		$('.classify').hide();
+		pageNum=1;
+		requestFlag=true;
+		requsetMedicineDetail('',$(this).html(),'',pageNum);
+	});
+
+	//点击大分类进行列表切换
+	$('.sore').on('tap','.sore-item-title',function(){
+		$('.top-sort-name').html($(this).html());
+		$('.sore>div').each(function(){
+			$(this).css('color','black');
+			$(this).css('background-color','white');
+		});
+		$(this).css('color','green');
+		$(this).css('background-color','#F2F2F2');
+		var midname = $(this).html();
+		chooseMidName(midname);
+	});
+
+    //请求数据方法
+	function requsetMedicineDetail(midname,smallname,mc,pageNum){
+		var midName = midname?midname:'';
+		var smallName = smallname?smallname:'';
+		var mC=mc?mc:'';
+//		alert(midName+"1");
+//		alert(smallName+"2");
+//		alert(mC+"3");
+		$.request({
+			urlType:'medicineDetail',
+			data:{
+				"access_token": $.getStorage('access_token'),
+				midname :midName ,
+				smallname:smallName ,
+				mc : mC,
+				page:pageNum,
+				pageSize:'10'
+			}
+		},function(json){
+			if(json.success) {
+//				alert(JSON.stringify(json));
+				var data = json.data;
+				$('.search-before-content').hide();
+				if(data.length){
+					setData(data);
+				}else{
+					if(pageNum==1){
+						setData(data);
+					}else{
+						$.toast('没有更多了!');
+						requestFlag=false;
+					}
+				}
+			}
+			else {
+				//alert('网络错误')
+			}
+		});
+	}
+
+	function setData(data){
+		var len = data.length;
+		var html='';
+		html +='<div class="product-box">';
+		if(len){
+			for(var i=0;i<len;i++){
+				html +='<div class="row mdui-box" data-id="'+data[i].id+'" data-focus="'+data[i].isfocus+'" data-picture="'+data[i].picture+'">';
+				html +='<div class="img-box">';
+				html +='<img src="'+ $.serverSettings.serverPath+'/mobile/mcheap/medicineAction!getMedicinePicture.do?access_token='+ $.getStorage('access_token')+'&url='+data[i].picture+'" class="drug-img"/>';
+				html +='</div>';
+				html +='<div class="drug-detail mdui-box-flex-1">';
+				html +='<div class="drug-name">'+data[i].namemark+'</div>';
+				html +='<div class="drug-origin">厂商:'+data[i].factory+'</div>';
+				html +='<div class="standard">规格:'+data[i].specification+'</div>';
+				html +='<div class="drug-price">￥'+data[i].price+'</div>';
+//				var focus=parseInt(data[i].isfocus);
+//				if(focus){
+//					html +='<div class="set-like">';
+//					html +='<img src="../image/like.png" class="gz"/>';
+//					html +='</div>';
+//				}else{
+//					html +='<div class="set-like">';
+//					html +='<img src="../image/dislike.png" class="gz"/>';
+//					html +='</div>';
+//				}
+				html +='</div>';
+				html +='</div>';
+			}
+			html +='</div>';
+			$('.product-content').append(html);
+		}else{
+			html='<div class="no-data">暂无数据</div>';
+			$('.product-content').html(html);
+		}
+	}
+
+$('.choose-box').on('tap','.choose-sx',function(){
+	//判断小类是否隐藏
+	if($(".tiny-sort-name").css("display")== 'none'){
+		flag1=1;    //元素为隐藏
+	}else{
+		flag1=0;     //元素为显现
+	}
+	$('.tiny-sort-name').hide();
+	flag=0;
+	topSortName=$('.top-sort-name').html();
+	$('.top-sort-name').show();
+	var tinyName = $('.tiny-sort-name').html();
+	if(tinyName){
+		$('.bottom-sore-box>div').each(function(){
+			$(this).css('color','black');
+			if($(this).html()==$('.tiny-sort-name').html()){
+				$(this).css('color','green');
+			}
+		});
+	}
+	$('.classify').show();
+});
+
+$('.classify').on('tap','.choose-sx',function(){
+	$('.classify').hide();
+	$('.bottom-sore-box>div').each(function(){
+		if(flag==1){//点了小类的
+			$('.sore>div').each(function(){
+				if($(this).css('color')=='green'){
+					$('.top-sort-name').html($(this).html());
+				}
+			})
+		}else{
+			if(flag1==1){
+				$('.top-sort-name').html(topSortName);
+			}else{
+				$('.tiny-sort-name').show();
+				$('.top-sort-name').html(topSortName);
+			}
+		}
+	});
+});
+
+
+//返回大首页
+$('.saoma').on('tap',function(){
+	$.closeWin();
+});
+</script>
+</body>
+</html>

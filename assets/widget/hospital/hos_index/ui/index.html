@@ -1,0 +1,120 @@
+<!doctype html>
+<html>
+<head>
+	<title>CSS3 ordered list styles - dremo</title>
+	<style>
+
+
+		/* -------------------------------------- */
+
+		ol{
+			counter-reset: li;
+			list-style: none;
+			*list-style: decimal;
+			font:23px 'trebuchet MS', 'lucida sans';
+			padding: 0;
+			margin-bottom: 4rem;
+			text-shadow: 0 1px 0 rgba(255,255,255,.5);
+		}
+
+		ol ol{
+			margin: 0 0 0 2rem;
+		}
+
+		/* -------------------------------------- */
+
+
+		/* -------------------------------------- */
+
+		.rectangle-list span{
+			width:80%;
+			position: relative;
+			display: block;
+			padding: 1.6rem 1.6rem 1.6rem 3.2rem;
+			*padding: .4rem;
+			margin: .5rem 0 .5rem ;
+			background: #ccdfe0;
+			color: #444;
+			text-decoration: none;
+			-webkit-transition: all .3s ease-out;
+			-moz-transition: all .3s ease-out;
+			-ms-transition: all .3s ease-out;
+			-o-transition: all .3s ease-out;
+			transition: all .3s ease-out;
+		}
+
+		.rectangle-list span:hover{
+			background: #eee;
+		}
+		/*.rectangle-list li{*/
+			/*height: 4rem;*/
+		/*}*/
+		.rectangle-list span:before{
+			content: "";
+			background-image: url(../image/1.png);
+			counter-incrrement: li;
+			position: absolute;
+			left: -4.5rem;
+			top: 50%;
+			margin-top: -2.3rem;
+			background-size:4rem 4rem;
+			height: 4rem;
+			width: 4rem;
+			line-height: 2rem;
+			text-align: center;
+			font-weight: bold;
+		}
+
+		.rectangle-list span:after{
+			position: absolute;
+			content: '';
+			border: .5rem solid transparent;
+			left: -1rem;
+			top: 50%;
+			margin-top: -.5rem;
+			-webkit-transition: all .3s ease-out;
+			-moz-transition: all .3s ease-out;
+			-ms-transition: all .3s ease-out;
+			-o-transition: all .3s ease-out;
+			transition: all .3s ease-out;
+		}
+
+		.rectangle-list span:hover:after{
+			left: -.5rem;
+			border-left-color: #ccdfe0;
+		}
+
+		/* -------------------------------------- */
+
+	</style>
+</head>
+<body>
+
+<div>
+
+<ol class="rectangle-list">
+
+	<li><span>神经科</span></li>
+	<li><span >内科</span></li>
+	<li><span >呼吸道疾病</span>
+		<ol>
+			<li><span >慢性租塞性肺疾病</span></li>
+			<li><span >感冒发烧</span></li>
+
+			<li><span>哮喘</span></li>
+		</ol>
+	</li>
+	<li><span>肝病科</span></li>
+	<li><span>肿瘤科</span></li>
+</ol>
+
+</div>
+</body>
+<script>
+	document.body.addEventListener('touchstart', function(){ });
+
+	$("#huxi").click(function(){
+		$("#huxi ol").toggle()
+	})
+</script>
+</html>

@@ -1,0 +1,135 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8">
+    <title>mCollection</title>
+    <meta name="viewport" content="target-densitydpi=device-dpi,width=device-width, initial-scale=1,maximum-scale=1, user-scalable=no">
+    <meta name="apple-mobile-web-app-capable" content="yes">
+    <meta name="apple-mobile-web-app-status-bar-style" content="black">
+    <link rel="stylesheet" href="../../../static/mdui/css/mdui.min.css">
+    <link rel="stylesheet" href="../../../static/mCheap/css/mCommon.css">
+    <link rel="stylesheet" href="../css/set_top.css">
+    <script src="../../../server.js"></script>
+    <style>
+        .sex-item{
+            margin: 0.5rem 0.5rem 1.5rem 0.5rem;
+            text-align: center;
+            color: black;
+            padding: 0.25rem 0.5rem 0.25rem 0.5rem;
+            border: 1px solid #CCCCCC;
+        }
+        .sex-item-on{
+            margin: 0.5rem 0.5rem 1.5rem 0.5rem;
+            text-align: center;
+            color: #3BA15C;
+            padding: 0.25rem 0.5rem 0.25rem 0.5rem;
+            border: 1px solid #3BA15C;
+        }
+        .sex-choose{
+            display: none;
+        }
+        #content_box{
+            display: none;
+        }
+
+    </style>
+</head>
+<body>
+<div class="header-box mdui-bar mdui-bar-nav">
+    <div class="header mdui-box">
+        <div class="cancel mdui-action-back">取消</div>
+        <div class="title mdui-box-flex-1"></div>
+        <div class="confirm ">保存</div>
+    </div>
+</div>
+<div class="mdui-content" id="content_box">
+    <input type="text" id="val"/>
+    <div class="clear-content"></div>
+</div>
+
+<div class="mdui-box sex-choose">
+    <div class="sex-item mdui-box-flex-1" data-sex="1">男</div>
+    <div class="sex-item mdui-box-flex-1" data-sex="2">女</div>
+</div>
+
+<!--页面-->
+<script src="../../../static/mdui/js/mdui.min.js"></script>
+<script src="../../../static/mCheap/js/mCheap.config.js"></script>
+<script src="../../../server.js"></script>
+<!--扩展组件/第三方/工程js-->
+<script>
+    var pageSexData={};
+    $.uexWindowReady(function() {
+        var pageData=$.pageParam;
+        var jsonData=$.strToJson(pageData);
+        var winTitle=jsonData.winTitle;
+        var defaultVal=jsonData.defaultVal;
+        var zd=jsonData.zd;
+        var userMessage= JSON.parse($.getStorage('userMessage'));
+        $('.header>.title').html(winTitle);
+        $('#val').val(defaultVal);
+        $(document).on('tap','.clear-content',function(){
+            $('#val').val('');
+        });
+        $(document).on('tap','.cancel',function(){
+        });
+        if(winTitle=='性别'){
+            $('.sex-choose').show();
+        }else{
+            $('#content_box').show();
+        }
+
+        $('.sex-choose').on('tap','.sex-choose>div',function(){
+            var items=$('.sex-choose>div');
+            items.removeClass('sex-item-on').addClass('sex-item');
+            $(this).removeClass('sex-item').addClass('sex-item-on');
+            pageSexData.sex=$(this).data('sex');
+        });
+
+        $(document).on('tap','.confirm',doSave);
+        function doSave(){
+            var tt;
+            if(winTitle=='性别'){
+                tt=pageSexData.sex;
+                saveInfo(tt);
+            }else{
+                tt=$('#val').val();
+                saveInfo(tt);
+            }
+        }
+        function saveInfo(tt){
+            $.request({
+                urlType: 'setUserInfo',
+                data: {
+                    "access_token": $.getStorage('access_token'),
+                    zd:pageSexData.zd,
+                    value:tt
+                }
+            }, function (data) {
+                if (data.success) {
+                    $.toast('修改成功');
+                    if(pageSexData.sex=='1'){
+                        userMessage[zd]='1';
+                        $.setStorage('userMessage',JSON.stringify(userMessage));
+                    }else if(pageSexData.sex=='2'){
+                        userMessage[zd]='2';
+                        $.setStorage('userMessage',JSON.stringify(userMessage));
+                    }else{
+                        userMessage[zd]=$('#val').val();
+                        $.setStorage('userMessage',JSON.stringify(userMessage));
+                    }
+                    $.execScript({
+                        winName:'personal_message',
+                        script:'$.refreshWin()'
+                    });
+                    $.closeWin();
+                }
+                else{
+                    alert('保存失败')
+                }
+            });
+        }
+    })
+</script>
+</body>
+</html>

@@ -1,0 +1,101 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8">
+    <title>交通运输</title>
+    <meta name="viewport" content="target-densitydpi=device-dpi,width=device-width, initial-scale=1,maximum-scale=1, user-scalable=no">
+    <meta name="apple-mobile-web-app-capable" content="yes">
+    <meta name="apple-mobile-web-app-status-bar-style" content="black">
+    <link rel="stylesheet" href="../../static/mdui/css/mdui.min.css">
+    <link rel="stylesheet" href="../../static/mCheap/css/mCommon.css">
+    <link rel="stylesheet" href="../css/livelihood_others.css">
+</head>
+<body>
+<div class="header-box mdui-bar mdui-bar-nav">
+    <div class="header">
+        <div class="back mdui-action-back"><img src="../images/back.png"></div>
+        <div class="title">交通运输</div>
+    </div>
+</div>
+<div class="address mdui-box clgl">
+    <div class="address-img"></div>
+    <div class="mdui-box-flex-1">车辆管理</div>
+    <div class="arrow"></div>
+</div>
+<div class="setting mdui-box touch public">
+    <div class="setting-img"></div>
+    <div class="mdui-box-flex-1">公共交通</div>
+    <div class="arrow"></div>
+</div>
+<div class="mdui-box ewm subway">
+    <div class="ewm-img"></div>
+    <div class="mdui-box-flex-1">地铁</div>
+    <div class="arrow"></div>
+</div>
+<div class="mdui-box ewm car">
+    <div class="ewm-img"></div>
+    <div class="mdui-box-flex-1">机动车停车费</div>
+    <div class="arrow"></div>
+</div>
+<div class="mdui-box ewm bike">
+    <div class="ewm-img"></div>
+    <div class="mdui-box-flex-1">非机动车停车费</div>
+    <div class="arrow"></div>
+</div>
+
+
+<!--页面-->
+<script src="../../static/mdui/js/mdui.min.js"></script>
+<script src="../../static/mCheap/js/mCheap.config.js"></script>
+<script>
+
+    $.uexWindowReady(function(){
+
+        $('.clgl').on('tap',function(){
+            $.openWin({
+                name:'transportation_565',
+                url:'wgtroot://livelihood/ui/transportation_565.html',  //wgtroot即工程widget目录
+                animId:2,
+                pageParam:{}
+            });
+        });
+
+        $('.public').on('tap',function(){
+            $.openWin({
+                name:'transportation_566',
+                url:'wgtroot://livelihood/ui/transportation_566.html',  //wgtroot即工程widget目录
+                animId:2,
+                pageParam:{}
+            });
+        });
+
+        $('.subway').on('tap',function(){
+            $.openWin({
+                name:'transportation_567',
+                url:'wgtroot://livelihood/ui/transportation_567.html',  //wgtroot即工程widget目录
+                animId:2,
+                pageParam:{}
+            });
+        });
+
+        $('.car').on('tap',function(){
+            $.openWin({
+                name:'transportation_568',
+                url:'wgtroot://livelihood/ui/transportation_568.html',  //wgtroot即工程widget目录
+                animId:2,
+                pageParam:{}
+            });
+        });
+
+        $('.bike').on('tap',function(){
+            $.openWin({
+                name:'transportation_569',
+                url:'wgtroot://livelihood/ui/transportation_569.html',  //wgtroot即工程widget目录
+                animId:2,
+                pageParam:{}
+            });
+        });
+    });
+</script>
+</body>
+</html>

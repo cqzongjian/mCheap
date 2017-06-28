@@ -1,0 +1,207 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8">
+    <title>mCollection</title>
+    <meta name="viewport" content="target-densitydpi=device-dpi,width=device-width, initial-scale=1,maximum-scale=1, user-scalable=no">
+    <meta name="apple-mobile-web-app-capable" content="yes">
+    <meta name="apple-mobile-web-app-status-bar-style" content="black">
+    <link rel="stylesheet" href="../../../static/mdui/css/mdui.min.css">
+    <link rel="stylesheet" href="../../../static/mCheap/css/mCommon.css">
+    <style>
+        *{
+            font-family: "Microsoft YaHei";
+        }
+        body{
+            background-color: #ffffff;
+        }
+        .title{
+            padding: 0.5rem 1rem;
+            background-color: #F0F0F0;
+        }
+        .title-text{
+            color: #3BA15C;
+        }
+        .title-time{
+            text-align: right;
+            color: #666666;
+        }
+        .data{
+            background-color: #ffffff;
+        }
+        .data-item{
+            padding: 0.5rem 1rem;
+            border-bottom: 1px solid #CCCCCC;
+            position: relative;
+        }
+        .item-img{
+            width: 5rem;
+            height: 4rem;
+            /*border: 1px solid #CCCCCC;*/
+        }
+        .item-img>img{
+            width: 100%;
+            height: 100%;
+            border-radius: 0.3rem;
+        }
+        .item-title-group{
+            padding-left: 0.5rem;
+            margin-top: 0.2rem;
+        }
+        .item-title{
+            color: #000000;
+        }
+        .item-sub{
+            color: #666666;
+            font-size: 0.8rem;
+        }
+        .add{
+            background: url("../images/add.png") no-repeat top center;
+            background-size: 1rem 1rem;
+            width: 2rem;
+            margin-top:0.3rem;
+        }
+    </style>
+</head>
+<body>
+<div class="box">
+    <div class="week">
+        <!--<div class="title mdui-box ">-->
+            <!--<div class="title-text">星期一</div>-->
+            <!--<div class="title-time mdui-box-flex-1 ">2016-08-22</div>-->
+        <!--</div>-->
+        <!--<div class="data">-->
+            <!--<div class="data-item mdui-box">-->
+                <!--<div class=" data-item-main mdui-box-flex-1 mdui-box">-->
+                    <!--<div class="item-img"></div>-->
+                    <!--<div class="item-title-group mdui-box-flex-1">-->
+                        <!--<div class="item-title">双人青椒肉丝</div>-->
+                        <!--<div class="item-sub">青椒、肉丝、</div>-->
+                    <!--</div>-->
+                <!--</div>-->
+                <!--<div class="add"></div>-->
+            <!--</div>-->
+            <!--<div class="data-item mdui-box">-->
+                <!--<div class="item-img"></div>-->
+                <!--<div class="item-title-group">-->
+                    <!--<div class="item-title">双人青椒肉丝</div>-->
+                    <!--<div class="item-sub">青椒、肉丝、</div>-->
+                <!--</div>-->
+                <!--<div class="add"></div>-->
+            <!--</div>-->
+            <!--<div class="data-item mdui-box">-->
+                <!--<div class="item-img"></div>-->
+                <!--<div class="item-title-group">-->
+                    <!--<div class="item-title">双人青椒肉丝</div>-->
+                    <!--<div class="item-sub">青椒、肉丝、</div>-->
+                <!--</div>-->
+            <!--</div>-->
+        <!--</div>-->
+    </div>
+</div>
+<!--页面-->
+<script src="../../../static/mdui/js/mdui.min.js"></script>
+<script src="../../../static/mCheap/js/mCheap.config.js"></script>
+<script src="../../../server.js"></script>
+<script src="../../../static/mdui/js/imageHandler.js"></script>
+<script src="../../../static/mdui/js/imageConfig.js"></script>
+<script>
+    var image;
+    $.uexWindowReady(function(){
+        image = $.imageHandler;
+        image.init($.imageOptions);
+        /*
+        * 请求每周菜谱
+        * */
+        $.request({
+            urlType:'queryWeekRecommend',
+            data:{
+                "access_token": $.getStorage('access_token')
+            }
+        },function(data){
+            if(data.success) {
+                setWeekList(data.data)
+            }
+            else {
+                //$.toast('网络错误')
+            }
+        });
+        /*
+        * 点击+添加到我的菜谱
+        * */
+        $(document).on('tap','.add',function(event){
+            var epsrmm01id=$(this).parent().find('.data-item-main').data('epsrmm01id');
+            $.request({
+                urlType:'addRecommendMenu',
+                data:{
+                    "access_token": $.getStorage('access_token'),
+                    epsrmm01id : epsrmm01id
+                }
+            },function(data){
+                if(data.success) {
+                    $.toast('添加成功！');
+                }
+                else {
+                    $.toast(data.message)
+                }
+            });
+        });
+        //点击菜谱列表
+        $('.box').on('tap','.data-item-main',function(){
+            var epsrmm01id=$(this).parent().find('.data-item-main').data("epsrmm01id");
+            var name=$(this).parent().find('.item-title').text();
+            $.openWin({
+                name:"caipu_detail",
+                animId : 2,
+                url:'wgtroot://mCheap/caipu/ui/caipu_detail.html',
+                pageParam:{
+                    epsrmm01id : epsrmm01id,
+                    name:name
+                }
+            });
+        });
+        function setWeekList(data){
+            var html='';
+            var arrWeek=['星期一','星期二','星期三','星期四','星期五','星期六','星期日'];
+            for(x in data) {
+                if (data[x].length > 0) {
+                    image.setCount(x*data[x].length);
+                    html += '<div class="week">';
+                    html += '  <div class="title mdui-box ">';
+                    html += '     <div class="title-text">' + arrWeek[x] + '</div>';
+                    html += '     <div class="title-time mdui-box-flex-1 ">' + data[x][0].epsrmm01006 + '</div>';
+                    html += '   </div>';
+                    html += '<div class="data">';
+                    for (var i = 0; i < data[x].length; i++) {
+                        var str = '适合人数:' + data[x][i].epsrmm01003 + '人&nbsp;&nbsp;&nbsp;&nbsp;预算价格:' + data[x][i].epsrmm01004+'元';
+                        html += ' <div class="data-item mdui-box">';
+                        html +='<div class=" data-item-main mdui-box-flex-1 mdui-box" data-epsrmm01id="' + data[x][i].epsrmm01id +'">';
+//                        html += '     <div class="item-img"><img src="'+ $.serverSettings.serverPath+'/mobile/mcheap/mcheapAction!getPhoto.do?access_token='+ $.getStorage('access_token')+'&url='+data[x][i].epsrmm04002+ '"/></div>';
+                        html += '     <div class="item-img"><img class="mzcp-img" imgid="'+ data[x][i].epsrmm01id +'" imgsrc="'+ $.serverSettings.serverPath+'/mobile/mcheap/mcheapAction!getPhoto.do?url='+data[x][i].epsrmm04002+'&access_token='+$.getStorage('access_token')+ '" src=""/></div>';
+                        html += '     <div class="item-title-group mdui-box-flex-1">';
+                        html += '         <div class="item-title">' + data[x][i].epsrmm01001 + '</div>';
+                                     html += '<div class="item-sub">' + str + '</div>';
+                        html += '     </div>';
+                        html+='</div>';
+                        html += '<div class="add"></div>';
+                        html += ' </div>';
+                    }
+                    html += '</div>';
+                    html += '</div>';
+                }
+            }
+            $('.box').html(html);
+
+            $($(".box").find(".mzcp-img")).each(function(index,each){
+                var $img = $(each);
+                image.setImage($img.attr("imgid"),$img.attr("imgsrc"),ImageType.cookbook,$img);
+            });
+
+            $('img').on('error',function(){
+                $(this).attr('src','../../../public/images/noImg.jpg');
+            });
+        }
+    });
+</script>
+</body>
+</html>

@@ -1,0 +1,122 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8">
+    <title>mCollection</title>
+    <meta name="viewport" content="target-densitydpi=device-dpi,width=device-width, initial-scale=1,maximum-scale=1, user-scalable=no">
+    <meta name="apple-mobile-web-app-capable" content="yes">
+    <meta name="apple-mobile-web-app-status-bar-style" content="black">
+    <link rel="stylesheet" href="../static/mdui/css/mdui.min.css">
+    <link rel="stylesheet" href="../static/mCheap/css/mCommon.css">
+    <style>
+        *{
+            font-family: "Microsoft YaHei";
+        }
+        body{
+            padding-top: 2.75rem;
+            background-color: #E6EAE8;
+        }
+        .title{
+            width: 100%;
+            height: 100%;
+            color: #FFFFFF;
+            text-align: center;
+            line-height:2.75rem ;
+
+        }
+        .header{
+            background-color: #3BA15C;
+        }
+        .message{
+            margin-left: 1rem;
+            margin-top: 0.75rem;
+            margin-right: 0.5rem;
+            position: absolute;
+            right: 1rem;
+            top: 0;
+        }
+        .message>img{
+            width:auto;
+            height: 1.25rem
+        }
+        .message-num{
+            position: absolute;
+            top: -0.5rem;
+            left: 0.5rem;
+            height: 0.9rem;
+            width: 1.5rem;
+            border-radius: 0.5rem;
+            background-color: #F25923;
+            color: white;
+            line-height: 1rem;
+            font-size: 0.7rem;
+            text-align: center;
+            border: 1px solid white;
+        }
+        .header-left{
+            padding-left: 1rem;
+            padding-top:0.75rem ;
+            padding-right: 0.5rem;
+            position: absolute;
+            left: 0;
+            top: 0;
+        }
+        .header-left>img{
+            width:auto;
+            height: 1.25rem
+        }
+        .box>div{
+            margin: 1rem;
+            position: relative;
+        }
+        .box>div>.bg{
+            width: 100%;
+            height: auto;
+        }
+        .box>div>.logo{
+            position: absolute;
+        }
+        .box>div:nth-child(odd)>.logo{
+            height: 80%;
+            width: auto;
+            left: 1rem;
+            top: 8%;
+        }
+        .box>div:nth-child(even)>.logo{
+            height: 80%;
+            width: auto;
+            right: 1rem;
+            top: 8%;
+        }
+        .box>div>.text{
+            position: absolute;
+        }
+        .box>div:nth-child(odd)>.text{
+            height: 40%;
+            width: auto;
+            right: 1rem;
+            top: 28%;
+        }
+        .box>div:nth-child(even)>.text{
+            height: 40%;
+            width: auto;
+            left: 1rem;
+            top: 28%;
+        }
+        .suggest>.text{
+            right: .5rem!important;
+        }
+    </style>
+</head>
+<body>
+<!--页面-->
+<script src="../static/mdui/js/mdui.min.js"></script>
+<script src="../static/mCheap/js/mCheap.config.js"></script>
+<script src="../server.js"></script>
+<!--扩展组件/第三方/工程js-->
+<script>
+
+
+</script>
+</body>
+</html>

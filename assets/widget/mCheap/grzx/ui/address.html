@@ -1,0 +1,301 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8">
+    <title>mCollection</title>
+    <meta name="viewport" content="target-densitydpi=device-dpi,width=device-width, initial-scale=1,maximum-scale=1, user-scalable=no">
+    <meta name="apple-mobile-web-app-capable" content="yes">
+    <meta name="apple-mobile-web-app-status-bar-style" content="black">
+    <link rel="stylesheet" href="../../../static/mdui/css/mdui.min.css">
+    <link rel="stylesheet" href="../../../static/mCheap/css/mCommon.css">
+    <link rel="stylesheet" href="../css/address.css">
+</head>
+<body>
+<div class="header-box mdui-bar mdui-bar-nav">
+    <div class="header">
+        <div class="back mdui-action-back"><img src="../images/back.png"></div>
+        <div class="title">常用地址</div>
+        <div class="add"><img src="../images/add.png" /></div>
+    </div>
+</div>
+<div class="home item mdui-box">
+    <div class="item-left">
+        <img src="../images/home.png">
+    </div>
+    <div class="item-text">家</div>
+    <div class="mdui-box-flex-1 input" id="homejia">
+        <input type="text" id="home" class="mdui-box-flex-1" readOnly="true" >
+    </div>
+    <div class="item-right">
+        <img src="../images/edit.png">
+    </div>
+</div>
+<div class="company item mdui-box">
+    <div class="item-left">
+        <img src="../images/company.png">
+    </div>
+    <div class="item-text">公司</div>
+    <div class="mdui-box-flex-1 input" id="homegs">
+        <input type="text" id="company" class="mdui-box-flex-1" readOnly="true" readOnly="true" >
+    </div>
+    <div class="item-right2">
+        <img src="../images/edit.png">
+    </div>
+</div>
+<div class="other mdui-table-view">
+ <!--    <div class="mdui-table-view-cell">
+        <div class="mdui-slider-right mdui-disabled ">
+            <a class="mdui-btn mdui-btn-red delete">删除</a>
+        </div>
+        <div class="mdui-slider-handle tj-list-item mdui-box">
+            <div class="other-img"></div>
+            <div class="mdui-box-flex-1">
+               <div>款回到家撒娇点击撒娇</div>
+             </div> 
+        </div>
+        
+    </div>  -->
+    
+</div>
+
+<!--页面-->
+<script src="../../../static/mdui/js/mdui.min.js"></script>
+<script src="../../../static/mCheap/js/mCheap.config.js"></script>
+<script src="../../../server.js"></script>
+<script>
+
+    
+/*     $.uexWindowReady(function(){
+        //点击公司修改数据
+        $('.item-right2').on('tap',function(){
+            $.openWin({
+                name: "base_top",
+                animId : 2,
+                url: 'wgtroot://mCheap/nav/ui/base_top.html',
+                pageParam: {
+                    frameName: 'map_place',
+                    frameUrl: 'wgtroot://mCheap/map/ui/map_place.html',
+                    winTitle: '我的购买点'
+                }
+            });
+        });
+    }); */
+
+	//点击添加自定义
+	$('.add').on('tap',function(){
+		$.openWin({
+			name: "map_place",
+			animId : 2,
+			url: 'wgtroot://mCheap/map/ui/map_place.html',
+			pageParam: {
+				bzf:"3"
+			}
+		});
+	});
+    
+    //查询购买点
+    $.request({
+        urlType: 'queryPurchase',
+        data: {
+            "access_token": $.getStorage('access_token')
+        }
+    }, function (json) {
+        if(json.success) { 	
+                dataInfo(json); 
+        }
+        else {
+            //$.toast('网络错误')
+        }
+
+    });
+    function  dataInfo(json){
+    	
+    	//alert(JSON.stringify(json))
+    	var json=json;
+    	var str='';
+    	for(var k=0;k<json.data.length;k++){  
+    		
+    	/* 	alert(JSON.stringify(json.data)); */
+    	
+   		   if(json.data[k].epsflw03005=="01"){//家
+   			  
+   			$("#home").val(json.data[k].epsflw03002);
+   			$("#home").parent().next().attr("data",k);
+   			/* if($("#home").val().length==0){
+   		 		$.toast("先输入地址");
+   		 		return;
+   		 	}	 */
+   		 //点击家修改数据 	 
+   		  $('.item-right').on("click",function(){
+   			  var k=$(this).attr('data');
+   			  /* alert(k); */
+   			var param_data={
+   					epsflw03002:json.data[k].epsflw03002,//购买点地址
+   	             	epsflw03003:json.data[k].epsflw03003,//经度
+   	             	epsflw03004:json.data[k].epsflw03004,//纬度
+   	             	epsflw03005:json.data[k].epsflw03005,//购买点类型 
+   	             	 epsflw03id:json.data[k].epsflw03id,//流水号 
+   	                 frameName: 'map_place',
+   	                 frameUrl: 'wgtroot://mCheap/map/ui/map_place.html',
+   	                 winTitle: '我的购买点'
+   	             }
+	             $.openWin({
+	                name: "base_top",
+	                animId : 2,
+	                url: 'wgtroot://mCheap/map/ui/map_place.html',
+	                pageParam: param_data
+	            
+	            });  
+	          
+	        });
+   			
+   		   }else if(json.data[k].epsflw03005=="02"){//公司
+   			   //alert(02)
+   			//  alert(json.data[k].epsflw03001)
+   		 //  alert(json.data[k].epsflw03003)
+   		/*  alert(json.data[k].epsflw03002); */
+   			$("#company").val(json.data[k].epsflw03002);
+   			$("#company").parent().next().attr("data",k);
+   			 $('.item-right2').on("click",function(){
+   				 var k=$(this).attr('data');
+   				/*  alert(k); */
+   				var param_data={
+   						epsflw03002:json.data[k].epsflw03002,//购买点地址
+   		             	epsflw03003:json.data[k].epsflw03003,//经度
+   		             	epsflw03004:json.data[k].epsflw03004,//纬度
+   		             	epsflw03005:json.data[k].epsflw03005,//购买点类型 
+   		             	 epsflw03id:json.data[k].epsflw03id,//流水号 
+   		                 frameName: 'map_place',
+   		                 frameUrl: 'wgtroot://mCheap/map/ui/map_place.html',
+   		                 winTitle: '我的购买点'
+   		             }
+ 	             $.openWin({
+ 	                name: "base_top",
+ 	                animId : 2,
+ 	                url: 'wgtroot://mCheap/map/ui/map_place.html',
+ 	                pageParam: param_data
+ 	            
+ 	            });  
+ 	          
+ 	        });
+
+   			   
+   		   }else{//自定义
+   			 var id='other'+k;
+   			 str='<div class="mdui-table-view-cell " >'+
+   	        '<div class="mdui-slider-right mdui-disabled ">'+
+   	            '<a class="mdui-btn mdui-btn-red delete" data="'+json.data[k].epsflw03id+'">删除</a>'+
+   	        '</div>'+
+   	        '<div class="mdui-slider-handle tj-list-item mdui-box" id='+id+'>'+
+   	            '<div class="other-img"></div>'+
+   	            '<div class="mdui-box-flex-1">'+
+   	               '<div>'+json.data[k].epsflw03002+'</div>'+
+   	             '</div> '+
+   	        '</div>'+
+   	        
+   	    '</div>'
+   	 	$(".other").append(str);
+   	  //  alert(id);
+   			 $("#"+id).on("click",function(){
+   				/*  alert($(this).attr('id')); */
+   				var _k=parseInt($(this).attr('id').substr(5));
+   				/* alert(_k) */
+   				var param_data={
+   						epsflw03002:json.data[_k].epsflw03002,//经度
+   		             	epsflw03003:json.data[_k].epsflw03003,//经度
+   		             	epsflw03004:json.data[_k].epsflw03004,//纬度
+   		             	epsflw03005:json.data[_k].epsflw03005,//购买点类型 
+   		             	 epsflw03id:json.data[_k].epsflw03id,//流水号 
+   		                 frameName: 'map_place',
+   		                 frameUrl: 'wgtroot://mCheap/map/ui/map_place.html',
+   		                 winTitle: '我的购买点'
+   		             }
+   				/* alert(alert(JSON.stringify(param_data))); */
+ 	             $.openWin({
+ 	                name: "base_top",
+ 	                animId : 2,
+ 	                url: 'wgtroot://mCheap/map/ui/map_place.html',
+ 	                pageParam: param_data
+ 	            
+ 	            });   
+ 	          
+ 	        });
+   		   }
+   		      		     		
+   		   		
+     	}
+    
+    	
+    
+    	$(".home").on("click",function(){
+    		//alert(123)
+    		if($("#home").val().length==0){
+    			
+   			 $.openWin({
+	                name: "base_top",
+	                animId : 2,
+	                url: 'wgtroot://mCheap/map/ui/map_place.html',
+	                pageParam: {
+	                	bzf:"1",
+	                	epsflw03005:"01",//购买点类型 	                	
+	                    frameName: 'map_place',
+	                    frameUrl: 'wgtroot://mCheap/map/ui/map_place.html',
+	                    winTitle: '我的购买点'
+	                }
+	            
+	            });  
+
+   			
+   	 	}
+    		  
+    	})
+    	$(".company").on("click",function(){
+    		//alert(234)
+    		if($("#company").val().length==0){
+    			 
+    			 $.openWin({
+ 	                name: "base_top",
+ 	                animId : 2,
+ 	                url: 'wgtroot://mCheap/map/ui/map_place.html',
+ 	                pageParam: {
+ 	                	bzf:"2",
+ 	                	epsflw03005:"02",//购买点类型 	                	
+ 	                    frameName: 'map_place',
+ 	                    frameUrl: 'wgtroot://mCheap/map/ui/map_place.html',
+ 	                    winTitle: '我的购买点'
+ 	                }
+ 	            
+ 	            });  
+
+    			
+    	 	}
+    	});
+    	
+    	$(".delete").on("click",function(){
+    		var _this=$(this);
+    		var epsflw03id=_this.attr('data');
+    		/* alert(epsflw03id); */
+    		  $.request({
+                  urlType: 'deletePurchasePoint',
+                  data: {
+                      "access_token": $.getStorage('access_token'),
+                      epsflw03id:epsflw03id// 采集点流水号
+                  }
+              }, function (json) {
+                  if(json.success) {
+                  	 $.toast("删除成功") 
+                  	 _this.parent().parent().remove();
+                  }
+                  else {
+                      //$.toast('网络错误')
+                  }
+
+              });
+    	});
+      	
+    }
+    
+    
+</script>
+</body>
+</html>

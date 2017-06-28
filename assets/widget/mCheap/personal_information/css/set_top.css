@@ -1,0 +1,40 @@
+*{
+    font-family: "Microsoft YaHei";
+    color: #666666;
+}
+body{
+    background-color: #FFFFFF;
+    padding-top: 2.75rem;
+
+}
+.header-box{
+    background-color: #3BA15C;
+    padding: 0;
+}
+.header{
+    width: 100%;
+    height: 100%;
+}
+.header>div{
+    line-height: 2.75rem;
+    color: #FFFFFF;
+    padding: 0 1rem;
+}
+.title{
+    text-align: center;
+}
+#content_box{
+    background-color: #CCCCCC;
+    padding-top:1rem;
+    position: relative;
+}
+.clear-content{
+    background: url("../images/clear.png") no-repeat center;
+    background-size: 1rem;
+    width: 2.5rem;
+    height: 2.5rem;
+    position: absolute;
+    top: 1rem;
+    right: 0.5rem;
+}
+

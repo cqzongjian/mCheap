@@ -1,0 +1,185 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8">
+    <title>mCollection</title>
+    <meta name="viewport" content="target-densitydpi=device-dpi,width=device-width, initial-scale=1,maximum-scale=1, user-scalable=no">
+    <meta name="apple-mobile-web-app-capable" content="yes">
+    <meta name="apple-mobile-web-app-status-bar-style" content="black">
+    <link rel="stylesheet" href="../../../static/mdui/css/mdui.min.css">
+    <link rel="stylesheet" href="../../../static/mCheap/css/mCommon.css">
+    <link rel="stylesheet" href="../css/mdui.indexedlist.css">
+    <style>
+        html,
+        body {
+            height: 100%;
+            position: relative;
+            background-color: #FFFFFF;
+        }
+        .header-box{
+            background-color: #3BA15C;
+            padding: 0;
+        }
+        .header{
+            width: 100%;
+            height: 100%;
+            position: relative;
+        }
+        .back{
+            padding-right: 1rem;
+            padding-left: 1rem;
+            margin-top: 0.75rem;
+            position: absolute;
+            z-index: 100;
+        }
+        .back img{
+            width:auto;
+            height: 1.25rem;
+        }
+        .title{
+            text-align: center;
+            position: absolute;
+            width: 100%;
+            height: 100%;
+            top: 0;
+            line-height: 2.75rem;
+            color: #FFFFFF;
+        }
+    </style>
+</head>
+<body>
+<div class="header-box mdui-bar mdui-bar-nav">
+    <div class="header">
+        <div class="back mdui-action-back"><img src="../images/back.png"></div>
+        <div class="title">新增品种</div>
+    </div>
+</div>
+<div class="mdui-content">
+    <div id='list' class="mdui-indexed-list">
+        <div class="mdui-indexed-list-search mdui-input-row mdui-search">
+            <input type="search" class="mdui-input-clear mdui-indexed-list-search-input" placeholder="搜索机场" style="display:none">
+        </div>
+        <div class="mdui-indexed-list-bar">
+            <a>A</a>
+            <a>B</a>
+            <a>C</a>
+            <a>D</a>
+            <a>E</a>
+            <a>F</a>
+            <a>G</a>
+            <a>H</a>
+            <a>I</a>
+            <a>J</a>
+            <a>K</a>
+            <a>L</a>
+            <a>M</a>
+            <a>N</a>
+            <a>O</a>
+            <a>P</a>
+            <a>Q</a>
+            <a>R</a>
+            <a>S</a>
+            <a>T</a>
+            <a>U</a>
+            <a>V</a>
+            <a>W</a>
+            <a>X</a>
+            <a>Y</a>
+            <a>Z</a>
+        </div>
+        <div class="mdui-indexed-list-alert"></div>
+        <div class="mdui-indexed-list-inner">
+            <div class="mdui-indexed-list-empty-alert">没有数据</div>
+            <ul class="mdui-table-view list-data"></ul>
+        </div>
+    </div>
+</div>
+<!--页面-->
+<script src="../../../static/mdui/js/mdui.min.js"></script>
+<script src="../js/mdui.indexedlist.js"></script>
+<script src="../../../server.js"></script>
+<script>
+    $.uexWindowReady(function(){
+        function Page(){}
+        Page.prototype={
+            request:function(){
+                var self=this;
+                $.request({
+                    urlType:'queryProducts',
+                    data:{
+                        "access_token": $.getStorage('access_token')
+                    }
+                },function(data){
+                    if(data.success) {
+                        self.setList(data.data);
+                    }
+                    else {
+                        alert('网络错误')
+                    }
+                });
+            },
+            setList:function (obj){
+                var arr_one=[];
+                for(var i=0;i<obj.length;i++){
+                    arr_one.push('<li data-group="'+obj[i].zm+'" class="mdui-table-view-divider mdui-indexed-list-group">'+obj[i].zm+'</li>');
+                    for(var j=0;j<obj[i].products.length;j++){
+                        var str = '<li class="mdui-table-view-cell data-item mdui-indexed-list-item mdui-checkbox mdui-left" data-id="' + obj[i].products[j].cltpro01id + '"><input type="checkbox" />' + obj[i].products[j].cltpro01001 + '</li>';
+                        arr_one.push(str);
+                    }
+                }
+                var html=arr_one.join('');
+                $('.list-data').html(html);
+            },
+            event:function(){
+                $('.list-data').on('tap','.data-item',function(){
+                    var name= $(this).text();
+                    var proId= $(this).data('id');
+                    var namePram='changeProduct(';
+                    for(var i=0;i<name.length;i++){
+                        namePram += name.charCodeAt(i)+",";
+                    }
+                    namePram = namePram.substring(0,namePram.length-1);
+                    namePram =namePram+','+proId;
+                    namePram += ');';
+                    var wName=$.strToJson($.pageParam).wName;
+                    if(wName=='qst'){
+                        $.execScript({
+                            winName:'tj_container',
+                            frameName:'qst',
+                            script:namePram
+                        });
+                    }
+                    if(wName=='top10'){
+                        $.execScript({
+                            winName:'tj_container',
+                            frameName:'top10',
+                            script:namePram
+                        });
+                    }
+                    if(wName=='rlt'){
+                        $.execScript({
+                            winName:'tj_container',
+                            frameName:'rlt',
+                            script:namePram
+                        });
+                    }
+                    $.closeWin('selectProduct');
+                });
+            }
+        };
+        var page=new Page();
+        page.request();
+        page.event();
+        page = null;
+    });
+
+    //选择初始化
+    $.ready(function() {
+        var list = $('#list');
+        var done = $('#done');
+        list.height(document.body.offsetHeight);
+        window.indexedList = new $.IndexedList(list[0]);
+    });
+</script>
+</body>
+</html>

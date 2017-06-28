@@ -1,0 +1,260 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8">
+    <title>grzx</title>
+    <meta name="viewport" content="target-densitydpi=device-dpi,width=device-width, initial-scale=1,maximum-scale=1, user-scalable=no">
+    <meta name="apple-mobile-web-app-capable" content="yes">
+    <meta name="apple-mobile-web-app-status-bar-style" content="black">
+    <link rel="stylesheet" href="../../../static/mdui/css/mdui.min.css">
+    <link rel="stylesheet" href="../../../static/mCheap/css/mCommon.css">
+    <style>
+        *{
+            font-family: "Microsoft YaHei";
+            color: #666666;
+        }
+        body{
+            background-color: #FFFFFF;
+            padding-top: 2.75rem;
+
+        }
+        .content {
+            margin-top: 1rem;
+        }
+        .header-box{
+            background-color: #3BA15C;
+            padding: 0;
+        }
+        .header{
+            width: 100%;
+            height: 100%;
+            position: relative;
+        }
+        .back{
+            padding-right: 1rem;
+            padding-left: 1rem;
+            padding-top: 0.75rem;
+            position: absolute;
+            z-index: 100;
+        }
+        .back img{
+            width:auto;
+            height: 1.25rem;
+        }
+        .title{
+            text-align: center;
+            position: absolute;
+            width: 100%;
+            height: 100%;
+            top: 0px;
+            line-height: 2.75rem;
+            color: #FFFFFF;
+        }
+        .version-box{
+            border-radius: 0.5rem;
+            background-color: #CCCCCC;
+            margin: 1rem;
+            padding: 1rem;
+        }
+        .already-have{
+            text-align: center;
+            margin-bottom: 1rem;
+        }
+        .change-new{
+            text-align: center;
+            color: white;
+            width: 100%;
+            background-color: green;
+            padding: 0.5rem;
+            border-radius: 0.3rem;
+        }
+        .content-title{
+            font-weight: 600;
+            margin-left: 1rem;
+        }
+        .version-content{
+            width: 100%;
+            padding: 1rem;
+        }
+        #version-new{
+            display: none;
+        }
+
+        .percentage-box{
+            position: fixed;
+            top: 6rem;
+            left: 1rem;
+            width: 90%;
+            display: none;
+            border-radius: 0.5rem;
+            background-color: #CCCCCC;
+            padding: 1rem;
+            z-index: 205;
+        }
+        .percentage-title{
+            text-align: center;
+            margin-bottom: 1rem;
+        }
+        .percentage-process{
+            text-align: center;
+            color: white;
+            width: 100%;
+            background-color: green;
+            padding: 0.5rem;
+            border-radius: 0.3rem;
+        }
+        .cancel{
+            text-align: center;
+            color: white;
+            width: 6rem;
+            background-color: green;
+            margin: 1.5rem 6rem 0;
+            padding: 0.5rem;
+            border-radius: 0.3rem;
+        }
+    </style>
+</head>
+<body>
+    <div class="header-box mdui-bar mdui-bar-nav">
+        <div class="header">
+            <div class="back mdui-action-back"><img src="../images/back.png"></div>
+            <div class="title">版本更新</div>
+        </div>
+    </div>
+    <div class="content">
+        <div class="version-box">
+            <div class="already-have"></div>
+            <div class="change-new"></div>
+        </div>
+        <div id="version-new">
+            <div class="content-title">找相因4.3.32主要更新内容</div>
+            <div class="version-content">了解到散发开始的减肥啊说服力</div>
+        </div>
+    </div>
+
+    <div class="percentage-box">
+        <div class="percentage-title">正在下载更新</div>
+        <div id="percentage" class="percentage-process"></div>
+        <div class="cancel">取消更新</div>
+    </div>
+
+
+
+<!--页面-->
+<script src="../../../static/mdui/js/mdui.min.js"></script>
+<script src="../../../static/mCheap/js/mCheap.config.js"></script>
+<script src="../../../server.js"></script>
+<script>
+    var version_curr='';
+    var downurl='';
+    var savePath='';
+    $.uexWindowReady(function(){
+        getAppNewVersion();
+    });
+    function cbGetCurrentWidgetInfo(opId,dataType,data){
+        var obj = eval('('+data+')');
+        version_curr=obj.version;//获取当前APP的一些信息，比如应用ID之类的数据
+    }
+
+    function getAppNewVersion(){
+        $.request({
+            urlType: 'getAppNewVersion',
+            data: {
+                "access_token": $.getStorage('access_token'),
+                 version_curr: $.getStorage('version_curr')
+            }
+        }, function (json) {
+            if (json.success) {
+                if(json.message){
+                    $('.already-have').html(json.message);
+                    $('.change-new').html('无需更新');
+                }else{
+                    downurl=json.data.downurl;
+                    savePath = 'wgt://data/down/mCheap_'+json.data.vname+'.apk';
+                    $('.already-have').html('已经有新版本:'+json.data.vname);
+                    $('.content-title').html('找相因'+json.data.vname+'主要更新内容');
+                    $('.version-content').html(json.data.content);
+                    $('#version-new').show();
+                    $('.change-new').html('立即更新');
+                }
+            }
+        });
+    }
+
+    $('.change-new').on('tap',function(){
+        var name=$(this).html();
+        var percentageBox = $('.percentage-box');
+        if(name=='立即更新'){
+            uexDownloaderMgr.createDownloader(1);
+            uexDownloaderMgr.cbCreateDownloader = function(opCode,dataType,data){
+                if(data == 0){
+                    uexDownloaderMgr.download(1,downurl,savePath,1);
+                }else{
+//                    alert("创建失败");
+                }
+            };
+            uexDownloaderMgr.onStatus = function(opCode,fileSize,percent,status){
+                switch (status) {
+                    case 0:
+                        showMask();
+                        percentageBox.show();
+                        var size = Math.round(fileSize/(1024*1024));
+                        document.getElementById('percentage').innerHTML ="文件大小:"+size+"M<br>下载进度:"+percent+"%";
+                        break;
+                    case 1:
+//                        alert("下载完成");
+                        hideMask();
+                        percentageBox.hide();
+                        uexWidget.installApp(savePath);
+                        uexDownloaderMgr.closeDownloader(opCode);
+                        break;
+                    case 2:
+//                        alert("下载失败");
+                        uexDownloaderMgr.closeDownloader(opCode);
+                        break;
+                    case 3:
+//                        alert("已取消下载");
+                        break;
+                }
+            };
+
+
+            /*uexCheckVersion.onStatus = function(code, msg){
+                switch (code) {
+                    case 0: //失败包括地址出错，下载文件出错等
+                        alert(msg);
+                        break;
+                    case 1: //成功
+                        //alert(msg);
+                        break;
+                }
+            };
+            var url = $.serverSettings.serverPath+$.serverSettings.urlPath.checkVersion;
+            uexCheckVersion.checkVersion(url);*/
+        }else{
+            $.toast('已是最新版本，无需更新！');
+        }
+    });
+
+    //取消更新
+    $(document).on('tap', '.cancel', function () {
+        uexDownloaderMgr.closeDownloader(1);
+        hideMask();
+        $('.percentage-box').hide();
+    });
+
+
+    //添加蒙层
+    function showMask(){
+        var $body = $('body');
+        var divHeight = $body.height();
+        $body.append('<div id="mask" style="background: #000;position: absolute;top:0;left:0;width: 100%;opacity: 0.5;z-index: 200;overflow: hidden"></div>');
+        $('#mask').css('height',divHeight);
+    }
+    //隐藏蒙层
+    function hideMask(){
+        $("#mask").remove();
+    }
+</script>
+</body>
+</html>

@@ -1,0 +1,270 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8">
+    <title>mCollection</title>
+    <meta name="viewport" content="target-densitydpi=device-dpi,width=device-width, initial-scale=1,maximum-scale=1, user-scalable=no">
+    <meta name="apple-mobile-web-app-capable" content="yes">
+    <meta name="apple-mobile-web-app-status-bar-style" content="black">
+    <link rel="stylesheet" href="../../../static/mdui/css/mdui.min.css">
+    <link rel="stylesheet" href="../../../static/mCheap/css/mCommon.css">
+    <style>
+        *{
+            font-family: "Microsoft YaHei";
+        }
+        body{
+            background-color:#ffffff;
+            padding-top: 2.75rem;
+        }
+        .header-box{
+            background-color: #3BA15C;
+            padding: 0;
+        }
+        .header{
+            width: 100%;
+            height: 100%;
+            position: relative;
+        }
+        .back{
+            padding-right: 1rem;
+            padding-left: 1rem;
+           padding-top: 0.75rem;
+            position: absolute;
+            z-index: 100;
+        }
+        .back img{
+            width:auto;
+            height: 1.25rem;
+        }
+        .title{
+            text-align: center;
+            position: absolute;
+            width: 100%;
+            height: 100%;
+            top: 0px;
+            line-height: 2.75rem;
+            color: #FFFFFF;
+        }
+        .top{
+            padding: 1rem;
+            padding-bottom: 0rem;
+        }
+        .top-title{
+            font-size: 1.2rem;
+        }
+        .top-time{
+            color: #666666;
+            margin-top: 0.2rem;
+        }
+        .notDeal{
+            color:#F57F20 ;
+        }
+        .hasDeal{
+            color: #3BA15C;
+        }
+        .detail,.ask{
+            padding: 1rem;
+            color: #000000;
+            line-height: 1.5rem;
+            border-bottom: 1px solid #CCCCCC;
+        }
+        .answer{
+            background-color: #F4F4F4;
+            padding: 1rem;
+            border-bottom: 1px solid #CCCCCC;
+        }
+        .ask{
+            border-bottom: 1px solid #CCCCCC;
+        }
+        .answer-right{
+            color:#F57F20 ;
+        }
+        .answer-content{
+            margin-top: 0.5rem;
+            line-height: 1.2rem;
+        }
+        .addAnswer{
+            position: fixed;
+            top: 0;
+            bottom: 0;
+            left: 0;
+            right: 0;
+            background-color: rgba(0,0,0,0.3);
+            display: none;
+        }
+        .addBox{
+            position: absolute;
+            bottom: 0;
+            left: 0;
+            right: 0;
+            background-color: #F5F5F5;
+            padding: 0.5rem;
+            overflow: hidden;
+        }
+        .add-top{
+            padding-bottom: 0.5rem;
+        }
+        .add-left{
+            padding-left: 1rem;
+            color: #3BA15C;
+        }
+        .add-right{
+            padding-right: 1rem;
+            color: #3BA15C;
+        }
+        .add-title{
+            text-align: center;
+        }
+        #tt{
+            margin: 0;
+            height: 6rem;
+        }
+    </style>
+</head>
+<body>
+<div class="header-box mdui-bar mdui-bar-nav">
+    <div class="header">
+        <div class="back mdui-action-back"><img src="../images/back.png"></div>
+        <div class="title">问题详情</div>
+    </div>
+</div>
+<div class="addAnswer">
+    <div class="addBox">
+        <div class="add-top mdui-box">
+            <div class="add-left">取消</div>
+            <div class="add-title mdui-box-flex-1">回复</div>
+            <div class="add-right">确定</div>
+        </div>
+        <textarea id="tt"></textarea>
+    </div>
+</div>
+<div class="top">
+    <div class="mdui-box">
+        <div class="top-title mdui-box-flex-1"></div>
+        <div class="isDeal">已处理</div>
+    </div>
+    <div class="top-time mdui-box-flex-1">2016-05-24 16:48</div>
+</div>
+<div class="detail"></div>
+<div class="box">
+    <!--<div class="answer">-->
+        <!--<div class="answer-top mdui-box">-->
+            <!--<div class="mdui-box-flex-1 mdui-box">-->
+                <!--<div>某某回复</div>-->
+                <!--<div class="mdui-box-flex-1">(2015-05-05):</div>-->
+            <!--</div>-->
+            <!--<div class="answer-right">回复</div>-->
+        <!--</div>-->
+        <!--<div class="answer-content">价格高管你锤子事</div>-->
+    <!--</div>-->
+    <!--<div class="ask">老子弄你死</div>-->
+    <!--<div class="answer">-->
+        <!--<div class="answer-top mdui-box">-->
+            <!--<div class="mdui-box-flex-1 mdui-box">-->
+                <!--<div>某某回复</div>-->
+                <!--<div class="mdui-box-flex-1">(2015-05-05):</div>-->
+            <!--</div>-->
+            <!--<div class="answer-right">回复</div>-->
+        <!--</div>-->
+        <!--<div class="answer-content">来啊来啊</div>-->
+    <!--</div>-->
+</div>
+<!--页面-->
+<script src="../../../static/mdui/js/mdui.min.js"></script>
+<script src="../../../static/mCheap/js/mCheap.config.js"></script>
+<script src="../../../server.js"></script>
+<script>
+    $.uexWindowReady(function(){
+        /*
+         *
+         * */
+        var pageData=$.pageParam;
+        var jsonData=$.strToJson(pageData);
+        var epssgt01id=jsonData.epssgt01id;
+        var detail=jsonData.detail;
+        var time=jsonData.time;
+        var title=jsonData.title;
+        var isDeal=jsonData.isDeal;
+        $('.top-title').html(title);
+        $('.top-time').html(time);
+        $('.detail').html(detail);
+        if(isDeal=='未处理'){
+            $('.isDeal').html('未处理').addClass('notDeal')
+        }
+        else{
+            $('.isDeal').html('已处理').addClass('hasDeal')
+        }
+        $.request({
+            urlType: 'userComplainDetail',
+            data: {
+                "access_token": $.getStorage('access_token'),
+                epssgt01id:epssgt01id
+            }
+        }, function (data) {
+            if (data.success) {
+                setComplainDetail(data.data);
+            }
+            else {
+                alert('网络错误')
+            }
+        });
+        function setComplainDetail(data){
+            var html='';
+            for(var i=0;i<data.length;i++){
+                if(data[i].epsrtu01id){
+                    html+='<div class="ask">'+'我：<br>'+data[i].epssgt01002+'</div>'
+                }
+                else {
+                    html+='<div class="answer">';
+                    html+='<div class="answer-top mdui-box">';
+                    html+='<div class="mdui-box-flex-1 mdui-box">';
+                    html+='<div>'+data[i].createName+'回复</div>';
+                    html+='<div class="mdui-box-flex-1">('+data[i].createTime+'):</div>';
+                    html+='</div>';
+                    html+='<div class="answer-right">回复</div>';
+                    html+='</div>';
+                    html+='<div class="answer-content">'+data[i].epssgt01002+'</div>';
+                    html+='</div>';
+                }
+            }
+            $('.box').html(html)
+        }
+        $(document).on('tap','.answer-right',function(){
+            $('.addAnswer').show();
+        });
+        $('.add-left').on('tap',function(){
+            $('.addAnswer').hide()
+        });
+        $('.add-right').on('tap',function(){
+            var userMessage= JSON.parse($.getStorage('userMessage'));
+            if($('#tt').val()!='') {
+                $.request({
+                    urlType: 'replyMessage',
+                    data: {
+                        "access_token": $.getStorage('access_token'),
+                        userComp: JSON.stringify({
+                            epssgt01002: $('#tt').val(),
+                            eosrtu01pid: epssgt01id
+                        })
+                    }
+                }, function (data) {
+                    if (data.success) {
+                        $.toast('回复成功');
+                        var insertHtml = '<div class="ask">我：<br>' + $('#tt').val() + '</div>';
+                        document.querySelector('.box').insertAdjacentHTML('afterbegin', insertHtml);
+                        $('.isDeal').html('未处理').removeClass('hasDeal').addClass('notDeal');
+                        $('.addAnswer').hide();
+                    }
+                    else {
+                        alert('网络错误')
+                    }
+                });
+            }
+            else {
+                $.toast('请输入回复内容')
+            }
+        })
+    });
+</script>
+</body>
+</html>

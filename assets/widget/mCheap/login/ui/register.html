@@ -1,0 +1,66 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8">
+    <title>mCollection</title>
+    <meta name="viewport" content="target-densitydpi=device-dpi,width=device-width, initial-scale=1,maximum-scale=1, user-scalable=no">
+    <meta name="apple-mobile-web-app-capable" content="yes">
+    <meta name="apple-mobile-web-app-status-bar-style" content="black">
+    <link rel="stylesheet" href="../../../static/mdui/css/mdui.min.css">
+    <link rel="stylesheet" href="../../../static/mCheap/css/mCommon.css">
+    <link rel="stylesheet" href="../css/register.css">
+</head>
+<body>
+<div class="header-box mdui-bar mdui-bar-nav">
+    <div class="header">
+        <div class="back mdui-action-back"><img src="../images/back.png"></div>
+        <div class="title">立即注册</div>
+    </div>
+</div>
+<div class="sort mdui-box">
+    <div class="mdui-box-flex-1 sort-item">
+        <div id="telRegister" class="sort-item-text">手机注册</div>
+    </div>
+    <div class="sort-item-gap">|</div>
+    <div class="mdui-box-flex-1 sort-item">
+        <div id="zhRegister" class="sort-item-text">账号注册</div>
+    </div>
+</div>
+<div class="mdui-content" id="content_box"></div>
+<!--页面-->
+<script src="../../../static/mdui/js/mdui.min.js"></script>
+<script src="../../../static/mCheap/js/mCheap.config.js"></script>
+<script>
+    $.uexWindowReady(function(){
+        var ele=$('.sort-item');
+        ele.on('tap',function(){
+            var target=$(this).find('.sort-item-text');
+            if(!target.hasClass('sort-item-on')) {
+                ele.find('.sort-item-text').removeClass('sort-item-on');
+                target.addClass('sort-item-on');
+                var text = $(this).find('.sort-item-text').text();
+                if (text == '手机注册') {
+                    $.openFrameByEle('content_box', {
+                        name: 'telRegister',
+                        winName: 'register',
+                        url: 'wgtroot://mCheap/login/ui/telRegister.html',
+                        pageParam: {}
+                    });
+                    $.closeFrame('zhRegister')
+                }
+                else if (text == '账号注册') {
+                    $.openFrameByEle('content_box', {
+                        name: 'zhRegister',
+                        winName: 'register',
+                        url: 'wgtroot://mCheap/login/ui/zhRegister.html',
+                        pageParam: {}
+                    });
+                    $.closeFrame('telRegister')
+                }
+            }
+        });
+        ele.eq(0).trigger('tap');
+    });
+</script>
+</body>
+</html>
