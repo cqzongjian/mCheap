@@ -824,15 +824,56 @@
         }}};
         $.initScroll(option1);
 
+
         closeMask();
         setTitleData();//设置题目信息
         setCommentData();//设置评论信息
         getCollecter();//获取采集者
-        //getProData();//价格走势
+        getProData();//详情
         mcheapQueryUserPrice();//获取报价信息
         requestNearMarketPrice();
         getFocus();  //设置是否关注
     });
+
+    //获取产品详情况
+    function getProData(){
+        $.request({
+            urlType:'productDetail',
+            data:{
+                "access_token": $.getStorage('access_token'),
+                cltpro01id:cltpro01id,
+                cltpit01id:cltpit01id,
+                epsbht01010:'01', //访问来源标志:01app,02微信,03门户
+                recordMark:'yes', //记录标志,
+                saveParam:'1' //记录所属模块标志
+            }
+        },function(data){
+            if(data.success) {
+                if(parseInt(data.data.isFocus)){
+                    $('.set-focus').removeClass('dislike').addClass('like');
+                }else{
+                    $('.set-focus').removeClass('like').addClass('dislike');
+                }
+                var content;
+                myDish.cltpro01id=data.data.cltpro01id;
+                myDish.cltpro01001=data.data.cltpro01001;
+                myDish.cltpro01004=data.data.cltpro01004;
+                myDish.cltpro01005=data.data.cltpro01005;
+                var vegetablePic='<img src="' + $.serverSettings.serverPath + '/mobile/mcheap/mcheapAction!getPicture.do?access_token=' + $.getStorage('access_token') + '&url=' + data.data.cltpro02002_new + '" alt=""/>';
+                url=data.data.cltpro02002_new;
+                $('.top-img').html(vegetablePic);
+                if(data.data.cltpro02002_new){
+                    content='&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;'+data.data.cltpro02002_new;
+                }else{
+                    content='暂无数据';
+                }
+                $('.xq-div').html(content);
+            }
+            else {
+                alert('网络错误')
+            }
+        });
+    }
 
     //查询是否关注
     function getFocus() {
@@ -854,6 +895,7 @@
     }
 
     //请求市场比价界面数据
+    var scroll_first = true;
     function requestNearMarketPrice(){
        // alert($.getStorage('near')+"@@@@@@@@@@2");
 
@@ -880,7 +922,10 @@
                     if(nMpageNum==0){
                         nMcreatList(data.data);
                     }else{
-                        $.toast('没有更多了!');
+                        if(scroll_first) {
+                            $.toast('没有更多了!');
+                            scroll_first=false;
+                        }
                         nMrequestFlag=false;
                     }
                 }
