@@ -1,21 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <project version="4">
-  <component name="IdProvider" IDEtalkID="12C7D1253FB82FDA336AB95B568D8A0D" />
-  <component name="ProjectRootManager" version="2" languageLevel="JDK_1_8" default="true" project-jdk-name="1.8_131" project-jdk-type="JavaSDK">
+  <component name="IdProvider" IDEtalkID="D97DB610BCD8423B470F5DE8794A310A" />
+  <component name="ProjectRootManager" version="2" languageLevel="JDK_1_8" default="false" project-jdk-name="Android API 19 Platform" project-jdk-type="Android SDK">
     <output url="file://$PROJECT_DIR$/classes" />
-  </component>
-  <component name="SvnBranchConfigurationManager">
-    <option name="myConfigurationMap">
-      <map>
-        <entry key="$PROJECT_DIR$">
-          <value>
-            <SvnBranchConfiguration>
-              <option name="trunkUrl" value="http://192.168.10.70:8090/svn/XZ16CD01800/04.Implement/mCheap" />
-            </SvnBranchConfiguration>
-          </value>
-        </entry>
-      </map>
-    </option>
-    <option name="mySupportsUserInfoFilter" value="true" />
   </component>
 </project>
