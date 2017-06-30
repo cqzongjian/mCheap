@@ -211,7 +211,8 @@
             return false;
         };
     	var pageData=$.pageParam;
-    	var cltpit01id=$.strToJson(pageData).cltpit01id;
+    	var cltpit01001=$.strToJson(pageData).cltpit01001;  //市场名称
+    	var cltpit01id=$.strToJson(pageData).cltpit01id;  //市场id
         var cltpro01id=$.strToJson(pageData).cltpro01id||'';
         var lat = $.strToJson(pageData).lat;
         var log = $.strToJson(pageData).log;
@@ -314,7 +315,9 @@
                     urlType:'deleteFocusStation',
                     data:{
                         "access_token": $.getStorage('access_token'),
-                        cltpit01id:cltpit01id
+                        cltpit01id:cltpit01id,  //市场id
+                        cltpit01001:cltpit01001  //市场名称
+
                     }
                 },function(data){
                     if(data.success) {

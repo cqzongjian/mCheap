@@ -1,8 +1,8 @@
 ﻿$.serverSettings={
     //serverPath:'http://118.112.188.108:8019/price',//接正式库演示
-    serverPath:'http://192.168.22.205:8080/price',//接李阳
+    //serverPath:'http://192.168.22.205:8080/price',//接李阳
 	//serverPath:'http://182.150.36.126:8085/price',//正式库测试
-    //serverPath:'http://182.150.36.126:8086/price',//正式库测试
+    serverPath:'http://182.150.36.126:8086/price',//正式库测试
     //serverPath:'http://192.168.10.198:8081/price',//测试库
     //serverPath:'http://192.168.22.118:8081/price',//接亚雄
     //serverPath:'http://192.168.29.167:8080/back',//接贺

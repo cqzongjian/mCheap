@@ -57,6 +57,9 @@
             color:#999999;
         }
         .hasSend{
+            /*background-color: #70927D;*/
+        }
+        .registing {
             background-color: #70927D;
         }
     </style>
@@ -147,7 +150,10 @@
                 if (tel == '') {
                     msg = '请输入手机号';
                 }
+                var $register = $('.register');
                 if (tel != '' && yzm != '' && pwd != '') {
+                    $register.text("注册中...");
+                    $register.addClass('registing');
                     $.request({
                         urlType: 'dxRegister',
                         data: {
@@ -159,6 +165,8 @@
                     }, function (data) {
                         if (data.success) {
                             $.toast('注册成功');
+                            $register.text("立即注册");
+                            $register.removeClass('registing');
                             $.execScript({
                                 winName:'register',
                                 script:'$.closeWin()'

@@ -88,12 +88,18 @@
 			
 			function toIndex(){
 				$.closeFrame("guide");
-				$.openFrame({
-					name:"index",
-					winName:'root',
-					url:'wgtroot://index.html',
-					pageParam: {}
-				}); 
+                $.closeFrame("default");
+                $.openWin({
+                    name:"index",
+                    url:'wgtroot://caishi_base.html',
+                    pageParam: {}
+                });
+                /*$.openFrame({
+                    name:"index",
+                    winName:'root',
+                    url:'wgtroot://caishi_base.html',
+                    pageParam: {}
+                }); */
 			}
 			//打开新的win的示例方法
 //			var frameData = {};

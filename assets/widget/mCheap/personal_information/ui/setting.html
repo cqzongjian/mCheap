@@ -59,7 +59,7 @@
     padding-left: 1.5rem;
     background-size:0.5rem 1rem;
 }
-#logout{
+/*#logout{
     height: 3rem;
     width: 100%;
     border-bottom:1px solid #BBBDBC;
@@ -70,7 +70,7 @@
     text-align: center;
     line-height: 3rem;
     display: none;
-}
+}*/
 </style>
 </head>
 
@@ -84,7 +84,7 @@
             </div>
         </div>
         <div class="version">版本更新</div>
-        <div id="logout">退出登录</div>
+        <!--<div id="logout">退出登录</div>-->
     </div>
 
 	<script src="../../../static/mdui/js/mdui.min.js"></script>
@@ -96,10 +96,10 @@
         uexWidgetOne.cbGetCurrentWidgetInfo = cbGetCurrentWidgetInfo;
 
         var pushMesFlag =$.getStorage('pushMesFlag');
-        var userMessage =$.getStorage('userMessage');
+        /*var userMessage =$.getStorage('userMessage');
         if(userMessage){
             $("#logout").show();
-        }
+        }*/
         if(pushMesFlag=='1'){
             $('.flag-div').css('background-color','green');
             $('.flag').css('float','right');
@@ -131,7 +131,7 @@
             }
         });
 
-        $('#logout').on('tap',function(){
+        /*$('#logout').on('tap',function(){
             $.request({
                 urlType:'logout',
                 data:{
@@ -141,7 +141,9 @@
                 if(data.success) {
                     $.setStorage('userMessage', '');
                     $.execScript({
-                        winName:'grzx',
+                        //winName:'grzx',
+                        winName:'index',
+                        frameName:'wode',
                         script:'$.refreshWin()'
                     });
                     $.toast(data.message);
@@ -152,7 +154,7 @@
 
                 }
             });
-        });
+        });*/
 
         $('.version').on('tap',function(){
             $.openWin({

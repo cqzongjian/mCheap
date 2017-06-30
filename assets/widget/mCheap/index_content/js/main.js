@@ -110,7 +110,7 @@ function setNearMarket(data,boole){
         var j=0;
         var picurl=data[i].cltpit02002?data[i].cltpit02002:data[i].url;
         //image.setCount(data.length);
-        html+='<div class="tj-list-item mdui-box" data-cltpit01id="'+data[i].cltpit01id+'" data-log="'+data[i].cltpit01007+'" data-lat="'+data[i].cltpit01008+'">';
+        html+='<div class="tj-list-item mdui-box" data-cltpit01id="'+data[i].cltpit01id+'" data-cltpit01001="'+data[i].cltpit01001+'" data-log="'+data[i].cltpit01007+'" data-lat="'+data[i].cltpit01008+'">';
         html+='<div>';
         //boole?url=data[i].cltpit02002:url=data[i].url;
         html+='<img src="'+$.serverSettings.serverPath+'/mobile/mcheap/mcheapAction!getMarketPicture.do?access_token='+$.getStorage('access_token')+'&url='+picurl+'">';

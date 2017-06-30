@@ -319,7 +319,9 @@
         $('.pic-img').attr('src',$.serverSettings.serverPath+'/mobile/mcheap/mcheapAction!getUserPicture.do?access_token='+ $.getStorage('access_token')+'&url='+url);
         $('.mc').hide();
         $.execScript({
-            winName: 'grzx',
+            //winName: 'grzx',
+            winName:'index',
+            frameName:'wode',
             script:'$.refreshWin();'
         });
     }

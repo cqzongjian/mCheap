@@ -212,6 +212,8 @@
                 if (data.success) {
                     if (data.data.length > 0) {
                         that.setList(data.data);
+                    } else {
+                        $.toast('你还没有关注的市场哦~')
                     }
                 }
                 else {

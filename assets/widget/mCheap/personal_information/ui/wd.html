@@ -14,7 +14,7 @@
             color: #666666;
         }
         body{
-            background-color: #FFFFFF;
+            /*background-color: #FFFFFF;*/
             padding-top: 2.75rem;
 
         }
@@ -163,6 +163,19 @@
         .onTouch{
             background-color:#F5F5F5;
         }
+
+        #logout{
+            height: 3rem;
+            width: 100%;
+            border-bottom:1px solid #BBBDBC;
+            background-color: white;
+            margin-top: 1rem;
+            border-top:1px solid  #BBBDBC;
+            border-bottom:1px solid #BBBDBC;
+            text-align: center;
+            line-height: 3rem;
+            display: none;
+        }
     </style>
 </head>
 <body>
@@ -228,6 +241,8 @@
     <div class="mdui-box-flex-1">投诉与建议</div>
     <div class="arrow"></div>
 </div>
+
+<div id="logout">退出登录</div>
 
 <!--页面-->
 <script src="../../../static/mdui/js/mdui.min.js"></script>
@@ -304,6 +319,24 @@
                 $('.person-img').append('<img src="../images/head.jpg"/>');
 
             }
+        });
+
+        if($.getStorage('loginid_username')){
+            $("#logout").show();
+        }
+        $('#logout').on('tap',function(){
+            $.request({
+                urlType:'logout',
+                data:{
+                    "access_token": $.getStorage('access_token')
+                }
+            },function(data){
+                if(data.success) {
+                    $.setStorage('loginid_username', '');
+                    $.refreshWin();
+                    $.toast(data.message);
+                }
+            });
         });
         /*投诉与建议*/
         $('.tsjy').on('tap',function(){

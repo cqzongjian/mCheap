@@ -54,6 +54,9 @@
             padding: 0.25rem 0.5rem 0.25rem 0.5rem;
             border: 1px solid #3BA15C;
         }
+        .registing {
+            background-color: #70927D;
+        }
     </style>
 </head>
 <body>
@@ -68,7 +71,7 @@
     </div>
     <input type="password" id="pwd" placeholder="密码(6-16位字符和数字)">
     <input type="password" id="repwd" placeholder="确认密码">
-    <div id="btn" class="btn touch">立即注册</div>
+    <div id="btn" class="btn touch register">立即注册</div>
 </div>
 <!--页面-->
 <script src="../../../static/mdui/js/mdui.min.js"></script>
@@ -104,8 +107,11 @@
             if(epsrtu01001.length<2||epsrtu01001>20){
                 msg='用户名必须在2-20个字符'
             }
+            var $register = $('.register');
             if(msg==''){
-                console.log(JSON.stringify(pageData));
+                //console.log(JSON.stringify(pageData));
+                $register.text("注册中...");
+                $register.addClass('registing');
                 $.request({
                     urlType: 'register',
                     data: {
@@ -122,7 +128,9 @@
                 },function(data){
                     console.log(JSON.stringify(data));
                     if (data.code='00') {
-                        $.toast('注册成功,请登陆');
+                        $.toast('注册成功');
+                        $register.text("立即注册");
+                        $register.removeClass('registing');
                         $.execScript({
                             winName:'register',
                             script:'$.closeWin()'

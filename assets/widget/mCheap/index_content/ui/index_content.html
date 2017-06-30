@@ -220,13 +220,19 @@
         $.setBounce({
             bounceType:"1",
             type:"0",
-            startPullCall:function(){
-                //console.log("下拉动作开始");
-            },
+            /*startPullCall:function(value){
+                if(value === 1){
+                    return;
+				}
+            },*/
             downEndCall:function(type){
                 //执行刷新数据
                 initPage();
                 //关闭上/下拉刷新效果
+                $.resetBounce(type);
+            },
+            upEndCall:function(type){
+
                 $.resetBounce(type);
             }
         });
@@ -480,7 +486,8 @@
             animId : 2,
             url:'wgtroot://mCheap/market/ui/market.html',
             pageParam:{
-                cltpit01id:$(this).data('cltpit01id'),
+                cltpit01id:$(this).data('cltpit01id'),  //市场id
+                cltpit01001:$(this).data('cltpit01001'),  //市场名称
                 log:$(this).data('log'),
                 lat:$(this).data('lat')
             }
@@ -492,7 +499,8 @@
             animId : 2,
             url:'wgtroot://mCheap/market/ui/market.html',
             pageParam:{
-                cltpit01id:$(this).data('cltpit01id'),
+                cltpit01id:$(this).data('cltpit01id'),  //市场id
+                cltpit01001:$(this).data('cltpit01001'),  //市场名称
                 log:$(this).data('log'),
                 lat:$(this).data('lat')
             }
@@ -612,11 +620,11 @@
     });
     $('.tj-caipu>.tj-more').on('tap',function(){
         $.execScript({
-            winName:'root',
+            winName:'index',
             script:'$(".footer-item-a").eq(2).trigger("tap")'
         });
         $.execScript({
-            winName:'root',
+            winName:'index',
             frameName:'caipu',
             script:'$(".sort-item").eq(0).trigger("tap")'
         });

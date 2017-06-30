@@ -564,6 +564,13 @@
             $('#list').html('');
             $this.request();
         });
+        $('#search').on('input propertychange', function () {  //搜索框内容改变时触发
+            $('.paixu-item').removeClass('up');
+            $('.paixu-item-bg').removeClass('paixu-up').removeClass('paixu-down');
+            $this.pageNum=0;
+            $('#list').html('');
+            $this.request();
+        });
         /*
          * 点击回退按钮
          * */
