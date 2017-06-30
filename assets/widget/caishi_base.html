@@ -61,14 +61,21 @@
 <script>
     var nowData={};//首页请求token参数对象
     $.uexWindowReady(function(){
-        getRegistration_ID();
+
+        //按返回键退出app
+        uexWindow.onKeyPressed = function(keyCode){
+            if(keyCode===0) {  //返回键
+                $.exitApp();
+            }
+        };
+        /*getRegistration_ID();
         uexJPush.onReceiveNotification = onReceiveNotification;
         function onReceiveNotification(info){
-            /*$.execScript({
-                winName:'root',
+            /!*$.execScript({
+         winName:'index',
                 frameName:'index',
                 script:' getPushHistoryMessage();'
-            });*/
+            });*!/
             getPushHistoryMessage();
             getNotReadNum(refreshMsgNum);
         }
@@ -93,18 +100,18 @@
             $.setStorage("isFirst","1");
             $.openFrame({
                 name:"guide",
-                winName:'root',
+         winName:'index',
                 url:'wgtroot://welcome.html',
                 pageParam: {}
             });
         }else{
             $.openFrame({
                 name:"default",
-                winName:'root',
+         winName:'index',
                 url:'wgtroot://default.html',
                 pageParam: {}
             });
-        }
+        }*/
 
 
         var init=new indexClass();
@@ -161,7 +168,7 @@
 
                     });
                 }
-            },500);
+            },100);
         };
 
         //机器关机后第二次打开软件
@@ -192,7 +199,7 @@
                             //点击首页执行
                             $.openFrameByEle('content_box',{
                                 name:'index_content',
-                                winName:'root',
+                                winName:'index',
                                 url:'wgtroot://mCheap/index_content/ui/index_content.html',
                                 pageParam:{}
                             });
@@ -201,14 +208,14 @@
                             //点击附近执行
                             $.openFrameByEle('content_box',{
                                 name:"fujin",
-                                winName:'root',
+                                winName:'index',
                                 url:'wgtroot://nearMapCommon/ui/nearMap.html',
                                 pageParam:{
                                 	moduleId:"greensNearby"//这个key不能打双引号
                                 }
                             });
                             /*$.execScript({
-                                winName:'root',
+                             winName:'index',
                                 frameName:'fujin',
                                 script:"openFrame();"
                             });*/
@@ -217,7 +224,7 @@
                             //点击菜谱执行
                             $.openFrameByEle('content_box',{
                                 name:'caipu',
-                                winName:'root',
+                                winName:'index',
                                 url:'wgtroot://mCheap/caipu/ui/caipu.html',
                                 pageParam:{}
                             });
@@ -231,7 +238,7 @@
                             //点击我的执行
                             $.openFrameByEle('content_box',{
                                 name:'wode',
-                                winName:'root',
+                                winName:'index',
                                 //url:'wgtroot://mCheap/personal_information/ui/personal_information.html',
                                 url:'wgtroot://mCheap/personal_information/ui/wd.html',
                                 pageParam:{}
@@ -240,7 +247,10 @@
                     }
                 }
             });
-            ele.eq(0).trigger('tap');
+            //ele.eq(0).trigger('tap');
+            setTimeout(function () {
+                ele.eq(0).trigger('tap');
+            },200);
         })();
 //        //获取经纬度
 //        var nowData={};
@@ -260,17 +270,17 @@
 //
     });
 
-    function toIndex(){
+    /*function toIndex(){
         $.closeFrame("guide");
         $.openFrame({
             name:"index_content",
-            winName:'root',
+     winName:'index',
             url:'wgtroot://mCheap/index_content/ui/index_content.html',
             pageParam: {}
         });
-    }
+    }*/
 
-    function pushProductCutPrice(){
+    /*function pushProductCutPrice(){
         $.request({
             urlType: 'productCutPrice',
             data:{
@@ -284,7 +294,7 @@
 
             }
         },null,function(){});
-    }
+    }*/
 
     var indexClass=function(){};
     indexClass.prototype={
