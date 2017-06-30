@@ -37,7 +37,7 @@ function refreshMsgNum(num){
 	});*/
 	/*新首页上的未读消息数*/
     $.execScript({
-        winName:'root',
+        winName:'index',
         frameName:'index_content',
         script:'setMsgNum('+num+');'
     });
