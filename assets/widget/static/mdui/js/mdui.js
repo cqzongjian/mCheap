@@ -7225,10 +7225,15 @@ window.mdui = mdui;
 					  var upEndCall=obj['upEndCall'];
 					  var color=obj['color'] || '#fff'; 
 					  var imgSettings=obj['imgSettings']|| '{"imagePath":"res://reload.png",'+
-		               '"textColor":"#2d8ef3",'+
+		               '"textColor":"#000000",'+
 		               '"pullToReloadText":"拖动刷新",'+
 		               '"releaseToReloadText":"释放刷新",'+
 		               '"loadingText":"加载中..."}';
+                      var imgSettings2=obj['imgSettings2']|| '{"imagePath":"",'+
+                          '"textColor":"#2d8ef3",'+
+                          '"pullToReloadText":"哈哈",'+
+                          '"releaseToReloadText":"呵呵",'+
+                          '"loadingText":""}';
 		                uexWindow.setBounce(1);
 		       	 		//设置颜色
 		        		if(bounceType == 1) {
@@ -7243,7 +7248,7 @@ window.mdui = mdui;
 		        		if(type == 2) {
 			            	uexWindow.setBounceParams(0, imgSettings);
 		    	        	uexWindow.showBounceView(0, color, 1);
-			            	uexWindow.setBounceParams(1, imgSettings);
+			            	uexWindow.setBounceParams(1, imgSettings2);
 		    	        	uexWindow.showBounceView(1, color, 1);
 		        		} else  {
 			           	 	uexWindow.setBounceParams(type, imgSettings);
@@ -7254,7 +7259,7 @@ window.mdui = mdui;
 		        	if(startPullCall || downEndCall || upEndCall) {
 		        			if(type == 2) {
 			        			uexWindow.notifyBounceEvent(0, '1');
-			        			uexWindow.notifyBounceEvent(1, '1');
+			        			//uexWindow.notifyBounceEvent(1, '1');
 		        			} else {
 			        			uexWindow.notifyBounceEvent(type, '1');
 		        			}

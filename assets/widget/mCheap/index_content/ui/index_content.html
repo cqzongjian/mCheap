@@ -33,161 +33,170 @@
 		<div class="num message-num"></div>
 	</div>
 </div>
-<div id="page_content">
-	<div id="slider" class="mdui-slider">
-		<div class="mdui-slider-group mdui-slider-loop">
-			<!--&lt;!&ndash; 额外增加的一个节点(循环轮播：第一个节点是最后一张轮播) &ndash;&gt;-->
-			<!--<div class="mdui-slider-item mdui-slider-item-duplicate">-->
-			<!--<a href="#">-->
-			<!--<img src="../images/slider/3.jpg">-->
-			<!--<div class="mask"></div>-->
-			<!--</a>-->
-			<!--</div>-->
-			<!--&lt;!&ndash; 第一张 &ndash;&gt;-->
-			<!--<div class="mdui-slider-item">-->
-			<!--<a href="#">-->
-			<!--<img src="../images/slider/1.jpg">-->
-			<!--<div class="mask">-->
-			<!--<div class="mask-title"></div>-->
-			<!--<div class="mask-sub"></div>-->
-			<!--</div>-->
-			<!--</a>-->
-			<!--</div>-->
-			<!--&lt;!&ndash; 第二张 &ndash;&gt;-->
-			<!--<div class="mdui-slider-item">-->
-			<!--<a href="#">-->
-			<!--<img src="../images/slider/2.jpg">-->
-			<!--<div class="mask"></div>-->
-			<!--</a>-->
-			<!--</div>-->
-			<!--&lt;!&ndash; 第三张 &ndash;&gt;-->
-			<!--<div class="mdui-slider-item">-->
-			<!--<a href="#">-->
-			<!--<img src="../images/slider/3.jpg">-->
-			<!--<div class="mask"></div>-->
-			<!--</a>-->
-			<!--</div>-->
-			<!--&lt;!&ndash; 额外增加的一个节点(循环轮播：最后一个节点是第一张轮播) &ndash;&gt;-->
-			<!--<div class="mdui-slider-item mdui-slider-item-duplicate">-->
-			<!--<a href="#">-->
-			<!--<img src="../images/slider/1.jpg">-->
-			<!--<div class="mask"></div>-->
-			<!--</a>-->
-			<!--</div>-->
+<div id="wrapper">
+	<!--<div id="pullDown">
+		<span class="pullDownIcon"></span><span class="pullDownLabel">下拉刷新...</span>
+	</div>-->
+	<div id="page_content">
+		<div id="slider" class="mdui-slider">
+			<div class="mdui-slider-group mdui-slider-loop">
+				<!--&lt;!&ndash; 额外增加的一个节点(循环轮播：第一个节点是最后一张轮播) &ndash;&gt;-->
+				<!--<div class="mdui-slider-item mdui-slider-item-duplicate">-->
+				<!--<a href="#">-->
+				<!--<img src="../images/slider/3.jpg">-->
+				<!--<div class="mask"></div>-->
+				<!--</a>-->
+				<!--</div>-->
+				<!--&lt;!&ndash; 第一张 &ndash;&gt;-->
+				<!--<div class="mdui-slider-item">-->
+				<!--<a href="#">-->
+				<!--<img src="../images/slider/1.jpg">-->
+				<!--<div class="mask">-->
+				<!--<div class="mask-title"></div>-->
+				<!--<div class="mask-sub"></div>-->
+				<!--</div>-->
+				<!--</a>-->
+				<!--</div>-->
+				<!--&lt;!&ndash; 第二张 &ndash;&gt;-->
+				<!--<div class="mdui-slider-item">-->
+				<!--<a href="#">-->
+				<!--<img src="../images/slider/2.jpg">-->
+				<!--<div class="mask"></div>-->
+				<!--</a>-->
+				<!--</div>-->
+				<!--&lt;!&ndash; 第三张 &ndash;&gt;-->
+				<!--<div class="mdui-slider-item">-->
+				<!--<a href="#">-->
+				<!--<img src="../images/slider/3.jpg">-->
+				<!--<div class="mask"></div>-->
+				<!--</a>-->
+				<!--</div>-->
+				<!--&lt;!&ndash; 额外增加的一个节点(循环轮播：最后一个节点是第一张轮播) &ndash;&gt;-->
+				<!--<div class="mdui-slider-item mdui-slider-item-duplicate">-->
+				<!--<a href="#">-->
+				<!--<img src="../images/slider/1.jpg">-->
+				<!--<div class="mask"></div>-->
+				<!--</a>-->
+				<!--</div>-->
+			</div>
+			<div class="mdui-slider-indicator">
+				<div class="mdui-indicator mdui-active"></div>
+				<div class="mdui-indicator"></div>
+				<div class="mdui-indicator"></div>
+			</div>
 		</div>
-		<div class="mdui-slider-indicator">
-			<div class="mdui-indicator mdui-active"></div>
-			<div class="mdui-indicator"></div>
-			<div class="mdui-indicator"></div>
-		</div>
-	</div>
-	<div class="sort mdui-box">
-		<!--		<div class="mdui-box-flex-1">
-                    <a class="sort-item btn-com">
-                        <img src="../images/1.png">
-                        <span>蔬菜</span>
-                    </a>
-                </div>-->
-		<!--<div class="mdui-box-flex-1">-->
-		<!--<a class="sort-item">-->
-		<!--<img src="../images/3.png">-->
-		<!--<span>肉禽</span>-->
-		<!--</a>-->
-		<!--</div>-->
-		<!--<div class="mdui-box-flex-1">-->
-		<!--<a class="sort-item">-->
-		<!--<img src="../images/4.png">-->
-		<!--<span>水产</span>-->
-		<!--</a>-->
-		<!--</div>-->
-		<!--<div class="mdui-box-flex-1">-->
-		<!--<a class="sort-item">-->
-		<!--<img src="../images/danlei.png">-->
-		<!--<span>蛋类</span>-->
-		<!--</a>-->
-		<!--</div>-->
-		<!--<div class="mdui-box-flex-1">-->
-		<!--<a class="sort-item">-->
-		<!--<img src="../images/5.png">-->
-		<!--<span>豆制品</span>-->
-		<!--</a>-->
-		<!--</div>-->
-	</div>
-	<div style="height: 0.5rem;background-color: #E6EAE8"></div>
-	<div class="tj-market">
-		<div class="tj-title"><img src="../images/store.png">&nbsp;附近市场</div>
-		<div class="tj-more">更多&nbsp;<img src="../images/you.png"></div>
-		<div class="tj-list">
-			<!--<div class="tj-list-item mdui-box">-->
-			<!--<div>-->
-			<!--<img src="../images/qjrs.jpg">-->
+		<div class="sort mdui-box">
+			<!--		<div class="mdui-box-flex-1">
+                        <a class="sort-item btn-com">
+                            <img src="../images/1.png">
+                            <span>蔬菜</span>
+                        </a>
+                    </div>-->
+			<!--<div class="mdui-box-flex-1">-->
+			<!--<a class="sort-item">-->
+			<!--<img src="../images/3.png">-->
+			<!--<span>肉禽</span>-->
+			<!--</a>-->
 			<!--</div>-->
 			<!--<div class="mdui-box-flex-1">-->
-			<!--<div class="list-item-title">双人青椒肉丝套餐对撒的空间的时间啊</div>-->
-			<!--<div class="star"><img src="../images/star_01.png"/><img src="../images/star_02.png"/></div>-->
-			<!--<div class="market-address">桃蹊路</div>-->
-			<!--<div class="market-yysj">营业时间：</div>-->
-			<!--</div>-->
-			<!--<div class="market-dis">1.7km</div>-->
-			<!--</div>-->
-		</div>
-	</div>
-	<div style="height: 0.5rem;background-color: #E6EAE8"></div>
-	<!--<div class="tj-focusMarket">-->
-	<!--<div class="tj-title"><img src="../images/store.png">&nbsp;关注市场</div>-->
-	<!--<div class="tj-more" id="wdgz">我的关注&nbsp;<img src="../images/you.png"></div>-->
-	<!--<div class="tj-list">-->
-	<!--<div class="tj-list-item mdui-box">-->
-	<!--<div>-->
-	<!--<img src="../images/qjrs.jpg">-->
-	<!--</div>-->
-	<!--<div class="mdui-box-flex-1">-->
-	<!--<div class="list-item-title">双人青椒肉丝套餐对撒的空间的时间啊</div>-->
-	<!--<div class="star"><img src="../images/star_01.png"/><img src="../images/star_02.png"/></div>-->
-	<!--<div class="market-address">桃蹊路</div>-->
-	<!--<div class="market-yysj">营业时间：</div>-->
-	<!--</div>-->
-	<!--<div class="market-dis">1.7km</div>-->
-	<!--</div>-->
-	<!--</div>-->
-	<!--</div>-->
-	<div class="focusMarket"></div>
-	<div style="height: 0.5rem;background-color: #E6EAE8" id="for_foucsMarket"></div>
-	<div class="tj-caipu">
-		<div class="tj-title"><img src="../images/cook.png">&nbsp;选菜谱&nbsp;找实惠</div>
-		<div class="tj-more">更多&nbsp;<img src="../images/you.png"></div>
-		<div class="tj-list">
-			<!--<div class="tj-list-item mdui-box">-->
-			<!--<div>-->
-			<!--<img src="../images/qjrs.jpg">-->
+			<!--<a class="sort-item">-->
+			<!--<img src="../images/4.png">-->
+			<!--<span>水产</span>-->
+			<!--</a>-->
 			<!--</div>-->
 			<!--<div class="mdui-box-flex-1">-->
-			<!--<div class="list-item-title">双人青椒肉丝套餐对撒的空间的时间啊</div>-->
-			<!--<div class="list-item-sub mdui-ellipsis-2">青椒肉丝、炝炒土豆丝、蛋花汤但就是撒开发放大空间付款回到家撒娇点击撒娇</div>-->
+			<!--<a class="sort-item">-->
+			<!--<img src="../images/danlei.png">-->
+			<!--<span>蛋类</span>-->
+			<!--</a>-->
 			<!--</div>-->
+			<!--<div class="mdui-box-flex-1">-->
+			<!--<a class="sort-item">-->
+			<!--<img src="../images/5.png">-->
+			<!--<span>豆制品</span>-->
+			<!--</a>-->
 			<!--</div>-->
 		</div>
-	</div>
-	<div style="height: 0.5rem;background-color: #E6EAE8"></div>
-	<div class="tj-like">
-		<div class="tj-title"><img src="../images/like.png">&nbsp;猜你喜欢</div>
+		<div style="height: 0.5rem;background-color: #E6EAE8"></div>
+		<div class="tj-market">
+			<div class="tj-title"><img src="../images/store.png">&nbsp;附近市场</div>
+			<div class="tj-more">更多&nbsp;<img src="../images/you.png"></div>
+			<div class="tj-list">
+				<!--<div class="tj-list-item mdui-box">-->
+				<!--<div>-->
+				<!--<img src="../images/qjrs.jpg">-->
+				<!--</div>-->
+				<!--<div class="mdui-box-flex-1">-->
+				<!--<div class="list-item-title">双人青椒肉丝套餐对撒的空间的时间啊</div>-->
+				<!--<div class="star"><img src="../images/star_01.png"/><img src="../images/star_02.png"/></div>-->
+				<!--<div class="market-address">桃蹊路</div>-->
+				<!--<div class="market-yysj">营业时间：</div>-->
+				<!--</div>-->
+				<!--<div class="market-dis">1.7km</div>-->
+				<!--</div>-->
+			</div>
+		</div>
+		<div style="height: 0.5rem;background-color: #E6EAE8"></div>
+		<!--<div class="tj-focusMarket">-->
+		<!--<div class="tj-title"><img src="../images/store.png">&nbsp;关注市场</div>-->
 		<!--<div class="tj-more" id="wdgz">我的关注&nbsp;<img src="../images/you.png"></div>-->
-		<div class="tj-list">
-			<!--<div class="mdui-box">-->
-			<!--<div class="mdui-box-flex-1 tj-list-item mdui-box">-->
-			<!--<div>-->
-			<!--<img src="../images/qjrs.jpg">-->
-			<!--</div>-->
-			<!--<div class="mdui-box-flex-1">-->
-			<!--<div class="list-item-title">双人青椒肉丝套餐对撒的空间的时间啊</div>-->
-			<!--<div class="list-item-sub mdui-ellipsis-2">青椒肉丝、炝炒土豆丝、蛋花汤但就是撒开发放大空间付款回到家撒娇点击撒娇</div>-->
-			<!--</div>-->
-			<!--</div>-->
-			<!--<div class="list-item-dis"><img src="../images/dis.png">&nbsp<span>1.7km</span></div>-->
-			<!--</div>-->
+		<!--<div class="tj-list">-->
+		<!--<div class="tj-list-item mdui-box">-->
+		<!--<div>-->
+		<!--<img src="../images/qjrs.jpg">-->
+		<!--</div>-->
+		<!--<div class="mdui-box-flex-1">-->
+		<!--<div class="list-item-title">双人青椒肉丝套餐对撒的空间的时间啊</div>-->
+		<!--<div class="star"><img src="../images/star_01.png"/><img src="../images/star_02.png"/></div>-->
+		<!--<div class="market-address">桃蹊路</div>-->
+		<!--<div class="market-yysj">营业时间：</div>-->
+		<!--</div>-->
+		<!--<div class="market-dis">1.7km</div>-->
+		<!--</div>-->
+		<!--</div>-->
+		<!--</div>-->
+		<div class="focusMarket"></div>
+		<div style="height: 0.5rem;background-color: #E6EAE8" id="for_foucsMarket"></div>
+		<div class="tj-caipu">
+			<div class="tj-title"><img src="../images/cook.png">&nbsp;选菜谱&nbsp;找实惠</div>
+			<div class="tj-more">更多&nbsp;<img src="../images/you.png"></div>
+			<div class="tj-list">
+				<!--<div class="tj-list-item mdui-box">-->
+				<!--<div>-->
+				<!--<img src="../images/qjrs.jpg">-->
+				<!--</div>-->
+				<!--<div class="mdui-box-flex-1">-->
+				<!--<div class="list-item-title">双人青椒肉丝套餐对撒的空间的时间啊</div>-->
+				<!--<div class="list-item-sub mdui-ellipsis-2">青椒肉丝、炝炒土豆丝、蛋花汤但就是撒开发放大空间付款回到家撒娇点击撒娇</div>-->
+				<!--</div>-->
+				<!--</div>-->
+			</div>
+		</div>
+		<div style="height: 0.5rem;background-color: #E6EAE8"></div>
+		<div class="tj-like">
+			<div class="tj-title"><img src="../images/like.png">&nbsp;猜你喜欢</div>
+			<!--<div class="tj-more" id="wdgz">我的关注&nbsp;<img src="../images/you.png"></div>-->
+			<div class="tj-list">
+				<!--<div class="mdui-box">-->
+				<!--<div class="mdui-box-flex-1 tj-list-item mdui-box">-->
+				<!--<div>-->
+				<!--<img src="../images/qjrs.jpg">-->
+				<!--</div>-->
+				<!--<div class="mdui-box-flex-1">-->
+				<!--<div class="list-item-title">双人青椒肉丝套餐对撒的空间的时间啊</div>-->
+				<!--<div class="list-item-sub mdui-ellipsis-2">青椒肉丝、炝炒土豆丝、蛋花汤但就是撒开发放大空间付款回到家撒娇点击撒娇</div>-->
+				<!--</div>-->
+				<!--</div>-->
+				<!--<div class="list-item-dis"><img src="../images/dis.png">&nbsp<span>1.7km</span></div>-->
+				<!--</div>-->
+			</div>
 		</div>
 	</div>
+	<!--<div id="pullUp">
+		<span class="pullUpIcon"></span><span class="pullUpLabel">上拉加载更多...</span>
+	</div>-->
 </div>
+
 <!--页面-->
 <script src="../../../static/mdui/js/mdui.js"></script>
 <script src="../../../static/mCheap/js/mCheap.config.js"></script>
@@ -196,7 +205,6 @@
 <script src="../../../static/mCheap/js/btn_click.js"></script>
 <script src="../../../static/mdui/js/imageHandler.js"></script>
 <script src="../../../static/mdui/js/imageConfig.js"></script>
-<!--<script src="../../../static/mdui/js/list.js"></script>-->
 <script>
 	var priceArr={};
 	var image;
@@ -204,7 +212,9 @@
 	var ids = [];
     var distances = [];
 
-	$.uexWindowReady(function(){
+
+    $.uexWindowReady(function(){
+        /*loadMyScroll();  //下拉刷新*/
 		var oForm =  document.getElementsByTagName("form")[0];
 		oForm.onsubmit = function(){
 			$('.search-img').trigger('tap');
@@ -216,10 +226,13 @@
         initPage();
         setInterval(refresh,180000);//3分钟刷新一次
 
-		/*下拉刷新*/
+		/*
+		*下拉刷新
+		* 注意：此处为了解决上拉问题，修改锅mdui.js
+		* */
         $.setBounce({
             bounceType:"1",
-            type:"0",
+            type:"2",
             /*startPullCall:function(value){
                 if(value === 1){
                     return;
@@ -232,20 +245,9 @@
                 $.resetBounce(type);
             },
             upEndCall:function(type){
-
                 $.resetBounce(type);
             }
         });
-        /*var option = {
-				id:"page_content",
-				mode:1,
-				funs:{refresh:function(){
-
-					initPage();
-				}},
-				header : $('<div class="" id="header" style="height: 3rem;text-align: center"> <img src="../../../static/mCheap/images/down.png" style="width: .8rem;transition-duration: 100ms;"/> <span style="color: #777777;margin-left: .3rem">继续下拉以刷新...</span> ')
-		};
-        $.initScroll(option);*/
 
 	});
 	/*

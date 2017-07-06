@@ -23,7 +23,7 @@
     <color name="platform_dialog_buttom_nomal">#ffffff</color>
     <color name="platform_dialog_buttom_pressed">#cdcccc</color>
     <color name="platform_dialog_line">#b0adad</color>
-    <color name="platform_dialog_text_blue">#3DB8FE</color>
+    <color name="platform_dialog_text_blue">#006a3d</color>
     <color name="platform_dialog_text_default">#4c4c4c</color>
     <!-- Audio use -->
 	<color name="plugin_audio_half_transparent">#30000000</color>
